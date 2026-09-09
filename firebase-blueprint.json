@@ -1,0 +1,52 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "displayName": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 200 },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      },
+      "required": ["email", "createdAt", "updatedAt"]
+    },
+    "Score": {
+      "title": "Score",
+      "description": "A past Jnachi score result",
+      "type": "object",
+      "properties": {
+        "score": { "type": "number" },
+        "level": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["score", "level", "createdAt"]
+    },
+    "Certification": {
+      "title": "Certification",
+      "description": "A saved certification",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string", "maxLength": 200 },
+        "issuedAt": { "type": "number" },
+        "url": { "type": "string", "maxLength": 500 }
+      },
+      "required": ["title", "issuedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Stores user profiles"
+    },
+    "/users/{userId}/scores/{scoreId}": {
+      "schema": { "$ref": "#/entities/Score" },
+      "description": "Stores user's past scores"
+    },
+    "/users/{userId}/certifications/{certId}": {
+      "schema": { "$ref": "#/entities/Certification" },
+      "description": "Stores user's saved certifications"
+    }
+  }
+}

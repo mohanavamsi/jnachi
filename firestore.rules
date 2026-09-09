@@ -1,0 +1,109 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isValidUser(data) {
+      return data.keys().hasAll(['email', 'createdAt', 'updatedAt'])
+        && data.email is string && data.email.size() <= 200
+        && (!("displayName" in data) || (data.displayName is string && data.displayName.size() <= 100))
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId)
+        && isValidId(userId)
+        && isValidUser(incoming())
+        && incoming().keys().size() <= 4
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+      allow update: if isOwner(userId)
+        && isValidId(userId)
+        && isValidUser(incoming())
+        && incoming().createdAt == existing().createdAt
+        && incoming().updatedAt == request.time
+        && incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'updatedAt']);
+    }
+
+    function isValidScore(data) {
+      return data.keys().hasAll(['score', 'level', 'createdAt'])
+        && data.score is number
+        && data.level is string && data.level.size() <= 20 && data.level.matches('^(emerging|active|energized)$')
+        && data.createdAt is timestamp;
+    }
+
+    match /users/{userId}/scores/{scoreId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId)
+        && isValidId(userId)
+        && isValidId(scoreId)
+        && isValidScore(incoming())
+        && incoming().keys().size() == 3
+        && incoming().createdAt == request.time;
+    }
+
+    function isValidCertification(data) {
+      return data.keys().hasAll(['title', 'issuedAt'])
+        && data.title is string && data.title.size() <= 200
+        && data.issuedAt is timestamp
+        && (!("url" in data) || (data.url is string && data.url.size() <= 500));
+    }
+
+    match /users/{userId}/certifications/{certId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId)
+        && isValidId(userId)
+        && isValidId(certId)
+        && isValidCertification(incoming())
+        && incoming().keys().size() <= 3
+        && incoming().issuedAt == request.time;
+      allow update: if isOwner(userId)
+        && isValidId(userId)
+        && isValidId(certId)
+        && isValidCertification(incoming())
+        && incoming().diff(existing()).affectedKeys().hasOnly(['title', 'issuedAt', 'url']);
+      allow delete: if isOwner(userId)
+        && isValidId(userId)
+        && isValidId(certId);
+    }
+
+    function isValidLead(data) {
+      return data.keys().hasAll(['email', 'score', 'level', 'answers', 'createdAt'])
+        && data.email is string && data.email.size() >= 3 && data.email.size() <= 200
+        && data.score is number
+        && data.level is string && data.level.size() <= 50
+        && data.answers is list && data.answers.size() == 9
+        && data.createdAt is timestamp;
+    }
+
+    match /leads/{leadId} {
+      allow create: if isValidLead(incoming())
+        && incoming().keys().size() <= 6
+        && incoming().createdAt == request.time;
+    }
+  }
+}
