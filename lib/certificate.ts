@@ -310,9 +310,9 @@ export function drawCertificate(canvas: HTMLCanvasElement, data: CertificateData
 
   // Brand button text
   ctx.textAlign = 'center';
-  ctx.font = 'bold 30px system-ui, -apple-system, sans-serif';
+  ctx.font = 'bold 32px system-ui, -apple-system, sans-serif';
   ctx.fillStyle = '#4f46e5';
-  ctx.fillText('jnachi.com/assessment', btnX + btnW / 2, btnY + 48);
+  ctx.fillText('jnachi.com', btnX + btnW / 2, btnY + 48);
 
   // 5. Verification Footer (y: 1795 - 1860)
   const footerY = 1815;

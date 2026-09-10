@@ -58,14 +58,14 @@ export default function ResultClient() {
   const { subScores, overallScore, overallLevel, getSubScoreStatus } = scores;
   const { strengths, growthAreas, actionSteps } = findings;
   
-  const currentUrl = typeof window !== 'undefined' ? window.location.href : `https://jnachi.com/assessment/result?a=${rawAnswers || ''}`;
-  const shareUrl = encodeURIComponent(currentUrl);
+  const shareSiteUrl = 'https://jnachi.com';
+  const shareUrl = encodeURIComponent(shareSiteUrl);
   const rawShareText = `I just scored ${overallScore}/100 (${overallLevel}) on my Jnachi assessment! Check your AI momentum:`;
   const shareText = encodeURIComponent(rawShareText);
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(`${rawShareText} ${currentUrl}`);
+      await navigator.clipboard.writeText(`${rawShareText} ${shareSiteUrl}`);
       setCopiedLink(true);
       setTimeout(() => setCopiedLink(false), 2500);
     } catch (err) {
@@ -79,7 +79,7 @@ export default function ResultClient() {
         await navigator.share({
           title: `Jnachi AI Score: ${overallScore} (${overallLevel})`,
           text: rawShareText,
-          url: currentUrl,
+          url: shareSiteUrl,
         });
         return;
       } catch (err: unknown) {

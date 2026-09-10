@@ -72,10 +72,7 @@ export default function CertificateModal({
   const [downloadSuccess, setDownloadSuccess] = useState<string | null>(null);
 
   // Share URL & formatted summary text
-  const shareUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/assessment/result?a=${rawAnswers || ''}`
-    : `https://jnachi.com/assessment/result?a=${rawAnswers || ''}`;
-
+  const shareUrl = 'https://jnachi.com';
   const shareText = `I just scored ${overallScore}/100 (${overallLevel}) on the Jnachi AI Skills Assessment! Measure your AI momentum:`;
 
   // Deterministic certificate / card ID based on answers hash
