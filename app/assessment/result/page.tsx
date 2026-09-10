@@ -3,7 +3,7 @@
 import { Suspense, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { RefreshCw, Download, Share2, Linkedin, Twitter, Facebook, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
+import { RefreshCw, Download, Share2, Linkedin, Twitter, Facebook, CheckCircle2, ArrowRight, Sparkles, BookOpen } from 'lucide-react';
 import { calculateScores, getFindings, Category, CATEGORY_LABELS } from '@/lib/assessmentData';
 import CertificateModal from '@/components/CertificateModal';
 
@@ -205,6 +205,25 @@ function ResultContent() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="mt-10 p-6 rounded-2xl bg-indigo-50/80 border border-indigo-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-3 bg-white rounded-xl text-indigo-600 shadow-sm flex-shrink-0">
+                <BookOpen className="w-6 h-6" />
+              </div>
+              <div>
+                <h4 className="font-bold text-slate-900 text-base">Activate These Skills in the Learning Hub</h4>
+                <p className="text-slate-600 text-xs mt-0.5">Explore 17 short, practical lessons with copyable prompt templates and 5-minute activation challenges.</p>
+              </div>
+            </div>
+            <Link
+              href="/lessons"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 text-white text-xs font-bold rounded-full hover:bg-indigo-700 transition-colors shadow-sm whitespace-nowrap flex-shrink-0"
+            >
+              <span>Explore 17 Lessons</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
 

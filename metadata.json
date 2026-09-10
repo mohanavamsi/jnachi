@@ -1,6 +1,6 @@
 {
   "name": "Jnachi",
-  "description": "An AI skills assessment platform. Know it. Use it. Prove it.",
+  "description": "An AI skills assessment and learning platform. Know it. Use it. Prove it.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

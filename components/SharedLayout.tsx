@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
+import { AuthNav } from '@/components/AuthNav';
+import { BookOpen } from 'lucide-react';
 
 export function Navigation() {
   return (
@@ -13,10 +15,20 @@ export function Navigation() {
             Know it. Use it. Prove it.
           </span>
         </div>
-        <nav className="flex items-center gap-4 sm:gap-6 text-sm font-medium">
+        <nav className="flex items-center gap-3 sm:gap-6 text-sm font-medium">
+          <Link 
+            href="/lessons" 
+            className="flex items-center gap-1.5 text-slate-700 hover:text-indigo-600 transition-colors font-medium px-2 py-1"
+          >
+            <BookOpen className="w-4 h-4 text-indigo-600" />
+            <span>Lessons</span>
+          </Link>
           <Link href="/about" className="hidden sm:block text-slate-600 hover:text-indigo-600 transition-colors">
             Our Story
           </Link>
+          <div className="hidden sm:block">
+            <AuthNav />
+          </div>
           <Link 
             href="/assessment" 
             className="px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors shadow-sm whitespace-nowrap"
@@ -39,11 +51,11 @@ export function Footer() {
           <p className="text-slate-500 text-sm mt-2">Where knowing becomes doing.</p>
         </div>
         
-        <div className="flex gap-8 text-sm text-slate-600">
+        <div className="flex flex-wrap gap-6 sm:gap-8 text-sm text-slate-600">
+          <Link href="/lessons" className="hover:text-indigo-600 transition-colors font-medium text-indigo-600">Learning Hub (17 Lessons)</Link>
+          <Link href="/assessment" className="hover:text-indigo-600 transition-colors">Assessment</Link>
           <Link href="/about" className="hover:text-indigo-600 transition-colors">About Jnachi</Link>
-          <Link href="#" className="hover:text-indigo-600 transition-colors">Privacy</Link>
-          <Link href="#" className="hover:text-indigo-600 transition-colors">Terms</Link>
-          <Link href="#" className="hover:text-indigo-600 transition-colors">Contact</Link>
+          <Link href="/profile" className="hover:text-indigo-600 transition-colors">My Profile</Link>
         </div>
       </div>
       <div className="container mx-auto px-4 max-w-6xl mt-8 pt-8 border-t border-slate-200 text-center text-slate-400 text-xs">
@@ -52,3 +64,4 @@ export function Footer() {
     </footer>
   );
 }
+

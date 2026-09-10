@@ -4,17 +4,17 @@ import { Navigation, Footer } from '@/components/SharedLayout';
 import { AuthProvider } from '@/components/AuthProvider';
 
 export const metadata: Metadata = {
-  title: 'Jnachi | AI Skills Assessment',
-  description: 'An AI skills assessment platform. Know it. Use it. Prove it.',
+  title: 'Jnachi | AI Skills Assessment & Learning Hub',
+  description: 'An AI skills assessment and learning platform. Know it. Use it. Prove it.',
   openGraph: {
-    title: 'Jnachi | AI Skills Assessment',
-    description: 'An AI skills assessment platform. Know it. Use it. Prove it.',
+    title: 'Jnachi | AI Skills Assessment & Learning Hub',
+    description: 'An AI skills assessment and learning platform. Know it. Use it. Prove it.',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jnachi | AI Skills Assessment',
-    description: 'An AI skills assessment platform. Know it. Use it. Prove it.',
+    title: 'Jnachi | AI Skills Assessment & Learning Hub',
+    description: 'An AI skills assessment and learning platform. Know it. Use it. Prove it.',
   },
   icons: {
     icon: [

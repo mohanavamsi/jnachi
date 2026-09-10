@@ -15,13 +15,97 @@ export default function HomePage() {
         <p className="text-xl md:text-2xl text-slate-600 max-w-2xl mb-10 leading-relaxed">
           Get a precise reading of how activated your AI knowledge is. Not a grade—a measure of your momentum.
         </p>
-        <Link 
-          href="/assessment" 
-          className="group inline-flex items-center gap-3 bg-indigo-600 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-200 hover:-translate-y-0.5"
-        >
-          Start Assessment
-          <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-        </Link>
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <Link 
+            href="/assessment" 
+            className="group inline-flex items-center gap-3 bg-indigo-600 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-200 hover:-translate-y-0.5"
+          >
+            Start Assessment
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </Link>
+          <Link 
+            href="/lessons" 
+            className="inline-flex items-center gap-2 bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-full text-lg font-medium hover:bg-slate-50 transition-all shadow-sm hover:-translate-y-0.5"
+          >
+            Explore 17 Lessons
+          </Link>
+        </div>
+      </section>
+
+      {/* Learning Hub Feature Section */}
+      <section className="w-full py-20 bg-slate-50 border-y border-slate-200/60 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1.5 rounded-full border border-indigo-100 inline-block mb-3">
+                Actionable Curriculum
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-3">
+                17 Lessons Built for Immediate Practice
+              </h2>
+              <p className="text-slate-600 text-lg max-w-2xl">
+                No vague hype or 30-minute corporate lecture videos. Each lesson gives you a concrete technique, copyable prompt patterns, and an immediate 5-minute activation challenge.
+              </p>
+            </div>
+            <Link
+              href="/lessons"
+              className="inline-flex items-center gap-2 text-indigo-600 font-bold hover:text-indigo-800 transition-colors text-base"
+            >
+              <span>View All 17 Lessons</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Link href="/lessons" className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-indigo-300 hover:shadow-md transition-all group">
+              <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md block w-fit mb-3">
+                Track 1 • 5 Lessons
+              </span>
+              <h3 className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors mb-2">
+                AI Literacy & Prompting
+              </h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Prompt anatomy, iterative calibration, hallucination detection, personas, and structured schemas.
+              </p>
+            </Link>
+
+            <Link href="/lessons" className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all group">
+              <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md block w-fit mb-3">
+                Track 2 • 4 Lessons
+              </span>
+              <h3 className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">
+                Workflow Automation
+              </h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Micro-task audits, personal prompt libraries, chaining multi-step processes, and first-draft clay.
+              </p>
+            </Link>
+
+            <Link href="/lessons" className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-emerald-300 hover:shadow-md transition-all group">
+              <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md block w-fit mb-3">
+                Track 3 • 4 Lessons
+              </span>
+              <h3 className="font-bold text-slate-900 group-hover:text-emerald-600 transition-colors mb-2">
+                Data Privacy & Ethics
+              </h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Session vs. training data, personal red lines, Zero Data Retention (ZDR), and corporate AI policies.
+              </p>
+            </Link>
+
+            <Link href="/lessons" className="bg-white p-6 rounded-2xl border border-slate-200 hover:border-purple-300 hover:shadow-md transition-all group">
+              <span className="text-xs font-bold text-purple-600 bg-purple-50 px-2.5 py-1 rounded-md block w-fit mb-3">
+                Track 4 • 4 Lessons
+              </span>
+              <h3 className="font-bold text-slate-900 group-hover:text-purple-600 transition-colors mb-2">
+                Growth & Problem Solving
+              </h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Cognitive sparring partners, multimodal inputs, anti-hype tool filters, and calibration matrices.
+              </p>
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* Value Proposition */}
