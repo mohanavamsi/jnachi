@@ -1,0 +1,145 @@
+const fs = require('fs');
+const path = require('path');
+const sharp = require('sharp');
+
+const width = 1200;
+const height = 630;
+
+// High-fidelity SVG matching Jnachi brand and concept
+const svg = `
+<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background Gradient: Brand Purple -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b2aa6" />
+      <stop offset="60%" stop-color="#34259b" />
+      <stop offset="100%" stop-color="#2a1c84" />
+    </linearGradient>
+
+    <!-- Subtle Radial Glow around Orbit -->
+    <radialGradient id="orbitGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.35" />
+      <stop offset="70%" stop-color="#4f46e5" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#34259b" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c7d2fe" stop-opacity="0.45" />
+      <stop offset="100%" stop-color="#818cf8" stop-opacity="0.15" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    .brand-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 700; fill: #ffffff; }
+    .brand-headline { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 800; fill: #ffffff; }
+    .brand-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 400; fill: #c7d2fe; }
+    .brand-meta { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 600; fill: #a5b4fc; }
+    .brand-url { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 600; fill: #e0e7ff; }
+  </style>
+
+  <!-- Background -->
+  <rect width="${width}" height="${height}" fill="url(#bgGrad)" />
+
+  <!-- Right Decorative Orbit Mark (Matches concept image) -->
+  <g transform="translate(920, 315)">
+    <!-- Faint Ambient Glow -->
+    <circle cx="0" cy="0" r="320" fill="url(#orbitGlow)" />
+
+    <!-- Outer Large Subtle Ring -->
+    <circle cx="0" cy="0" r="260" fill="none" stroke="url(#ringGrad)" stroke-width="24" opacity="0.85" />
+
+    <!-- Inner Thin Orbit Guide -->
+    <circle cx="0" cy="0" r="225" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.15" stroke-dasharray="6 6" />
+
+    <!-- Distant Orbit Trace -->
+    <circle cx="0" cy="0" r="340" fill="none" stroke="#ffffff" stroke-width="1" stroke-opacity="0.08" />
+
+    <!-- Center White Dot (Seed of Knowledge) -->
+    <circle cx="0" cy="0" r="22" fill="#ffffff" filter="drop-shadow(0 0 16px rgba(255,255,255,0.6))" />
+  </g>
+
+  <!-- Top-Left Jnachi Brand Identity -->
+  <g transform="translate(80, 75)">
+    <!-- Logo Icon -->
+    <g transform="translate(0, 0)">
+      <svg width="44" height="44" viewBox="0 0 32 32" fill="none">
+        <path
+          d="M 28 16 C 28 22.627 22.627 28 16 28 C 9.373 28 4 22.627 4 16 C 4 9.373 9.373 4 16 4 C 18 4 19.8 4.6 21.4 5.5"
+          stroke="#ffffff"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-opacity="0.75"
+        />
+        <circle cx="22" cy="10" r="5" fill="#ffffff" />
+      </svg>
+    </g>
+
+    <!-- Wordmark -->
+    <text x="56" y="31" class="brand-title" font-size="34" letter-spacing="-0.04em">jnachi</text>
+
+    <!-- Category Pill -->
+    <g transform="translate(200, 4)">
+      <rect x="0" y="0" width="280" height="34" rx="17" fill="#ffffff" fill-opacity="0.12" stroke="#ffffff" stroke-opacity="0.2" stroke-width="1" />
+      <text x="140" y="22" text-anchor="middle" class="brand-meta" font-size="12" letter-spacing="0.1em">AI SKILLS BENCHMARK &amp; HUB</text>
+    </g>
+  </g>
+
+  <!-- Left Center Headline & Value Prop -->
+  <g transform="translate(80, 225)">
+    <!-- Large Headline Text -->
+    <text x="0" y="65" class="brand-headline" font-size="62" letter-spacing="-0.03em">
+      Know it. Use it. Prove it.
+    </text>
+
+    <!-- Supporting Line -->
+    <text x="0" y="135" class="brand-sub" font-size="27" letter-spacing="-0.01em">
+      A precise reading of how activated your AI knowledge is.
+    </text>
+
+    <!-- Key Pillars Pills -->
+    <g transform="translate(0, 195)">
+      <!-- Pill 1 -->
+      <rect x="0" y="0" width="168" height="38" rx="19" fill="#ffffff" fill-opacity="0.1" stroke="#ffffff" stroke-opacity="0.18" stroke-width="1" />
+      <text x="84" y="24" text-anchor="middle" class="brand-url" font-size="13" letter-spacing="0.02em">Literacy &amp; Prompting</text>
+
+      <!-- Pill 2 -->
+      <rect x="180" y="0" width="160" height="38" rx="19" fill="#ffffff" fill-opacity="0.1" stroke="#ffffff" stroke-opacity="0.18" stroke-width="1" />
+      <text x="260" y="24" text-anchor="middle" class="brand-url" font-size="13" letter-spacing="0.02em">Automation Flow</text>
+
+      <!-- Pill 3 -->
+      <rect x="352" y="0" width="154" height="38" rx="19" fill="#ffffff" fill-opacity="0.1" stroke="#ffffff" stroke-opacity="0.18" stroke-width="1" />
+      <text x="429" y="24" text-anchor="middle" class="brand-url" font-size="13" letter-spacing="0.02em">Privacy &amp; Ethics</text>
+    </g>
+  </g>
+
+  <!-- Bottom Details -->
+  <g transform="translate(80, 560)">
+    <text x="0" y="0" class="brand-url" font-size="22" letter-spacing="0.05em">jnachi.com</text>
+    <text x="140" y="0" class="brand-sub" font-size="16" opacity="0.75">— 9 Questions. 3 Minutes. Objective Momentum.</text>
+  </g>
+</svg>
+`;
+
+async function main() {
+  const publicDir = path.join(process.cwd(), 'public');
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
+  }
+
+  const svgPath = path.join(publicDir, 'og-default.svg');
+  const pngPath = path.join(publicDir, 'og-default.png');
+
+  fs.writeFileSync(svgPath, svg, 'utf8');
+  console.log(`Saved SVG to ${svgPath}`);
+
+  await sharp(Buffer.from(svg))
+    .png({ quality: 95 })
+    .toFile(pngPath);
+
+  console.log(`Successfully generated ${pngPath} (1200x630px)`);
+}
+
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});
