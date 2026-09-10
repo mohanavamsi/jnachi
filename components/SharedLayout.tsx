@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
-import { AuthNav } from '@/components/AuthNav';
 
 export function Navigation() {
   return (
@@ -14,17 +13,13 @@ export function Navigation() {
             Know it. Use it. Prove it.
           </span>
         </div>
-        <nav className="flex items-center gap-6 text-sm font-medium">
-          <Link href="/about" className="text-slate-600 hover:text-indigo-600 transition-colors">
+        <nav className="flex items-center gap-4 sm:gap-6 text-sm font-medium">
+          <Link href="/about" className="hidden sm:block text-slate-600 hover:text-indigo-600 transition-colors">
             Our Story
           </Link>
-          <Link href="/reading" className="text-slate-600 hover:text-indigo-600 transition-colors">
-            Check Reading
-          </Link>
-          <AuthNav />
           <Link 
-            href="/reading" 
-            className="px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors shadow-sm"
+            href="/assessment" 
+            className="px-4 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors shadow-sm whitespace-nowrap"
           >
             Start Assessment
           </Link>

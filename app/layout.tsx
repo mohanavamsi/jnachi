@@ -16,6 +16,14 @@ export const metadata: Metadata = {
     title: 'Jnachi | AI Skills Assessment',
     description: 'An AI skills assessment platform. Know it. Use it. Prove it.',
   },
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/icon-32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-icon.png',
+  },
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

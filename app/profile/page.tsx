@@ -118,7 +118,7 @@ export default function ProfilePage() {
             {scores.length === 0 ? (
               <div className="text-center py-10 bg-slate-50 rounded-xl border border-slate-100">
                 <p className="text-slate-500 mb-4">No readings taken yet.</p>
-                <a href="/reading" className="text-indigo-600 font-medium hover:underline">Take your first assessment</a>
+                <a href="/assessment" className="text-indigo-600 font-medium hover:underline">Take your first assessment</a>
               </div>
             ) : (
               <div className="space-y-4">

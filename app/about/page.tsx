@@ -36,10 +36,10 @@ export default function AboutPage() {
               Take our interactive assessment to see where your skills are emerging, and where they are fully energized.
             </p>
             <Link 
-              href="/reading" 
+              href="/assessment" 
               className="group inline-flex items-center gap-3 bg-indigo-600 text-white px-6 py-3 rounded-full font-medium hover:bg-indigo-700 transition-all shadow"
             >
-              Check Your Reading
+              Start Assessment
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>

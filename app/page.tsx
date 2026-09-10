@@ -16,10 +16,10 @@ export default function HomePage() {
           Get a precise reading of how activated your AI knowledge is. Not a grade—a measure of your momentum.
         </p>
         <Link 
-          href="/reading" 
+          href="/assessment" 
           className="group inline-flex items-center gap-3 bg-indigo-600 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-200 hover:-translate-y-0.5"
         >
-          Check Your Reading
+          Start Assessment
           <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
         </Link>
       </section>
@@ -75,10 +75,10 @@ export default function HomePage() {
           Take the Jnachi assessment today to get your baseline reading and discover your path to full activation.
         </p>
         <Link 
-          href="/reading" 
+          href="/assessment" 
           className="inline-flex items-center gap-3 bg-white text-indigo-900 px-8 py-4 rounded-full text-lg font-medium hover:bg-indigo-50 transition-colors shadow-lg"
         >
-          Start Your Assessment
+          Start Assessment
         </Link>
       </section>
     </div>
