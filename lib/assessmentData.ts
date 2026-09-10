@@ -308,15 +308,20 @@ export function getFindings(subScores: Record<Category, number>) {
     return FINDINGS.find(f => f.category === cat && score >= f.scoreRange[0] && score <= f.scoreRange[1]);
   }).filter(Boolean) as Finding[];
 
-  // Sort categories by score highest to lowest
+  // Sort categories by score descending (highest to lowest)
   const sortedCategories = (Object.keys(subScores) as Category[]).sort((a, b) => subScores[b] - subScores[a]);
   
-  // Top 2 for strengths
-  const topCategories = sortedCategories.slice(0, 2);
-  // Bottom 2 for growth areas (reversed so absolute lowest is first)
-  const bottomCategories = sortedCategories.slice(-2).reverse();
+  // Only categories with score >= 70 ("Active" or "Fully Activated") qualify as Key Strengths (up to top 2)
+  const qualifyingStrengths = sortedCategories
+    .filter(cat => subScores[cat] >= 70)
+    .slice(0, 2);
 
-  const strengths = topCategories.map(cat => {
+  // Growth areas: pull from lowest-scoring categories, but NEVER duplicate a category in Key Strengths
+  const sortedAscending = (Object.keys(subScores) as Category[]).sort((a, b) => subScores[a] - subScores[b]);
+  const candidateGrowth = sortedAscending.filter(cat => !qualifyingStrengths.includes(cat));
+  const bottomCategories = candidateGrowth.slice(0, 2);
+
+  const strengths = qualifyingStrengths.map(cat => {
     const f = selectedFindings.find(f => f.category === cat);
     return { category: cat, label: CATEGORY_LABELS[cat], text: f?.strength || "" };
   });

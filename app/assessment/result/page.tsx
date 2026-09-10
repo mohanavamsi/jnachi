@@ -3,7 +3,7 @@
 import { Suspense, useMemo } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { RefreshCw, Download, Share2, Linkedin, Twitter, Facebook, CheckCircle2, ArrowRight } from 'lucide-react';
+import { RefreshCw, Download, Share2, Linkedin, Twitter, Facebook, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
 import { calculateScores, getFindings, Category, CATEGORY_LABELS } from '@/lib/assessmentData';
 
 function ResultContent() {
@@ -107,19 +107,33 @@ function ResultContent() {
           {/* Strengths */}
           <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100">
             <h3 className="text-2xl font-bold text-slate-900 mb-6">Key Strengths Identified</h3>
-            <ul className="space-y-6">
-              {strengths.map((str, idx) => (
-                <li key={idx} className="flex gap-4">
-                  <div className="mt-1 bg-indigo-50 text-indigo-600 rounded-full p-1 h-fit">
-                    <CheckCircle2 className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900">{str.label}</h4>
-                    <p className="text-slate-600 mt-1">{str.text}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            {strengths.length > 0 ? (
+              <ul className="space-y-6">
+                {strengths.map((str, idx) => (
+                  <li key={idx} className="flex gap-4">
+                    <div className="mt-1 bg-indigo-50 text-indigo-600 rounded-full p-1 h-fit">
+                      <CheckCircle2 className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-900">{str.label}</h4>
+                      <p className="text-slate-600 mt-1">{str.text}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex items-start gap-4">
+                <div className="mt-0.5 bg-indigo-50 text-indigo-600 rounded-full p-2 flex-shrink-0">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-slate-900 mb-1">Building Your Foundation</h4>
+                  <p className="text-slate-600 text-sm leading-relaxed">
+                    No standout strengths yet — every area still has room to activate. That&apos;s exactly what the plan below is for.
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Growth Areas */}
@@ -144,7 +158,9 @@ function ResultContent() {
         {/* Action Plan */}
         <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-slate-100 mb-12">
           <h3 className="text-3xl font-bold text-slate-900 mb-2">Your Personalized 4-Step Action Plan</h3>
-          <p className="text-slate-500 mb-10">Based on your dormant categories, here is exactly how to start building momentum this week.</p>
+          <p className="text-slate-500 mb-10">
+            Based on your assessment results{growthAreas.length > 0 ? `—prioritizing ${growthAreas.map(g => g.label).join(' and ')}` : ''}—here is a prioritized path to build momentum this week.
+          </p>
           
           <div className="grid sm:grid-cols-2 gap-8">
             {actionSteps.map((step, idx) => (
