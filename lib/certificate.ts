@@ -377,6 +377,29 @@ function roundRect(
 }
 
 /**
+ * Converts canvas to a PNG Blob.
+ */
+export function getCertificateBlob(canvas: HTMLCanvasElement): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => {
+      if (!blob) {
+        reject(new Error('Failed to generate image blob from canvas'));
+        return;
+      }
+      resolve(blob);
+    }, 'image/png', 1.0);
+  });
+}
+
+/**
+ * Converts canvas to a PNG File suitable for Web Share API navigator.share({ files: [file] }).
+ */
+export async function getCertificateFile(canvas: HTMLCanvasElement, filename = 'Jnachi-Result-Card.png'): Promise<File> {
+  const blob = await getCertificateBlob(canvas);
+  return new File([blob], filename, { type: 'image/png' });
+}
+
+/**
  * Downloads a crisp 9:16 PNG image file.
  */
 export function downloadCertificatePng(canvas: HTMLCanvasElement, filename = 'Jnachi-Result-Card.png') {

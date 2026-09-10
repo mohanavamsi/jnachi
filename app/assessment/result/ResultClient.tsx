@@ -3,7 +3,21 @@
 import { useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { RefreshCw, Download, Share2, Linkedin, Twitter, Facebook, CheckCircle2, ArrowRight, Sparkles, BookOpen } from 'lucide-react';
+import {
+  RefreshCw,
+  Share2,
+  Linkedin,
+  Twitter,
+  Facebook,
+  CheckCircle2,
+  ArrowRight,
+  Sparkles,
+  BookOpen,
+  MessageCircle,
+  Instagram,
+  Copy,
+  Check,
+} from 'lucide-react';
 import { calculateScores, getFindings, Category, CATEGORY_LABELS } from '@/lib/assessmentData';
 import CertificateModal from '@/components/CertificateModal';
 
@@ -14,6 +28,7 @@ export default function ResultClient() {
   const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
   const [userEmail, setUserEmail] = useState<string>('');
   const [isCertModalOpen, setIsCertModalOpen] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -45,7 +60,34 @@ export default function ResultClient() {
   
   const currentUrl = typeof window !== 'undefined' ? window.location.href : `https://jnachi.com/assessment/result?a=${rawAnswers || ''}`;
   const shareUrl = encodeURIComponent(currentUrl);
-  const shareText = encodeURIComponent(`I just scored an ${overallScore} (${overallLevel}) on my Jnachi assessment! Check your AI momentum at Jnachi.`);
+  const rawShareText = `I just scored ${overallScore}/100 (${overallLevel}) on my Jnachi assessment! Check your AI momentum:`;
+  const shareText = encodeURIComponent(rawShareText);
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(`${rawShareText} ${currentUrl}`);
+      setCopiedLink(true);
+      setTimeout(() => setCopiedLink(false), 2500);
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+    }
+  };
+
+  const handleDirectShare = async () => {
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({
+          title: `Jnachi AI Score: ${overallScore} (${overallLevel})`,
+          text: rawShareText,
+          url: currentUrl,
+        });
+        return;
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === 'AbortError') return;
+      }
+    }
+    setIsCertModalOpen(true);
+  };
 
   if (!isAuthorized) {
     return (
@@ -237,32 +279,88 @@ export default function ResultClient() {
         </div>
 
         {/* Social Sharing */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12 bg-indigo-50/50 p-6 rounded-2xl border border-indigo-100">
-          <span className="text-indigo-900 font-medium flex items-center gap-2">
-            <Share2 className="w-5 h-5 text-indigo-600" /> Share your momentum:
-          </span>
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 mb-12 bg-gradient-to-r from-indigo-50/70 via-purple-50/50 to-indigo-50/70 p-6 rounded-2xl border border-indigo-100">
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 bg-indigo-600 text-white rounded-xl shadow-sm">
+              <Share2 className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="text-slate-900 font-bold block text-sm sm:text-base">
+                Share your AI momentum
+              </span>
+              <span className="text-slate-500 text-xs">
+                Directly share to WhatsApp, Instagram Stories, LinkedIn, or any app
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center flex-wrap justify-center gap-3">
+            {/* WhatsApp */}
             <a 
-              href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareText}`} 
+              href={`https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`} 
               target="_blank" rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-white text-[#0A66C2] flex items-center justify-center shadow-sm hover:shadow hover:-translate-y-0.5 transition-all"
+              className="w-11 h-11 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-sm hover:shadow hover:-translate-y-0.5 transition-all"
+              title="Share to WhatsApp"
+            >
+              <MessageCircle className="w-5 h-5 fill-white" />
+            </a>
+
+            {/* Instagram Stories / Feed (Opens 9:16 Card) */}
+            <button
+              onClick={() => setIsCertModalOpen(true)}
+              className="w-11 h-11 rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white flex items-center justify-center shadow-sm hover:shadow hover:-translate-y-0.5 transition-all"
+              title="Share 9:16 Card to Instagram Stories"
+            >
+              <Instagram className="w-5 h-5" />
+            </button>
+
+            {/* LinkedIn */}
+            <a 
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`} 
+              target="_blank" rel="noopener noreferrer"
+              className="w-11 h-11 rounded-full bg-[#0A66C2] text-white flex items-center justify-center shadow-sm hover:shadow hover:-translate-y-0.5 transition-all"
+              title="Share to LinkedIn"
             >
               <Linkedin className="w-5 h-5 fill-current" />
             </a>
+
+            {/* Twitter / X */}
             <a 
               href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareText}`} 
               target="_blank" rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-white text-slate-900 flex items-center justify-center shadow-sm hover:shadow hover:-translate-y-0.5 transition-all"
+              className="w-11 h-11 rounded-full bg-slate-900 text-white flex items-center justify-center shadow-sm hover:shadow hover:-translate-y-0.5 transition-all"
+              title="Share on Twitter/X"
             >
               <Twitter className="w-5 h-5 fill-current" />
             </a>
+
+            {/* Facebook */}
             <a 
               href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} 
               target="_blank" rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-white text-[#1877F2] flex items-center justify-center shadow-sm hover:shadow hover:-translate-y-0.5 transition-all"
+              className="w-11 h-11 rounded-full bg-[#1877F2] text-white flex items-center justify-center shadow-sm hover:shadow hover:-translate-y-0.5 transition-all"
+              title="Share on Facebook"
             >
               <Facebook className="w-5 h-5" />
             </a>
+
+            {/* Native Device Share / More Apps */}
+            <button
+              onClick={handleDirectShare}
+              className="w-11 h-11 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-sm hover:shadow hover:-translate-y-0.5 transition-all"
+              title="Share via Device Apps"
+            >
+              <Share2 className="w-5 h-5" />
+            </button>
+
+            {/* Copy Link */}
+            <button
+              onClick={handleCopyLink}
+              className="w-11 h-11 rounded-full bg-white border border-slate-200 text-slate-700 flex items-center justify-center shadow-sm hover:shadow hover:-translate-y-0.5 transition-all"
+              title={copiedLink ? 'Copied!' : 'Copy Link'}
+            >
+              {copiedLink ? <Check className="w-5 h-5 text-emerald-600" /> : <Copy className="w-5 h-5" />}
+            </button>
           </div>
         </div>
 
@@ -270,17 +368,17 @@ export default function ResultClient() {
         <div className="flex flex-col sm:flex-row justify-center gap-4">
           <Link 
             href="/assessment" 
-            className="inline-flex items-center justify-center gap-2 bg-slate-100 text-slate-700 px-6 py-3 rounded-full font-medium hover:bg-slate-200 transition-colors"
+            className="inline-flex items-center justify-center gap-2 bg-slate-100 text-slate-700 px-6 py-3.5 rounded-full font-medium hover:bg-slate-200 transition-colors"
           >
             <RefreshCw className="w-4 h-4" />
             Retake Assessment
           </Link>
           <button 
             onClick={() => setIsCertModalOpen(true)}
-            className="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-full font-medium hover:bg-indigo-700 transition-all shadow hover:shadow-md active:scale-95"
+            className="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-7 py-3.5 rounded-full font-medium hover:bg-indigo-700 transition-all shadow hover:shadow-md active:scale-95"
           >
-            <Download className="w-4 h-4" />
-            Download Share Card (9:16)
+            <Share2 className="w-4 h-4" />
+            Share / Download Card (9:16)
           </button>
         </div>
 

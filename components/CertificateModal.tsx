@@ -1,9 +1,30 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X, Download, FileText, Image as ImageIcon, CheckCircle, Sparkles, User as UserIcon, Smartphone } from 'lucide-react';
+import {
+  X,
+  Download,
+  FileText,
+  CheckCircle,
+  Sparkles,
+  User as UserIcon,
+  Smartphone,
+  Share2,
+  MessageCircle,
+  Instagram,
+  Linkedin,
+  Twitter,
+  Copy,
+  Check,
+  ExternalLink,
+} from 'lucide-react';
 import { Category } from '@/lib/assessmentData';
-import { drawCertificate, downloadCertificatePdf, downloadCertificatePng } from '@/lib/certificate';
+import {
+  drawCertificate,
+  downloadCertificatePdf,
+  downloadCertificatePng,
+  getCertificateFile,
+} from '@/lib/certificate';
 import { useAuth } from './AuthProvider';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp, query, where, getDocs } from 'firebase/firestore';
@@ -37,7 +58,7 @@ export default function CertificateModal({
       const prefix = initialEmail.split('@')[0];
       return prefix
         .split(/[._-]/)
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
         .join(' ');
     }
     return '';
@@ -46,7 +67,16 @@ export default function CertificateModal({
   const [recipientName, setRecipientName] = useState(getDefaultName());
   const [isDownloadingPdf, setIsDownloadingPdf] = useState(false);
   const [isDownloadingPng, setIsDownloadingPng] = useState(false);
+  const [isSharing, setIsSharing] = useState(false);
+  const [copiedLink, setCopiedLink] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState<string | null>(null);
+
+  // Share URL & formatted summary text
+  const shareUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/assessment/result?a=${rawAnswers || ''}`
+    : `https://jnachi.com/assessment/result?a=${rawAnswers || ''}`;
+
+  const shareText = `I just scored ${overallScore}/100 (${overallLevel}) on the Jnachi AI Skills Assessment! Measure your AI momentum:`;
 
   // Deterministic certificate / card ID based on answers hash
   const [certificateId] = useState(() => {
@@ -111,15 +141,18 @@ export default function CertificateModal({
 
   if (!isOpen) return null;
 
+  const showStatus = (msg: string) => {
+    setDownloadSuccess(msg);
+    setTimeout(() => setDownloadSuccess(null), 5000);
+  };
+
   const handleDownloadPng = () => {
     if (!canvasRef.current) return;
     setIsDownloadingPng(true);
-    setDownloadSuccess(null);
     try {
       const sanitizedName = recipientName.trim().replace(/[^a-zA-Z0-9]/g, '_') || 'Jnachi_Result';
       downloadCertificatePng(canvasRef.current, `Jnachi_Score_${sanitizedName}_9x16.png`);
-      setDownloadSuccess('9:16 Share Card downloaded! Ready for WhatsApp, Instagram, or LinkedIn.');
-      setTimeout(() => setDownloadSuccess(null), 4000);
+      showStatus('9:16 Share Card downloaded! Ready for WhatsApp, Instagram, or LinkedIn.');
     } catch (err) {
       console.error('Error generating image:', err);
     } finally {
@@ -130,12 +163,10 @@ export default function CertificateModal({
   const handleDownloadPdf = () => {
     if (!canvasRef.current) return;
     setIsDownloadingPdf(true);
-    setDownloadSuccess(null);
     try {
       const sanitizedName = recipientName.trim().replace(/[^a-zA-Z0-9]/g, '_') || 'Jnachi_Result';
       downloadCertificatePdf(canvasRef.current, `Jnachi_Result_${sanitizedName}.pdf`);
-      setDownloadSuccess('PDF downloaded successfully!');
-      setTimeout(() => setDownloadSuccess(null), 4000);
+      showStatus('PDF downloaded successfully!');
     } catch (err) {
       console.error('Error generating PDF:', err);
     } finally {
@@ -143,9 +174,138 @@ export default function CertificateModal({
     }
   };
 
+  // Direct WhatsApp Share Handler
+  const handleWhatsAppShare = async () => {
+    if (!canvasRef.current) return;
+    setIsSharing(true);
+    try {
+      const sanitizedName = recipientName.trim().replace(/[^a-zA-Z0-9]/g, '_') || 'Jnachi_Result';
+      const filename = `Jnachi_Score_${sanitizedName}_9x16.png`;
+      const file = await getCertificateFile(canvasRef.current, filename);
+      const isMobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      // On mobile devices, native share sheet opens WhatsApp directly with the image file attached
+      if (isMobile && navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: `Jnachi AI Momentum: ${overallScore}`,
+            text: `${shareText}\n${shareUrl}`,
+          });
+          showStatus('Opened share sheet! Select WhatsApp to send to chat or status.');
+          return;
+        } catch (err: unknown) {
+          if (err instanceof Error && err.name === 'AbortError') return;
+        }
+      }
+
+      // Web/Desktop fallback: download image so user can attach, and open WhatsApp with link
+      downloadCertificatePng(canvasRef.current, filename);
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(`${shareText}\n${shareUrl}`)}`;
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+      showStatus('WhatsApp opened! 9:16 card image also downloaded to attach.');
+    } catch (err) {
+      console.error('Error sharing to WhatsApp:', err);
+    } finally {
+      setIsSharing(false);
+    }
+  };
+
+  // Direct Instagram Stories / Feed Handler
+  const handleInstagramShare = async () => {
+    if (!canvasRef.current) return;
+    setIsSharing(true);
+    try {
+      const sanitizedName = recipientName.trim().replace(/[^a-zA-Z0-9]/g, '_') || 'Jnachi_Result';
+      const filename = `Jnachi_Score_${sanitizedName}_9x16.png`;
+      const file = await getCertificateFile(canvasRef.current, filename);
+      const isMobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      // If mobile supports sharing files directly, native share sheet triggers Instagram Stories/Feed
+      if (isMobile && navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await navigator.share({
+            files: [file],
+            title: `Jnachi AI Score: ${overallScore}`,
+            text: `${shareText}\n${shareUrl}`,
+          });
+          showStatus('Opened share sheet! Select Instagram Stories or Feed.');
+          return;
+        } catch (err: unknown) {
+          if (err instanceof Error && err.name === 'AbortError') return;
+        }
+      }
+
+      // Fallback: download card image & copy caption
+      downloadCertificatePng(canvasRef.current, filename);
+      if (navigator.clipboard) {
+        await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+      }
+      showStatus('9:16 Card saved to photos & caption copied! Open Instagram to share to Story or Feed.');
+      setTimeout(() => {
+        window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
+      }, 1200);
+    } catch (err) {
+      console.error('Error sharing to Instagram:', err);
+    } finally {
+      setIsSharing(false);
+    }
+  };
+
+  // Native Device Share (More Apps) Handler
+  const handleNativeShare = async () => {
+    if (!canvasRef.current) return;
+    setIsSharing(true);
+    try {
+      const sanitizedName = recipientName.trim().replace(/[^a-zA-Z0-9]/g, '_') || 'Jnachi_Result';
+      const filename = `Jnachi_Score_${sanitizedName}_9x16.png`;
+      const file = await getCertificateFile(canvasRef.current, filename);
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: `Jnachi AI Momentum: ${overallScore} (${overallLevel})`,
+          text: `${shareText}\n${shareUrl}`,
+        });
+        showStatus('Shared successfully via device!');
+        return;
+      } else if (navigator.share) {
+        await navigator.share({
+          title: `Jnachi AI Momentum: ${overallScore} (${overallLevel})`,
+          text: `${shareText}\n${shareUrl}`,
+          url: shareUrl,
+        });
+        showStatus('Link shared via device sheet!');
+        return;
+      } else {
+        // Fallback: copy link
+        await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+        showStatus('Link copied to clipboard!');
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error && err.name !== 'AbortError') {
+        console.warn('Native share error:', err);
+      }
+    } finally {
+      setIsSharing(false);
+    }
+  };
+
+  // Copy Link Handler
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(`${shareText} ${shareUrl}`);
+      setCopiedLink(true);
+      showStatus('Score summary and link copied to clipboard!');
+      setTimeout(() => setCopiedLink(false), 2500);
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-      <div 
+      <div
         className="relative w-full max-w-xl bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden flex flex-col max-h-[94vh]"
         role="dialog"
         aria-modal="true"
@@ -158,7 +318,9 @@ export default function CertificateModal({
             </div>
             <div>
               <h3 className="text-lg font-bold text-slate-900">Share Your Result Card (9:16)</h3>
-              <p className="text-xs text-slate-500">Mobile screenshot ready for WhatsApp, Stories, or LinkedIn</p>
+              <p className="text-xs text-slate-500">
+                Directly share to WhatsApp, Instagram Stories, LinkedIn, or any app
+              </p>
             </div>
           </div>
           <button
@@ -186,6 +348,81 @@ export default function CertificateModal({
               className="flex-1 px-3.5 py-2 bg-white border border-slate-300 rounded-xl text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm"
               maxLength={36}
             />
+          </div>
+
+          {/* Quick Direct Social Sharing Bar */}
+          <div className="bg-gradient-to-r from-indigo-50/60 to-purple-50/60 border border-indigo-100/80 rounded-2xl p-4">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-3">
+              Direct Social Share:
+            </span>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {/* WhatsApp */}
+              <button
+                onClick={handleWhatsAppShare}
+                disabled={isSharing}
+                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#25D366] text-white font-semibold text-xs hover:bg-[#20bd5a] transition-all shadow-sm active:scale-95 disabled:opacity-50"
+                title="Share card to WhatsApp"
+              >
+                <MessageCircle className="w-4 h-4 fill-white" />
+                <span>WhatsApp</span>
+              </button>
+
+              {/* Instagram */}
+              <button
+                onClick={handleInstagramShare}
+                disabled={isSharing}
+                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-gradient-to-r from-[#f09433] via-[#dc2743] to-[#bc1888] text-white font-semibold text-xs hover:opacity-95 transition-all shadow-sm active:scale-95 disabled:opacity-50"
+                title="Share to Instagram Stories"
+              >
+                <Instagram className="w-4 h-4" />
+                <span>Instagram</span>
+              </button>
+
+              {/* Native Device Share / More Apps */}
+              <button
+                onClick={handleNativeShare}
+                disabled={isSharing}
+                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold text-xs hover:bg-indigo-700 transition-all shadow-sm active:scale-95 disabled:opacity-50"
+                title="Open device share menu"
+              >
+                <Share2 className="w-4 h-4" />
+                <span>More Apps</span>
+              </button>
+
+              {/* Copy Link */}
+              <button
+                onClick={handleCopyLink}
+                className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 font-semibold text-xs hover:bg-slate-50 transition-all shadow-sm active:scale-95"
+                title="Copy result link and score"
+              >
+                {copiedLink ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                <span>{copiedLink ? 'Copied!' : 'Copy Link'}</span>
+              </button>
+            </div>
+
+            {/* Quick Web Links for LinkedIn & Twitter */}
+            <div className="flex items-center justify-between mt-3 pt-3 border-t border-indigo-100/60 text-xs text-slate-500">
+              <span>Also share on web:</span>
+              <div className="flex items-center gap-3">
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-[#0A66C2] font-semibold hover:underline"
+                >
+                  <Linkedin className="w-3.5 h-3.5 fill-current" /> LinkedIn
+                </a>
+                <span>•</span>
+                <a
+                  href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-slate-800 font-semibold hover:underline"
+                >
+                  <Twitter className="w-3.5 h-3.5 fill-current" /> Twitter/X
+                </a>
+              </div>
+            </div>
           </div>
 
           {/* Mobile Screenshot Phone Frame Preview */}
@@ -240,3 +477,4 @@ export default function CertificateModal({
     </div>
   );
 }
+
