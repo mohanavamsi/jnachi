@@ -5,30 +5,96 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center w-full">
       {/* Hero Section */}
-      <section className="w-full bg-slate-50 py-24 md:py-32 flex flex-col items-center justify-center text-center px-4 relative overflow-hidden">
-        {/* Subtle background decoration */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-indigo-50 rounded-full blur-3xl opacity-50 -z-10 pointer-events-none"></div>
-        
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 max-w-4xl mb-6">
-          Know it. Use it. Prove it.
-        </h1>
-        <p className="text-xl md:text-2xl text-slate-600 max-w-2xl mb-10 leading-relaxed">
-          Get a precise reading of how activated your AI knowledge is. Not a grade—a measure of your momentum.
-        </p>
-        <div className="flex flex-col sm:flex-row items-center gap-4">
-          <Link 
-            href="/assessment" 
-            className="group inline-flex items-center gap-3 bg-indigo-600 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-indigo-700 transition-all shadow-lg hover:shadow-indigo-200 hover:-translate-y-0.5"
-          >
-            Start Assessment
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <Link 
-            href="/lessons" 
-            className="inline-flex items-center gap-2 bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-full text-lg font-medium hover:bg-slate-50 transition-all shadow-sm hover:-translate-y-0.5"
-          >
-            Explore 17 Lessons
-          </Link>
+      <section className="w-full bg-slate-50 py-16 md:py-24 px-4 relative overflow-hidden border-b border-slate-200/60">
+        {/* Background decorative brand mark */}
+        <div
+          aria-hidden="true"
+          className="absolute top-0 right-0 -translate-y-12 translate-x-16 sm:translate-x-24 md:translate-x-32 w-[380px] sm:w-[500px] md:w-[620px] h-[380px] sm:h-[500px] md:h-[620px] pointer-events-none opacity-45 z-0 text-indigo-200"
+        >
+          <svg viewBox="0 0 100 100" fill="none" className="w-full h-full">
+            <circle cx="50" cy="50" r="44" stroke="currentColor" strokeWidth="3" />
+            <circle cx="50" cy="50" r="36" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" opacity="0.7" />
+            <circle cx="50" cy="50" r="6" fill="currentColor" />
+          </svg>
+        </div>
+
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 lg:gap-16 items-center">
+            {/* Left Column: Text & Actions */}
+            <div className="md:col-span-7 flex flex-col items-start text-left">
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-indigo-600 mb-3 block">
+                Know it. Use it. Prove it.
+              </span>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.12] mb-6">
+                Get a precise reading of your AI momentum
+              </h1>
+              <p className="text-lg sm:text-xl text-slate-600 mb-8 max-w-xl leading-relaxed">
+                Not a grade. A measure of how activated your AI knowledge is right now.
+              </p>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
+                <Link
+                  href="/assessment"
+                  className="inline-flex items-center justify-center gap-2.5 bg-indigo-600 text-white px-8 py-4 rounded-full text-base font-medium hover:bg-indigo-700 transition-colors"
+                >
+                  <span>Start assessment</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  href="/lessons"
+                  className="inline-flex items-center justify-center bg-white text-slate-700 border border-slate-300 px-8 py-4 rounded-full text-base font-medium hover:bg-slate-50 transition-colors"
+                >
+                  Explore 17 lessons
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Column: Tilted Preview Card */}
+            <div className="md:col-span-5 flex justify-center md:justify-end w-full">
+              <div className="w-full max-w-sm bg-white border-2 border-slate-200 rounded-3xl p-8 flex flex-col items-center text-center transform rotate-0 md:-rotate-3 transition-transform">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-6">
+                  Jnachi score
+                </span>
+
+                {/* Circular Progress Ring (SVG) */}
+                <div className="relative w-48 h-48 flex items-center justify-center">
+                  <svg className="w-full h-full -rotate-90" viewBox="0 0 160 160">
+                    <circle
+                      cx="80"
+                      cy="80"
+                      r="66"
+                      fill="none"
+                      stroke="#f1f5f9"
+                      strokeWidth="12"
+                    />
+                    <circle
+                      cx="80"
+                      cy="80"
+                      r="66"
+                      fill="none"
+                      stroke="#4f46e5"
+                      strokeWidth="12"
+                      strokeLinecap="round"
+                      strokeDasharray="414.69"
+                      strokeDashoffset="178.32"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-5xl font-black text-slate-900 tracking-tight leading-none">
+                      57
+                    </span>
+                    <span className="text-xs font-medium text-slate-500 uppercase tracking-wider mt-1.5">
+                      out of 100
+                    </span>
+                  </div>
+                </div>
+
+                {/* Level Label in Accent Color */}
+                <div className="mt-6 inline-flex items-center px-4 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 font-bold text-sm">
+                  Level 3: Builder
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
