@@ -1,15 +1,37 @@
 'use client';
 
-import { Suspense, useMemo } from 'react';
+import { Suspense, useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { RefreshCw, Download, Share2, Linkedin, Twitter, Facebook, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
 import { calculateScores, getFindings, Category, CATEGORY_LABELS } from '@/lib/assessmentData';
+import CertificateModal from '@/components/CertificateModal';
 
 function ResultContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const rawAnswers = searchParams.get('a');
-  
+  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [isCertModalOpen, setIsCertModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const verifiedEmail = sessionStorage.getItem('jnachi_assessed_email');
+      if (!verifiedEmail) {
+        // Redirect back to assessment email gate with preserved answers
+        if (rawAnswers) {
+          router.replace(`/assessment?a=${rawAnswers}&gate=true`);
+        } else {
+          router.replace('/assessment');
+        }
+      } else {
+        setUserEmail(verifiedEmail);
+        setIsAuthorized(true);
+      }
+    }
+  }, [rawAnswers, router]);
+
   const { scores, findings } = useMemo(() => {
     // Default answers if none provided (all 0s)
     const answers = rawAnswers ? rawAnswers.split(',').map(n => parseInt(n, 10)) : new Array(9).fill(0);
@@ -23,6 +45,14 @@ function ResultContent() {
   
   const shareUrl = encodeURIComponent(typeof window !== 'undefined' ? window.location.origin : 'https://jnachi.com');
   const shareText = encodeURIComponent(`I just scored an ${overallScore} (${overallLevel}) on my Jnachi assessment! Check your AI momentum at Jnachi.`);
+
+  if (!isAuthorized) {
+    return (
+      <div className="flex-1 flex items-center justify-center min-h-[calc(100vh-16rem)]">
+        <div className="w-8 h-8 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center w-full py-12 px-4 bg-slate-50 min-h-[calc(100vh-16rem)]">
@@ -217,11 +247,25 @@ function ResultContent() {
             <RefreshCw className="w-4 h-4" />
             Retake Assessment
           </Link>
-          <button className="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-full font-medium hover:bg-indigo-700 transition-colors shadow">
+          <button 
+            onClick={() => setIsCertModalOpen(true)}
+            className="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-full font-medium hover:bg-indigo-700 transition-all shadow hover:shadow-md active:scale-95"
+          >
             <Download className="w-4 h-4" />
-            Download Certificate
+            Download Share Card (9:16)
           </button>
         </div>
+
+        {/* Certificate Preview & Download Modal */}
+        <CertificateModal
+          isOpen={isCertModalOpen}
+          onClose={() => setIsCertModalOpen(false)}
+          overallScore={overallScore}
+          overallLevel={overallLevel}
+          subScores={subScores}
+          initialEmail={userEmail}
+          rawAnswers={rawAnswers}
+        />
       </div>
     </div>
   );

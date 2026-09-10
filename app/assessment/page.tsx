@@ -1,15 +1,16 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowRight, ArrowLeft, Sparkles, Mail } from 'lucide-react';
 import { useAuth } from '@/components/AuthProvider';
-import { db, OperationType, handleFirestoreError } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { QUESTIONS, calculateScores } from '@/lib/assessmentData';
 
-export default function AssessmentPage() {
+function AssessmentContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { user } = useAuth();
   
   const [currentStep, setCurrentStep] = useState(0);
@@ -18,6 +19,20 @@ export default function AssessmentPage() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Restore state if redirected back from results page due to missing email authorization
+  useEffect(() => {
+    const isGate = searchParams.get('gate') === 'true';
+    const rawAnswers = searchParams.get('a');
+    if (isGate && rawAnswers) {
+      const parsed = rawAnswers.split(',').map(n => parseInt(n, 10));
+      if (parsed.length === QUESTIONS.length && parsed.every(n => !isNaN(n))) {
+        setAnswers(parsed);
+        setCurrentStep(QUESTIONS.length - 1);
+        setShowEmailGate(true);
+      }
+    }
+  }, [searchParams]);
 
   const handleSelect = (optionIndex: number) => {
     if (isTransitioning) return;
@@ -85,6 +100,11 @@ export default function AssessmentPage() {
     } catch (error) {
       console.error("Error saving assessment results:", error);
       // Non-blocking error since this is an anonymous gate primarily
+    }
+
+    // Save session state to authorize viewing results
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('jnachi_assessed_email', email);
     }
 
     // Redirect to results with the answers encoded in the URL
@@ -198,5 +218,13 @@ export default function AssessmentPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AssessmentPage() {
+  return (
+    <Suspense fallback={<div className="flex-1 flex items-center justify-center min-h-[calc(100vh-16rem)]"><div className="w-8 h-8 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div></div>}>
+      <AssessmentContent />
+    </Suspense>
   );
 }
