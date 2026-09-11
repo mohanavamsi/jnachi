@@ -218,6 +218,39 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Formal Credential: Jnachi Beginner Certification Callout */}
+      <section className="w-full py-16 bg-slate-900 text-white px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
+            <div className="space-y-4 max-w-2xl text-center lg:text-left">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                Formal Credential
+              </span>
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
+                Earn the Jnachi Beginner Certification
+              </h2>
+              <p className="text-slate-300 text-base leading-relaxed">
+                Ready for a rigorous, formal benchmark? Take the 100-question comprehensive exam spanning AI Literacy, Workflow Automation, Data Privacy, and Growth with an 80% passing standard.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0">
+              <Link
+                href="/certification"
+                className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white text-base font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition-all text-center"
+              >
+                Begin Certification Exam
+              </Link>
+              <Link
+                href="/assessment"
+                className="w-full sm:w-auto px-6 py-4 bg-slate-800 hover:bg-slate-700 text-slate-200 text-base font-semibold rounded-2xl border border-slate-700 transition-colors text-center"
+              >
+                Quick Diagnostic (3 min)
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="w-full bg-indigo-900 py-24 px-4 text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to see your energy shift?</h2>

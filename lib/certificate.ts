@@ -429,3 +429,294 @@ export function downloadCertificatePdf(canvas: HTMLCanvasElement, filename = 'Jn
   pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
   pdf.save(filename);
 }
+
+export interface BeginnerCertData {
+  recipientName: string;
+  location?: string;
+  company?: string;
+  overallScore: number; // 0-40
+  overallPercentage: number;
+  sectionScores: {
+    literacy: { correct: number; total: number; percentage: number };
+    automation: { correct: number; total: number; percentage: number };
+    privacy: { correct: number; total: number; percentage: number };
+    growth: { correct: number; total: number; percentage: number };
+  };
+  issuedDate: string;
+  certificateId: string;
+}
+
+/**
+ * Draws the official landscape diploma for Jnachi Beginner Certification.
+ * Dimensions: 1920 x 1080 (16:9 full HD official credential diploma format).
+ */
+export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: BeginnerCertData) {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const width = 1920;
+  const height = 1080;
+  canvas.width = width;
+  canvas.height = height;
+
+  // Background - pristine warm ivory parchment with subtle gradient
+  const bgGrad = ctx.createLinearGradient(0, 0, width, height);
+  bgGrad.addColorStop(0, '#fafaf9');
+  bgGrad.addColorStop(0.5, '#f5f5f4');
+  bgGrad.addColorStop(1, '#eef2ff');
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, width, height);
+
+  // Outer decorative border frame
+  const margin = 48;
+  ctx.strokeStyle = '#312e81'; // Indigo 900
+  ctx.lineWidth = 4;
+  ctx.strokeRect(margin, margin, width - margin * 2, height - margin * 2);
+
+  // Inner subtle gold border
+  const innerMargin = margin + 14;
+  ctx.strokeStyle = '#d97706'; // Amber 600
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(innerMargin, innerMargin, width - innerMargin * 2, height - innerMargin * 2);
+
+  // Corner ornaments
+  const cornerSize = 36;
+  const corners = [
+    { x: innerMargin, y: innerMargin },
+    { x: width - innerMargin, y: innerMargin },
+    { x: innerMargin, y: height - innerMargin },
+    { x: width - innerMargin, y: height - innerMargin },
+  ];
+  corners.forEach((c) => {
+    ctx.fillStyle = '#b45309';
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, 6, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // Header Jnachi Emblem
+  const centerX = width / 2;
+  const logoY = 120;
+  const logoR = 28;
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(centerX, logoY, logoR, 0.4, Math.PI * 1.95, false);
+  ctx.strokeStyle = '#4338ca';
+  ctx.lineWidth = 6;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(centerX, logoY, logoR - 10, Math.PI * 0.9, Math.PI * 2.4, false);
+  ctx.strokeStyle = '#f59e0b';
+  ctx.lineWidth = 4;
+  ctx.lineCap = 'round';
+  ctx.stroke();
+  ctx.restore();
+
+  // Top Title
+  ctx.fillStyle = '#4338ca';
+  ctx.font = '600 16px "Plus Jakarta Sans", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('JNACHI EXECUTIVE LEARNING & CERTIFICATION COUNCIL', centerX, 185);
+
+  // Main Heading: CERTIFICATE OF ACHIEVEMENT
+  ctx.fillStyle = '#1e1b4b';
+  ctx.font = '700 48px Georgia, serif';
+  ctx.fillText('Certificate of Achievement', centerX, 245);
+
+  // Subtitle
+  ctx.fillStyle = '#64748b';
+  ctx.font = '400 18px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('THIS IS TO OFFICIALLY CERTIFY THAT', centerX, 290);
+
+  // Recipient Name
+  ctx.fillStyle = '#1e293b';
+  ctx.font = '700 46px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText(data.recipientName || 'Candidate', centerX, 355);
+
+  // Optional Organization / Location line
+  const metaLine = [data.company, data.location].filter(Boolean).join(' • ');
+  if (metaLine) {
+    ctx.fillStyle = '#64748b';
+    ctx.font = '500 16px "Plus Jakarta Sans", sans-serif';
+    ctx.fillText(metaLine, centerX, 385);
+  }
+
+  // Underline for name
+  ctx.strokeStyle = '#cbd5e1';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(centerX - 320, 400);
+  ctx.lineTo(centerX + 320, 400);
+  ctx.stroke();
+
+  // Achievement description text
+  ctx.fillStyle = '#334155';
+  ctx.font = '400 20px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText(
+    'has satisfied all foundational competency criteria across 40 comprehensive examination evaluations (80%+ passing standard)',
+    centerX,
+    440
+  );
+  ctx.fillText('and is hereby conferred the official credential:', centerX, 470);
+
+  // Official Credential Badge Box
+  const badgeWidth = 620;
+  const badgeHeight = 76;
+  const badgeX = centerX - badgeWidth / 2;
+  const badgeY = 505;
+
+  ctx.fillStyle = '#1e1b4b';
+  roundRect(ctx, badgeX, badgeY, badgeWidth, badgeHeight, 14, true, false);
+
+  ctx.strokeStyle = '#f59e0b';
+  ctx.lineWidth = 2;
+  roundRect(ctx, badgeX + 4, badgeY + 4, badgeWidth - 8, badgeHeight - 8, 10, false, true);
+
+  ctx.fillStyle = '#fbbf24';
+  ctx.font = '800 28px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('JNACHI BEGINNER CERTIFIED', centerX, badgeY + 47);
+
+  // 4 Section Competency Cards
+  const cardW = 280;
+  const cardH = 110;
+  const cardGap = 24;
+  const startX = centerX - (cardW * 4 + cardGap * 3) / 2;
+  const cardY = 635;
+
+  const sections = [
+    { title: 'AI Literacy & Prompting', data: data.sectionScores.literacy, color: '#4f46e5' },
+    { title: 'Workflow Automation', data: data.sectionScores.automation, color: '#059669' },
+    { title: 'Data Privacy & Ethics', data: data.sectionScores.privacy, color: '#0284c7' },
+    { title: 'Growth & Problem Solving', data: data.sectionScores.growth, color: '#7c3aed' },
+  ];
+
+  sections.forEach((sec, idx) => {
+    const x = startX + idx * (cardW + cardGap);
+    ctx.fillStyle = '#ffffff';
+    roundRect(ctx, x, cardY, cardW, cardH, 12, true, false);
+
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 1;
+    roundRect(ctx, x, cardY, cardW, cardH, 12, false, true);
+
+    // Color top bar
+    ctx.fillStyle = sec.color;
+    ctx.fillRect(x + 12, cardY, cardW - 24, 4);
+
+    // Section title
+    ctx.fillStyle = '#475569';
+    ctx.font = '600 13px "Plus Jakarta Sans", sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(sec.title, x + 16, cardY + 36);
+
+    // Score & Percentage
+    ctx.fillStyle = '#0f172a';
+    ctx.font = '700 24px "Plus Jakarta Sans", sans-serif';
+    ctx.fillText(`${sec.data.correct} / ${sec.data.total}`, x + 16, cardY + 74);
+
+    ctx.fillStyle = sec.color;
+    ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(`${sec.data.percentage}%`, x + cardW - 16, cardY + 74);
+  });
+
+  // Overall Score & Seal bar (y: 790 - 860)
+  ctx.fillStyle = '#0f172a';
+  ctx.font = '700 20px "Plus Jakarta Sans", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(
+    `Overall Examination Grade: ${data.overallScore}/100 (${data.overallPercentage}%)  •  Passing Standard: 80%`,
+    centerX,
+    810
+  );
+
+  // Footer Signoff & Verification Metadata (y: 880 - 1000)
+  const footerY = 930;
+
+  // Left: Verification ID
+  ctx.textAlign = 'left';
+  ctx.fillStyle = '#64748b';
+  ctx.font = '500 14px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('VERIFICATION ID', margin + 60, footerY);
+
+  ctx.fillStyle = '#0f172a';
+  ctx.font = '700 18px monospace';
+  ctx.fillText(data.certificateId, margin + 60, footerY + 28);
+
+  ctx.fillStyle = '#64748b';
+  ctx.font = '400 13px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('Verify online at jnachi.com', margin + 60, footerY + 50);
+
+  // Center: Official Gold Seal
+  const sealR = 44;
+  const sealX = centerX;
+  const sealY = footerY + 10;
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(sealX, sealY, sealR, 0, Math.PI * 2);
+  ctx.fillStyle = '#fef3c7';
+  ctx.fill();
+  ctx.strokeStyle = '#d97706';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  // Inner star ring
+  ctx.beginPath();
+  ctx.arc(sealX, sealY, sealR - 8, 0, Math.PI * 2);
+  ctx.strokeStyle = '#b45309';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  ctx.fillStyle = '#b45309';
+  ctx.font = '700 12px "Plus Jakarta Sans", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('VERIFIED', sealX, sealY - 6);
+  ctx.fillText('PASS', sealX, sealY + 12);
+  ctx.restore();
+
+  // Right: Date & Authority
+  ctx.textAlign = 'right';
+  ctx.fillStyle = '#64748b';
+  ctx.font = '500 14px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('CONFERRED DATE', width - margin - 60, footerY);
+
+  ctx.fillStyle = '#0f172a';
+  ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText(data.issuedDate, width - margin - 60, footerY + 28);
+
+  ctx.fillStyle = '#64748b';
+  ctx.font = '400 13px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('Jnachi Certification Authority', width - margin - 60, footerY + 50);
+}
+
+/**
+ * Downloads a crisp landscape Diploma PNG.
+ */
+export function downloadBeginnerCertificatePng(canvas: HTMLCanvasElement, filename = 'Jnachi-Beginner-Certificate.png') {
+  const link = document.createElement('a');
+  link.download = filename;
+  link.href = canvas.toDataURL('image/png', 1.0);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+/**
+ * Downloads a crisp landscape Diploma PDF.
+ */
+export function downloadBeginnerCertificatePdf(canvas: HTMLCanvasElement, filename = 'Jnachi-Beginner-Certificate.pdf') {
+  const pdf = new jsPDF({
+    orientation: 'landscape',
+    unit: 'pt',
+    format: [842, 595], // A4 Landscape approx in pt (1.414 ratio)
+  });
+
+  const imgData = canvas.toDataURL('image/png', 1.0);
+  pdf.addImage(imgData, 'PNG', 0, 0, 842, 595, undefined, 'FAST');
+  pdf.save(filename);
+}
+

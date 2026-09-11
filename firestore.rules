@@ -29,6 +29,8 @@ service cloud.firestore {
       return data.keys().hasAll(['email', 'createdAt', 'updatedAt'])
         && data.email is string && data.email.size() <= 200
         && (!("displayName" in data) || (data.displayName is string && data.displayName.size() <= 100))
+        && (!("location" in data) || (data.location is string && data.location.size() <= 200))
+        && (!("company" in data) || (data.company is string && data.company.size() <= 200))
         && data.createdAt is timestamp
         && data.updatedAt is timestamp;
     }
@@ -38,7 +40,7 @@ service cloud.firestore {
       allow create: if isOwner(userId)
         && isValidId(userId)
         && isValidUser(incoming())
-        && incoming().keys().size() <= 4
+        && incoming().keys().size() <= 6
         && incoming().createdAt == request.time
         && incoming().updatedAt == request.time;
       allow update: if isOwner(userId)
@@ -46,7 +48,7 @@ service cloud.firestore {
         && isValidUser(incoming())
         && incoming().createdAt == existing().createdAt
         && incoming().updatedAt == request.time
-        && incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'updatedAt']);
+        && incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'location', 'company', 'updatedAt']);
     }
 
     function isValidScore(data) {
@@ -104,6 +106,18 @@ service cloud.firestore {
       allow create: if isValidLead(incoming())
         && incoming().keys().size() <= 6
         && incoming().createdAt == request.time;
+    }
+
+    match /cert_profiles/{profileId} {
+      allow get: if profileId is string && profileId.size() <= 128;
+      allow list: if false;
+      allow create, update: if profileId is string && profileId.size() <= 128;
+    }
+
+    match /cert_attempts/{attemptId} {
+      allow get: if attemptId is string && attemptId.size() <= 128;
+      allow list: if false;
+      allow create, update: if attemptId is string && attemptId.size() <= 128;
     }
   }
 }

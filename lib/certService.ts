@@ -1,0 +1,457 @@
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getFirestore, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import crypto from 'crypto';
+import firebaseConfig from '../firebase-applet-config.json';
+import {
+  drawExamQuestions,
+  stripAnswersForClient,
+  gradeExam,
+  ClientCertQuestion,
+  ExamGradingResult,
+} from './certQuestionBank';
+
+// Initialize Firebase App for server-side operations
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+
+export const COOLDOWN_HOURS = 24;
+export const COOLDOWN_MS = COOLDOWN_HOURS * 60 * 60 * 1000;
+export const MAX_ATTEMPTS = 3;
+export const PASSING_THRESHOLD = 80;
+export const EXAM_DURATION_MINUTES = 45;
+export const EXAM_DURATION_MS = EXAM_DURATION_MINUTES * 60 * 1000; // 45 minutes
+
+export interface CertProfileData {
+  email: string;
+  totalAttempts: number;
+  lastAttemptAt: number;
+  passed: boolean;
+  highestScore?: number;
+  latestCertificateId?: string;
+  recipientName?: string;
+  location?: string;
+  company?: string;
+  usedQuestionIds?: string[];
+}
+
+export interface CertAttemptData {
+  id: string;
+  email: string;
+  recipientName?: string;
+  location?: string;
+  company?: string;
+  attemptNumber: number;
+  status: 'in_progress' | 'completed' | 'abandoned';
+  startedAt: number;
+  completedAt?: number;
+  lastSyncedAt?: number;
+  questionIds: string[];
+  answers?: Record<string, string>;
+  score?: number;
+  percentage?: number;
+  passed?: boolean;
+  certificateId?: string;
+}
+
+export interface CertStatusResponse {
+  email: string;
+  eligible: boolean;
+  totalAttempts: number;
+  attemptsRemaining: number;
+  passed: boolean;
+  latestCertificateId?: string;
+  highestScore?: number;
+  recipientName?: string;
+  location?: string;
+  company?: string;
+  cooldownActive: boolean;
+  timeRemainingMs?: number;
+  nextAvailableAt?: number;
+  isLocked: boolean;
+  message?: string;
+}
+
+export function normalizeEmail(email: string): string {
+  return email.trim().toLowerCase();
+}
+
+export function getProfileId(email: string): string {
+  const norm = normalizeEmail(email);
+  const hash = crypto.createHash('sha256').update(norm).digest('hex').slice(0, 32);
+  return `prof_${hash}`;
+}
+
+export function generateCertId(email: string): string {
+  const seed = email.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const hex = Math.abs((seed * 9301 + 49297) % 233280).toString(16).toUpperCase().padStart(4, '0');
+  const randPart = Math.floor(1000 + Math.random() * 9000);
+  return `JNACHI-CERT-${new Date().getFullYear()}-${hex}-${randPart}`;
+}
+
+/**
+ * Checks exam status, attempt limits, and 24-hour cooldown for an email.
+ */
+export async function getCertStatus(email: string): Promise<CertStatusResponse> {
+  const normEmail = normalizeEmail(email);
+  if (!normEmail || !normEmail.includes('@')) {
+    throw new Error('Please provide a valid email address');
+  }
+
+  const profileId = getProfileId(normEmail);
+  const profileRef = doc(db, 'cert_profiles', profileId);
+  const snap = await getDoc(profileRef);
+
+  if (!snap.exists()) {
+    return {
+      email: normEmail,
+      eligible: true,
+      totalAttempts: 0,
+      attemptsRemaining: MAX_ATTEMPTS,
+      passed: false,
+      cooldownActive: false,
+      isLocked: false,
+    };
+  }
+
+  const profile = snap.data() as CertProfileData;
+  const attemptsRemaining = Math.max(0, MAX_ATTEMPTS - (profile.totalAttempts || 0));
+
+  // If already passed
+  if (profile.passed) {
+    return {
+      email: normEmail,
+      eligible: false,
+      totalAttempts: profile.totalAttempts || 1,
+      attemptsRemaining,
+      passed: true,
+      latestCertificateId: profile.latestCertificateId,
+      highestScore: profile.highestScore,
+      recipientName: profile.recipientName,
+      location: profile.location,
+      company: profile.company,
+      cooldownActive: false,
+      isLocked: false,
+      message: 'You have already earned your Jnachi Beginner Certification!',
+    };
+  }
+
+  // If exhausted all 3 attempts without passing
+  if ((profile.totalAttempts || 0) >= MAX_ATTEMPTS) {
+    return {
+      email: normEmail,
+      eligible: false,
+      totalAttempts: profile.totalAttempts,
+      attemptsRemaining: 0,
+      passed: false,
+      highestScore: profile.highestScore,
+      recipientName: profile.recipientName,
+      location: profile.location,
+      company: profile.company,
+      cooldownActive: false,
+      isLocked: true,
+      message: "You've used all 3 attempts. Contact us if you'd like to discuss a retake.",
+    };
+  }
+
+  // Check 24-hour cooldown from last attempt
+  const lastAttemptAt = profile.lastAttemptAt || 0;
+  const elapsed = Date.now() - lastAttemptAt;
+  if (elapsed < COOLDOWN_MS) {
+    const timeRemainingMs = COOLDOWN_MS - elapsed;
+    const nextAvailableAt = lastAttemptAt + COOLDOWN_MS;
+    return {
+      email: normEmail,
+      eligible: false,
+      totalAttempts: profile.totalAttempts,
+      attemptsRemaining,
+      passed: false,
+      highestScore: profile.highestScore,
+      recipientName: profile.recipientName,
+      location: profile.location,
+      company: profile.company,
+      cooldownActive: true,
+      timeRemainingMs,
+      nextAvailableAt,
+      isLocked: false,
+      message: '24-hour cooldown required between attempts.',
+    };
+  }
+
+  return {
+    email: normEmail,
+    eligible: true,
+    totalAttempts: profile.totalAttempts || 0,
+    attemptsRemaining,
+    passed: false,
+    highestScore: profile.highestScore,
+    recipientName: profile.recipientName,
+    location: profile.location,
+    company: profile.company,
+    cooldownActive: false,
+    isLocked: false,
+  };
+}
+
+/**
+ * Starts a new exam attempt for an email if eligible.
+ * Returns 40 randomly sampled questions (10 per section) stripped of answers.
+ */
+export async function startExamAttempt(
+  email: string,
+  recipientName = '',
+  location = '',
+  company = ''
+): Promise<{
+  attemptId: string;
+  attemptNumber: number;
+  questions: ClientCertQuestion[];
+  startedAt: number;
+  status: CertStatusResponse;
+}> {
+  const status = await getCertStatus(email);
+  if (!status.eligible) {
+    throw new Error(status.message || 'You are not currently eligible to start a new exam attempt.');
+  }
+
+  const normEmail = normalizeEmail(email);
+  const profileId = getProfileId(normEmail);
+  const profileRef = doc(db, 'cert_profiles', profileId);
+  const profileSnap = await getDoc(profileRef);
+  const existingProfile = profileSnap.exists() ? (profileSnap.data() as CertProfileData) : null;
+
+  const usedQuestionIds = existingProfile?.usedQuestionIds || [];
+  // Sample 10 random questions per section (40 total) prioritizing fresh questions
+  const selectedQuestions = drawExamQuestions(usedQuestionIds, 10);
+  const questionIds = selectedQuestions.map((q) => q.id);
+
+  const attemptNumber = (existingProfile?.totalAttempts || 0) + 1;
+  const now = Date.now();
+  const attemptId = `att_${now}_${Math.random().toString(36).slice(2, 8)}`;
+
+  // Save in-progress attempt to Firestore
+  const attemptRef = doc(db, 'cert_attempts', attemptId);
+  try {
+    await setDoc(attemptRef, {
+      email: normEmail,
+      recipientName: (recipientName || existingProfile?.recipientName || '').trim(),
+      location: (location || existingProfile?.location || '').trim(),
+      company: (company || existingProfile?.company || '').trim(),
+      attemptNumber,
+      status: 'in_progress',
+      startedAt: now,
+      lastSyncedAt: now,
+      questionIds,
+    });
+  } catch (err) {
+    console.error('FAILED to setDoc attemptRef:', err);
+    throw err;
+  }
+
+  // Also persist location & company to profile record if provided
+  if (location || company || recipientName) {
+    try {
+      await setDoc(
+        profileRef,
+        {
+          email: normEmail,
+          totalAttempts: existingProfile?.totalAttempts || 0,
+          lastAttemptAt: existingProfile?.lastAttemptAt || now,
+          passed: existingProfile?.passed || false,
+          ...(recipientName ? { recipientName: recipientName.trim() } : {}),
+          ...(location ? { location: location.trim() } : {}),
+          ...(company ? { company: company.trim() } : {}),
+        },
+        { merge: true }
+      );
+    } catch (err) {
+      console.error('FAILED to setDoc profileRef:', err);
+      // Do not let non-critical profile sync failure block exam startup
+    }
+  }
+
+  return {
+    attemptId,
+    attemptNumber,
+    questions: stripAnswersForClient(selectedQuestions),
+    startedAt: now,
+    status,
+  };
+}
+
+/**
+ * Synchronizes in-progress candidate answers to Firestore to ensure zero data loss
+ * during network interruptions or tab refreshes.
+ */
+export async function syncExamProgress(params: {
+  attemptId: string;
+  email: string;
+  answers: Record<string, string>;
+}): Promise<{ success: boolean; lastSyncedAt: number }> {
+  const { attemptId, email, answers } = params;
+  const normEmail = normalizeEmail(email);
+  const attemptRef = doc(db, 'cert_attempts', attemptId);
+  const attemptSnap = await getDoc(attemptRef);
+
+  if (!attemptSnap.exists()) {
+    throw new Error('Exam attempt not found');
+  }
+
+  const attemptData = attemptSnap.data() as CertAttemptData;
+  if (normalizeEmail(attemptData.email) !== normEmail) {
+    throw new Error('Email does not match this exam attempt');
+  }
+
+  if (attemptData.status === 'completed') {
+    return { success: true, lastSyncedAt: attemptData.completedAt || Date.now() };
+  }
+
+  const now = Date.now();
+  await updateDoc(attemptRef, {
+    answers,
+    lastSyncedAt: now,
+  });
+
+  return { success: true, lastSyncedAt: now };
+}
+
+/**
+ * Submits an exam attempt, grades answers server-side, and records completion in Firestore.
+ */
+export async function submitExamAttempt(params: {
+  attemptId: string;
+  email: string;
+  answers: Record<string, string>;
+  recipientName?: string;
+  location?: string;
+  company?: string;
+}): Promise<{
+  attemptId: string;
+  email: string;
+  attemptNumber: number;
+  recipientName: string;
+  location?: string;
+  company?: string;
+  grading: ExamGradingResult;
+  certificateId?: string;
+  attemptsRemaining: number;
+  cooldownNextAvailableAt?: number;
+}> {
+  const { attemptId, email, answers, recipientName = '', location = '', company = '' } = params;
+  const normEmail = normalizeEmail(email);
+
+  const attemptRef = doc(db, 'cert_attempts', attemptId);
+  const attemptSnap = await getDoc(attemptRef);
+
+  if (!attemptSnap.exists()) {
+    throw new Error('Exam attempt not found');
+  }
+
+  const attemptData = attemptSnap.data() as CertAttemptData;
+  if (normalizeEmail(attemptData.email) !== normEmail) {
+    throw new Error('Email does not match this exam attempt');
+  }
+
+  if (attemptData.status === 'completed') {
+    const profileId = getProfileId(normEmail);
+    const profileSnap = await getDoc(doc(db, 'cert_profiles', profileId));
+    const prevProfile = profileSnap.exists() ? (profileSnap.data() as CertProfileData) : null;
+    const attemptsRemaining = Math.max(0, MAX_ATTEMPTS - (prevProfile?.totalAttempts || attemptData.attemptNumber));
+
+    // Regrade deterministically from stored answers
+    const grading = gradeExam(attemptData.questionIds, attemptData.answers || {});
+
+    return {
+      attemptId,
+      email: normEmail,
+      attemptNumber: attemptData.attemptNumber,
+      recipientName: attemptData.recipientName || '',
+      location: attemptData.location || undefined,
+      company: attemptData.company || undefined,
+      grading,
+      certificateId: attemptData.certificateId || undefined,
+      attemptsRemaining,
+      cooldownNextAvailableAt: (attemptData.completedAt || Date.now()) + COOLDOWN_MS,
+    };
+  }
+
+  // Grade the 40 questions against the server question bank
+  const grading = gradeExam(attemptData.questionIds, answers);
+  const now = Date.now();
+
+  let certificateId: string | undefined = undefined;
+  if (grading.passed) {
+    certificateId = generateCertId(normEmail);
+  }
+
+  const finalName = (recipientName || attemptData.recipientName || normEmail.split('@')[0]).trim();
+  const finalLocation = (location || attemptData.location || '').trim();
+  const finalCompany = (company || attemptData.company || '').trim();
+
+  // Update attempt record
+  await updateDoc(attemptRef, {
+    status: 'completed',
+    completedAt: now,
+    lastSyncedAt: now,
+    answers,
+    score: grading.overallScore,
+    percentage: grading.overallPercentage,
+    passed: grading.passed,
+    certificateId: certificateId || null,
+    recipientName: finalName,
+    location: finalLocation || null,
+    company: finalCompany || null,
+    sectionScores: grading.sectionScores,
+  });
+
+  // Update or create user profile record in Firestore
+  const profileId = getProfileId(normEmail);
+  const profileRef = doc(db, 'cert_profiles', profileId);
+  const profileSnap = await getDoc(profileRef);
+  const prevProfile = profileSnap.exists() ? (profileSnap.data() as CertProfileData) : null;
+
+  const totalAttempts = (prevProfile?.totalAttempts || 0) + 1;
+  const passedSoFar = (prevProfile?.passed || false) || grading.passed;
+  const highestScore = Math.max(prevProfile?.highestScore || 0, grading.overallScore);
+  const latestCertificateId = certificateId || prevProfile?.latestCertificateId || null;
+  const combinedQuestionIds = Array.from(
+    new Set([...(prevProfile?.usedQuestionIds || []), ...attemptData.questionIds])
+  );
+
+  const profileUpdate: Partial<CertProfileData> = {
+    email: normEmail,
+    totalAttempts,
+    lastAttemptAt: now,
+    passed: passedSoFar,
+    highestScore,
+    recipientName: finalName,
+    usedQuestionIds: combinedQuestionIds,
+  };
+
+  if (latestCertificateId) {
+    profileUpdate.latestCertificateId = latestCertificateId;
+  }
+  if (finalLocation || prevProfile?.location) {
+    profileUpdate.location = finalLocation || prevProfile?.location;
+  }
+  if (finalCompany || prevProfile?.company) {
+    profileUpdate.company = finalCompany || prevProfile?.company;
+  }
+
+  await setDoc(profileRef, profileUpdate, { merge: true });
+
+  const attemptsRemaining = Math.max(0, MAX_ATTEMPTS - totalAttempts);
+  const cooldownNextAvailableAt = now + COOLDOWN_MS;
+
+  return {
+    attemptId,
+    email: normEmail,
+    attemptNumber: attemptData.attemptNumber,
+    recipientName: finalName,
+    location: finalLocation,
+    company: finalCompany,
+    grading,
+    certificateId,
+    attemptsRemaining,
+    cooldownNextAvailableAt,
+  };
+}
