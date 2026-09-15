@@ -36,6 +36,7 @@ import {
   TrendingUp,
   Layers,
   Key,
+  ShieldAlert,
 } from 'lucide-react';
 import {
   CertSection,
@@ -138,6 +139,21 @@ export default function CertificationClient() {
   const [networkErrorModal, setNetworkErrorModal] = useState<boolean>(false);
   const syncTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Phase 1: Security & Anti-Copy Protection State
+  const [securityToast, setSecurityToast] = useState<string | null>(null);
+  const securityToastTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const triggerSecurityNotice = useCallback(
+    (message: string = 'Copying, right-click, and text selection are disabled during the examination.') => {
+      setSecurityToast(message);
+      if (securityToastTimeoutRef.current) clearTimeout(securityToastTimeoutRef.current);
+      securityToastTimeoutRef.current = setTimeout(() => {
+        setSecurityToast(null);
+      }, 3500);
+    },
+    []
+  );
+
   // Result State
   const [submissionResult, setSubmissionResult] = useState<ExamSubmissionResult | null>(null);
   const [isCertModalOpen, setIsCertModalOpen] = useState(false);
@@ -176,6 +192,65 @@ export default function CertificationClient() {
       window.removeEventListener('offline', handleOffline);
     };
   }, [examState]);
+
+  // Phase 1 Security: Clipboard, Shortcut & Context Menu Lockdown
+  useEffect(() => {
+    if (view !== 'exam' || !examState) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const isCtrlOrCmd = e.ctrlKey || e.metaKey;
+      const key = e.key.toLowerCase();
+
+      // Intercept Copy (Ctrl/Cmd+C), Select All (Ctrl/Cmd+A), Cut (Ctrl/Cmd+X), View Source (Ctrl/Cmd+U), Print (Ctrl/Cmd+P), Save (Ctrl/Cmd+S)
+      if (isCtrlOrCmd && ['c', 'a', 'x', 'u', 'p', 's'].includes(key)) {
+        e.preventDefault();
+        e.stopPropagation();
+        triggerSecurityNotice('Copying, printing, and keyboard shortcuts are disabled during the examination.');
+        return false;
+      }
+
+      // Intercept DevTools shortcuts (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C)
+      if (e.key === 'F12' || (isCtrlOrCmd && e.shiftKey && ['i', 'j', 'c'].includes(key))) {
+        e.preventDefault();
+        e.stopPropagation();
+        triggerSecurityNotice('Developer inspection tools are restricted during the examination.');
+        return false;
+      }
+    };
+
+    const handleCopy = (e: ClipboardEvent) => {
+      e.preventDefault();
+      triggerSecurityNotice('Copying examination questions to clipboard is strictly prohibited.');
+    };
+
+    const handleCut = (e: ClipboardEvent) => {
+      e.preventDefault();
+      triggerSecurityNotice('Text modification is disabled during the examination.');
+    };
+
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+      triggerSecurityNotice('Right-click context menu is disabled during proctored exams.');
+    };
+
+    const handleSelectStart = (e: Event) => {
+      e.preventDefault();
+    };
+
+    window.addEventListener('keydown', handleKeyDown, { capture: true });
+    window.addEventListener('copy', handleCopy, { capture: true });
+    window.addEventListener('cut', handleCut, { capture: true });
+    window.addEventListener('contextmenu', handleContextMenu, { capture: true });
+    document.addEventListener('selectstart', handleSelectStart, { capture: true });
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown, { capture: true });
+      window.removeEventListener('copy', handleCopy, { capture: true });
+      window.removeEventListener('cut', handleCut, { capture: true });
+      window.removeEventListener('contextmenu', handleContextMenu, { capture: true });
+      document.removeEventListener('selectstart', handleSelectStart, { capture: true });
+    };
+  }, [view, examState, triggerSecurityNotice]);
 
   // Sync profile details when user logs in or candidate session is restored
   useEffect(() => {
@@ -1331,7 +1406,22 @@ export default function CertificationClient() {
     const unansweredCount = totalExamQuestions - answeredCount;
 
     return (
-      <div className="min-h-screen bg-slate-100 flex flex-col">
+      <div
+        className="min-h-screen bg-slate-100 flex flex-col exam-protected select-none"
+        onContextMenu={(e) => {
+          e.preventDefault();
+          triggerSecurityNotice();
+        }}
+        onCopy={(e) => {
+          e.preventDefault();
+          triggerSecurityNotice('Copying examination questions is prohibited.');
+        }}
+        onCut={(e) => {
+          e.preventDefault();
+          triggerSecurityNotice();
+        }}
+        onDragStart={(e) => e.preventDefault()}
+      >
         {/* Top Floating Exam Navbar */}
         <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 sm:px-8 py-3.5 shadow-xs">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
@@ -1348,6 +1438,10 @@ export default function CertificationClient() {
               </span>
               <div className="hidden sm:block text-xs font-bold text-slate-700">
                 Attempt #{examState.attemptNumber} • Candidate: {examState.recipientName}
+              </div>
+              <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold">
+                <Lock className="w-3 h-3 text-emerald-600" />
+                <span>Copy-Protected & Proctored</span>
               </div>
             </div>
 
@@ -1609,6 +1703,18 @@ export default function CertificationClient() {
                   {isSubmittingExam ? 'Grading...' : 'Confirm & Submit'}
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+        {/* Floating Security Alert Toast */}
+        {securityToast && (
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-5 py-3.5 bg-slate-900/95 text-white rounded-2xl shadow-2xl border border-rose-500/40 backdrop-blur-md animate-in fade-in slide-in-from-bottom-4 duration-200 max-w-md w-[92%] sm:w-auto">
+            <div className="w-8 h-8 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
+              <ShieldAlert className="w-4 h-4" />
+            </div>
+            <div className="space-y-0.5">
+              <div className="text-xs font-black uppercase tracking-wider text-rose-400">Exam Security Notice</div>
+              <div className="text-xs font-medium text-slate-200 leading-snug">{securityToast}</div>
             </div>
           </div>
         )}
