@@ -6,13 +6,29 @@ import { AuthProvider } from '@/components/AuthProvider';
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://jnachi.com'),
   title: {
-    default: 'Jnachi | AI Skills Assessment & Learning Hub',
+    default: 'Jnachi | AI Skills Assessment & Professional Certifications',
     template: '%s | Jnachi',
   },
-  description: 'A precise reading of how activated your AI knowledge is. Know it. Use it. Prove it.',
+  description:
+    'Measure your AI momentum and earn 10 official industry certifications spanning Core Engineering Ladders and Role-Based Tracks (Sales, Developers, Marketers, Support, HR, Managers). Know it. Use it. Prove it.',
+  keywords: [
+    'AI Skills Assessment',
+    'AI Certification',
+    'AI Prompt Engineering',
+    'AI for Sales',
+    'AI for Developers',
+    'AI for Marketers',
+    'AI for Customer Support',
+    'AI for HR',
+    'AI for Managers',
+    'Applied AI Certification',
+    'AI Competency Test',
+    'LinkedIn AI Badge',
+  ],
   openGraph: {
-    title: 'Jnachi | AI Skills Assessment & Learning Hub',
-    description: 'A precise reading of how activated your AI knowledge is. Know it. Use it. Prove it.',
+    title: 'Jnachi | AI Skills Assessment & Professional Certifications',
+    description:
+      'Measure your AI momentum and earn 10 official industry certifications spanning Core Engineering Ladders and Role-Based Tracks. 100% free 30-day launch access.',
     url: 'https://jnachi.com',
     siteName: 'Jnachi',
     locale: 'en_US',
@@ -29,8 +45,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jnachi | AI Skills Assessment & Learning Hub',
-    description: 'A precise reading of how activated your AI knowledge is. Know it. Use it. Prove it.',
+    title: 'Jnachi | AI Skills Assessment & Professional Certifications',
+    description:
+      'Measure your AI momentum and earn 10 official industry certifications. Free 30-day launch access.',
     images: ['/og-default.png'],
   },
   icons: {
