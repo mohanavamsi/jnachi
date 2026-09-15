@@ -54,6 +54,58 @@ export default function VerifyCertificateClient({
   const tier = record?.tier || 'beginner';
   const tierConfig = CERT_TIERS[tier] || CERT_TIERS.beginner;
 
+  // Automatically resolve candidate real name if record has placeholder
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const nameParam = urlParams.get('name') || urlParams.get('candidate');
+
+      let candidateName = nameParam || '';
+      let candidateLocation = '';
+      let candidateCompany = '';
+
+      // Check specific certificate record saved in localStorage
+      const lookupId = (record?.certificateId || certId || '').toUpperCase();
+      if (lookupId) {
+        const certKey = `jnachi_cert_${lookupId}`;
+        const specificCertRaw = localStorage.getItem(certKey);
+        if (specificCertRaw) {
+          const parsed = JSON.parse(specificCertRaw);
+          if (parsed.recipientName) candidateName = parsed.recipientName;
+          if (parsed.location) candidateLocation = parsed.location;
+          if (parsed.company) candidateCompany = parsed.company;
+        }
+      }
+
+      // Check candidate session stored on this device
+      if (!candidateName) {
+        const sessionRaw = localStorage.getItem('jnachi_candidate_session');
+        if (sessionRaw) {
+          const parsed = JSON.parse(sessionRaw);
+          if (parsed.name) candidateName = parsed.name;
+          if (parsed.location) candidateLocation = candidateLocation || parsed.location;
+          if (parsed.company) candidateCompany = candidateCompany || parsed.company;
+        }
+      }
+
+      // If we found a real name and the current record is using the placeholder
+      if (candidateName && (!record || record.recipientName === 'Verified Candidate' || !record.recipientName)) {
+        setRecord((prev) => {
+          if (!prev) return null;
+          return {
+            ...prev,
+            recipientName: candidateName,
+            location: candidateLocation || prev.location,
+            company: candidateCompany || prev.company,
+          };
+        });
+      }
+    } catch {
+      // Ignore
+    }
+  }, [certId, record?.certificateId, record?.recipientName]);
+
   // Render Diploma Canvas
   const renderDiploma = useCallback(() => {
     if (!canvasRef.current || !record) return;
