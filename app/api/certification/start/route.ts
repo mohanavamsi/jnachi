@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { startExamAttempt } from '@/lib/certService';
+import { CertTier } from '@/lib/certTypes';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { email, recipientName, location, company } = body;
+    const { email, recipientName, location, company, tier = 'beginner' } = body;
 
     if (!email) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
@@ -24,11 +25,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Current Company / Organization is required before starting the exam' }, { status: 400 });
     }
 
+    const validTier: CertTier = ['beginner', 'practitioner', 'builder', 'master'].includes(tier)
+      ? (tier as CertTier)
+      : 'beginner';
+
     const attempt = await startExamAttempt(
       email,
       recipientName || '',
       location || '',
-      company || ''
+      company || '',
+      validTier
     );
     return NextResponse.json(attempt);
   } catch (err: unknown) {

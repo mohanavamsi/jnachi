@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
 import { AuthNav } from '@/components/AuthNav';
-import { BookOpen, Award, Menu, X, ArrowRight } from 'lucide-react';
+import { BookOpen, Award, Menu, X, ArrowRight, Layers } from 'lucide-react';
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -31,7 +31,7 @@ export function Navigation() {
             className="flex items-center gap-1.5 text-slate-600 hover:text-indigo-600 transition-colors py-1"
           >
             <Award className="w-4 h-4 text-indigo-500" />
-            <span>Certification</span>
+            <span>Certifications</span>
           </Link>
 
           <div className="h-4 w-px bg-slate-200 mx-1" />
@@ -82,7 +82,7 @@ export function Navigation() {
               className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50 hover:text-indigo-600 transition-colors"
             >
               <Award className="w-4 h-4 text-indigo-600" />
-              <span>Beginner Certification</span>
+              <span>4-Tier Certifications</span>
             </Link>
             <Link
               href="/about"
@@ -122,7 +122,7 @@ export function Footer() {
         
         <div className="flex flex-wrap gap-6 sm:gap-8 text-sm text-slate-600">
           <Link href="/lessons" className="hover:text-indigo-600 transition-colors font-medium text-indigo-600">Learning Hub (17 Lessons)</Link>
-          <Link href="/certification" className="hover:text-indigo-600 transition-colors font-medium">Beginner Certification</Link>
+          <Link href="/certification" className="hover:text-indigo-600 transition-colors font-medium">4-Tier Certifications</Link>
           <Link href="/assessment" className="hover:text-indigo-600 transition-colors">Quick Assessment</Link>
           <Link href="/about" className="hover:text-indigo-600 transition-colors">About Jnachi</Link>
           <Link href="/profile" className="hover:text-indigo-600 transition-colors">My Profile</Link>
@@ -134,4 +134,3 @@ export function Footer() {
     </footer>
   );
 }
-

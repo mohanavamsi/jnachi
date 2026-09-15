@@ -38,7 +38,7 @@
     },
     "CertProfile": {
       "title": "CertProfile",
-      "description": "Certification user profile tracking attempts, cooldown, and pass status",
+      "description": "Certification user profile tracking multi-tier attempts, cooldowns, and pass status",
       "type": "object",
       "properties": {
         "email": { "type": "string", "maxLength": 200 },
@@ -50,16 +50,18 @@
         "passed": { "type": "boolean" },
         "highestScore": { "type": "number" },
         "latestCertificateId": { "type": "string", "maxLength": 50 },
-        "usedQuestionIds": { "type": "array", "items": { "type": "string" } }
+        "usedQuestionIds": { "type": "array", "items": { "type": "string" } },
+        "tierProgress": { "type": "object" }
       },
-      "required": ["email", "totalAttempts", "lastAttemptAt", "passed"]
+      "required": ["email"]
     },
     "CertAttempt": {
       "title": "CertAttempt",
-      "description": "An individual 40-question certification exam attempt",
+      "description": "An individual 40-question certification exam attempt for a specific tier",
       "type": "object",
       "properties": {
         "email": { "type": "string", "maxLength": 200 },
+        "tier": { "type": "string", "maxLength": 30 },
         "recipientName": { "type": "string", "maxLength": 100 },
         "location": { "type": "string", "maxLength": 200 },
         "company": { "type": "string", "maxLength": 200 },
@@ -92,11 +94,11 @@
     },
     "/cert_profiles/{profileId}": {
       "schema": { "$ref": "#/entities/CertProfile" },
-      "description": "Stores user exam attempt counts, cooldown timestamps, and passing certification status"
+      "description": "Stores user exam attempt counts, cooldown timestamps, and passing certification status across tiers"
     },
     "/cert_attempts/{attemptId}": {
       "schema": { "$ref": "#/entities/CertAttempt" },
-      "description": "Stores individual exam attempt questions, answers, and scores"
+      "description": "Stores individual exam attempt questions, answers, tier, and scores"
     }
   }
 }

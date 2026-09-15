@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf';
 import { Category, CATEGORY_LABELS } from './assessmentData';
+import { CertTier, CERT_TIERS } from './certTypes';
 
 export interface CertificateData {
   recipientName: string;
@@ -334,7 +335,6 @@ function drawElevatedCard(
   height: number,
   radius: number
 ) {
-  // Soft ambient shadow
   ctx.save();
   ctx.shadowColor = 'rgba(15, 23, 42, 0.06)';
   ctx.shadowBlur = 18;
@@ -345,7 +345,6 @@ function drawElevatedCard(
   roundRect(ctx, x, y, width, height, radius, true, false);
   ctx.restore();
 
-  // Subtle border
   ctx.strokeStyle = '#e2e8f0';
   ctx.lineWidth = 1.5;
   roundRect(ctx, x, y, width, height, radius, false, true);
@@ -415,9 +414,8 @@ export function downloadCertificatePng(canvas: HTMLCanvasElement, filename = 'Jn
  * Downloads a 9:16 portrait PDF document.
  */
 export function downloadCertificatePdf(canvas: HTMLCanvasElement, filename = 'Jnachi-Result-Card.pdf') {
-  // Standard 9:16 aspect ratio in points
   const pdfWidth = 450;
-  const pdfHeight = 800; // 9:16 approx
+  const pdfHeight = 800;
 
   const pdf = new jsPDF({
     orientation: 'portrait',
@@ -431,10 +429,11 @@ export function downloadCertificatePdf(canvas: HTMLCanvasElement, filename = 'Jn
 }
 
 export interface BeginnerCertData {
+  tier?: CertTier;
   recipientName: string;
   location?: string;
   company?: string;
-  overallScore: number; // 0-40
+  overallScore: number; // 0-40 correct
   overallPercentage: number;
   sectionScores: {
     literacy: { correct: number; total: number; percentage: number };
@@ -446,41 +445,45 @@ export interface BeginnerCertData {
   certificateId: string;
 }
 
+export type TierCertData = BeginnerCertData;
+
 /**
- * Draws the official landscape diploma for Jnachi Beginner Certification.
+ * Draws the official landscape diploma for Jnachi Certifications across all 4 tiers.
  * Dimensions: 1920 x 1080 (16:9 full HD official credential diploma format).
  */
 export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: BeginnerCertData) {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
+  const tier = data.tier || 'beginner';
+  const tierConfig = CERT_TIERS[tier] || CERT_TIERS.beginner;
+
   const width = 1920;
   const height = 1080;
   canvas.width = width;
   canvas.height = height;
 
-  // Background - pristine warm ivory parchment with subtle gradient
+  // Background - parchment with subtle gradient customized per tier
   const bgGrad = ctx.createLinearGradient(0, 0, width, height);
-  bgGrad.addColorStop(0, '#fafaf9');
-  bgGrad.addColorStop(0.5, '#f5f5f4');
-  bgGrad.addColorStop(1, '#eef2ff');
+  bgGrad.addColorStop(0, tierConfig.colorScheme.diplomaParchment);
+  bgGrad.addColorStop(0.5, '#ffffff');
+  bgGrad.addColorStop(1, '#f1f5f9');
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, width, height);
 
   // Outer decorative border frame
   const margin = 48;
-  ctx.strokeStyle = '#312e81'; // Indigo 900
+  ctx.strokeStyle = tierConfig.colorScheme.diplomaPrimary;
   ctx.lineWidth = 4;
   ctx.strokeRect(margin, margin, width - margin * 2, height - margin * 2);
 
-  // Inner subtle gold border
+  // Inner subtle accent border
   const innerMargin = margin + 14;
-  ctx.strokeStyle = '#d97706'; // Amber 600
+  ctx.strokeStyle = tierConfig.colorScheme.diplomaAccent;
   ctx.lineWidth = 1.5;
   ctx.strokeRect(innerMargin, innerMargin, width - innerMargin * 2, height - innerMargin * 2);
 
   // Corner ornaments
-  const cornerSize = 36;
   const corners = [
     { x: innerMargin, y: innerMargin },
     { x: width - innerMargin, y: innerMargin },
@@ -488,7 +491,7 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
     { x: width - innerMargin, y: height - innerMargin },
   ];
   corners.forEach((c) => {
-    ctx.fillStyle = '#b45309';
+    ctx.fillStyle = tierConfig.colorScheme.diplomaAccent;
     ctx.beginPath();
     ctx.arc(c.x, c.y, 6, 0, Math.PI * 2);
     ctx.fill();
@@ -502,27 +505,27 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   ctx.save();
   ctx.beginPath();
   ctx.arc(centerX, logoY, logoR, 0.4, Math.PI * 1.95, false);
-  ctx.strokeStyle = '#4338ca';
+  ctx.strokeStyle = tierConfig.colorScheme.primary;
   ctx.lineWidth = 6;
   ctx.lineCap = 'round';
   ctx.stroke();
 
   ctx.beginPath();
   ctx.arc(centerX, logoY, logoR - 10, Math.PI * 0.9, Math.PI * 2.4, false);
-  ctx.strokeStyle = '#f59e0b';
+  ctx.strokeStyle = tierConfig.colorScheme.diplomaAccent;
   ctx.lineWidth = 4;
   ctx.lineCap = 'round';
   ctx.stroke();
   ctx.restore();
 
   // Top Title
-  ctx.fillStyle = '#4338ca';
+  ctx.fillStyle = tierConfig.colorScheme.primary;
   ctx.font = '600 16px "Plus Jakarta Sans", sans-serif';
   ctx.textAlign = 'center';
   ctx.fillText('JNACHI EXECUTIVE LEARNING & CERTIFICATION COUNCIL', centerX, 185);
 
   // Main Heading: CERTIFICATE OF ACHIEVEMENT
-  ctx.fillStyle = '#1e1b4b';
+  ctx.fillStyle = tierConfig.colorScheme.diplomaPrimary;
   ctx.font = '700 48px Georgia, serif';
   ctx.fillText('Certificate of Achievement', centerX, 245);
 
@@ -556,28 +559,28 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   ctx.fillStyle = '#334155';
   ctx.font = '400 20px "Plus Jakarta Sans", sans-serif';
   ctx.fillText(
-    'has satisfied all foundational competency criteria across 40 comprehensive examination evaluations (80%+ passing standard)',
+    `has satisfied all rigorous competency criteria across 40 examination evaluations (${tierConfig.passingScorePercent}%+ passing standard)`,
     centerX,
     440
   );
   ctx.fillText('and is hereby conferred the official credential:', centerX, 470);
 
   // Official Credential Badge Box
-  const badgeWidth = 620;
+  const badgeWidth = 640;
   const badgeHeight = 76;
   const badgeX = centerX - badgeWidth / 2;
   const badgeY = 505;
 
-  ctx.fillStyle = '#1e1b4b';
+  ctx.fillStyle = tierConfig.colorScheme.diplomaPrimary;
   roundRect(ctx, badgeX, badgeY, badgeWidth, badgeHeight, 14, true, false);
 
-  ctx.strokeStyle = '#f59e0b';
+  ctx.strokeStyle = tierConfig.colorScheme.diplomaAccent;
   ctx.lineWidth = 2;
   roundRect(ctx, badgeX + 4, badgeY + 4, badgeWidth - 8, badgeHeight - 8, 10, false, true);
 
-  ctx.fillStyle = '#fbbf24';
-  ctx.font = '800 28px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('JNACHI BEGINNER CERTIFIED', centerX, badgeY + 47);
+  ctx.fillStyle = tierConfig.colorScheme.diplomaAccent === '#d97706' ? '#fbbf24' : '#ffffff';
+  ctx.font = '800 26px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText(tierConfig.badgeLabel, centerX, badgeY + 47);
 
   // 4 Section Competency Cards
   const cardW = 280;
@@ -628,7 +631,7 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   ctx.font = '700 20px "Plus Jakarta Sans", sans-serif';
   ctx.textAlign = 'center';
   ctx.fillText(
-    `Overall Examination Grade: ${data.overallScore}/100 (${data.overallPercentage}%)  •  Passing Standard: 80%`,
+    `Overall Examination Grade: ${data.overallScore}/40 (${data.overallPercentage}%)  •  Passing Standard: ${tierConfig.passingScorePercent}%`,
     centerX,
     810
   );
@@ -650,7 +653,7 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   ctx.font = '400 13px "Plus Jakarta Sans", sans-serif';
   ctx.fillText('Verify online at jnachi.com', margin + 60, footerY + 50);
 
-  // Center: Official Gold Seal
+  // Center: Official Seal
   const sealR = 44;
   const sealX = centerX;
   const sealY = footerY + 10;
@@ -658,20 +661,20 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   ctx.save();
   ctx.beginPath();
   ctx.arc(sealX, sealY, sealR, 0, Math.PI * 2);
-  ctx.fillStyle = '#fef3c7';
+  ctx.fillStyle = tierConfig.colorScheme.sealColor;
   ctx.fill();
-  ctx.strokeStyle = '#d97706';
+  ctx.strokeStyle = tierConfig.colorScheme.diplomaAccent;
   ctx.lineWidth = 3;
   ctx.stroke();
 
   // Inner star ring
   ctx.beginPath();
   ctx.arc(sealX, sealY, sealR - 8, 0, Math.PI * 2);
-  ctx.strokeStyle = '#b45309';
+  ctx.strokeStyle = tierConfig.colorScheme.sealText;
   ctx.lineWidth = 1;
   ctx.stroke();
 
-  ctx.fillStyle = '#b45309';
+  ctx.fillStyle = tierConfig.colorScheme.sealText;
   ctx.font = '700 12px "Plus Jakarta Sans", sans-serif';
   ctx.textAlign = 'center';
   ctx.fillText('VERIFIED', sealX, sealY - 6);
@@ -693,10 +696,12 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   ctx.fillText('Jnachi Certification Authority', width - margin - 60, footerY + 50);
 }
 
+export const drawTierDiploma = drawBeginnerCertificate;
+
 /**
  * Downloads a crisp landscape Diploma PNG.
  */
-export function downloadBeginnerCertificatePng(canvas: HTMLCanvasElement, filename = 'Jnachi-Beginner-Certificate.png') {
+export function downloadBeginnerCertificatePng(canvas: HTMLCanvasElement, filename = 'Jnachi-Certificate.png') {
   const link = document.createElement('a');
   link.download = filename;
   link.href = canvas.toDataURL('image/png', 1.0);
@@ -705,14 +710,16 @@ export function downloadBeginnerCertificatePng(canvas: HTMLCanvasElement, filena
   document.body.removeChild(link);
 }
 
+export const downloadTierCertificatePng = downloadBeginnerCertificatePng;
+
 /**
  * Downloads a crisp landscape Diploma PDF.
  */
-export function downloadBeginnerCertificatePdf(canvas: HTMLCanvasElement, filename = 'Jnachi-Beginner-Certificate.pdf') {
+export function downloadBeginnerCertificatePdf(canvas: HTMLCanvasElement, filename = 'Jnachi-Certificate.pdf') {
   const pdf = new jsPDF({
     orientation: 'landscape',
     unit: 'pt',
-    format: [842, 595], // A4 Landscape approx in pt (1.414 ratio)
+    format: [842, 595], // A4 Landscape approx in pt
   });
 
   const imgData = canvas.toDataURL('image/png', 1.0);
@@ -720,3 +727,4 @@ export function downloadBeginnerCertificatePdf(canvas: HTMLCanvasElement, filena
   pdf.save(filename);
 }
 
+export const downloadTierCertificatePdf = downloadBeginnerCertificatePdf;

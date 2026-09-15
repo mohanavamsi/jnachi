@@ -2,6 +2,7 @@ import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import crypto from 'crypto';
 import firebaseConfig from '../firebase-applet-config.json';
+import { CertTier, CERT_TIERS } from './certTypes';
 import {
   drawExamQuestions,
   stripAnswersForClient,
@@ -21,22 +22,34 @@ export const PASSING_THRESHOLD = 80;
 export const EXAM_DURATION_MINUTES = 45;
 export const EXAM_DURATION_MS = EXAM_DURATION_MINUTES * 60 * 1000; // 45 minutes
 
-export interface CertProfileData {
-  email: string;
+export interface TierProgressData {
+  tier: CertTier;
   totalAttempts: number;
   lastAttemptAt: number;
   passed: boolean;
+  highestScore?: number;
+  latestCertificateId?: string;
+  usedQuestionIds?: string[];
+}
+
+export interface CertProfileData {
+  email: string;
+  totalAttempts?: number;
+  lastAttemptAt?: number;
+  passed?: boolean;
   highestScore?: number;
   latestCertificateId?: string;
   recipientName?: string;
   location?: string;
   company?: string;
   usedQuestionIds?: string[];
+  tierProgress?: Partial<Record<CertTier, TierProgressData>>;
 }
 
 export interface CertAttemptData {
   id: string;
   email: string;
+  tier?: CertTier;
   recipientName?: string;
   location?: string;
   company?: string;
@@ -51,10 +64,13 @@ export interface CertAttemptData {
   percentage?: number;
   passed?: boolean;
   certificateId?: string;
+  sectionScores?: Record<string, { correct: number; total: number; percentage: number }>;
 }
 
 export interface CertStatusResponse {
   email: string;
+  tier: CertTier;
+  tierTitle: string;
   eligible: boolean;
   totalAttempts: number;
   attemptsRemaining: number;
@@ -69,6 +85,7 @@ export interface CertStatusResponse {
   nextAvailableAt?: number;
   isLocked: boolean;
   message?: string;
+  allTiersProgress?: Partial<Record<CertTier, { passed: boolean; certificateId?: string; attempts: number }>>;
 }
 
 export function normalizeEmail(email: string): string {
@@ -81,22 +98,60 @@ export function getProfileId(email: string): string {
   return `prof_${hash}`;
 }
 
-export function generateCertId(email: string): string {
+export function generateCertId(tier: CertTier, email: string): string {
   const seed = email.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
   const hex = Math.abs((seed * 9301 + 49297) % 233280).toString(16).toUpperCase().padStart(4, '0');
   const randPart = Math.floor(1000 + Math.random() * 9000);
-  return `JNACHI-CERT-${new Date().getFullYear()}-${hex}-${randPart}`;
+  const tierPrefix =
+    tier === 'master'
+      ? 'MSTR'
+      : tier === 'builder'
+      ? 'BLD'
+      : tier === 'practitioner'
+      ? 'PRAC'
+      : 'BEG';
+  return `JNACHI-${tierPrefix}-${new Date().getFullYear()}-${hex}-${randPart}`;
 }
 
 /**
- * Checks exam status, attempt limits, and 24-hour cooldown for an email.
+ * Extracts specific tier progress from a profile, falling back to legacy top-level fields for Beginner tier.
  */
-export async function getCertStatus(email: string): Promise<CertStatusResponse> {
+function getTierData(profile: CertProfileData | null, tier: CertTier): TierProgressData {
+  if (profile?.tierProgress && profile.tierProgress[tier]) {
+    return profile.tierProgress[tier]!;
+  }
+
+  // Legacy fallback for beginner tier
+  if (tier === 'beginner' && profile && typeof profile.totalAttempts === 'number') {
+    return {
+      tier: 'beginner',
+      totalAttempts: profile.totalAttempts || 0,
+      lastAttemptAt: profile.lastAttemptAt || 0,
+      passed: profile.passed || false,
+      highestScore: profile.highestScore,
+      latestCertificateId: profile.latestCertificateId,
+      usedQuestionIds: profile.usedQuestionIds || [],
+    };
+  }
+
+  return {
+    tier,
+    totalAttempts: 0,
+    lastAttemptAt: 0,
+    passed: false,
+  };
+}
+
+/**
+ * Checks exam status, attempt limits, and 24-hour cooldown for an email and specific tier.
+ */
+export async function getCertStatus(email: string, tier: CertTier = 'beginner'): Promise<CertStatusResponse> {
   const normEmail = normalizeEmail(email);
   if (!normEmail || !normEmail.includes('@')) {
     throw new Error('Please provide a valid email address');
   }
 
+  const tierConfig = CERT_TIERS[tier] || CERT_TIERS.beginner;
   const profileId = getProfileId(normEmail);
   const profileRef = doc(db, 'cert_profiles', profileId);
   const snap = await getDoc(profileRef);
@@ -104,68 +159,91 @@ export async function getCertStatus(email: string): Promise<CertStatusResponse> 
   if (!snap.exists()) {
     return {
       email: normEmail,
+      tier,
+      tierTitle: tierConfig.title,
       eligible: true,
       totalAttempts: 0,
       attemptsRemaining: MAX_ATTEMPTS,
       passed: false,
       cooldownActive: false,
       isLocked: false,
+      allTiersProgress: {},
     };
   }
 
   const profile = snap.data() as CertProfileData;
-  const attemptsRemaining = Math.max(0, MAX_ATTEMPTS - (profile.totalAttempts || 0));
+  const tierData = getTierData(profile, tier);
+  const attemptsRemaining = Math.max(0, MAX_ATTEMPTS - (tierData.totalAttempts || 0));
 
-  // If already passed
-  if (profile.passed) {
+  // Build high-level summary of all tiers for UI ladder
+  const allTiersProgress: Partial<Record<CertTier, { passed: boolean; certificateId?: string; attempts: number }>> = {};
+  (['beginner', 'practitioner', 'builder', 'master'] as CertTier[]).forEach((t) => {
+    const d = getTierData(profile, t);
+    allTiersProgress[t] = {
+      passed: d.passed,
+      certificateId: d.latestCertificateId,
+      attempts: d.totalAttempts,
+    };
+  });
+
+  // If already passed this specific tier
+  if (tierData.passed) {
     return {
       email: normEmail,
+      tier,
+      tierTitle: tierConfig.title,
       eligible: false,
-      totalAttempts: profile.totalAttempts || 1,
+      totalAttempts: tierData.totalAttempts || 1,
       attemptsRemaining,
       passed: true,
-      latestCertificateId: profile.latestCertificateId,
-      highestScore: profile.highestScore,
+      latestCertificateId: tierData.latestCertificateId,
+      highestScore: tierData.highestScore,
       recipientName: profile.recipientName,
       location: profile.location,
       company: profile.company,
       cooldownActive: false,
       isLocked: false,
-      message: 'You have already earned your Jnachi Beginner Certification!',
+      allTiersProgress,
+      message: `You have already earned your ${tierConfig.title} Certification!`,
     };
   }
 
-  // If exhausted all 3 attempts without passing
-  if ((profile.totalAttempts || 0) >= MAX_ATTEMPTS) {
+  // If exhausted all 3 attempts for this tier
+  if ((tierData.totalAttempts || 0) >= MAX_ATTEMPTS) {
     return {
       email: normEmail,
+      tier,
+      tierTitle: tierConfig.title,
       eligible: false,
-      totalAttempts: profile.totalAttempts,
+      totalAttempts: tierData.totalAttempts,
       attemptsRemaining: 0,
       passed: false,
-      highestScore: profile.highestScore,
+      highestScore: tierData.highestScore,
       recipientName: profile.recipientName,
       location: profile.location,
       company: profile.company,
       cooldownActive: false,
       isLocked: true,
-      message: "You've used all 3 attempts. Contact us if you'd like to discuss a retake.",
+      allTiersProgress,
+      message: `You've used all 3 attempts for ${tierConfig.title}. Contact us to discuss a retake.`,
     };
   }
 
-  // Check 24-hour cooldown from last attempt
-  const lastAttemptAt = profile.lastAttemptAt || 0;
+  // Check 24-hour cooldown from last attempt for this tier
+  const lastAttemptAt = tierData.lastAttemptAt || 0;
   const elapsed = Date.now() - lastAttemptAt;
   if (elapsed < COOLDOWN_MS) {
     const timeRemainingMs = COOLDOWN_MS - elapsed;
     const nextAvailableAt = lastAttemptAt + COOLDOWN_MS;
     return {
       email: normEmail,
+      tier,
+      tierTitle: tierConfig.title,
       eligible: false,
-      totalAttempts: profile.totalAttempts,
+      totalAttempts: tierData.totalAttempts,
       attemptsRemaining,
       passed: false,
-      highestScore: profile.highestScore,
+      highestScore: tierData.highestScore,
       recipientName: profile.recipientName,
       location: profile.location,
       company: profile.company,
@@ -173,44 +251,51 @@ export async function getCertStatus(email: string): Promise<CertStatusResponse> 
       timeRemainingMs,
       nextAvailableAt,
       isLocked: false,
-      message: '24-hour cooldown required between attempts.',
+      allTiersProgress,
+      message: `24-hour cooldown required between attempts for ${tierConfig.title}.`,
     };
   }
 
   return {
     email: normEmail,
+    tier,
+    tierTitle: tierConfig.title,
     eligible: true,
-    totalAttempts: profile.totalAttempts || 0,
+    totalAttempts: tierData.totalAttempts || 0,
     attemptsRemaining,
     passed: false,
-    highestScore: profile.highestScore,
+    highestScore: tierData.highestScore,
     recipientName: profile.recipientName,
     location: profile.location,
     company: profile.company,
     cooldownActive: false,
     isLocked: false,
+    allTiersProgress,
   };
 }
 
 /**
- * Starts a new exam attempt for an email if eligible.
+ * Starts a new exam attempt for an email and specific tier if eligible.
  * Returns 40 randomly sampled questions (10 per section) stripped of answers.
  */
 export async function startExamAttempt(
   email: string,
   recipientName = '',
   location = '',
-  company = ''
+  company = '',
+  tier: CertTier = 'beginner'
 ): Promise<{
   attemptId: string;
+  tier: CertTier;
+  tierTitle: string;
   attemptNumber: number;
   questions: ClientCertQuestion[];
   startedAt: number;
   status: CertStatusResponse;
 }> {
-  const status = await getCertStatus(email);
+  const status = await getCertStatus(email, tier);
   if (!status.eligible) {
-    throw new Error(status.message || 'You are not currently eligible to start a new exam attempt.');
+    throw new Error(status.message || 'You are not currently eligible to start a new exam attempt for this tier.');
   }
 
   const normEmail = normalizeEmail(email);
@@ -218,13 +303,14 @@ export async function startExamAttempt(
   const profileRef = doc(db, 'cert_profiles', profileId);
   const profileSnap = await getDoc(profileRef);
   const existingProfile = profileSnap.exists() ? (profileSnap.data() as CertProfileData) : null;
+  const tierData = getTierData(existingProfile, tier);
 
-  const usedQuestionIds = existingProfile?.usedQuestionIds || [];
-  // Sample 10 random questions per section (40 total) prioritizing fresh questions
-  const selectedQuestions = drawExamQuestions(usedQuestionIds, 10);
+  const usedQuestionIds = tierData.usedQuestionIds || [];
+  // Sample 10 random questions per section (40 total) for this specific tier
+  const selectedQuestions = drawExamQuestions(tier, usedQuestionIds, 10);
   const questionIds = selectedQuestions.map((q) => q.id);
 
-  const attemptNumber = (existingProfile?.totalAttempts || 0) + 1;
+  const attemptNumber = (tierData.totalAttempts || 0) + 1;
   const now = Date.now();
   const attemptId = `att_${now}_${Math.random().toString(36).slice(2, 8)}`;
 
@@ -233,6 +319,7 @@ export async function startExamAttempt(
   try {
     await setDoc(attemptRef, {
       email: normEmail,
+      tier,
       recipientName: (recipientName || existingProfile?.recipientName || '').trim(),
       location: (location || existingProfile?.location || '').trim(),
       company: (company || existingProfile?.company || '').trim(),
@@ -247,16 +334,13 @@ export async function startExamAttempt(
     throw err;
   }
 
-  // Also persist location & company to profile record if provided
+  // Persist candidate profile info
   if (location || company || recipientName) {
     try {
       await setDoc(
         profileRef,
         {
           email: normEmail,
-          totalAttempts: existingProfile?.totalAttempts || 0,
-          lastAttemptAt: existingProfile?.lastAttemptAt || now,
-          passed: existingProfile?.passed || false,
           ...(recipientName ? { recipientName: recipientName.trim() } : {}),
           ...(location ? { location: location.trim() } : {}),
           ...(company ? { company: company.trim() } : {}),
@@ -265,12 +349,13 @@ export async function startExamAttempt(
       );
     } catch (err) {
       console.error('FAILED to setDoc profileRef:', err);
-      // Do not let non-critical profile sync failure block exam startup
     }
   }
 
   return {
     attemptId,
+    tier,
+    tierTitle: CERT_TIERS[tier]?.title || 'Jnachi Certification',
     attemptNumber,
     questions: stripAnswersForClient(selectedQuestions),
     startedAt: now,
@@ -279,8 +364,7 @@ export async function startExamAttempt(
 }
 
 /**
- * Synchronizes in-progress candidate answers to Firestore to ensure zero data loss
- * during network interruptions or tab refreshes.
+ * Synchronizes in-progress candidate answers to Firestore to ensure zero data loss.
  */
 export async function syncExamProgress(params: {
   attemptId: string;
@@ -327,6 +411,8 @@ export async function submitExamAttempt(params: {
 }): Promise<{
   attemptId: string;
   email: string;
+  tier: CertTier;
+  tierTitle: string;
   attemptNumber: number;
   recipientName: string;
   location?: string;
@@ -351,11 +437,15 @@ export async function submitExamAttempt(params: {
     throw new Error('Email does not match this exam attempt');
   }
 
+  const tier: CertTier = attemptData.tier || 'beginner';
+  const tierConfig = CERT_TIERS[tier] || CERT_TIERS.beginner;
+
   if (attemptData.status === 'completed') {
     const profileId = getProfileId(normEmail);
     const profileSnap = await getDoc(doc(db, 'cert_profiles', profileId));
     const prevProfile = profileSnap.exists() ? (profileSnap.data() as CertProfileData) : null;
-    const attemptsRemaining = Math.max(0, MAX_ATTEMPTS - (prevProfile?.totalAttempts || attemptData.attemptNumber));
+    const tierData = getTierData(prevProfile, tier);
+    const attemptsRemaining = Math.max(0, MAX_ATTEMPTS - (tierData.totalAttempts || attemptData.attemptNumber));
 
     // Regrade deterministically from stored answers
     const grading = gradeExam(attemptData.questionIds, attemptData.answers || {});
@@ -363,6 +453,8 @@ export async function submitExamAttempt(params: {
     return {
       attemptId,
       email: normEmail,
+      tier,
+      tierTitle: tierConfig.title,
       attemptNumber: attemptData.attemptNumber,
       recipientName: attemptData.recipientName || '',
       location: attemptData.location || undefined,
@@ -380,7 +472,7 @@ export async function submitExamAttempt(params: {
 
   let certificateId: string | undefined = undefined;
   if (grading.passed) {
-    certificateId = generateCertId(normEmail);
+    certificateId = generateCertId(tier, normEmail);
   }
 
   const finalName = (recipientName || attemptData.recipientName || normEmail.split('@')[0]).trim();
@@ -403,33 +495,53 @@ export async function submitExamAttempt(params: {
     sectionScores: grading.sectionScores,
   });
 
-  // Update or create user profile record in Firestore
+  // Update user profile record in Firestore
   const profileId = getProfileId(normEmail);
   const profileRef = doc(db, 'cert_profiles', profileId);
   const profileSnap = await getDoc(profileRef);
   const prevProfile = profileSnap.exists() ? (profileSnap.data() as CertProfileData) : null;
+  const prevTierData = getTierData(prevProfile, tier);
 
-  const totalAttempts = (prevProfile?.totalAttempts || 0) + 1;
-  const passedSoFar = (prevProfile?.passed || false) || grading.passed;
-  const highestScore = Math.max(prevProfile?.highestScore || 0, grading.overallScore);
-  const latestCertificateId = certificateId || prevProfile?.latestCertificateId || null;
+  const totalAttempts = (prevTierData.totalAttempts || 0) + 1;
+  const passedSoFar = prevTierData.passed || grading.passed;
+  const highestScore = Math.max(prevTierData.highestScore || 0, grading.overallScore);
+  const latestCertificateId = certificateId || prevTierData.latestCertificateId || undefined;
   const combinedQuestionIds = Array.from(
-    new Set([...(prevProfile?.usedQuestionIds || []), ...attemptData.questionIds])
+    new Set([...(prevTierData.usedQuestionIds || []), ...attemptData.questionIds])
   );
 
-  const profileUpdate: Partial<CertProfileData> = {
-    email: normEmail,
+  const updatedTierData: TierProgressData = {
+    tier,
     totalAttempts,
     lastAttemptAt: now,
     passed: passedSoFar,
     highestScore,
-    recipientName: finalName,
+    latestCertificateId,
     usedQuestionIds: combinedQuestionIds,
   };
 
-  if (latestCertificateId) {
-    profileUpdate.latestCertificateId = latestCertificateId;
-  }
+  const updatedTierProgress = {
+    ...(prevProfile?.tierProgress || {}),
+    [tier]: updatedTierData,
+  };
+
+  const profileUpdate: Partial<CertProfileData> = {
+    email: normEmail,
+    recipientName: finalName,
+    tierProgress: updatedTierProgress,
+    // Keep legacy top-level sync for Beginner tier backward compatibility
+    ...(tier === 'beginner'
+      ? {
+          totalAttempts,
+          lastAttemptAt: now,
+          passed: passedSoFar,
+          highestScore,
+          latestCertificateId: latestCertificateId || undefined,
+          usedQuestionIds: combinedQuestionIds,
+        }
+      : {}),
+  };
+
   if (finalLocation || prevProfile?.location) {
     profileUpdate.location = finalLocation || prevProfile?.location;
   }
@@ -445,6 +557,8 @@ export async function submitExamAttempt(params: {
   return {
     attemptId,
     email: normEmail,
+    tier,
+    tierTitle: tierConfig.title,
     attemptNumber: attemptData.attemptNumber,
     recipientName: finalName,
     location: finalLocation,

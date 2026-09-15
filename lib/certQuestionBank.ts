@@ -1,16 +1,25 @@
 /**
- * Jnachi Beginner Certification Exam Question Bank
+ * Jnachi Certification Exam Question Bank
  * 
- * Total Bank: 200 Questions (50 per section across 4 tracks)
- * Each exam attempt randomly selects 10 questions per section (40 questions total).
+ * Supports the 4-Tier Progression Ladder:
+ * - Tier 1: Jnachi Beginner (200 Questions, 50 per section across 4 tracks)
+ * - Tier 2: Jnachi Practitioner (40 In-Depth Scenario Questions, 10 per section)
+ * - Tier 3: Jnachi Builder (40 Pipeline & Automation Questions, 10 per section)
+ * - Tier 4: Jnachi Master (40 Governance, Judgment & Strategic Questions, 10 per section)
  * 
- * Questions are modularized in /lib/certQuestions/*.ts for easy maintenance.
+ * Each exam attempt samples 10 questions per section (40 questions total).
  */
 
+import { CertTier } from './certTypes';
 import { LITERACY_QUESTIONS } from './certQuestions/literacy';
 import { AUTOMATION_QUESTIONS } from './certQuestions/automation';
 import { PRIVACY_QUESTIONS } from './certQuestions/privacy';
 import { GROWTH_QUESTIONS } from './certQuestions/growth';
+import {
+  PRACTITIONER_QUESTIONS,
+  BUILDER_QUESTIONS,
+  MASTER_QUESTIONS,
+} from './certQuestions/tierQuestions';
 
 export type CertSection = 'literacy' | 'automation' | 'privacy' | 'growth';
 
@@ -60,37 +69,66 @@ export const CERT_SECTION_LABELS: Record<CertSection, string> = {
 };
 
 // =========================================================================
-// ASSEMBLED COMPLETE QUESTION BANK (200 Questions Total, 50 Per Track)
+// ASSEMBLED COMPLETE QUESTION BANKS PER TIER
 // =========================================================================
-export const CERT_QUESTION_BANK: Record<CertSection, CertQuestion[]> = {
-  literacy: LITERACY_QUESTIONS,
-  automation: AUTOMATION_QUESTIONS,
-  privacy: PRIVACY_QUESTIONS,
-  growth: GROWTH_QUESTIONS,
+
+function groupQuestionsBySection(questions: CertQuestion[]): Record<CertSection, CertQuestion[]> {
+  const grouped: Record<CertSection, CertQuestion[]> = {
+    literacy: [],
+    automation: [],
+    privacy: [],
+    growth: [],
+  };
+  questions.forEach((q) => {
+    if (grouped[q.section]) {
+      grouped[q.section].push(q);
+    }
+  });
+  return grouped;
+}
+
+export const TIER_QUESTION_BANK: Record<CertTier, Record<CertSection, CertQuestion[]>> = {
+  beginner: {
+    literacy: LITERACY_QUESTIONS,
+    automation: AUTOMATION_QUESTIONS,
+    privacy: PRIVACY_QUESTIONS,
+    growth: GROWTH_QUESTIONS,
+  },
+  practitioner: groupQuestionsBySection(PRACTITIONER_QUESTIONS),
+  builder: groupQuestionsBySection(BUILDER_QUESTIONS),
+  master: groupQuestionsBySection(MASTER_QUESTIONS),
 };
 
-// Flat list of all 200 questions for instant lookup by ID
+// Backward compatibility alias for Beginner bank
+export const CERT_QUESTION_BANK: Record<CertSection, CertQuestion[]> = TIER_QUESTION_BANK.beginner;
+
+// Flat map of ALL questions across ALL 4 tiers for instant lookup by ID
 export const ALL_QUESTIONS_MAP: Map<string, CertQuestion> = new Map();
-Object.values(CERT_QUESTION_BANK).forEach((questions) => {
-  questions.forEach((q) => ALL_QUESTIONS_MAP.set(q.id, q));
+
+Object.values(TIER_QUESTION_BANK).forEach((sectionMap) => {
+  Object.values(sectionMap).forEach((questions) => {
+    questions.forEach((q) => ALL_QUESTIONS_MAP.set(q.id, q));
+  });
 });
 
 /**
- * Randomly samples 10 questions per section (40 total).
+ * Randomly samples 10 questions per section (40 total) for a specific tier.
  * Prioritizes questions not previously encountered in `excludeQuestionIds`
  * so subsequent attempts for the same user maximize variety!
  */
 export function drawExamQuestions(
+  tier: CertTier = 'beginner',
   excludeQuestionIds: string[] = [],
   countPerSection = 10
 ): CertQuestion[] {
   const excludedSet = new Set(excludeQuestionIds);
   const selected: CertQuestion[] = [];
 
+  const tierBank = TIER_QUESTION_BANK[tier] || TIER_QUESTION_BANK.beginner;
   const sections: CertSection[] = ['literacy', 'automation', 'privacy', 'growth'];
 
   for (const section of sections) {
-    const bank = CERT_QUESTION_BANK[section];
+    const bank = tierBank[section] || [];
     // Split into unencountered vs previously encountered
     const fresh = bank.filter((q) => !excludedSet.has(q.id));
     const used = bank.filter((q) => excludedSet.has(q.id));
@@ -140,17 +178,17 @@ export interface SectionScore {
 }
 
 export interface ExamGradingResult {
-  overallScore: number; // 0 - 100
-  overallPercentage: number; // 0 - 100
+  overallScore: number; // raw correct count (e.g. 35 out of 40)
+  overallPercentage: number; // 0 - 100 percentage
   passed: boolean;
-  passingThreshold: number; // 80
+  passingThreshold: number; // 80%
   sectionScores: Record<CertSection, SectionScore>;
   weakestSection: CertSection;
 }
 
 /**
  * Grades an exam submission server-side.
- * Passing threshold: 80% overall (80 out of 100 correct).
+ * Passing threshold: 80% overall (minimum 32 out of 40 correct).
  */
 export function gradeExam(
   questionIds: string[],

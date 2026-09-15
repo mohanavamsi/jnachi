@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { ArrowRight, Activity, Zap, Compass } from 'lucide-react';
+import { ArrowRight, Activity, Zap, Compass, Award, Layers, CheckCircle2 } from 'lucide-react';
+import { CERT_TIERS, TIER_ORDER } from '@/lib/certTypes';
 
 export default function HomePage() {
   return (
@@ -40,10 +41,10 @@ export default function HomePage() {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
-                  href="/lessons"
+                  href="/certification"
                   className="inline-flex items-center justify-center bg-white text-slate-700 border border-slate-300 px-8 py-4 rounded-full text-base font-medium hover:bg-slate-50 transition-colors"
                 >
-                  Explore 17 lessons
+                  4-Tier Certifications
                 </Link>
               </div>
             </div>
@@ -98,6 +99,66 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Formal Credential: 4-Tier Progression Ladder Callout */}
+      <section className="w-full py-20 bg-slate-900 text-white px-4">
+        <div className="container mx-auto max-w-6xl space-y-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-3 max-w-2xl">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                <Layers className="w-3.5 h-3.5" />
+                Formal Credentials
+              </span>
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+                The Jnachi 4-Tier Certification Ladder
+              </h2>
+              <p className="text-slate-300 text-base leading-relaxed">
+                Comprehensive, proctored examinations designed to evaluate applied AI fluency across four structured career progression milestones.
+              </p>
+            </div>
+
+            <Link
+              href="/certification"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-xl transition-colors shrink-0"
+            >
+              <span>Explore All 4 Tiers</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          {/* 4 Tier Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {TIER_ORDER.map((tierKey) => {
+              const tier = CERT_TIERS[tierKey];
+              return (
+                <div
+                  key={tierKey}
+                  className="p-6 rounded-3xl bg-slate-800/80 border border-slate-700 hover:border-indigo-500/50 transition-all flex flex-col justify-between space-y-4"
+                >
+                  <div className="space-y-3">
+                    <span
+                      className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full inline-block"
+                      style={{
+                        backgroundColor: tier.colorScheme.bgBadge,
+                        color: tier.colorScheme.textBadge,
+                      }}
+                    >
+                      Tier 0{tier.levelNumber}
+                    </span>
+                    <h3 className="text-xl font-bold text-white">{tier.title}</h3>
+                    <p className="text-xs text-slate-300 leading-relaxed">{tier.shortDescription}</p>
+                  </div>
+
+                  <div className="pt-3 border-t border-slate-700/80 flex items-center justify-between text-xs text-slate-400">
+                    <span>40 Questions (45m)</span>
+                    <span className="text-emerald-400 font-bold">80% Pass</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Learning Hub Feature Section */}
       <section className="w-full py-20 bg-slate-50 border-y border-slate-200/60 px-4">
         <div className="container mx-auto max-w-6xl">
@@ -110,7 +171,7 @@ export default function HomePage() {
                 17 Lessons Built for Immediate Practice
               </h2>
               <p className="text-slate-600 text-lg max-w-2xl">
-                No vague hype or 30-minute corporate lecture videos. Each lesson gives you a concrete technique, copyable prompt patterns, and an immediate 5-minute activation challenge.
+                No vague hype or corporate lecture videos. Each lesson gives you a concrete technique, copyable prompt patterns, and an immediate 5-minute activation challenge.
               </p>
             </div>
             <Link
@@ -213,39 +274,6 @@ export default function HomePage() {
               <p className="text-slate-600">
                 Knowledge is meant to move. Recheck your reading over time and watch your understanding come alive.
               </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Formal Credential: Jnachi Beginner Certification Callout */}
-      <section className="w-full py-16 bg-slate-900 text-white px-4">
-        <div className="container mx-auto max-w-6xl">
-          <div className="rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 p-8 md:p-12 flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="space-y-4 max-w-2xl text-center lg:text-left">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider">
-                Formal Credential
-              </span>
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-                Earn the Jnachi Beginner Certification
-              </h2>
-              <p className="text-slate-300 text-base leading-relaxed">
-                Ready for a rigorous, formal benchmark? Take the 100-question comprehensive exam spanning AI Literacy, Workflow Automation, Data Privacy, and Growth with an 80% passing standard.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0">
-              <Link
-                href="/certification"
-                className="w-full sm:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white text-base font-bold rounded-2xl shadow-lg shadow-indigo-600/30 transition-all text-center"
-              >
-                Begin Certification Exam
-              </Link>
-              <Link
-                href="/assessment"
-                className="w-full sm:w-auto px-6 py-4 bg-slate-800 hover:bg-slate-700 text-slate-200 text-base font-semibold rounded-2xl border border-slate-700 transition-colors text-center"
-              >
-                Quick Diagnostic (3 min)
-              </Link>
             </div>
           </div>
         </div>

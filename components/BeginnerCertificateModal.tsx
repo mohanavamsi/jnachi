@@ -5,7 +5,6 @@ import {
   X,
   Download,
   FileText,
-  CheckCircle2,
   Sparkles,
   User as UserIcon,
   Share2,
@@ -14,7 +13,6 @@ import {
   Twitter,
   Copy,
   Check,
-  ShieldCheck,
   Award,
 } from 'lucide-react';
 import {
@@ -23,6 +21,7 @@ import {
   downloadBeginnerCertificatePdf,
   downloadBeginnerCertificatePng,
 } from '@/lib/certificate';
+import { CERT_TIERS } from '@/lib/certTypes';
 
 interface BeginnerCertificateModalProps {
   isOpen: boolean;
@@ -42,19 +41,21 @@ export default function BeginnerCertificateModal({
   const [copied, setCopied] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
 
+  const tier = data.tier || 'beginner';
+  const tierConfig = CERT_TIERS[tier] || CERT_TIERS.beginner;
   const cleanShareUrl = 'https://jnachi.com';
 
   const renderDiploma = useCallback(() => {
     if (!canvasRef.current) return;
     drawBeginnerCertificate(canvasRef.current, {
       ...data,
+      tier,
       recipientName: recipientName.trim() || 'Candidate',
     });
-  }, [data, recipientName]);
+  }, [data, recipientName, tier]);
 
   useEffect(() => {
     if (isOpen) {
-      // Small timeout to allow canvas mounting in DOM
       const timer = setTimeout(() => {
         renderDiploma();
       }, 50);
@@ -75,7 +76,7 @@ export default function BeginnerCertificateModal({
     if (!canvasRef.current) return;
     setIsGenerating(true);
     try {
-      const filename = `Jnachi-Beginner-Certified-${data.certificateId}.png`;
+      const filename = `Jnachi-${tier.toUpperCase()}-Certified-${data.certificateId}.png`;
       downloadBeginnerCertificatePng(canvasRef.current, filename);
     } finally {
       setIsGenerating(false);
@@ -86,14 +87,14 @@ export default function BeginnerCertificateModal({
     if (!canvasRef.current) return;
     setIsGenerating(true);
     try {
-      const filename = `Jnachi-Beginner-Certified-${data.certificateId}.pdf`;
+      const filename = `Jnachi-${tier.toUpperCase()}-Certified-${data.certificateId}.pdf`;
       downloadBeginnerCertificatePdf(canvasRef.current, filename);
     } finally {
       setIsGenerating(false);
     }
   };
 
-  const shareText = `Proud to announce that I have passed the 100-question exam and earned my official Jnachi Beginner Certification in AI! Credential ID: ${data.certificateId}. Verify or begin your journey:`;
+  const shareText = `Proud to announce that I have passed the 40-question examination (80%+ passing standard) and earned my official ${tierConfig.title} in Applied AI! Credential ID: ${data.certificateId}. Verify or begin your journey:`;
 
   const handleCopyLink = async () => {
     try {
@@ -112,7 +113,10 @@ export default function BeginnerCertificateModal({
 
   const handleShareLinkedIn = () => {
     const text = encodeURIComponent(`${shareText}\n${cleanShareUrl}`);
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(cleanShareUrl)}&text=${text}`, '_blank');
+    window.open(
+      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(cleanShareUrl)}&text=${text}`,
+      '_blank'
+    );
   };
 
   const handleShareTwitter = () => {
@@ -122,7 +126,7 @@ export default function BeginnerCertificateModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
-      <div 
+      <div
         className="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
@@ -134,135 +138,151 @@ export default function BeginnerCertificateModal({
             </div>
             <div>
               <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                Official Credential Diploma
+                {tierConfig.title} Diploma
                 <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300">
                   Verified Pass
                 </span>
               </h2>
-              <p className="text-xs text-slate-500 font-mono">
-                {data.certificateId} • Issued {data.issuedDate}
+              <p className="text-xs text-slate-500">
+                Official Credential ID: <span className="font-mono font-medium">{data.certificateId}</span>
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-200/50 rounded-lg transition-colors"
+            className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-xl transition-colors"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {/* Scrollable Body */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {/* Name Customization Input */}
-          <div className="bg-indigo-50/60 border border-indigo-100 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5">
-              <UserIcon className="w-4 h-4 text-indigo-600 shrink-0" />
+        {/* Modal Body */}
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+          {/* Name Customizer Card */}
+          <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0">
+                <UserIcon className="w-4 h-4" />
+              </div>
               <div>
-                <label htmlFor="modal-cert-name" className="text-xs font-semibold text-indigo-950 uppercase tracking-wider block">
-                  Name on Official Diploma
+                <label htmlFor="certNameInput" className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                  Diploma Recipient Name
                 </label>
-                <p className="text-xs text-indigo-700">Customize how your legal or professional name appears on the credential.</p>
+                <p className="text-xs text-slate-500">Edit the printed name to match your professional legal credentials.</p>
               </div>
             </div>
-            <div className="flex w-full sm:w-auto items-center gap-2">
+            <div className="flex items-center gap-2">
               <input
-                id="modal-cert-name"
+                id="certNameInput"
                 type="text"
                 value={recipientName}
                 onChange={(e) => setRecipientName(e.target.value)}
                 onBlur={handleNameBlur}
-                onKeyDown={(e) => e.key === 'Enter' && handleNameBlur()}
-                placeholder="Full Name"
-                className="px-3 py-1.5 text-sm font-medium text-slate-900 bg-white border border-indigo-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 w-full sm:w-56"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleNameBlur();
+                }}
+                maxLength={60}
+                className="w-full sm:w-64 px-3 py-1.5 text-sm font-semibold text-slate-900 bg-white border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                placeholder="Enter your name"
               />
               <button
+                type="button"
                 onClick={handleNameBlur}
-                className="px-3 py-1.5 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition-colors shrink-0"
+                className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-lg transition-colors shrink-0"
               >
                 Update
               </button>
             </div>
           </div>
 
-          {/* Certificate Canvas Preview */}
-          <div className="relative rounded-xl overflow-hidden border border-slate-200 shadow-md bg-slate-100 flex items-center justify-center">
+          {/* Landscape Diploma Canvas Preview */}
+          <div className="relative w-full rounded-xl overflow-hidden border border-slate-300 bg-slate-100 shadow-inner flex items-center justify-center">
             <canvas
               ref={canvasRef}
-              className="w-full h-auto max-h-[460px] object-contain block bg-white"
+              className="w-full h-auto max-h-[460px] object-contain block mx-auto"
+              style={{ aspectRatio: '16/9' }}
             />
           </div>
 
-          {/* Download & Sharing Grid */}
+          {/* Action & Share Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Download Options */}
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
-              <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-                <Download className="w-4 h-4 text-slate-600" />
-                Download Official Diploma
-              </h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Download your credential in high-resolution print-ready formats suitable for framing, portfolios, or resume attachments.
-              </p>
-              <div className="flex gap-2 pt-1">
+            {/* Export Section */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col justify-between space-y-3">
+              <div>
+                <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <Download className="w-4 h-4 text-indigo-600" />
+                  <span>Download High-Resolution Files</span>
+                </h3>
+                <p className="text-xs text-slate-500 mt-1">
+                  Export vector PDF for printing or high-DPI 1920x1080 PNG for portfolio resumes.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-2 pt-2">
                 <button
+                  type="button"
                   onClick={handleDownloadPdf}
                   disabled={isGenerating}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-sm transition-all disabled:opacity-50"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm"
                 >
                   <FileText className="w-4 h-4" />
-                  Download PDF
+                  <span>Download PDF Diploma</span>
                 </button>
                 <button
+                  type="button"
                   onClick={handleDownloadPng}
                   disabled={isGenerating}
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 text-sm font-semibold rounded-xl shadow-sm transition-all disabled:opacity-50"
+                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-white hover:bg-slate-100 text-slate-700 text-xs font-bold rounded-xl border border-slate-300 transition-all shadow-sm"
                 >
-                  <Download className="w-4 h-4 text-slate-600" />
-                  Download PNG
+                  <Download className="w-4 h-4" />
+                  <span>Download PNG Image</span>
                 </button>
               </div>
             </div>
 
-            {/* Social Sharing Options */}
-            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
-              <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-                <Share2 className="w-4 h-4 text-slate-600" />
-                Share Your Credential
-              </h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Announce your verified certification on social channels using canonical link <span className="font-mono font-medium text-slate-700">jnachi.com</span>.
-              </p>
-              <div className="flex flex-wrap gap-2 pt-1">
+            {/* Social Share Section */}
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col justify-between space-y-3">
+              <div>
+                <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <Share2 className="w-4 h-4 text-indigo-600" />
+                  <span>Share Your Credential</span>
+                </h3>
+                <p className="text-xs text-slate-500 mt-1">
+                  Broadcast your verified score and credential ID to your professional network.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2 pt-2">
                 <button
+                  type="button"
                   onClick={handleShareLinkedIn}
-                  className="flex-1 min-w-[100px] inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#0077B5] hover:bg-[#006097] text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#0A66C2] hover:bg-[#004182] text-white text-xs font-semibold rounded-lg transition-colors shadow-sm"
                 >
                   <Linkedin className="w-3.5 h-3.5" />
-                  LinkedIn
+                  <span>LinkedIn</span>
                 </button>
                 <button
-                  onClick={handleShareWhatsApp}
-                  className="flex-1 min-w-[100px] inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#25D366] hover:bg-[#1EBE5D] text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
-                >
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  WhatsApp
-                </button>
-                <button
+                  type="button"
                   onClick={handleShareTwitter}
-                  className="flex-1 min-w-[80px] inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-900 hover:bg-black text-white text-xs font-semibold rounded-lg shadow-sm transition-colors"
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#000000] hover:bg-[#222222] text-white text-xs font-semibold rounded-lg transition-colors shadow-sm"
                 >
                   <Twitter className="w-3.5 h-3.5" />
-                  X / Post
+                  <span>X (Twitter)</span>
                 </button>
                 <button
-                  onClick={handleCopyLink}
-                  className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-semibold rounded-lg shadow-sm transition-colors"
-                  title="Copy share message & link"
+                  type="button"
+                  onClick={handleShareWhatsApp}
+                  className="flex-1 inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#25D366] hover:bg-[#1DA851] text-white text-xs font-semibold rounded-lg transition-colors shadow-sm"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-600" />}
-                  {copied ? 'Copied!' : 'Copy'}
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>WhatsApp</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  className="px-3 py-2 bg-white hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-lg border border-slate-300 transition-colors inline-flex items-center gap-1"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copied ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>
             </div>
@@ -272,12 +292,13 @@ export default function BeginnerCertificateModal({
         {/* Footer */}
         <div className="px-6 py-3 border-t border-slate-100 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
           <div className="flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>Cryptographically verifiable credential via Jnachi Authority</span>
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+            <span>Official Jnachi Certification Council Verification Protocol</span>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className="text-slate-600 hover:text-slate-900 font-medium px-3 py-1"
+            className="px-4 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors"
           >
             Done
           </button>
