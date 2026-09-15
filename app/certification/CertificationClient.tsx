@@ -59,6 +59,7 @@ import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, Cer
 import { LESSONS, CategoryKey } from '@/lib/lessonsData';
 import BeginnerCertificateModal from '@/components/BeginnerCertificateModal';
 import ExamSyllabusModal from '@/components/ExamSyllabusModal';
+import RazorpayModal from '@/components/RazorpayModal';
 import { useAuth } from '@/components/AuthProvider';
 import {
   loginWithGoogle,
@@ -165,6 +166,7 @@ export default function CertificationClient() {
   const [submissionResult, setSubmissionResult] = useState<ExamSubmissionResult | null>(null);
   const [isCertModalOpen, setIsCertModalOpen] = useState(false);
   const [isSyllabusModalOpen, setIsSyllabusModalOpen] = useState(false);
+  const [isRazorpayModalOpen, setIsRazorpayModalOpen] = useState(false);
   const [copiedCertId, setCopiedCertId] = useState(false);
 
   // Active tier metadata
@@ -1528,6 +1530,14 @@ export default function CertificationClient() {
                   <ShieldCheck className="w-4 h-4 text-slate-400" />
                   <span>45m Countdown begins upon clicking. Zero-data-loss active.</span>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsRazorpayModalOpen(true)}
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-colors shrink-0"
+                >
+                  Claim Voucher / Razorpay Checkout
+                </button>
               </div>
             </div>
           )}
@@ -1539,6 +1549,18 @@ export default function CertificationClient() {
           onClose={() => setIsSyllabusModalOpen(false)}
           initialTier={selectedTier}
           onSelectTier={setSelectedTier}
+        />
+
+        {/* Razorpay Checkout & Voucher Modal */}
+        <RazorpayModal
+          isOpen={isRazorpayModalOpen}
+          onClose={() => setIsRazorpayModalOpen(false)}
+          initialTier={selectedTier}
+          candidateName={effectiveCandidateName}
+          candidateEmail={effectiveEmail}
+          onPaymentSuccess={() => {
+            if (effectiveEmail) handleCheckStatus(effectiveEmail, selectedTier);
+          }}
         />
       </div>
     );
