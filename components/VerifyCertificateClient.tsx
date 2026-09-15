@@ -8,8 +8,6 @@ import {
   Award,
   Download,
   Share2,
-  Linkedin,
-  ExternalLink,
   Lock,
   Sparkles,
   Clock,
@@ -33,7 +31,6 @@ import {
   drawBeginnerCertificate,
   downloadBeginnerCertificatePdf,
   downloadBeginnerCertificatePng,
-  buildLinkedInCertificationUrl,
 } from '@/lib/certificate';
 
 interface VerifyCertificateClientProps {
@@ -113,16 +110,6 @@ export default function VerifyCertificateClient({
   };
 
   const shareUrl = typeof window !== 'undefined' ? `${window.location.origin}/verify/${record?.certificateId || certId}` : `https://jnachi.com/verify/${certId}`;
-
-  const linkedInUrl = record
-    ? buildLinkedInCertificationUrl({
-        certName: record.tierTitle,
-        certId: record.certificateId,
-        certUrl: shareUrl,
-        issueYear: new Date(record.issuedAt).getFullYear(),
-        issueMonth: new Date(record.issuedAt).getMonth() + 1,
-      })
-    : '';
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareUrl);
@@ -296,21 +283,9 @@ export default function VerifyCertificateClient({
                 </div>
               </div>
 
-              {/* ACTION TOOLBAR: LINKEDIN + DOWNLOADS + SHARE */}
+              {/* ACTION TOOLBAR: DOWNLOADS + SHARE */}
               <div className="mt-6 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex flex-wrap items-center gap-2.5">
-                  {/* 1-Click LinkedIn Add Button */}
-                  <a
-                    href={linkedInUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 bg-[#0077b5] hover:bg-[#006097] text-white text-xs font-extrabold rounded-xl shadow-md transition-all flex items-center gap-2"
-                  >
-                    <Linkedin className="w-4 h-4 fill-white" />
-                    <span>Add to LinkedIn Profile</span>
-                    <ExternalLink className="w-3 h-3 opacity-70" />
-                  </a>
-
                   {/* PDF Download */}
                   <button
                     type="button"
