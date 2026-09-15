@@ -40,6 +40,7 @@ import {
   Maximize2,
   Minimize2,
   AlertOctagon,
+  ExternalLink,
 } from 'lucide-react';
 import {
   CertSection,
@@ -1995,6 +1996,17 @@ export default function CertificationClient() {
                   <Download className="w-4 h-4 text-slate-900" />
                   View & Download Official Diploma
                 </button>
+                {certId && (
+                  <Link
+                    href={`/verify/${encodeURIComponent(certId)}`}
+                    target="_blank"
+                    className="px-6 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-xl border border-indigo-400/40 shadow-lg shadow-indigo-600/20 transition-all inline-flex items-center gap-2"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                    <span>Public Verification Page</span>
+                    <ExternalLink className="w-3.5 h-3.5 opacity-75" />
+                  </Link>
+                )}
                 <button
                   type="button"
                   onClick={() => {

@@ -728,3 +728,33 @@ export function downloadBeginnerCertificatePdf(canvas: HTMLCanvasElement, filena
 }
 
 export const downloadTierCertificatePdf = downloadBeginnerCertificatePdf;
+
+/**
+ * Builds the official 1-Click LinkedIn "Add to Profile" certification URL.
+ */
+export function buildLinkedInCertificationUrl(params: {
+  certName: string;
+  certId: string;
+  certUrl?: string;
+  issueYear?: number;
+  issueMonth?: number;
+}): string {
+  const base = 'https://www.linkedin.com/profile/add';
+  const url = new URL(base);
+  url.searchParams.set('startTask', 'CERTIFICATION_NAME');
+  url.searchParams.set('name', params.certName);
+  url.searchParams.set('organizationName', 'Jnachi');
+
+  const now = new Date();
+  const year = params.issueYear || now.getFullYear();
+  const month = params.issueMonth || now.getMonth() + 1;
+  url.searchParams.set('issueYear', year.toString());
+  url.searchParams.set('issueMonth', month.toString());
+
+  if (params.certUrl) {
+    url.searchParams.set('certUrl', params.certUrl);
+  }
+  url.searchParams.set('certId', params.certId);
+  return url.toString();
+}
+
