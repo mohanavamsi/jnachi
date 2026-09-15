@@ -57,6 +57,7 @@ import {
 import { CertTier, CERT_TIERS, TIER_ORDER } from '@/lib/certTypes';
 import { LESSONS, CategoryKey } from '@/lib/lessonsData';
 import BeginnerCertificateModal from '@/components/BeginnerCertificateModal';
+import ExamSyllabusModal from '@/components/ExamSyllabusModal';
 import { useAuth } from '@/components/AuthProvider';
 import {
   loginWithGoogle,
@@ -161,6 +162,7 @@ export default function CertificationClient() {
   // Result State
   const [submissionResult, setSubmissionResult] = useState<ExamSubmissionResult | null>(null);
   const [isCertModalOpen, setIsCertModalOpen] = useState(false);
+  const [isSyllabusModalOpen, setIsSyllabusModalOpen] = useState(false);
   const [copiedCertId, setCopiedCertId] = useState(false);
 
   // Active tier metadata
@@ -1095,6 +1097,21 @@ export default function CertificationClient() {
               ))}
             </div>
           </div>
+
+          {/* Syllabus & Study Guide CTA */}
+          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-100">
+            <div className="text-xs text-slate-500">
+              Want to review the 4-track curriculum breakdown, assessed competencies, and preparation checklist?
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsSyllabusModalOpen(true)}
+              className="w-full sm:w-auto px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold rounded-xl border border-indigo-200 transition-colors flex items-center justify-center gap-2 shrink-0 shadow-2xs"
+            >
+              <BookOpen className="w-4 h-4" />
+              View Exam Syllabus & Study Guide
+            </button>
+          </div>
         </div>
 
         {/* CANDIDATE PORTAL SIGN-UP & VERIFICATION GATE */}
@@ -1473,6 +1490,14 @@ export default function CertificationClient() {
             </div>
           )}
         </div>
+
+        {/* Exam Syllabus & Candidate Study Guide Modal */}
+        <ExamSyllabusModal
+          isOpen={isSyllabusModalOpen}
+          onClose={() => setIsSyllabusModalOpen(false)}
+          initialTier={selectedTier}
+          onSelectTier={setSelectedTier}
+        />
       </div>
     );
   }
