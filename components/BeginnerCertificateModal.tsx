@@ -108,7 +108,7 @@ export default function BeginnerCertificateModal({
     issueMonth: new Date().getMonth() + 1,
   });
 
-  const shareText = `Proud to announce that I passed the 40-question proctored examination (80%+ passing benchmark) and earned my official ${tierConfig.title} in Applied AI! View my verified credential:`;
+  const shareText = `Proud to announce that I passed the proctored examination and earned my official ${tierConfig.title} credential in Applied AI! View my verified certificate:`;
 
   const handleCopyLink = async () => {
     try {

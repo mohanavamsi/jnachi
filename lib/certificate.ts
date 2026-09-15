@@ -539,8 +539,8 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   ctx.font = '700 46px "Plus Jakarta Sans", sans-serif';
   ctx.fillText(data.recipientName || 'Candidate', centerX, 355);
 
-  // Optional Organization / Location line
-  const metaLine = [data.company, data.location].filter(Boolean).join(' • ');
+  // Optional Location line (company is excluded)
+  const metaLine = data.location ? data.location.trim() : '';
   if (metaLine) {
     ctx.fillStyle = '#64748b';
     ctx.font = '500 16px "Plus Jakarta Sans", sans-serif';
@@ -559,7 +559,7 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   ctx.fillStyle = '#334155';
   ctx.font = '400 20px "Plus Jakarta Sans", sans-serif';
   ctx.fillText(
-    `has satisfied all rigorous competency criteria across 40 examination evaluations (${tierConfig.passingScorePercent}%+ passing standard)`,
+    'has satisfied all rigorous competency criteria across the proctored examination evaluations',
     centerX,
     440
   );
@@ -615,23 +615,23 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
     ctx.textAlign = 'left';
     ctx.fillText(sec.title, x + 16, cardY + 36);
 
-    // Score & Percentage
+    // Track Status (Clean Pass/Mastery status without percentages)
     ctx.fillStyle = '#0f172a';
-    ctx.font = '700 24px "Plus Jakarta Sans", sans-serif';
-    ctx.fillText(`${sec.data.correct} / ${sec.data.total}`, x + 16, cardY + 74);
+    ctx.font = '700 20px "Plus Jakarta Sans", sans-serif';
+    ctx.fillText('Verified Pass', x + 16, cardY + 74);
 
     ctx.fillStyle = sec.color;
-    ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
+    ctx.font = '700 13px "Plus Jakarta Sans", sans-serif';
     ctx.textAlign = 'right';
-    ctx.fillText(`${sec.data.percentage}%`, x + cardW - 16, cardY + 74);
+    ctx.fillText('COMPETENCY MET', x + cardW - 16, cardY + 74);
   });
 
-  // Overall Score & Seal bar (y: 790 - 860)
+  // Overall Status bar (y: 790 - 860) - Clean pass confirmation without percentage figures
   ctx.fillStyle = '#0f172a';
   ctx.font = '700 20px "Plus Jakarta Sans", sans-serif';
   ctx.textAlign = 'center';
   ctx.fillText(
-    `Overall Examination Grade: ${data.overallScore}/40 (${data.overallPercentage}%)  •  Passing Standard: ${tierConfig.passingScorePercent}%`,
+    'Official Examination Status: Verified Pass • Conferred by Jnachi Certification Council',
     centerX,
     810
   );

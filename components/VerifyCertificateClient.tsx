@@ -192,7 +192,7 @@ export default function VerifyCertificateClient({
             Verify Jnachi Certification
           </h1>
           <p className="text-xs sm:text-sm text-slate-400">
-            Confirm authentic applied AI competency credentials, tamper-resistant scorecards, and issuing timestamps.
+            Confirm authentic applied AI competency credentials, tamper-resistant diplomas, and issuing timestamps.
           </p>
 
           <form onSubmit={handleManualSearch} className="pt-2 flex gap-2 max-w-lg mx-auto">
@@ -255,13 +255,6 @@ export default function VerifyCertificateClient({
                       Tier 0{tierConfig.levelNumber} • {record.tierTitle}
                     </span>
 
-                    {record.company && (
-                      <span className="flex items-center gap-1 text-slate-400">
-                        <Building className="w-3.5 h-3.5" />
-                        {record.company}
-                      </span>
-                    )}
-
                     {record.location && (
                       <span className="flex items-center gap-1 text-slate-400">
                         <MapPin className="w-3.5 h-3.5" />
@@ -271,14 +264,15 @@ export default function VerifyCertificateClient({
                   </div>
                 </div>
 
-                {/* Score & Cert ID Badge */}
+                {/* Verified Status & Cert ID Badge */}
                 <div className="flex items-center gap-3 shrink-0">
-                  <div className="p-4 rounded-2xl bg-slate-900/90 border border-white/10 text-center min-w-[120px]">
-                    <div className="text-2xl sm:text-3xl font-black text-emerald-400">
-                      {record.overallPercentage}%
+                  <div className="p-4 rounded-2xl bg-emerald-950/60 border border-emerald-500/30 text-center min-w-[130px]">
+                    <div className="text-xl sm:text-2xl font-black text-emerald-400 flex items-center justify-center gap-1.5">
+                      <CheckCircle2 className="w-5 h-5" />
+                      <span>PASSED</span>
                     </div>
-                    <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                      Overall Score ({record.overallScore}/40)
+                    <div className="text-[10px] font-bold text-emerald-300/80 uppercase tracking-wider mt-0.5">
+                      Verified Credential
                     </div>
                   </div>
 
@@ -348,89 +342,77 @@ export default function VerifyCertificateClient({
               </div>
             </div>
 
-            {/* 4-TRACK COMPETENCY SCORECARD */}
+            {/* 4-TRACK COMPETENCY VERIFICATION */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2">
+              <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-extrabold text-indigo-400 flex items-center gap-1.5">
                     <Sparkles className="w-4 h-4" /> AI Literacy
                   </span>
-                  <span className="font-bold text-white">
-                    {record.sectionScores.literacy.correct} / {record.sectionScores.literacy.total}
+                  <span className="font-bold text-emerald-400 flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5" /> Passed
                   </span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                  <div
-                    className="h-full bg-indigo-500 rounded-full"
-                    style={{ width: `${record.sectionScores.literacy.percentage}%` }}
-                  />
+                  <div className="h-full bg-indigo-500 rounded-full w-full" />
                 </div>
                 <div className="text-[11px] text-slate-400 flex justify-between">
                   <span>Prompt Engineering & Reasoning</span>
-                  <span className="font-bold text-slate-200">{record.sectionScores.literacy.percentage}%</span>
+                  <span className="font-bold text-slate-300">Competency Verified</span>
                 </div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2">
+              <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-extrabold text-amber-400 flex items-center gap-1.5">
                     <Zap className="w-4 h-4" /> Automation
                   </span>
-                  <span className="font-bold text-white">
-                    {record.sectionScores.automation.correct} / {record.sectionScores.automation.total}
+                  <span className="font-bold text-emerald-400 flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5" /> Passed
                   </span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                  <div
-                    className="h-full bg-amber-500 rounded-full"
-                    style={{ width: `${record.sectionScores.automation.percentage}%` }}
-                  />
+                  <div className="h-full bg-amber-500 rounded-full w-full" />
                 </div>
                 <div className="text-[11px] text-slate-400 flex justify-between">
                   <span>Workflows & Multi-Step Systems</span>
-                  <span className="font-bold text-slate-200">{record.sectionScores.automation.percentage}%</span>
+                  <span className="font-bold text-slate-300">Competency Verified</span>
                 </div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2">
+              <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-extrabold text-rose-400 flex items-center gap-1.5">
                     <ShieldCheck className="w-4 h-4" /> Privacy & Ethics
                   </span>
-                  <span className="font-bold text-white">
-                    {record.sectionScores.privacy.correct} / {record.sectionScores.privacy.total}
+                  <span className="font-bold text-emerald-400 flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5" /> Passed
                   </span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                  <div
-                    className="h-full bg-rose-500 rounded-full"
-                    style={{ width: `${record.sectionScores.privacy.percentage}%` }}
-                  />
+                  <div className="h-full bg-rose-500 rounded-full w-full" />
                 </div>
                 <div className="text-[11px] text-slate-400 flex justify-between">
                   <span>Data Protection & Safety Redlines</span>
-                  <span className="font-bold text-slate-200">{record.sectionScores.privacy.percentage}%</span>
+                  <span className="font-bold text-slate-300">Competency Verified</span>
                 </div>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2">
+              <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2.5">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-extrabold text-emerald-400 flex items-center gap-1.5">
                     <TrendingUp className="w-4 h-4" /> Growth & Judgment
                   </span>
-                  <span className="font-bold text-white">
-                    {record.sectionScores.growth.correct} / {record.sectionScores.growth.total}
+                  <span className="font-bold text-emerald-400 flex items-center gap-1">
+                    <Check className="w-3.5 h-3.5" /> Passed
                   </span>
                 </div>
                 <div className="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
-                  <div
-                    className="h-full bg-emerald-500 rounded-full"
-                    style={{ width: `${record.sectionScores.growth.percentage}%` }}
-                  />
+                  <div className="h-full bg-emerald-500 rounded-full w-full" />
                 </div>
                 <div className="text-[11px] text-slate-400 flex justify-between">
                   <span>Critical Evaluation & Scaling</span>
-                  <span className="font-bold text-slate-200">{record.sectionScores.growth.percentage}%</span>
+                  <span className="font-bold text-slate-300">Competency Verified</span>
                 </div>
               </div>
             </div>

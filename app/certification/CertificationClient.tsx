@@ -1966,14 +1966,17 @@ export default function CertificationClient() {
               <div className="space-y-2">
                 <h1 className="text-3xl sm:text-5xl font-black tracking-tight">{tierConfig.title} Certified</h1>
                 <p className="text-indigo-200 text-sm sm:text-base max-w-xl mx-auto">
-                  Congratulations, {submissionResult.recipientName}! You have successfully demonstrated applied mastery across all 4 tracks with {percentage}% (Passed with 80%+ standard).
+                  Congratulations, {submissionResult.recipientName}! You have successfully demonstrated applied mastery across all 4 tracks of the proctored examination.
                 </p>
               </div>
 
               <div className="inline-flex flex-col items-center justify-center p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/15 min-w-[200px]">
-                <span className="text-4xl sm:text-5xl font-extrabold text-white">{percentage}%</span>
+                <span className="text-3xl sm:text-4xl font-extrabold text-emerald-300 flex items-center gap-2">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-400" />
+                  VERIFIED PASS
+                </span>
                 <span className="text-xs text-indigo-200 uppercase tracking-wider font-semibold mt-1">
-                  {score} of 40 Correct (Needed 32)
+                  Official Proctored Credential Conferred
                 </span>
               </div>
 
@@ -2034,14 +2037,14 @@ export default function CertificationClient() {
                       <div className="flex items-center justify-between">
                         <h3 className="text-sm font-bold text-slate-900">{sec.title}</h3>
                         <span className="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
-                          {sData.percentage}%
+                          Passed
                         </span>
                       </div>
                       <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
-                        <div className="h-full bg-emerald-600 rounded-full" style={{ width: `${sData.percentage}%` }} />
+                        <div className="h-full bg-emerald-600 rounded-full w-full" />
                       </div>
                       <div className="flex justify-between text-xs text-slate-500">
-                        <span>Score: {sData.correct} / {sData.total} correct</span>
+                        <span>Status: Verified</span>
                         <span>Track Threshold Met ✓</span>
                       </div>
                     </div>

@@ -18,11 +18,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `Verified: ${record.recipientName} — ${record.tierTitle} (${record.overallPercentage}%) | Jnachi`,
-    description: `Official Verified Jnachi Credential for ${record.recipientName} in ${record.tierTitle}. Overall Score: ${record.overallPercentage}%. Credential ID: ${record.certificateId}`,
+    title: `Verified: ${record.recipientName} — ${record.tierTitle} | Jnachi`,
+    description: `Official Verified Jnachi Credential for ${record.recipientName} in ${record.tierTitle}. Credential ID: ${record.certificateId}`,
     openGraph: {
       title: `Verified Credential: ${record.recipientName} — ${record.tierTitle}`,
-      description: `Officially verified credential issued by Jnachi. Passed with ${record.overallPercentage}% overall score across Literacy, Automation, Privacy, and Growth.`,
+      description: `Officially verified credential issued by Jnachi in ${record.tierTitle} across Literacy, Automation, Privacy, and Growth.`,
       url: `https://jnachi.com/verify/${record.certificateId}`,
       siteName: 'Jnachi',
       type: 'website',
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     twitter: {
       card: 'summary_large_image',
       title: `Verified: ${record.recipientName} — ${record.tierTitle}`,
-      description: `Official Jnachi Certified Credential (${record.overallPercentage}%). Credential ID: ${record.certificateId}`,
+      description: `Official Jnachi Certified Credential. Credential ID: ${record.certificateId}`,
     },
   };
 }
