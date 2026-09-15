@@ -499,8 +499,8 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
 
   // Header Jnachi Emblem
   const centerX = width / 2;
-  const logoY = 120;
-  const logoR = 28;
+  const logoY = 135;
+  const logoR = 30;
 
   ctx.save();
   ctx.beginPath();
@@ -511,7 +511,7 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.arc(centerX, logoY, logoR - 10, Math.PI * 0.9, Math.PI * 2.4, false);
+  ctx.arc(centerX, logoY, logoR - 11, Math.PI * 0.9, Math.PI * 2.4, false);
   ctx.strokeStyle = tierConfig.colorScheme.diplomaAccent;
   ctx.lineWidth = 4;
   ctx.lineCap = 'round';
@@ -522,54 +522,55 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   ctx.fillStyle = tierConfig.colorScheme.primary;
   ctx.font = '600 16px "Plus Jakarta Sans", sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText('JNACHI EXECUTIVE LEARNING & CERTIFICATION COUNCIL', centerX, 185);
+  ctx.fillText('JNACHI EXECUTIVE LEARNING & CERTIFICATION COUNCIL', centerX, 205);
 
   // Main Heading: CERTIFICATE OF ACHIEVEMENT
   ctx.fillStyle = tierConfig.colorScheme.diplomaPrimary;
-  ctx.font = '700 48px Georgia, serif';
-  ctx.fillText('Certificate of Achievement', centerX, 245);
+  ctx.font = '700 52px Georgia, serif';
+  ctx.fillText('Certificate of Achievement', centerX, 275);
 
   // Subtitle
   ctx.fillStyle = '#64748b';
-  ctx.font = '400 18px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText('THIS IS TO OFFICIALLY CERTIFY THAT', centerX, 290);
+  ctx.font = '500 18px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText('THIS IS TO OFFICIALLY CERTIFY THAT', centerX, 330);
 
   // Recipient Name
   ctx.fillStyle = '#1e293b';
-  ctx.font = '700 46px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText(data.recipientName || 'Candidate', centerX, 355);
+  ctx.font = '700 50px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText(data.recipientName || 'Candidate', centerX, 405);
 
   // Optional Location line (company is excluded)
   const metaLine = data.location ? data.location.trim() : '';
+  const underlineY = metaLine ? 475 : 455;
   if (metaLine) {
     ctx.fillStyle = '#64748b';
-    ctx.font = '500 16px "Plus Jakarta Sans", sans-serif';
-    ctx.fillText(metaLine, centerX, 385);
+    ctx.font = '500 17px "Plus Jakarta Sans", sans-serif';
+    ctx.fillText(metaLine, centerX, 445);
   }
 
   // Underline for name
   ctx.strokeStyle = '#cbd5e1';
-  ctx.lineWidth = 1;
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
-  ctx.moveTo(centerX - 320, 400);
-  ctx.lineTo(centerX + 320, 400);
+  ctx.moveTo(centerX - 340, underlineY);
+  ctx.lineTo(centerX + 340, underlineY);
   ctx.stroke();
 
   // Achievement description text
   ctx.fillStyle = '#334155';
-  ctx.font = '400 20px "Plus Jakarta Sans", sans-serif';
+  ctx.font = '400 22px "Plus Jakarta Sans", sans-serif';
   ctx.fillText(
     'has satisfied all rigorous competency criteria across the proctored examination evaluations',
     centerX,
-    440
+    525
   );
-  ctx.fillText('and is hereby conferred the official credential:', centerX, 470);
+  ctx.fillText('and is hereby conferred the official credential:', centerX, 560);
 
   // Official Credential Badge Box
-  const badgeWidth = 640;
-  const badgeHeight = 76;
+  const badgeWidth = 720;
+  const badgeHeight = 84;
   const badgeX = centerX - badgeWidth / 2;
-  const badgeY = 505;
+  const badgeY = 605;
 
   ctx.fillStyle = tierConfig.colorScheme.diplomaPrimary;
   roundRect(ctx, badgeX, badgeY, badgeWidth, badgeHeight, 14, true, false);
@@ -579,61 +580,17 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   roundRect(ctx, badgeX + 4, badgeY + 4, badgeWidth - 8, badgeHeight - 8, 10, false, true);
 
   ctx.fillStyle = tierConfig.colorScheme.diplomaAccent === '#d97706' ? '#fbbf24' : '#ffffff';
-  ctx.font = '800 26px "Plus Jakarta Sans", sans-serif';
-  ctx.fillText(tierConfig.badgeLabel, centerX, badgeY + 47);
+  ctx.font = '800 28px "Plus Jakarta Sans", sans-serif';
+  ctx.fillText(tierConfig.badgeLabel, centerX, badgeY + 53);
 
-  // 4 Section Competency Cards
-  const cardW = 280;
-  const cardH = 110;
-  const cardGap = 24;
-  const startX = centerX - (cardW * 4 + cardGap * 3) / 2;
-  const cardY = 635;
-
-  const sections = [
-    { title: 'AI Literacy & Prompting', data: data.sectionScores.literacy, color: '#4f46e5' },
-    { title: 'Workflow Automation', data: data.sectionScores.automation, color: '#059669' },
-    { title: 'Data Privacy & Ethics', data: data.sectionScores.privacy, color: '#0284c7' },
-    { title: 'Growth & Problem Solving', data: data.sectionScores.growth, color: '#7c3aed' },
-  ];
-
-  sections.forEach((sec, idx) => {
-    const x = startX + idx * (cardW + cardGap);
-    ctx.fillStyle = '#ffffff';
-    roundRect(ctx, x, cardY, cardW, cardH, 12, true, false);
-
-    ctx.strokeStyle = '#e2e8f0';
-    ctx.lineWidth = 1;
-    roundRect(ctx, x, cardY, cardW, cardH, 12, false, true);
-
-    // Color top bar
-    ctx.fillStyle = sec.color;
-    ctx.fillRect(x + 12, cardY, cardW - 24, 4);
-
-    // Section title
-    ctx.fillStyle = '#475569';
-    ctx.font = '600 13px "Plus Jakarta Sans", sans-serif';
-    ctx.textAlign = 'left';
-    ctx.fillText(sec.title, x + 16, cardY + 36);
-
-    // Track Status (Clean Pass/Mastery status without percentages)
-    ctx.fillStyle = '#0f172a';
-    ctx.font = '700 20px "Plus Jakarta Sans", sans-serif';
-    ctx.fillText('Verified Pass', x + 16, cardY + 74);
-
-    ctx.fillStyle = sec.color;
-    ctx.font = '700 13px "Plus Jakarta Sans", sans-serif';
-    ctx.textAlign = 'right';
-    ctx.fillText('COMPETENCY MET', x + cardW - 16, cardY + 74);
-  });
-
-  // Overall Status bar (y: 790 - 860) - Clean pass confirmation without percentage figures
-  ctx.fillStyle = '#0f172a';
-  ctx.font = '700 20px "Plus Jakarta Sans", sans-serif';
+  // Overall Status bar - Clean pass confirmation without cards or percentage figures
+  ctx.fillStyle = '#475569';
+  ctx.font = '600 20px "Plus Jakarta Sans", sans-serif';
   ctx.textAlign = 'center';
   ctx.fillText(
     'Official Examination Status: Verified Pass • Conferred by Jnachi Certification Council',
     centerX,
-    810
+    740
   );
 
   // Footer Signoff & Verification Metadata (y: 880 - 1000)
