@@ -4,13 +4,16 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Logo } from '@/components/Logo';
 import { AuthNav } from '@/components/AuthNav';
+import { PromoBanner } from '@/components/LaunchPromoModal';
 import { BookOpen, Award, Menu, X, ArrowRight, Layers } from 'lucide-react';
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/90 backdrop-blur-md">
+    <>
+      <PromoBanner />
+      <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/90 backdrop-blur-md">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between max-w-6xl">
         {/* Left: Brand Logo */}
         <Link href="/" className="hover:opacity-85 transition-opacity flex items-center">
@@ -107,6 +110,7 @@ export function Navigation() {
         </div>
       )}
     </header>
+    </>
   );
 }
 

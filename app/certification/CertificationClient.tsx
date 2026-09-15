@@ -974,15 +974,15 @@ export default function CertificationClient() {
       <div className="py-10 px-4 sm:px-6 max-w-5xl mx-auto space-y-10 animate-in fade-in duration-300">
         {/* Header Hero */}
         <div className="text-center space-y-4 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-200/80 text-indigo-700 text-xs font-semibold tracking-wide">
-            <Award className="w-4 h-4 text-indigo-600" />
-            Official Credential Progression Ladder
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/20 border border-amber-400/50 text-amber-900 text-xs font-bold tracking-wide">
+            <Sparkles className="w-4 h-4 text-amber-600" />
+            <span>Limited 30-Day Launch Event: 100% Free Examination Fees</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
-            Jnachi AI Certifications
+            Jnachi Professional Certifications
           </h1>
           <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-            Four rigorous industry benchmarks designed to measure and certify applied AI capability—from baseline literacy to strategic workflow architecture.
+            Ten rigorous, proctored examinations designed to measure and certify applied AI capability—spanning the 4-tier Core Progression Ladder and 6 Specialized Role Tracks.
           </p>
         </div>
 

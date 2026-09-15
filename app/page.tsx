@@ -1,10 +1,14 @@
 import Link from 'next/link';
-import { ArrowRight, Activity, Zap, Compass, Award, Layers, CheckCircle2 } from 'lucide-react';
-import { CERT_TIERS, TIER_ORDER } from '@/lib/certTypes';
+import { ArrowRight, Activity, Zap, Compass, Award, Layers, CheckCircle2, Sparkles, Briefcase } from 'lucide-react';
+import { CERT_TIERS, CORE_TIER_ORDER, ROLE_TIER_ORDER } from '@/lib/certTypes';
+import { LaunchPromoModal } from '@/components/LaunchPromoModal';
 
 export default function HomePage() {
   return (
     <div className="flex flex-col items-center w-full">
+      {/* 30-Day Free Launch Promo Modal */}
+      <LaunchPromoModal />
+
       {/* Hero Section */}
       <section className="w-full bg-slate-50 py-16 md:py-24 px-4 relative overflow-hidden border-b border-slate-200/60">
         {/* Background decorative brand mark */}
@@ -23,35 +27,47 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 lg:gap-16 items-center">
             {/* Left Column: Text & Actions */}
             <div className="md:col-span-7 flex flex-col items-start text-left">
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-indigo-600 mb-3 block">
+              {/* 30-Day Launch Event Urgency Pill */}
+              <Link
+                href="/certification"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/15 border border-amber-400/60 text-slate-900 text-xs sm:text-sm font-semibold mb-4 hover:bg-amber-400/25 transition-all shadow-xs group"
+              >
+                <span className="flex h-2 w-2 rounded-full bg-amber-500 animate-ping" />
+                <span className="text-amber-900 font-black uppercase tracking-wider text-[11px]">Limited 30-Day Launch:</span>
+                <span className="text-slate-800">All 10 AI Certifications 100% Free</span>
+                <ArrowRight className="w-3.5 h-3.5 text-indigo-600 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+
+              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-indigo-600 mb-2 block">
                 Know it. Use it. Prove it.
               </span>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.12] mb-6">
                 Get a precise reading of your AI momentum
               </h1>
               <p className="text-lg sm:text-xl text-slate-600 mb-8 max-w-xl leading-relaxed">
-                Not a grade. A measure of how activated your AI knowledge is right now.
+                Not a grade. A measure of how activated your AI knowledge is right now — backed by 10 official verifiable industry certifications.
               </p>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
                 <Link
-                  href="/assessment"
-                  className="inline-flex items-center justify-center gap-2.5 bg-indigo-600 text-white px-8 py-4 rounded-full text-base font-medium hover:bg-indigo-700 transition-colors"
+                  href="/certification"
+                  className="inline-flex items-center justify-center gap-2.5 bg-indigo-600 text-white px-8 py-4 rounded-full text-base font-bold hover:bg-indigo-700 transition-all shadow-md hover:shadow-lg hover:scale-102"
                 >
-                  <span>Start assessment</span>
+                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  <span>Explore Certifications (Free)</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <Link
-                  href="/certification"
+                  href="/assessment"
                   className="inline-flex items-center justify-center bg-white text-slate-700 border border-slate-300 px-8 py-4 rounded-full text-base font-medium hover:bg-slate-50 transition-colors"
                 >
-                  4-Tier Certifications
+                  Quick Assessment
                 </Link>
               </div>
             </div>
 
             {/* Right Column: Tilted Preview Card */}
             <div className="md:col-span-5 flex justify-center md:justify-end w-full">
-              <div className="w-full max-w-sm bg-white border-2 border-slate-200 rounded-3xl p-8 flex flex-col items-center text-center transform rotate-0 md:-rotate-3 transition-transform">
+              <div className="w-full max-w-sm bg-white border-2 border-slate-200 rounded-3xl p-8 flex flex-col items-center text-center transform rotate-0 md:-rotate-3 transition-transform shadow-xl">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-6">
                   Jnachi score
                 </span>
@@ -99,62 +115,98 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Formal Credential: 4-Tier Progression Ladder Callout */}
+      {/* Formal Credential: 10 Certifications Callout */}
       <section className="w-full py-20 bg-slate-900 text-white px-4">
         <div className="container mx-auto max-w-6xl space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-3 max-w-2xl">
-              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider">
-                <Layers className="w-3.5 h-3.5" />
-                Formal Credentials
-              </span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-400/20 border border-amber-400/40 text-amber-300 text-xs font-bold uppercase tracking-wider">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  Free 30-Day Launch Event
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-bold uppercase tracking-wider">
+                  <Layers className="w-3.5 h-3.5" />
+                  10 Official Credentials
+                </span>
+              </div>
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
-                The Jnachi 4-Tier Certification Ladder
+                Professional AI Certification Suite
               </h2>
               <p className="text-slate-300 text-base leading-relaxed">
-                Comprehensive, proctored examinations designed to evaluate applied AI fluency across four structured career progression milestones.
+                4 Core Career Progression Milestones plus 6 Role-Based Examinations (Sales, Devs, Marketers, Support, HR, Managers). Proctored, verifiable, and free for the next 30 days.
               </p>
             </div>
 
             <Link
               href="/certification"
-              className="inline-flex items-center gap-2 px-6 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-xl transition-colors shrink-0"
+              className="inline-flex items-center gap-2 px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm rounded-xl transition-all shadow-md shrink-0 hover:scale-102"
             >
-              <span>Explore All 4 Tiers</span>
+              <span>Explore All 10 Certifications</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
-          {/* 4 Tier Cards */}
+          {/* 4 Core Tier Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {TIER_ORDER.map((tierKey) => {
+            {CORE_TIER_ORDER.map((tierKey) => {
               const tier = CERT_TIERS[tierKey];
               return (
-                <div
+                <Link
                   key={tierKey}
-                  className="p-6 rounded-3xl bg-slate-800/80 border border-slate-700 hover:border-indigo-500/50 transition-all flex flex-col justify-between space-y-4"
+                  href="/certification"
+                  className="p-6 rounded-3xl bg-slate-800/80 border border-slate-700 hover:border-indigo-400 hover:bg-slate-800 transition-all flex flex-col justify-between space-y-4 group"
                 >
                   <div className="space-y-3">
-                    <span
-                      className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full inline-block"
-                      style={{
-                        backgroundColor: tier.colorScheme.bgBadge,
-                        color: tier.colorScheme.textBadge,
-                      }}
-                    >
-                      Tier 0{tier.levelNumber}
-                    </span>
-                    <h3 className="text-xl font-bold text-white">{tier.title}</h3>
+                    <div className="flex items-center justify-between">
+                      <span
+                        className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full inline-block"
+                        style={{
+                          backgroundColor: tier.colorScheme.bgBadge,
+                          color: tier.colorScheme.textBadge,
+                        }}
+                      >
+                        Tier 0{tier.levelNumber}
+                      </span>
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        Free Launch
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-white group-hover:text-indigo-300 transition-colors">{tier.title}</h3>
                     <p className="text-xs text-slate-300 leading-relaxed">{tier.shortDescription}</p>
                   </div>
 
                   <div className="pt-3 border-t border-slate-700/80 flex items-center justify-between text-xs text-slate-400">
                     <span>40 Questions (45m)</span>
-                    <span className="text-emerald-400 font-bold">80% Pass</span>
+                    <span className="text-indigo-400 font-bold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                      Start →
+                    </span>
                   </div>
-                </div>
+                </Link>
               );
             })}
+          </div>
+
+          {/* Role Track Highlights Strip */}
+          <div className="p-6 rounded-3xl bg-indigo-950/60 border border-indigo-800/60 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-indigo-600/40 border border-indigo-400/40 flex items-center justify-center shrink-0">
+                <Briefcase className="w-5 h-5 text-indigo-300" />
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-white">6 Specialized Role-Based Certifications Also Available</h4>
+                <p className="text-xs text-indigo-200">
+                  Sales • Developers • Marketers • Customer Support • HR & People Ops • Managers & Leads
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/certification"
+              className="inline-flex items-center gap-2 text-amber-300 hover:text-amber-200 text-xs font-bold uppercase tracking-wider shrink-0"
+            >
+              <span>View Role Certifications</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </section>
