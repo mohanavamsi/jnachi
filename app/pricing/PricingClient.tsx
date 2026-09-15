@@ -29,7 +29,7 @@ export default function PricingClient() {
               Transparent Pricing for Applied AI Mastery
             </h1>
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-              Jnachi Beginner is 100% free, and all 6 Specialized Role-Based Certifications are completely free during the 30-day launch period.
+              Jnachi AI Foundations is 100% free, and all 6 Specialized Role-Based Certifications are completely free during the 30-day launch period.
             </p>
           </div>
 
@@ -41,18 +41,18 @@ export default function PricingClient() {
                 <span className="text-xs font-bold uppercase text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 inline-block tracking-wider">
                   Always Free
                 </span>
-                <h2 className="text-2xl font-bold text-slate-900">Foundational AI & Beginner Cert</h2>
+                <h2 className="text-2xl font-bold text-slate-900">AI Foundations Certification</h2>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-black text-slate-900">₹0</span>
                   <span className="text-xs text-slate-500 uppercase font-bold">/ Free Tier</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Momentum assessment plus the official Tier 01: Beginner Certification exam with verified diploma.
+                  Momentum assessment plus the official Tier 01: Certified AI Foundations exam with verified diploma.
                 </p>
 
                 <ul className="space-y-2.5 text-xs text-slate-700 pt-4 border-t border-slate-100">
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600" /> Adaptive 20-question momentum test</li>
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600" /> <strong>Tier 01: Beginner Exam</strong> (40 Qs, 45m)</li>
+                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600" /> <strong>Tier 01: AI Foundations Exam</strong> (40 Qs, 45m)</li>
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600" /> Official verifiable digital diploma</li>
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-emerald-600" /> 1-Click LinkedIn Add to Profile</li>
                 </ul>
@@ -62,7 +62,7 @@ export default function PricingClient() {
                 href="/certification"
                 className="w-full inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-4 rounded-xl text-xs transition-colors"
               >
-                <span>Start Beginner Exam (Free)</span>
+                <span>Start AI Foundations Exam (Free)</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -132,15 +132,15 @@ export default function PricingClient() {
 
                 <ul className="space-y-2.5 text-xs text-slate-700 pt-4 border-t border-slate-100">
                   <li className="flex items-center justify-between">
-                    <span>• Tier 02: Practitioner</span>
+                    <span>• Tier 02: AI Practitioner</span>
                     <strong className="text-slate-900">₹1,499 ($29)</strong>
                   </li>
                   <li className="flex items-center justify-between">
-                    <span>• Tier 03: Specialist</span>
+                    <span>• Tier 03: AI Builder</span>
                     <strong className="text-slate-900">₹2,499 ($49)</strong>
                   </li>
                   <li className="flex items-center justify-between">
-                    <span>• Tier 04: Master Architect</span>
+                    <span>• Tier 04: AI Master Architect</span>
                     <strong className="text-slate-900">₹3,999 ($79)</strong>
                   </li>
                   <li className="flex items-center gap-2 pt-1 text-slate-500 text-[11px]">

@@ -112,7 +112,7 @@ export const BEGINNER_GROWTH_QUESTIONS: CertQuestion[] = [
   {
     id: 'beg_gro_10',
     section: 'growth',
-    prompt: 'What distinguishes someone who has earned the Jnachi Beginner Certification?',
+    prompt: 'What distinguishes someone who has earned the Jnachi Certified AI Foundations credential?',
     options: [
       { id: 'a', label: 'They have memorized theoretical AI vocabulary without testing prompt workflows.' },
       { id: 'b', label: 'They possess verified foundational fluency—knowing how to craft robust prompts, automate daily micro-tasks, safeguard sensitive data, and critically evaluate outputs.' },
@@ -136,26 +136,26 @@ export const BEGINNER_GROWTH_QUESTIONS: CertQuestion[] = [
   {
     id: 'beg_gro_12',
     section: 'growth',
-    prompt: 'How can an individual leverage AI as a personalized career mentor or interview coach?',
+    prompt: 'How should an employee respond when a generative AI model outputs an analysis that contradicts verifiable corporate sales data?',
     options: [
-      { id: 'a', label: 'Ask the AI to write fake references on their behalf.' },
-      { id: 'b', label: 'Have the AI automatically take their live video interview without human presence.' },
-      { id: 'c', label: 'Ignore all industry job descriptions.' },
-      { id: 'd', label: 'Conduct simulated mock interviews where the AI plays the role of a hiring manager asking behavioral questions and critiquing STAR-method responses.' },
+      { id: 'a', label: 'Assume the AI has discovered secret trends that the internal data missed.' },
+      { id: 'b', label: 'Override the AI output with verified ground truth data, diagnose the prompt grounding error, and document the discrepancy.' },
+      { id: 'c', label: 'Forward the AI output to executives immediately without mentioning the discrepancy.' },
+      { id: 'd', label: 'Delete the internal database to align with the AI recommendation.' },
     ],
-    correctOptionId: 'd',
+    correctOptionId: 'b',
   },
   {
     id: 'beg_gro_13',
     section: 'growth',
-    prompt: 'What is the "Feynman Technique" prompt pattern for deep learning with AI?',
+    prompt: 'Which habit best ensures sustained skill growth when working with generative AI tools across evolving models?',
     options: [
-      { id: 'a', label: 'Explaining a complex topic to the AI in simple layman terms, then prompting the AI to identify conceptual gaps, misconceptions, and oversimplifications.' },
-      { id: 'b', label: 'Generating 5,000 flashcards and memorizing all of them overnight.' },
-      { id: 'c', label: 'Translating English text into Latin and back.' },
-      { id: 'd', label: 'Running automated web scrapers across Wikipedia.' },
+      { id: 'a', label: 'Using only one fixed prompt template for the next five years.' },
+      { id: 'b', label: 'Actively testing new prompting techniques, measuring output quality, cataloging edge cases, and adhering to latest safety guidelines.' },
+      { id: 'c', label: 'Avoiding all prompt adjustments once an output is minimally readable.' },
+      { id: 'd', label: 'Delegating all strategic thinking to automated chatbot outputs.' },
     ],
-    correctOptionId: 'a',
+    correctOptionId: 'b',
   },
   {
     id: 'beg_gro_14',

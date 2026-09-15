@@ -46,10 +46,10 @@ const COMMON_PREP_PATH = [
 ];
 
 export const CERT_SYLLABUS: Record<CertTier, CertSyllabusData> = {
-  // 1. BEGINNER
+  // 1. BEGINNER (AI FOUNDATIONS)
   beginner: {
     tier: 'beginner',
-    title: 'Jnachi Beginner (Foundational AI Literacy)',
+    title: 'Jnachi Certified AI Foundations (Level 1)',
     overview: 'Validates baseline practical fluency across core prompting anatomy, context hygiene, basic automation, and confidentiality redlines.',
     targetRole: 'Professionals, students, and teams starting their applied AI journey.',
     examSpecs: {
@@ -135,10 +135,10 @@ export const CERT_SYLLABUS: Record<CertTier, CertSyllabusData> = {
     preparationPath: COMMON_PREP_PATH,
   },
 
-  // 2. PRACTITIONER
+  // 2. PRACTITIONER (AI PRACTITIONER)
   practitioner: {
     tier: 'practitioner',
-    title: 'Jnachi Practitioner (Advanced Scenario Execution)',
+    title: 'Jnachi Certified AI Practitioner (Level 2)',
     overview: 'Evaluates hands-on efficiency in daily tasks: deep prompt calibration, structured JSON schemas, document synthesis, and enterprise redaction.',
     targetRole: 'Knowledge workers, product managers, analysts, and operators using AI tools daily.',
     examSpecs: {
@@ -224,10 +224,10 @@ export const CERT_SYLLABUS: Record<CertTier, CertSyllabusData> = {
     preparationPath: COMMON_PREP_PATH,
   },
 
-  // 3. BUILDER
+  // 3. BUILDER (AI BUILDER)
   builder: {
     tier: 'builder',
-    title: 'Jnachi Builder (AI Workflow Architecture)',
+    title: 'Jnachi Certified AI Builder (Level 3)',
     overview: 'Measures your mastery of building automated multi-step AI workflows, custom system instructions, function calling, tool augmentation, and error recovery.',
     targetRole: 'Engineers, technical operators, no-code builders, and automation architects.',
     examSpecs: {
@@ -313,10 +313,10 @@ export const CERT_SYLLABUS: Record<CertTier, CertSyllabusData> = {
     preparationPath: COMMON_PREP_PATH,
   },
 
-  // 4. MASTER
+  // 4. MASTER (AI MASTER ARCHITECT)
   master: {
     tier: 'master',
-    title: 'Jnachi Master (Enterprise AI Architect & Strategist)',
+    title: 'Jnachi Certified AI Master Architect (Level 4)',
     overview: 'The pinnacle benchmark. Strategic AI evaluation, enterprise governance, knowing when NOT to use AI, and organizational leadership.',
     targetRole: 'AI team leads, enterprise architects, directors, and strategic decision-makers.',
     examSpecs: {

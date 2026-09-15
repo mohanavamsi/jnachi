@@ -232,7 +232,7 @@ export const PRACTITIONER_GROWTH_QUESTIONS: CertQuestion[] = [
   {
     id: 'prac_gro_20',
     section: 'growth',
-    prompt: 'What is the ultimate milestone of achieving the Jnachi Practitioner Certification?',
+    prompt: 'What is the ultimate milestone of achieving the Jnachi Certified AI Practitioner Certification?',
     options: [
       { id: 'a', label: 'Memorizing prompt templates without understanding their underlying mechanisms.' },
       { id: 'b', label: 'Writing prompts solely for entertainment.' },

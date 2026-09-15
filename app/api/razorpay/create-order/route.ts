@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
         isFree: true,
         isLaunchFree: pricing.isLaunchFree,
         message: pricing.isFree
-          ? 'Jnachi Beginner is 100% free. No payment required.'
+          ? 'Jnachi Certified AI Foundations is 100% free. No payment required.'
           : '30-Day Launch Event: Examination fees for this Role Track are 100% waived.',
         tier,
       });
