@@ -2,41 +2,58 @@
  * Jnachi Certification Exam Question Bank
  * 
  * Supports the 4-Tier Progression Ladder:
- * - Tier 1: Jnachi Beginner (200 Questions, 50 per section across 4 tracks)
- * - Tier 2: Jnachi Practitioner (40 In-Depth Scenario Questions, 10 per section)
- * - Tier 3: Jnachi Builder (40 Pipeline & Automation Questions, 10 per section)
- * - Tier 4: Jnachi Master (40 Governance, Judgment & Strategic Questions, 10 per section)
+ * - Tier 1: Jnachi Beginner (40 Fresh, Calibrated Baseline Questions across 4 tracks)
+ * - Tier 2: Jnachi Practitioner (40 In-Depth Scenario Questions across 4 tracks)
+ * - Tier 3: Jnachi Builder (40 Pipeline & Automation Questions across 4 tracks)
+ * - Tier 4: Jnachi Master / Architect (40 Governance, Judgment & Strategic Questions across 4 tracks)
  * 
  * Each exam attempt samples 10 questions per section (40 questions total).
  */
 
 import { CertTier } from './certTypes';
-import { LITERACY_QUESTIONS } from './certQuestions/literacy';
-import { AUTOMATION_QUESTIONS } from './certQuestions/automation';
-import { PRIVACY_QUESTIONS } from './certQuestions/privacy';
-import { GROWTH_QUESTIONS } from './certQuestions/growth';
 import {
-  PRACTITIONER_QUESTIONS,
-  BUILDER_QUESTIONS,
-  MASTER_QUESTIONS,
-} from './certQuestions/tierQuestions';
+  CertSection,
+  CertOption,
+  CertQuestion,
+  ClientCertQuestion,
+} from './certQuestions/types';
 
-export type CertSection = 'literacy' | 'automation' | 'privacy' | 'growth';
+import {
+  BEGINNER_QUESTIONS_BY_SECTION,
+  ALL_BEGINNER_QUESTIONS,
+} from './certQuestions/beginner';
 
-export interface CertOption {
-  id: string; // 'a' | 'b' | 'c' | 'd'
-  label: string;
-}
+import {
+  PRACTITIONER_QUESTIONS_BY_SECTION,
+  ALL_PRACTITIONER_QUESTIONS,
+} from './certQuestions/practitioner';
 
-export interface CertQuestion {
-  id: string;
-  section: CertSection;
-  prompt: string;
-  options: CertOption[];
-  correctOptionId: string;
-}
+import {
+  BUILDER_QUESTIONS_BY_SECTION,
+  ALL_BUILDER_QUESTIONS,
+} from './certQuestions/builder';
 
-export type ClientCertQuestion = Omit<CertQuestion, 'correctOptionId'>;
+import {
+  ARCHITECT_QUESTIONS_BY_SECTION,
+  ALL_ARCHITECT_QUESTIONS,
+  MASTER_QUESTIONS_BY_SECTION,
+  ALL_MASTER_QUESTIONS,
+} from './certQuestions/architect';
+
+export type { CertSection, CertOption, CertQuestion, ClientCertQuestion };
+
+export {
+  BEGINNER_QUESTIONS_BY_SECTION,
+  ALL_BEGINNER_QUESTIONS,
+  PRACTITIONER_QUESTIONS_BY_SECTION,
+  ALL_PRACTITIONER_QUESTIONS,
+  BUILDER_QUESTIONS_BY_SECTION,
+  ALL_BUILDER_QUESTIONS,
+  ARCHITECT_QUESTIONS_BY_SECTION,
+  ALL_ARCHITECT_QUESTIONS,
+  MASTER_QUESTIONS_BY_SECTION,
+  ALL_MASTER_QUESTIONS,
+};
 
 export const CERT_SECTIONS: { id: CertSection; title: string; description: string }[] = [
   {
@@ -72,31 +89,11 @@ export const CERT_SECTION_LABELS: Record<CertSection, string> = {
 // ASSEMBLED COMPLETE QUESTION BANKS PER TIER
 // =========================================================================
 
-function groupQuestionsBySection(questions: CertQuestion[]): Record<CertSection, CertQuestion[]> {
-  const grouped: Record<CertSection, CertQuestion[]> = {
-    literacy: [],
-    automation: [],
-    privacy: [],
-    growth: [],
-  };
-  questions.forEach((q) => {
-    if (grouped[q.section]) {
-      grouped[q.section].push(q);
-    }
-  });
-  return grouped;
-}
-
 export const TIER_QUESTION_BANK: Record<CertTier, Record<CertSection, CertQuestion[]>> = {
-  beginner: {
-    literacy: LITERACY_QUESTIONS,
-    automation: AUTOMATION_QUESTIONS,
-    privacy: PRIVACY_QUESTIONS,
-    growth: GROWTH_QUESTIONS,
-  },
-  practitioner: groupQuestionsBySection(PRACTITIONER_QUESTIONS),
-  builder: groupQuestionsBySection(BUILDER_QUESTIONS),
-  master: groupQuestionsBySection(MASTER_QUESTIONS),
+  beginner: BEGINNER_QUESTIONS_BY_SECTION,
+  practitioner: PRACTITIONER_QUESTIONS_BY_SECTION,
+  builder: BUILDER_QUESTIONS_BY_SECTION,
+  master: ARCHITECT_QUESTIONS_BY_SECTION,
 };
 
 // Backward compatibility alias for Beginner bank

@@ -1,0 +1,26 @@
+import { CertQuestion, CertSection } from '../types';
+import { BUILDER_LITERACY_QUESTIONS } from './literacy';
+import { BUILDER_AUTOMATION_QUESTIONS } from './automation';
+import { BUILDER_PRIVACY_QUESTIONS } from './privacy';
+import { BUILDER_GROWTH_QUESTIONS } from './growth';
+
+export {
+  BUILDER_LITERACY_QUESTIONS,
+  BUILDER_AUTOMATION_QUESTIONS,
+  BUILDER_PRIVACY_QUESTIONS,
+  BUILDER_GROWTH_QUESTIONS,
+};
+
+export const BUILDER_QUESTIONS_BY_SECTION: Record<CertSection, CertQuestion[]> = {
+  literacy: BUILDER_LITERACY_QUESTIONS,
+  automation: BUILDER_AUTOMATION_QUESTIONS,
+  privacy: BUILDER_PRIVACY_QUESTIONS,
+  growth: BUILDER_GROWTH_QUESTIONS,
+};
+
+export const ALL_BUILDER_QUESTIONS: CertQuestion[] = [
+  ...BUILDER_LITERACY_QUESTIONS,
+  ...BUILDER_AUTOMATION_QUESTIONS,
+  ...BUILDER_PRIVACY_QUESTIONS,
+  ...BUILDER_GROWTH_QUESTIONS,
+];
