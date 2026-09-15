@@ -37,6 +37,9 @@ import {
   Layers,
   Key,
   ShieldAlert,
+  Maximize2,
+  Minimize2,
+  AlertOctagon,
 } from 'lucide-react';
 import {
   CertSection,
@@ -78,6 +81,7 @@ interface ExamState {
   answers: Record<string, string>; // questionId -> optionId ('a' | 'b' | 'c' | 'd')
   flagged: Record<string, boolean>; // questionId -> boolean
   currentIndex: number;
+  strikes?: number; // Phase 2: Active security violations (0 - 3)
 }
 
 interface ExamSubmissionResult {
@@ -251,6 +255,83 @@ export default function CertificationClient() {
       document.removeEventListener('selectstart', handleSelectStart, { capture: true });
     };
   }, [view, examState, triggerSecurityNotice]);
+
+  // Phase 2: Tab-Switch & Focus Loss Proctoring State & Handlers
+  const [strikeModal, setStrikeModal] = useState<{ strikeCount: number; reason: string } | null>(null);
+  const lastViolationTimeRef = useRef<number>(0);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+
+  const toggleFullscreen = useCallback(() => {
+    if (typeof document === 'undefined') return;
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.().catch(() => {});
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen?.().catch(() => {});
+      setIsFullscreen(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(Boolean(document.fullscreenElement));
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const registerSecurityViolation = useCallback(
+    (reason: string = 'Left active examination window') => {
+      if (view !== 'exam' || !examState || isSubmittingExam) return;
+
+      // Debounce to prevent duplicate triggers (e.g. blur + visibilitychange within 1.5s)
+      const nowMs = Date.now();
+      if (nowMs - lastViolationTimeRef.current < 1500) return;
+      lastViolationTimeRef.current = nowMs;
+
+      const currentStrikes = (examState.strikes || 0) + 1;
+      setExamState((prev) => (prev ? { ...prev, strikes: currentStrikes } : null));
+
+      if (currentStrikes >= 3) {
+        setStrikeModal({
+          strikeCount: 3,
+          reason: 'Maximum security violations (3/3) exceeded. Your examination has been automatically submitted for grading.',
+        });
+        setTimeout(() => {
+          handleSubmitExam(true);
+        }, 2800);
+      } else {
+        setStrikeModal({
+          strikeCount: currentStrikes,
+          reason,
+        });
+      }
+    },
+    [view, examState, isSubmittingExam]
+  );
+
+  // Phase 2 Focus & Visibility Change Listeners
+  useEffect(() => {
+    if (view !== 'exam' || !examState) return;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        registerSecurityViolation('Switched browser tabs or minimized examination window');
+      }
+    };
+
+    const handleWindowBlur = () => {
+      registerSecurityViolation('Left active examination window or switched focus');
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('blur', handleWindowBlur);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('blur', handleWindowBlur);
+    };
+  }, [view, examState, registerSecurityViolation]);
 
   // Sync profile details when user logs in or candidate session is restored
   useEffect(() => {
@@ -1441,7 +1522,20 @@ export default function CertificationClient() {
               </div>
               <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold">
                 <Lock className="w-3 h-3 text-emerald-600" />
-                <span>Copy-Protected & Proctored</span>
+                <span>Protected</span>
+              </div>
+              {/* Live Proctoring Strike Badge */}
+              <div
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold border transition-colors ${
+                  (examState.strikes || 0) === 0
+                    ? 'bg-slate-50 border-slate-200 text-slate-600'
+                    : (examState.strikes || 0) === 1
+                    ? 'bg-amber-50 border-amber-300 text-amber-900'
+                    : 'bg-rose-100 border-rose-300 text-rose-900 animate-pulse'
+                }`}
+              >
+                <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
+                <span>{examState.strikes || 0} / 3 Strikes</span>
               </div>
             </div>
 
@@ -1472,6 +1566,17 @@ export default function CertificationClient() {
                   />
                 </div>
               </div>
+
+              {/* Fullscreen Toggle Button */}
+              <button
+                type="button"
+                onClick={toggleFullscreen}
+                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors shrink-0"
+                title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+              >
+                {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+                <span className="text-[11px]">{isFullscreen ? 'Exit Full' : 'Fullscreen'}</span>
+              </button>
 
               <button
                 type="button"
@@ -1715,6 +1820,83 @@ export default function CertificationClient() {
             <div className="space-y-0.5">
               <div className="text-xs font-black uppercase tracking-wider text-rose-400">Exam Security Notice</div>
               <div className="text-xs font-medium text-slate-200 leading-snug">{securityToast}</div>
+            </div>
+          </div>
+        )}
+
+        {/* Phase 2: Security Strike Warning & Disqualification Modal */}
+        {strikeModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-in fade-in duration-200">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-200 space-y-6 text-center">
+              <div
+                className={`w-16 h-16 rounded-3xl mx-auto flex items-center justify-center ${
+                  strikeModal.strikeCount >= 3
+                    ? 'bg-rose-100 text-rose-600 animate-bounce'
+                    : strikeModal.strikeCount === 2
+                    ? 'bg-amber-100 text-amber-600 animate-pulse'
+                    : 'bg-amber-50 text-amber-600'
+                }`}
+              >
+                {strikeModal.strikeCount >= 3 ? (
+                  <AlertOctagon className="w-8 h-8" />
+                ) : (
+                  <ShieldAlert className="w-8 h-8" />
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <div
+                  className={`inline-block text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full ${
+                    strikeModal.strikeCount >= 3
+                      ? 'bg-rose-100 text-rose-700'
+                      : strikeModal.strikeCount === 2
+                      ? 'bg-rose-100 text-rose-700'
+                      : 'bg-amber-100 text-amber-800'
+                  }`}
+                >
+                  {strikeModal.strikeCount >= 3
+                    ? 'Examination Terminated'
+                    : strikeModal.strikeCount === 2
+                    ? 'Final Warning: Strike 2 of 3'
+                    : 'Security Warning: Strike 1 of 3'}
+                </div>
+
+                <h3 className="text-xl font-extrabold text-slate-900">
+                  {strikeModal.strikeCount >= 3
+                    ? 'Disqualified & Auto-Submitted'
+                    : strikeModal.strikeCount === 2
+                    ? 'Final Violation Notice'
+                    : 'Proctoring Notice'}
+                </h3>
+
+                <p className="text-xs text-slate-600 leading-relaxed max-w-xs mx-auto">
+                  {strikeModal.strikeCount >= 3
+                    ? 'Maximum security violations (3/3) reached. Your examination session has ended and answers have been submitted.'
+                    : strikeModal.strikeCount === 2
+                    ? 'You have navigated away from the exam window twice. One more focus violation will immediately disqualify and submit your exam.'
+                    : 'Navigating away from the examination window, switching tabs, or opening external applications is recorded by proctoring.'}
+                </p>
+              </div>
+
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 text-left text-xs space-y-1">
+                <div className="font-bold text-slate-700">Triggered Event:</div>
+                <div className="text-slate-500 font-mono text-[11px]">{strikeModal.reason}</div>
+              </div>
+
+              {strikeModal.strikeCount < 3 ? (
+                <button
+                  type="button"
+                  onClick={() => setStrikeModal(null)}
+                  className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-indigo-600/20 transition-all cursor-pointer"
+                >
+                  I Understand & Resume Exam
+                </button>
+              ) : (
+                <div className="flex items-center justify-center gap-2 text-xs font-bold text-rose-600">
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  <span>Submitting Examination Answers...</span>
+                </div>
+              )}
             </div>
           </div>
         )}
