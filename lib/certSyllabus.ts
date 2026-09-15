@@ -1,7 +1,7 @@
 import { CertTier } from './certTypes';
 import { CertSection } from './certQuestions/types';
 
-export interface SyllabusSectionTopic {
+export interface SyllabusTopic {
   title: string;
   description: string;
   skillsAssessed: string[];
@@ -10,584 +10,931 @@ export interface SyllabusSectionTopic {
 export interface SyllabusSection {
   id: CertSection;
   title: string;
-  weightPercent: number; // e.g., 25%
+  weightPercent: number;
   overview: string;
-  topics: SyllabusSectionTopic[];
+  topics: SyllabusTopic[];
   recommendedLessonSlugs?: string[];
 }
 
-export interface TierSyllabus {
+export interface CertSyllabusData {
   tier: CertTier;
   title: string;
-  badgeLabel: string;
-  levelNumber: number;
   overview: string;
   targetRole: string;
   examSpecs: {
     totalQuestions: number;
     durationMinutes: number;
     passingScorePercent: number;
-    questionFormat: string;
     proctoringRules: string[];
   };
-  preparationPath: {
-    stepNumber: number;
-    title: string;
-    action: string;
-  }[];
   sections: Record<CertSection, SyllabusSection>;
+  preparationPath: Array<{ stepNumber: number; title: string; action: string }>;
 }
 
-export const CERT_SYLLABUS: Record<CertTier, TierSyllabus> = {
+const COMMON_PROCTORING_RULES = [
+  'Proctored tab-switch & focus monitoring (3-strike limit before auto-invalidation)',
+  'Direct clipboard & context-menu lock during the examination window',
+  '45-minute strict countdown timer with automatic answer state persistence',
+  '80% minimum passing score required across 40 randomized scenario questions',
+];
+
+const COMMON_PREP_PATH = [
+  { stepNumber: 1, title: 'Review Syllabus', action: 'Understand core competencies and domain weights for this tier.' },
+  { stepNumber: 2, title: 'Study Lesson Library', action: 'Work through interactive lessons and practical micro-tasks.' },
+  { stepNumber: 3, title: 'Scenario Practice', action: 'Practice prompt refactoring, JSON schemas, and privacy rules.' },
+  { stepNumber: 4, title: 'Proctored Exam', action: 'Complete the 40-question proctored exam to earn your official diploma.' },
+];
+
+export const CERT_SYLLABUS: Record<CertTier, CertSyllabusData> = {
+  // 1. BEGINNER
   beginner: {
     tier: 'beginner',
-    title: 'Jnachi Beginner Certification',
-    badgeLabel: 'JNACHI BEGINNER CERTIFIED',
-    levelNumber: 1,
-    overview: 'The foundational benchmark for applied AI fluency. Verifies that candidates understand core prompt anatomy, context hygiene, basic micro-task automation, corporate privacy redlines, and critical output evaluation.',
-    targetRole: 'Professionals, knowledge workers, students, and operational teams starting their AI productivity journey.',
+    title: 'Jnachi Beginner (Foundational AI Literacy)',
+    overview: 'Validates baseline practical fluency across core prompting anatomy, context hygiene, basic automation, and confidentiality redlines.',
+    targetRole: 'Professionals, students, and teams starting their applied AI journey.',
     examSpecs: {
       totalQuestions: 40,
       durationMinutes: 45,
       passingScorePercent: 80,
-      questionFormat: '40 Multiple-Choice Questions (10 per section sampled from an 80-question bank)',
-      proctoringRules: [
-        'Single-window proctoring with 3-Strike Focus Loss detection',
-        'Direct text copying and clipboard shortcuts disabled',
-        '80% minimum overall benchmark (at least 32 / 40 correct)',
-        '24-Hour attempt cooldown between consecutive attempts',
-      ],
+      proctoringRules: COMMON_PROCTORING_RULES,
     },
-    preparationPath: [
-      {
-        stepNumber: 1,
-        title: 'Master Four-Block Prompt Anatomy',
-        action: 'Practice structuring every prompt with explicit Role, Context, Deliverable, and Constraints.',
-      },
-      {
-        stepNumber: 2,
-        title: 'Conduct a Personal Micro-Task Audit',
-        action: 'Identify 3 recurring weekly 2-5 minute tasks and build reusable prompt templates with variable placeholders.',
-      },
-      {
-        stepNumber: 3,
-        title: 'Memorize Data Privacy Red Lines',
-        action: 'Understand Zero Data Retention (ZDR), consumer vs enterprise data privacy, and client-side PII scrubbing.',
-      },
-      {
-        stepNumber: 4,
-        title: 'Practice Cognitive Sparring & Output Verification',
-        action: 'Use LLMs as devil\'s advocates to challenge assumptions, and apply zero-trust verification on all factual claims.',
-      },
-    ],
     sections: {
       literacy: {
         id: 'literacy',
-        title: 'AI Literacy & Prompting',
+        title: 'AI Literacy & Prompt Anatomy',
         weightPercent: 25,
-        overview: 'Core foundational mechanics of interacting with Large Language Models reliably and deterministically.',
+        overview: 'Core prompt structure, instructions, role framing, and hallucination management.',
         topics: [
           {
-            title: 'Prompt Structure & Anatomy',
-            description: 'Role definition, context grounding, specific task directives, positive vs negative constraints, and output format contracts.',
-            skillsAssessed: ['Role Persona Modeling', 'Few-Shot Example Tuning', 'Constraint Framing', 'JSON/Markdown Formatting'],
+            title: 'Prompt Anatomy & Structure',
+            description: 'Decomposing tasks into explicit roles, instructions, context, constraints, and format specs.',
+            skillsAssessed: ['Role Prompting', 'Constraint Setting', 'Format Specification'],
           },
           {
-            title: 'Model Parameters & Context Windows',
-            description: 'Understanding temperature, token budgeting, context window limits, and the mechanics of token prediction.',
-            skillsAssessed: ['Temperature Calibration', 'Token Allocation Awareness', 'Context Hygiene', 'Chain-of-Thought Activation'],
-          },
-          {
-            title: 'Hallucination Mitigation',
-            description: 'Recognizing ungrounded assertions, factual drift, and applying grounding techniques to ensure precision.',
-            skillsAssessed: ['Zero Trust Verification', 'Citation Enforcement', 'Negative Scope Boundary Setting'],
+            title: 'Hallucination Management',
+            description: 'Applying strict grounding rules and uncertainty handling to eliminate false claims.',
+            skillsAssessed: ['Grounding Verification', 'Uncertainty Calibration'],
           },
         ],
-        recommendedLessonSlugs: ['anatomy-of-a-great-prompt', 'few-shot-prompting', 'temperature-and-sampling'],
       },
       automation: {
         id: 'automation',
         title: 'Workflow Automation',
         weightPercent: 25,
-        overview: 'Transforming recurring manual work into structured, repeatable prompts and multi-stage pipelines.',
+        overview: 'Standardized prompt templates, batch transformations, and table extractions.',
         topics: [
           {
-            title: 'Micro-Task Auditing & Decomposition',
-            description: 'Breaking down complex ambiguous workflows into 2–10 minute discrete sub-tasks suitable for AI acceleration.',
-            skillsAssessed: ['Workflow Deconstruction', 'Task Suitability Filtering', 'Bottleneck Identification'],
+            title: 'Reusable Prompt Templates',
+            description: 'Building parameterized prompt macros for repetitive daily writing and summary tasks.',
+            skillsAssessed: ['Template Design', 'Batch Processing'],
           },
           {
-            title: 'Clay Drafting & Prompt Chaining',
-            description: 'Separating generative drafting from editorial refinement; chaining intermediate outputs between prompts.',
-            skillsAssessed: ['Two-Pass Generation', 'Prompt Chaining Sequences', 'Intermediate Schema Validation'],
-          },
-          {
-            title: 'Prompt Libraries & System Context',
-            description: 'Creating parameterized prompt repositories ({name}, {context}) and configuring persistent custom instructions.',
-            skillsAssessed: ['Template Parameterization', 'Custom System Prompts', 'Reusable Macro Design'],
+            title: 'Structured Extraction',
+            description: 'Converting unstructured transcripts and meeting notes into standardized tables.',
+            skillsAssessed: ['Information Extraction', 'Table Formatting'],
           },
         ],
-        recommendedLessonSlugs: ['clay-drafting-workflows', 'building-prompt-libraries', 'prompt-chaining-basics'],
       },
       privacy: {
         id: 'privacy',
         title: 'Data Privacy & Ethics',
         weightPercent: 25,
-        overview: 'Safe and responsible AI utilization, safeguarding sensitive data, and adhering to legal compliance standards.',
+        overview: 'Client-side PII redaction, Zero Data Retention (ZDR), and enterprise security.',
         topics: [
           {
-            title: 'Consumer vs. Enterprise Privacy Tiers',
-            description: 'Understanding foundation model training policies, chat history settings, and Zero Data Retention (ZDR) agreements.',
-            skillsAssessed: ['ZDR Verification', 'Opt-out Configuration', 'Cloud Storage Boundary Awareness'],
+            title: 'PII Scrubbing & Redaction',
+            description: 'Identifying and masking confidential names, tokens, client info, and internal secrets.',
+            skillsAssessed: ['PII Masking', 'Data Classification'],
           },
           {
-            title: 'Personally Identifiable Information (PII) Scrubbing',
-            description: 'Identifying and masking sensitive employee, customer, medical, and financial identifiers prior to prompt submission.',
-            skillsAssessed: ['Client-Side Anonymization', 'PCI/HIPAA Basic Guardrails', 'Pseudonymization Patterns'],
-          },
-          {
-            title: 'Algorithmic Bias & Accountability',
-            description: 'Recognizing demographic skews in generated text and maintaining human-in-the-loop professional accountability.',
-            skillsAssessed: ['Bias Detection', 'Ethical Red Lines', 'Human Verification Governance'],
+            title: 'Enterprise AI Policies',
+            description: 'Understanding vendor data retention policies and public vs. private subscription boundaries.',
+            skillsAssessed: ['ZDR Compliance', 'Risk Mitigation'],
           },
         ],
-        recommendedLessonSlugs: ['data-privacy-and-retention', 'pii-anonymization-guide', 'responsible-ai-ethics'],
       },
       growth: {
         id: 'growth',
-        title: 'Growth & Problem Solving',
+        title: 'Critical Judgment & Problem Solving',
         weightPercent: 25,
-        overview: 'Elevating cognitive leverage, sparring on strategic problems, and building sustainable AI momentum.',
+        overview: 'Fact verification, critical evaluation, and human-in-the-loop sign-off.',
         topics: [
           {
-            title: 'Cognitive Sparring & Persona Stress-Testing',
-            description: 'Instructing models to roleplay as critical stakeholders (CFO, auditor, customer) to stress-test proposals.',
-            skillsAssessed: ['Steel-man Critique Design', 'Counter-Argument Synthesis', 'Blind Spot Identification'],
+            title: 'Fact Checking & Verification',
+            description: 'Auditing AI output for factual errors, outdated claims, and logical inconsistencies.',
+            skillsAssessed: ['Fact Checking', 'Critical Evaluation'],
           },
           {
-            title: 'Combating Sycophancy & Confirmation Bias',
-            description: 'Preventing models from confirming flawed hypotheses through objective prompt calibration.',
-            skillsAssessed: ['Anti-Sycophancy Prompting', 'Factual Reconciliation', 'Adversarial Prompting'],
-          },
-          {
-            title: 'Multimodal Vision Problem Solving',
-            description: 'Utilizing screenshots, diagrams, and visual UI layouts to accelerate technical troubleshooting.',
-            skillsAssessed: ['Visual Debugging', 'Chart & Trend Extraction', 'Whiteboard Synthesis'],
+            title: 'Iterative Refinement',
+            description: 'Diagnosing flawed AI drafts and steering outputs with targeted feedback loops.',
+            skillsAssessed: ['Iterative Prompting', 'Quality Assurance'],
           },
         ],
-        recommendedLessonSlugs: ['cognitive-sparring-techniques', 'anti-hype-evaluation-filters', 'multimodal-problem-solving'],
       },
     },
+    preparationPath: COMMON_PREP_PATH,
   },
 
+  // 2. PRACTITIONER
   practitioner: {
     tier: 'practitioner',
-    title: 'Jnachi Practitioner Certification',
-    badgeLabel: 'JNACHI PRACTITIONER CERTIFIED',
-    levelNumber: 2,
-    overview: 'The benchmark for hands-on operators and domain professionals actively deploying AI inside complex daily workflows. Assesses scenario execution, JSON extraction schemas, multi-document synthesis, and enterprise compliance.',
-    targetRole: 'Product managers, analysts, senior operators, and consultants driving operational AI adoption.',
+    title: 'Jnachi Practitioner (Advanced Scenario Execution)',
+    overview: 'Evaluates hands-on efficiency in daily tasks: deep prompt calibration, structured JSON schemas, document synthesis, and enterprise redaction.',
+    targetRole: 'Knowledge workers, product managers, analysts, and operators using AI tools daily.',
     examSpecs: {
       totalQuestions: 40,
       durationMinutes: 45,
       passingScorePercent: 80,
-      questionFormat: '40 In-Depth Scenario Questions (10 per section sampled from an 80-question bank)',
-      proctoringRules: [
-        'Single-window proctoring with 3-Strike Focus Loss detection',
-        'Direct text copying and clipboard shortcuts disabled',
-        '80% minimum overall benchmark (at least 32 / 40 correct)',
-        '24-Hour attempt cooldown between consecutive attempts',
-      ],
+      proctoringRules: COMMON_PROCTORING_RULES,
     },
-    preparationPath: [
-      {
-        stepNumber: 1,
-        title: 'Master Strict JSON Schemas & Negative Constraints',
-        action: 'Build prompt templates that output strictly parseable JSON schemas with confidence scores.',
-      },
-      {
-        stepNumber: 2,
-        title: 'Implement Multi-Document Synthesis Pipelines',
-        action: 'Extract insights across conflicting reports, handling "lost in the middle" context window phenomena.',
-      },
-      {
-        stepNumber: 3,
-        title: 'Audit Enterprise Privacy & DPA Workflows',
-        action: 'Execute client-side PII masking pipelines and verify Data Processing Agreements.',
-      },
-      {
-        stepNumber: 4,
-        title: 'Develop Anti-Hype Evaluation Filters',
-        action: 'Evaluate commercial AI wrappers vs defensible domain workflow integrations.',
-      },
-    ],
     sections: {
       literacy: {
         id: 'literacy',
-        title: 'AI Literacy & Prompting',
+        title: 'Advanced Prompting & Few-Shot Modeling',
         weightPercent: 25,
-        overview: 'Advanced prompt calibration, regression testing, and strict output contract enforcement.',
+        overview: 'Structured JSON schemas, few-shot exemplars, delimiter discipline, and edge-case handling.',
         topics: [
           {
-            title: 'Strict JSON & Machine-Parsable Schemas',
-            description: 'Designing typed prompt schemas that eliminate conversational preamble and parse reliably in downstream code.',
-            skillsAssessed: ['Schema Specification', 'Constrained Sampling Awareness', 'Zero-Preamble Directives'],
+            title: 'Few-Shot Calibration & Exemplars',
+            description: 'Using high-variance input/output pairs to guide complex, nuanced formatting requirements.',
+            skillsAssessed: ['Few-Shot Design', 'Schema Enforcement'],
           },
           {
-            title: 'Context Window Optimization & "Lost in the Middle"',
-            description: 'Positioning high-priority context tokens at optimal attention boundaries in multi-thousand token contexts.',
-            skillsAssessed: ['Attention Density Optimization', 'Chunk Placement Strategy', 'Information Retrieval Grounding'],
-          },
-          {
-            title: 'Prompt Drift & Regression Testing',
-            description: 'Detecting subtle shifts in model responses due to provider updates and running assertion test suites.',
-            skillsAssessed: ['Prompt Regression Testing', 'Assertion Benchmarks', 'Drift Monitoring'],
+            title: 'Strict JSON Schema Enforcement',
+            description: 'Enforcing typed JSON/YAML outputs with syntax verification and error guardrails.',
+            skillsAssessed: ['JSON Schemas', 'Output Validation'],
           },
         ],
       },
       automation: {
         id: 'automation',
-        title: 'Workflow Automation',
+        title: 'Deep Document Synthesis',
         weightPercent: 25,
-        overview: 'Multi-stage processing pipelines, data transformation, and automated error recovery.',
+        overview: 'Cross-document analysis, qualitative thematic extraction, and multi-prompt chains.',
         topics: [
           {
-            title: 'Multi-Stage Transcript & Document Pipelines',
-            description: 'Deconstructing 90-minute recordings and reports into structured action items, owners, and deliverables.',
-            skillsAssessed: ['Stage-Gated Processing', 'Speaker Diarization Summarization', 'Action Matrix Extraction'],
+            title: 'Cross-Document Research Synthesis',
+            description: 'Extracting key themes, contradictions, and data points across disparate PDF reports.',
+            skillsAssessed: ['Document Analysis', 'Synthesis'],
           },
           {
-            title: 'Batch Extraction & Numerical Pre-calculation',
-            description: 'Combining programmatic arithmetic calculations with generative qualitative synthesis to eliminate math hallucinations.',
-            skillsAssessed: ['Deterministic Pre-calculation', 'Batch Processing Efficiency', 'Structured CSV Ingestion'],
-          },
-          {
-            title: 'Resilient Error Fallbacks & Retry Loops',
-            description: 'Architecting graceful degradation when automated responses fail schema validation.',
-            skillsAssessed: ['Parsing Exception Recovery', 'Correction Prompt Routing', 'Human Review Queue Dispatch'],
+            title: 'Prompt Chaining & Extraction',
+            description: 'Decomposing complex analysis into sequential extraction, synthesis, and review prompts.',
+            skillsAssessed: ['Multi-Step Chaining', 'Pipeline Architecture'],
           },
         ],
       },
       privacy: {
         id: 'privacy',
-        title: 'Data Privacy & Ethics',
+        title: 'Enterprise Data Governance',
         weightPercent: 25,
-        overview: 'Enterprise compliance frameworks, data processing agreements, and multi-tenant security.',
+        overview: 'Deterministic token masking, vendor DPA evaluation, and regulated data handling.',
         topics: [
           {
-            title: 'GDPR/CCPA Compliance & Data Processing Agreements',
-            description: 'Contractual requirements, sub-processor security disclosures, and enterprise data residency.',
-            skillsAssessed: ['DPA Standard Clauses', 'Data Sovereignty', 'Vendor Compliance Auditing'],
+            title: 'Deterministic Token Replacement',
+            description: 'Masking sensitive entities with reproducible tokens and safe re-identification mapping.',
+            skillsAssessed: ['Token Masking', 'Security Hygiene'],
           },
           {
-            title: 'Client-Side Masking vs Server Redaction',
-            description: 'Comparing tokenization masking mechanisms and verifying that confidential keys never egress.',
-            skillsAssessed: ['Tokenized PII Replacement', 'Secret Key Isolation', 'Prompt Sanitization'],
-          },
-          {
-            title: 'Code Copyright & Licensing Audits',
-            description: 'Configuring telemetry filters in AI coding copilot tools and running open-source license compliance audits.',
-            skillsAssessed: ['Code Match Filtering', 'License Scanners', 'Attribution Verification'],
+            title: 'Enterprise Vendor Compliance',
+            description: 'Auditing third-party LLM vendors for SOC2, DPA, and training opt-out guarantees.',
+            skillsAssessed: ['DPA Auditing', 'Regulatory Compliance'],
           },
         ],
       },
       growth: {
         id: 'growth',
-        title: 'Growth & Problem Solving',
+        title: 'Strategic Output Evaluation',
         weightPercent: 25,
-        overview: 'Strategic reasoning, organizational momentum, and human-in-the-loop decision amplification.',
+        overview: 'Stress-testing prompts, spotting subtle fallacies, and quality assurance benchmarking.',
         topics: [
           {
-            title: 'Strategic Anti-Hype Filters',
-            description: 'Dissecting third-party AI software to distinguish thin wrappers from defensible domain technology.',
-            skillsAssessed: ['Architecture Dissection', 'Moat Evaluation', 'TCO Analysis'],
+            title: 'Stress-Testing & Edge Cases',
+            description: 'Subjecting prompts to adversarial, contradictory, and out-of-distribution user inputs.',
+            skillsAssessed: ['Edge Case Testing', 'Robustness'],
           },
           {
-            title: 'Calibration & Sycophancy Inversion',
-            description: 'Developing sharp intuition for model strengths and systematically eliminating flattering confirmational skews.',
-            skillsAssessed: ['Cognitive Calibration', 'Adversarial Prompting', 'Bias Disruption'],
-          },
-          {
-            title: 'Multimodal UI/UX & Layout Debugging',
-            description: 'Diagnosing complex visual defects by pairing DOM source code with visual render screenshots.',
-            skillsAssessed: ['Multimodal Troubleshooting', 'Visual CSS Pinpointing', 'Cross-Platform Inspection'],
+            title: 'Model Quality & Benchmark Analysis',
+            description: 'Evaluating trade-offs between model intelligence, latency, and operational cost.',
+            skillsAssessed: ['Model Selection', 'Cost/Latency Optimization'],
           },
         ],
       },
     },
+    preparationPath: COMMON_PREP_PATH,
   },
 
+  // 3. BUILDER
   builder: {
     tier: 'builder',
-    title: 'Jnachi Builder Certification',
-    badgeLabel: 'JNACHI BUILDER CERTIFIED',
-    levelNumber: 3,
-    overview: 'The benchmark for technical engineers, tool builders, and pipeline designers. Tests function calling, agent state graphs (ReAct), Retrieval-Augmented Generation (RAG), prompt injection defense, and unit cost economics.',
-    targetRole: 'AI engineers, software developers, technical product managers, and automation architects.',
+    title: 'Jnachi Builder (AI Workflow Architecture)',
+    overview: 'Measures your mastery of building automated multi-step AI workflows, custom system instructions, function calling, tool augmentation, and error recovery.',
+    targetRole: 'Engineers, technical operators, no-code builders, and automation architects.',
     examSpecs: {
       totalQuestions: 40,
       durationMinutes: 45,
       passingScorePercent: 80,
-      questionFormat: '40 Pipeline, Code & Architecture Questions (10 per section sampled from an 80-question bank)',
-      proctoringRules: [
-        'Single-window proctoring with 3-Strike Focus Loss detection',
-        'Direct text copying and clipboard shortcuts disabled',
-        '80% minimum overall benchmark (at least 32 / 40 correct)',
-        '24-Hour attempt cooldown between consecutive attempts',
-      ],
+      proctoringRules: COMMON_PROCTORING_RULES,
     },
-    preparationPath: [
-      {
-        stepNumber: 1,
-        title: 'Master Structured Tool & Function Calling',
-        action: 'Design JSON parameter schemas, docstring cues, and constrained decoding workflows.',
-      },
-      {
-        stepNumber: 2,
-        title: 'Build Resilient RAG & State Graph Architectures',
-        action: 'Implement chunking strategies, vector index filtering with ACLs, and multi-agent state machines.',
-      },
-      {
-        stepNumber: 3,
-        title: 'Harden Pipelines Against Prompt Injections',
-        action: 'Isolate untrusted data inputs, apply least privilege tool scopes, and scrub PII traces.',
-      },
-      {
-        stepNumber: 4,
-        title: 'Optimize Unit Economics & Evals',
-        action: 'Deploy model cascading (Flash -> Pro), rate-limit backoffs, and automated faithfulness evals.',
-      },
-    ],
     sections: {
       literacy: {
         id: 'literacy',
-        title: 'AI Literacy & Prompting',
+        title: 'System Prompts & Function Calling',
         weightPercent: 25,
-        overview: 'Tool declarations, dynamic prompt templating engines, and constrained sampling decoding.',
+        overview: 'Immutable system boundaries, tool calling schemas, and structured error fallbacks.',
         topics: [
           {
-            title: 'Structured Tool / Function Calling Declarations',
-            description: 'Designing JSON schema parameters, detailed docstrings, and strict type constraints for model tool execution.',
-            skillsAssessed: ['Function Signature Design', 'Schema Type Enforcement', 'Docstring Context Grounding'],
+            title: 'System Instructions & Boundary Isolation',
+            description: 'Crafting immutable system prompts that prevent injection and preserve instructions.',
+            skillsAssessed: ['System Prompt Engineering', 'Boundary Enforcement'],
           },
           {
-            title: 'Dynamic Templating & Router Classifiers',
-            description: 'Using Jinja2/Mustache templating to inject session variables and dispatching intent via lightweight classifiers.',
-            skillsAssessed: ['Prompt Template Composition', 'Semantic Routing', 'Intent Classification'],
-          },
-          {
-            title: 'Constrained Decoding vs Post-Hoc Validation',
-            description: 'Understanding grammar-based sampling, JSON logit masks, and deterministic syntax enforcement.',
-            skillsAssessed: ['Logit Bias Masking', 'Grammar Sampling', 'Syntax Guarantee Methods'],
+            title: 'JSON Function & Tool Calling',
+            description: 'Defining typed function schemas and handling malformed API calls gracefully.',
+            skillsAssessed: ['Tool Calling Schemas', 'Parameter Typing'],
           },
         ],
       },
       automation: {
         id: 'automation',
-        title: 'Workflow Automation',
+        title: 'Multi-Step Agent Pipelines',
         weightPercent: 25,
-        overview: 'Autonomous agent loops (ReAct), Retrieval-Augmented Generation, and state management.',
+        overview: 'Sequential pipelines, state handoffs, routing agents, and iterative refinement loops.',
         topics: [
           {
-            title: 'Autonomous Agent Loops & Breakpoints',
-            description: 'Architecting Reasoning -> Action -> Observation -> Evaluation loops with recursion limit guards.',
-            skillsAssessed: ['ReAct Agent Architecture', 'Loop Guardrails', 'Human-in-the-Loop Escalation'],
+            title: 'Agent Task Decomposition',
+            description: 'Decomposing complex workflows into specialized Planner, Worker, and Judge agents.',
+            skillsAssessed: ['Agent Architecture', 'State Management'],
           },
           {
-            title: 'RAG Pipeline Design & Chunking Strategies',
-            description: 'Semantic vector search, chunk overlap sizing, hybrid dense/sparse retrieval, and knowledge injection.',
-            skillsAssessed: ['Vector Chunk Sizing', 'Embedding Distance Metrics', 'Context Injection Budgets'],
-          },
-          {
-            title: 'Asynchronous Queues & Rate Limiting (TPM/RPM)',
-            description: 'Implementing token-bucket rate limiters, exponential backoffs with jitter, and BullMQ/SQS workers.',
-            skillsAssessed: ['Rate Limit Throttling', 'Retry Backoff Algorithms', 'Batch Queue Orchestration'],
+            title: 'Prompt Routing & Classification',
+            description: 'Dynamically routing queries to specialized model tiers based on intent and cost.',
+            skillsAssessed: ['Dynamic Routing', 'Cost Optimization'],
           },
         ],
       },
       privacy: {
         id: 'privacy',
-        title: 'Data Privacy & Ethics',
+        title: 'RAG Security & Vector Hygiene',
         weightPercent: 25,
-        overview: 'Prompt injection hardening, ACL-filtered vector retrieval, and least privilege tool scoping.',
+        overview: 'Indirect prompt injection defense, vector chunking, and secrets isolation.',
         topics: [
           {
-            title: 'Direct & Indirect Prompt Injection Defenses',
-            description: 'Isolating untrusted third-party data within strict boundary tags and sanitizing input streams.',
-            skillsAssessed: ['Data Delimiter Sandboxing', 'Indirect Injection Mitigation', 'Adversarial Input Scrubbing'],
+            title: 'Indirect Prompt Injection Defense',
+            description: 'Sanitizing untrusted external documents and web scrapes before feeding into context.',
+            skillsAssessed: ['Injection Mitigation', 'Context Sanitization'],
           },
           {
-            title: 'ACL & Permission Enforcement in RAG',
-            description: 'Filtering vector search queries with tenant metadata to prevent unauthorized document leakage.',
-            skillsAssessed: ['Tenant-Isolated Indexing', 'Metadata ACL Filtering', 'Role-Based Vector Retrieval'],
-          },
-          {
-            title: 'Principle of Least Privilege in Tool Design',
-            description: 'Scoping agent tools to read-only capabilities and requiring explicit human sign-off for state mutations.',
-            skillsAssessed: ['Tool Scope Minimization', 'Read-Only Sandboxing', 'Mutation Verification Gates'],
+            title: 'Vector Database Hygiene & RBAC',
+            description: 'Ensuring strict tenant isolation and access controls across retrieval pipelines.',
+            skillsAssessed: ['RAG Architecture', 'Access Control'],
           },
         ],
       },
       growth: {
         id: 'growth',
-        title: 'Growth & Problem Solving',
+        title: 'Observability & Failure Recovery',
         weightPercent: 25,
-        overview: 'Unit economics, model cascading, automated evaluation frameworks, and telemetry.',
+        overview: 'Automated evaluation suites, retry budgets, cost tracking, and graceful degradation.',
         topics: [
           {
-            title: 'Unit Economics & Model Cascading',
-            description: 'Calculating cost per transaction and routing simple queries to low-cost models and complex reasoning to frontier models.',
-            skillsAssessed: ['Token Cost Modeling', 'Tiered Model Cascades', 'Latency vs Cost Trade-offs'],
+            title: 'Automated LLM Evaluation',
+            description: 'Setting up LLM-as-a-judge pipelines and deterministic regression test suites.',
+            skillsAssessed: ['Automated Eval', 'Regression Testing'],
           },
           {
-            title: 'Automated Evaluation Frameworks (Ragas, DeepEval)',
-            description: 'Measuring faithfulness, answer relevancy, and context recall using golden benchmark datasets.',
-            skillsAssessed: ['Faithfulness Metrics', 'Context Recall Scoring', 'Golden Dataset Assertion'],
-          },
-          {
-            title: 'Production Telemetry & A/B Prompt Testing',
-            description: 'Tracking p95 latency, parse failure rates, and running live production A/B prompt variant splits.',
-            skillsAssessed: ['A/B Prompt Routing', 'Latency & Error Dashboards', 'User Feedback Signals'],
+            title: 'Retry Budgets & Fallback Patterns',
+            description: 'Preventing cascading timeouts with exponential backoff and degraded-mode logic.',
+            skillsAssessed: ['Fault Tolerance', 'Observability'],
           },
         ],
       },
     },
+    preparationPath: COMMON_PREP_PATH,
   },
 
+  // 4. MASTER
   master: {
     tier: 'master',
-    title: 'Jnachi Master (Architect) Certification',
-    badgeLabel: 'JNACHI MASTER ARCHITECT CERTIFIED',
-    levelNumber: 4,
-    overview: 'The pinnacle credential. Evaluates strategic governance, model auditing, knowing when NOT to use AI, circuit breakers, EU AI Act compliance, and elevating organizational capability.',
-    targetRole: 'Chief AI Officers, enterprise architects, directors of engineering, and senior strategic leaders.',
+    title: 'Jnachi Master (Enterprise AI Architect & Strategist)',
+    overview: 'The pinnacle benchmark. Strategic AI evaluation, enterprise governance, knowing when NOT to use AI, and organizational leadership.',
+    targetRole: 'AI team leads, enterprise architects, directors, and strategic decision-makers.',
     examSpecs: {
       totalQuestions: 40,
       durationMinutes: 45,
       passingScorePercent: 80,
-      questionFormat: '40 Strategic, Governance & Judgment Questions (10 per section sampled from an 80-question bank)',
-      proctoringRules: [
-        'Single-window proctoring with 3-Strike Focus Loss detection',
-        'Direct text copying and clipboard shortcuts disabled',
-        '80% minimum overall benchmark (at least 32 / 40 correct)',
-        '24-Hour attempt cooldown between consecutive attempts',
-      ],
+      proctoringRules: COMMON_PROCTORING_RULES,
     },
-    preparationPath: [
-      {
-        stepNumber: 1,
-        title: 'Master Governance & the EU AI Act',
-        action: 'Formulate conformity assessment frameworks for High-Risk AI systems and establish AI governance boards.',
-      },
-      {
-        stepNumber: 2,
-        title: 'Design Circuit Breakers & Fail-Safe Architecture',
-        action: 'Architect graceful degradation heuristics, shadow deployments, and cascading error cut-offs.',
-      },
-      {
-        stepNumber: 3,
-        title: 'Mitigate Cognitive Offloading & Model Collapse',
-        action: 'Enforce zero-trust code review protocols and monitor synthetic recursive training drift.',
-      },
-      {
-        stepNumber: 4,
-        title: 'Champion Organizational AI Momentum',
-        action: 'Establish empirical model bake-offs, shared prompt audits, and cross-functional mentorship programs.',
-      },
-    ],
     sections: {
       literacy: {
         id: 'literacy',
-        title: 'AI Literacy & Prompting',
+        title: 'Strategic Evaluation & "When NOT to Use AI"',
         weightPercent: 25,
-        overview: 'Strategic discernment, knowing when NOT to use AI, adversarial red teaming, and model auditing.',
+        overview: 'Deterministic vs. probabilistic trade-offs, TCO auditing, and avoiding technical debt.',
         topics: [
           {
-            title: 'When NOT to Use Generative AI',
-            description: 'Identifying problems requiring 100% deterministic mathematical precision and classic database algorithms.',
-            skillsAssessed: ['Deterministic vs Probabilistic Evaluation', 'Liability Assessment', 'Technology Selection'],
+            title: 'Deterministic vs. Probabilistic Auditing',
+            description: 'Knowing when rules-based code or standard DB lookups vastly outperform AI.',
+            skillsAssessed: ['Architecture Trade-offs', 'TCO Analysis'],
           },
           {
-            title: 'Adversarial Red Teaming & Jailbreak Auditing',
-            description: 'Designing automated penetration tests probing for token smuggling, data extraction, and boundary bypasses.',
-            skillsAssessed: ['Red Teaming Architecture', 'Payload Obfuscation Probing', 'Safety Boundary Stress Testing'],
-          },
-          {
-            title: 'Model Collapse & Cognitive Offloading',
-            description: 'Diagnosing model collapse in recursive synthetic loops and preventing loss of domain intuition in teams.',
-            skillsAssessed: ['Synthetic Training Safeguards', 'Review Quality Maintenance', 'Domain Competency Preservation'],
+            title: 'Technical Debt & Vendor Lock-In',
+            description: 'Designing model-agnostic abstraction layers that prevent vendor dependency.',
+            skillsAssessed: ['Vendor Agnosticism', 'Debt Mitigation'],
           },
         ],
       },
       automation: {
         id: 'automation',
-        title: 'Workflow Automation',
+        title: 'Enterprise Architecture & Scale',
         weightPercent: 25,
-        overview: 'System-level circuit breakers, vendor lock-in mitigation, and CI/CD prompt versioning.',
+        overview: 'Hybrid local/cloud models, semantic caching, and high-throughput batch systems.',
         topics: [
           {
-            title: 'Cascading AI Failures & Circuit Breakers',
-            description: 'Implementing automated kill-switches and rate throttles when multi-agent microservices drift.',
-            skillsAssessed: ['Systemic Anomaly Detection', 'Circuit Breaker Design', 'Microservice Fault Isolation'],
+            title: 'Hybrid Deployment & Semantic Caching',
+            description: 'Deploying on-premise SLMs alongside cloud frontier models with semantic caching.',
+            skillsAssessed: ['Hybrid Architecture', 'Semantic Caching'],
           },
           {
-            title: 'Vendor Abstraction & Lock-in Mitigation',
-            description: 'Creating unified provider interfaces to swap underlying model clusters without business code refactors.',
-            skillsAssessed: ['Model Gateway Design', 'Multi-Provider Abstraction', 'Failover Orchestration'],
-          },
-          {
-            title: 'Prompt CI/CD & Shadow Deployments',
-            description: 'Treating prompts as versioned software artifacts with automated regression gates and silent shadow traffic.',
-            skillsAssessed: ['Prompt Version Control', 'Shadow Evaluation Pipelines', 'Automated Rollback Systems'],
+            title: 'High-Throughput Batch Processing',
+            description: 'Designing resilient queueing architectures for millions of asynchronous inferences.',
+            skillsAssessed: ['Queue Management', 'Throughput Scaling'],
           },
         ],
       },
       privacy: {
         id: 'privacy',
-        title: 'Data Privacy & Ethics',
+        title: 'Governance, Red-Teaming & Compliance',
         weightPercent: 25,
-        overview: 'Global regulatory compliance (EU AI Act), differential privacy, and governance boards.',
+        overview: 'NIST AI RMF, EU AI Act, bias auditing, red-teaming, and liability frameworks.',
         topics: [
           {
-            title: 'EU AI Act & High-Risk Conformity Assessments',
-            description: 'Evaluating mandatory fundamental rights impact assessments, risk categorizations, and transparency logs.',
-            skillsAssessed: ['Regulatory Classification', 'Fundamental Rights Impact Analysis', 'Conformity Auditing'],
+            title: 'Regulatory Compliance & Risk Frameworks',
+            description: 'Operationalizing EU AI Act, ISO 42001, and NIST AI RMF across business units.',
+            skillsAssessed: ['AI Governance', 'Regulatory Compliance'],
           },
           {
-            title: 'Differential Privacy & Model Inversion Defense',
-            description: 'Applying calibrated statistical noise and safeguarding proprietary weights from adversarial inversion.',
-            skillsAssessed: ['Differential Privacy Noise Calibration', 'Model Inversion Resistance', 'Weight Watermarking'],
-          },
-          {
-            title: 'AI Governance Board Leadership',
-            description: 'Structuring cross-functional oversight across engineering, legal, security, product, and ethics.',
-            skillsAssessed: ['Governance Board Frameworks', 'Disparate Impact Remediation', 'Ethical Review Gates'],
+            title: 'Enterprise Red-Teaming & Bias Audits',
+            description: 'Executing adversarial red-teaming exercises and mitigating demographic bias.',
+            skillsAssessed: ['Red-Teaming', 'Bias Auditing'],
           },
         ],
       },
       growth: {
         id: 'growth',
-        title: 'Growth & Problem Solving',
+        title: 'Organizational Transformation',
         weightPercent: 25,
-        overview: 'Organizational momentum, empirical model bake-offs, and talent uplift mentorship.',
+        overview: 'Building AI centers of excellence, change management, and measuring real ROI.',
         topics: [
           {
-            title: 'Empirical Model Bake-Offs',
-            description: 'Conducting objective benchmark evaluations on custom domain datasets comparing latency, accuracy, and SLA.',
-            skillsAssessed: ['Domain Benchmarking', 'TCO Comparative Analysis', 'SLA Contract Evaluation'],
+            title: 'AI Centers of Excellence (CoE)',
+            description: 'Structuring cross-functional enablement programs that scale AI adoption safely.',
+            skillsAssessed: ['Enablement', 'Change Management'],
           },
           {
-            title: 'Graceful Degradation in Critical Infrastructure',
-            description: 'Designing fail-safe heuristics that preserve user state and seamlessly transition to manual human queues.',
-            skillsAssessed: ['Graceful Failover Heuristics', 'High-Reliability Architecture', 'State Preservation'],
-          },
-          {
-            title: 'Mentorship & Organizational Momentum',
-            description: 'Instilling critical discernment across engineering teams and unlocking sustainable human-AI leverage.',
-            skillsAssessed: ['Organizational Talent Uplift', 'Culture of Accountable Experimentation', 'AI Capability Mentorship'],
+            title: 'Preserving Core Human Judgment',
+            description: 'Safeguarding domain critical thinking from cognitive atrophy in AI workflows.',
+            skillsAssessed: ['Skill Preservation', 'ROI Measurement'],
           },
         ],
       },
     },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 5. SALES
+  sales: {
+    tier: 'sales',
+    title: 'Jnachi for Sales (AI-Powered Revenue Operations)',
+    overview: 'Master AI-driven prospecting, hyper-personalized outreach at scale, CRM automation, proposal drafting, and client confidentiality in deal cycles.',
+    targetRole: 'Account Executives, SDRs/BDRs, Sales Leaders, Account Managers, and Revenue Ops.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'AI-Assisted Prospecting & Outreach',
+        weightPercent: 25,
+        overview: 'Writing personalized cold outreach at scale, rapid account research, and adaptive sequences.',
+        topics: [
+          {
+            title: 'Hyper-Personalized Outreach at Scale',
+            description: 'Crafting non-generic cold emails by fusing account signals with personalized value hooks.',
+            skillsAssessed: ['Cold Outreach', 'Personalization'],
+          },
+          {
+            title: '3-Minute Pre-Call Account Research',
+            description: 'Extracting key strategic priorities, pain points, and executive quotes using AI.',
+            skillsAssessed: ['Account Research', 'Signal Extraction'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'CRM & Workflow Integration',
+        weightPercent: 25,
+        overview: 'Call transcript extraction, automatic CRM updates, and deal stage recommendations.',
+        topics: [
+          {
+            title: 'Discovery Call Transcript Extraction',
+            description: 'Summarizing Gong/Zoom transcripts into clean BANT/MEDDPICC fields and action items.',
+            skillsAssessed: ['Transcript Parsing', 'CRM Automation'],
+          },
+          {
+            title: 'Deal Pipeline Automation',
+            description: 'Automating pipeline hygiene while catching mismatched or illogical next steps.',
+            skillsAssessed: ['Pipeline Management', 'Next-Step Analysis'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Client Communication & Deal Support',
+        weightPercent: 25,
+        overview: 'Custom proposal drafting, objection handling matrices, and human-in-the-loop sign-off.',
+        topics: [
+          {
+            title: 'Proposals & Objection Matrices',
+            description: 'Drafting tailored commercial proposals and dynamic negotiation talking points.',
+            skillsAssessed: ['Proposal Drafting', 'Objection Handling'],
+          },
+          {
+            title: 'Relationship Trust vs. Speed',
+            description: 'Balancing automated efficiency with genuine executive relationship-building.',
+            skillsAssessed: ['Human-in-the-Loop', 'Client Trust'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Judgment & Data Handling in Sales',
+        weightPercent: 25,
+        overview: 'Protecting confidential deal terms, verifying pricing, and avoiding overconfident claims.',
+        topics: [
+          {
+            title: 'Deal Data Confidentiality Redlines',
+            description: 'Strictly preventing proprietary client financials and NDAs from public AI exposure.',
+            skillsAssessed: ['Data Redlines', 'NDA Protection'],
+          },
+          {
+            title: 'Fact-Checking Competitor Claims',
+            description: 'Eliminating hallucinated battlecard claims and verifying pricing before sharing.',
+            skillsAssessed: ['Competitor Verification', 'Pricing Integrity'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 6. DEVELOPERS
+  developers: {
+    tier: 'developers',
+    title: 'Jnachi for Developers (AI-Assisted Software Engineering)',
+    overview: 'Accelerate coding velocity, precision debugging, IDE agent workflows, security audits, and responsible code licensing hygiene.',
+    targetRole: 'Software Engineers, Full-Stack Developers, DevOps, Tech Leads, and QA Engineers.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'AI-Assisted Coding & Debugging',
+        weightPercent: 25,
+        overview: 'Code generation, refactoring, context-rich debugging, and iterative code refinement.',
+        topics: [
+          {
+            title: 'Idiomatic Code Generation',
+            description: 'Prompting for clean, typed, modular code aligned with project architecture.',
+            skillsAssessed: ['Code Generation', 'Boilerplate Reduction'],
+          },
+          {
+            title: 'Precision Root-Cause Debugging',
+            description: 'Providing stack traces, environment state, and constraints to isolate bugs quickly.',
+            skillsAssessed: ['Stack Trace Debugging', 'Iterative Refinement'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Tool & Coding Agent Workflows',
+        weightPercent: 25,
+        overview: 'In-IDE assistants, CLI terminal agents, PR reviews, and multi-file code refactoring.',
+        topics: [
+          {
+            title: 'IDE Agents & Task Delegation',
+            description: 'Knowing the boundary between inline autocomplete and multi-file agent execution.',
+            skillsAssessed: ['Coding Agents', 'IDE Workflows'],
+          },
+          {
+            title: 'CI/CD & Pull Request Automation',
+            description: 'Integrating automated PR summarization, test generation, and review comments.',
+            skillsAssessed: ['PR Automation', 'CI/CD Integration'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Code Quality, Security & Audits',
+        weightPercent: 25,
+        overview: 'Static vulnerability review, hallucinated dependencies, and architectural standards.',
+        topics: [
+          {
+            title: 'Security & Vulnerability Auditing',
+            description: 'Catching OWASP flaws, injection risks, and insecure defaults in AI code snippets.',
+            skillsAssessed: ['Vulnerability Review', 'Dependency Verification'],
+          },
+          {
+            title: 'Testing AI-Generated Code',
+            description: 'Writing comprehensive unit and edge-case tests rather than trusting code blindly.',
+            skillsAssessed: ['Unit Testing', 'Quality Assurance'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Responsible AI Use in Engineering',
+        weightPercent: 25,
+        overview: 'Protecting proprietary source code, software licenses, and team contribution clarity.',
+        topics: [
+          {
+            title: 'Proprietary Codebase Hygiene',
+            description: 'Safeguarding secret API tokens, database keys, and proprietary IP from leaks.',
+            skillsAssessed: ['Secret Isolation', 'Repository Security'],
+          },
+          {
+            title: 'Open Source Licensing & Copyleft',
+            description: 'Preventing unintentional GPL copyleft license contamination from AI-suggested code.',
+            skillsAssessed: ['License Compliance', 'IP Protection'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 7. MARKETERS
+  marketers: {
+    tier: 'marketers',
+    title: 'Jnachi for Marketers (AI-Powered Growth & Brand Storytelling)',
+    overview: 'Master omnichannel content creation, campaign ideation, performance reporting narratives, and brand voice preservation.',
+    targetRole: 'Content Marketers, Growth Leads, Copywriters, Product Marketers, and Digital Strategists.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'AI-Assisted Content & Brand Voice',
+        weightPercent: 25,
+        overview: 'Multi-format copywriting, persona tone guidelines, and eliminating generic tropes.',
+        topics: [
+          {
+            title: 'Omnichannel Brand Copywriting',
+            description: 'Generating engaging social hooks, blog drafts, ad copy, and email newsletters.',
+            skillsAssessed: ['Copywriting', 'Brand Voice'],
+          },
+          {
+            title: 'Eradicating AI Clichés',
+            description: 'Identifying and replacing generic buzzwords with punchy, authentic human prose.',
+            skillsAssessed: ['Tone Calibration', 'Editing & Polish'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Campaign Ideation & Multi-Channel Strategy',
+        weightPercent: 25,
+        overview: 'Brainstorming angles, A/B messaging variants, and cross-channel concept adaptation.',
+        topics: [
+          {
+            title: 'Rapid Campaign Angle Brainstorming',
+            description: 'Generating high-contrast messaging angles and creative hooks for buyer personas.',
+            skillsAssessed: ['Creative Ideation', 'A/B Variant Generation'],
+          },
+          {
+            title: 'Content Repurposing Workflows',
+            description: 'Adapting a single pillar asset across 10+ channel formats with zero tone drift.',
+            skillsAssessed: ['Content Repurposing', 'Multi-Channel Strategy'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Analytics & Reporting Narratives',
+        weightPercent: 25,
+        overview: 'Synthesizing campaign metrics, executive summaries, and avoiding data misinterpretation.',
+        topics: [
+          {
+            title: 'Marketing Performance Narratives',
+            description: 'Translating CAC, ROAS, and conversion metrics into clear executive summaries.',
+            skillsAssessed: ['Analytics Summarization', 'Narrative Reporting'],
+          },
+          {
+            title: 'Data Integrity & Statistical Verification',
+            description: 'Preventing AI oversimplification and false correlation in campaign reporting.',
+            skillsAssessed: ['Data Verification', 'Insight Auditing'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Brand Voice, Ethics & Originality',
+        weightPercent: 25,
+        overview: 'Copyright risks, fact-checking claims, authentic storytelling, and transparency.',
+        topics: [
+          {
+            title: 'Copyright & Plagiarism Safeguards',
+            description: 'Ensuring AI-generated creative assets do not mirror copyrighted material.',
+            skillsAssessed: ['Copyright Safety', 'Originality'],
+          },
+          {
+            title: 'Public Claim Fact-Checking',
+            description: 'Cross-verifying all public statistics, quotes, and product claims before publishing.',
+            skillsAssessed: ['Fact Checking', 'Brand Reputation'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 8. CUSTOMER SUPPORT
+  support: {
+    tier: 'support',
+    title: 'Jnachi for Customer Support (Empathetic AI CX & Resolution)',
+    overview: 'Accelerate resolution times with AI ticket triage, empathetic on-brand response drafting, human escalation judgment, and customer PII protection.',
+    targetRole: 'Support Specialists, Customer Success Managers, CX Leads, and Helpdesk Admins.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Ticket Triage & Prioritization',
+        weightPercent: 25,
+        overview: 'Intelligent classification, sentiment detection, urgent ticket flagging, and trend detection.',
+        topics: [
+          {
+            title: 'High-Precision Ticket Categorization',
+            description: 'Classifying incoming tickets by product area, severity, and customer sentiment.',
+            skillsAssessed: ['Ticket Triage', 'Sentiment Analysis'],
+          },
+          {
+            title: 'Bug & Outage Pattern Detection',
+            description: 'Detecting emerging product issues across ticket spikes in real time.',
+            skillsAssessed: ['Pattern Detection', 'Urgency Flagging'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'AI-Assisted Response Drafting',
+        weightPercent: 25,
+        overview: 'Accurate product knowledge extraction, empathetic phrasing, and speed optimization.',
+        topics: [
+          {
+            title: 'Empathetic Troubleshooting Drafts',
+            description: 'Synthesizing knowledge base articles into clear, step-by-step customer solutions.',
+            skillsAssessed: ['Response Drafting', 'Empathetic Tone'],
+          },
+          {
+            title: 'Hallucination & Policy Prevention',
+            description: 'Catching and eliminating hallucinated features or unapproved SLA commitments.',
+            skillsAssessed: ['Policy Verification', 'Accuracy Assurance'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Escalation Judgment & Boundaries',
+        weightPercent: 25,
+        overview: 'Managing angry customers, complex billing disputes, and human handover criteria.',
+        topics: [
+          {
+            title: 'Human Handover Triggers',
+            description: 'Recognizing when high-stakes, emotionally charged conflicts demand human empathy.',
+            skillsAssessed: ['Escalation Criteria', 'De-escalation'],
+          },
+          {
+            title: 'Preventing False Promises',
+            description: 'Ensuring AI drafts do not make legally binding refunds or product guarantees.',
+            skillsAssessed: ['Risk Boundaries', 'Compliance'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Data Privacy in Support Conversations',
+        weightPercent: 25,
+        overview: 'Redacting customer credit cards, credentials, medical data, and HIPAA/GDPR rules.',
+        topics: [
+          {
+            title: 'Customer PII Redaction',
+            description: 'Scrubbing passwords, credit cards, SSNs, and identity documents before AI prompt.',
+            skillsAssessed: ['PII Scrubbing', 'GDPR/CCPA Compliance'],
+          },
+          {
+            title: 'Long-Term Customer Trust',
+            description: 'Maintaining transparent, ethical AI assistance that builds customer loyalty.',
+            skillsAssessed: ['Trust Preservation', 'Ethical CX'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 9. HR & PEOPLE OPS
+  hr: {
+    tier: 'hr',
+    title: 'Jnachi for HR & People Ops (Fair, Ethical & Productive People Operations)',
+    overview: 'Implement fair AI in talent screening, empathetic employee communications, candidate privacy protection, and workplace AI policy governance.',
+    targetRole: 'HR Managers, Talent Acquisition Leads, People Ops, Recruiters, and HRBPs.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Responsible AI in Hiring & Screening',
+        weightPercent: 25,
+        overview: 'Writing unbiased job descriptions, structured rubric generation, and candidate screening.',
+        topics: [
+          {
+            title: 'Inclusive Job Descriptions',
+            description: 'Drafting clear, gender-neutral, competency-based job descriptions.',
+            skillsAssessed: ['JD Design', 'Inclusive Language'],
+          },
+          {
+            title: 'Structured Interview Rubrics',
+            description: 'Generating fair, objective interview rubrics and candidate evaluation criteria.',
+            skillsAssessed: ['Rubric Generation', 'Bias Mitigation'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Employee Communication & Policies',
+        weightPercent: 25,
+        overview: 'Internal handbooks, sensitive announcements, and nuanced compensation discussions.',
+        topics: [
+          {
+            title: 'Internal Policy & Handbook Drafting',
+            description: 'Drafting employee guides, onboarding roadmaps, and leave policies in clear language.',
+            skillsAssessed: ['Policy Drafting', 'Internal Comms'],
+          },
+          {
+            title: 'Sensitive Communications Calibration',
+            description: 'Calibrating appropriate, compassionate tone for PIPs, restructuring, and leaves.',
+            skillsAssessed: ['Tone Calibration', 'HR Discretion'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Data Privacy & Bias Awareness',
+        weightPercent: 25,
+        overview: 'Safeguarding employee medical, compensation, and review records from data leaks.',
+        topics: [
+          {
+            title: 'Employee Data Redlines',
+            description: 'Protecting performance reviews, salaries, and medical notes from external AI tools.',
+            skillsAssessed: ['Data Redlines', 'Personnel Privacy'],
+          },
+          {
+            title: 'Auditing for Algorithmic Fairness',
+            description: 'Ensuring AI-assisted recruiting pipelines do not introduce demographic bias.',
+            skillsAssessed: ['Fairness Auditing', 'Diversity Compliance'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Internal AI Policy & Governance',
+        weightPercent: 25,
+        overview: 'Drafting employee AI guidelines, safe tool lists, and practical governance rollout.',
+        topics: [
+          {
+            title: 'Workplace AI Acceptable Use Policies',
+            description: 'Creating practical, non-technical guidelines that keep employees safe and productive.',
+            skillsAssessed: ['Policy Governance', 'Employee Enablement'],
+          },
+          {
+            title: 'Evolving Company AI Guidelines',
+            description: 'Iterating workplace AI policies in lockstep with new multimodal and agentic tools.',
+            skillsAssessed: ['Governance Strategy', 'Risk Management'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 10. MANAGERS & TEAM LEADS
+  managers: {
+    tier: 'managers',
+    title: 'Jnachi for Managers & Team Leads (AI Leadership & Sustainable Team Enablement)',
+    overview: 'Lead high-performing teams through AI adoption: workflow selection, tool security/cost evaluation, team training, and preventing skill atrophy.',
+    targetRole: 'Engineering Managers, Department Heads, Team Leads, Directors, and Operations Managers.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Team AI Adoption Strategy',
+        weightPercent: 25,
+        overview: 'Identifying high-ROI workflows, gradual rollouts, and setting realistic productivity expectations.',
+        topics: [
+          {
+            title: 'High-Impact Workflow Identification',
+            description: 'Auditing team tasks to prioritize high-leverage AI opportunities with low error risk.',
+            skillsAssessed: ['Workflow Auditing', 'Adoption Strategy'],
+          },
+          {
+            title: 'Realistic Productivity Expectations',
+            description: 'Setting grounded benchmarks and avoiding mandates that disrupt core operations.',
+            skillsAssessed: ['Expectation Setting', 'Change Management'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Evaluating & Selecting AI Tools',
+        weightPercent: 25,
+        overview: 'Security vetting, cost-per-seat ROI, small pilots, and avoiding vendor hype.',
+        topics: [
+          {
+            title: 'Vendor Vetting & Pilot Programs',
+            description: 'Testing tools in controlled pilots with explicit ROI and security criteria.',
+            skillsAssessed: ['Vendor Evaluation', 'Pilot Execution'],
+          },
+          {
+            title: 'TCO & Data Privacy Assessment',
+            description: 'Evaluating per-seat licensing, API costs, and corporate DPA compliance.',
+            skillsAssessed: ['Cost Analysis', 'Security Assessment'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Enabling & Training Direct Reports',
+        weightPercent: 25,
+        overview: 'Foundational literacy, psychological safety, and coaching both skeptics and over-reliant users.',
+        topics: [
+          {
+            title: 'Hands-On Team Enablement',
+            description: 'Running practical prompt clinics and creating psychological safety for experiments.',
+            skillsAssessed: ['Team Coaching', 'Skill Building'],
+          },
+          {
+            title: 'Addressing Over-Reliance & Skepticism',
+            description: 'Catching blind trust early while helping hesitant team members build confidence.',
+            skillsAssessed: ['Over-Reliance Mitigation', 'Coaching'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Measuring Impact & Avoiding Atrophy',
+        weightPercent: 25,
+        overview: 'Real business ROI metrics, preventing domain skill atrophy, and executive reporting.',
+        topics: [
+          {
+            title: 'Meaningful AI Adoption Metrics',
+            description: 'Tracking quality, speed, and employee satisfaction beyond superficial adoption vanity.',
+            skillsAssessed: ['Impact Measurement', 'Executive Reporting'],
+          },
+          {
+            title: 'Preserving Human Expertise',
+            description: 'Ensuring core critical thinking and judgment remain strong across the organization.',
+            skillsAssessed: ['Skill Preservation', 'Accountability'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
   },
 };
+
+export const CERT_SYLLABI = CERT_SYLLABUS;

@@ -1,10 +1,24 @@
-export type CertTier = 'beginner' | 'practitioner' | 'builder' | 'master';
+export type CertCategory = 'core' | 'role';
+
+export type CertTier =
+  | 'beginner'
+  | 'practitioner'
+  | 'builder'
+  | 'master'
+  | 'sales'
+  | 'developers'
+  | 'marketers'
+  | 'support'
+  | 'hr'
+  | 'managers';
 
 export interface TierConfig {
   id: CertTier;
+  category: CertCategory;
   levelNumber: number;
   title: string;
   badgeLabel: string;
+  roleName?: string;
   shortDescription: string;
   fullDescription: string;
   targetAudience: string;
@@ -29,8 +43,10 @@ export interface TierConfig {
 }
 
 export const CERT_TIERS: Record<CertTier, TierConfig> = {
+  // CORE LEVEL CERTIFICATIONS
   beginner: {
     id: 'beginner',
+    category: 'core',
     levelNumber: 1,
     title: 'Jnachi Beginner',
     badgeLabel: 'JNACHI BEGINNER CERTIFIED',
@@ -63,6 +79,7 @@ export const CERT_TIERS: Record<CertTier, TierConfig> = {
   },
   practitioner: {
     id: 'practitioner',
+    category: 'core',
     levelNumber: 2,
     title: 'Jnachi Practitioner',
     badgeLabel: 'JNACHI PRACTITIONER CERTIFIED',
@@ -95,6 +112,7 @@ export const CERT_TIERS: Record<CertTier, TierConfig> = {
   },
   builder: {
     id: 'builder',
+    category: 'core',
     levelNumber: 3,
     title: 'Jnachi Builder',
     badgeLabel: 'JNACHI BUILDER CERTIFIED',
@@ -127,6 +145,7 @@ export const CERT_TIERS: Record<CertTier, TierConfig> = {
   },
   master: {
     id: 'master',
+    category: 'core',
     levelNumber: 4,
     title: 'Jnachi Master (Architect)',
     badgeLabel: 'JNACHI MASTER ARCHITECT CERTIFIED',
@@ -157,6 +176,220 @@ export const CERT_TIERS: Record<CertTier, TierConfig> = {
       'Adversarial Robustness, Safety & Team Enablement',
     ],
   },
+
+  // ROLE-BASED CERTIFICATIONS
+  sales: {
+    id: 'sales',
+    category: 'role',
+    levelNumber: 5,
+    title: 'Jnachi for Sales',
+    badgeLabel: 'JNACHI CERTIFIED IN APPLIED AI FOR SALES',
+    roleName: 'Sales & Revenue',
+    shortDescription: 'Master AI-driven prospecting, CRM automation, personalized outreach, and deal support.',
+    fullDescription: 'Evaluates high-impact AI application for commercial sales teams. Assesses hyper-personalized outreach at scale, rapid account research, call transcript summarization into CRM, proposal drafting, and client confidentiality boundaries.',
+    targetAudience: 'Account Executives, SDRs/BDRs, Sales Leaders, Account Managers, and Revenue Ops.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#d97706', // Amber / Gold
+      secondary: '#b45309',
+      border: '#fde68a',
+      bgBadge: '#fffbeb',
+      textBadge: '#92400e',
+      gradientFrom: '#451a03',
+      gradientTo: '#b45309',
+      diplomaParchment: '#fffdf5',
+      diplomaPrimary: '#78350f',
+      diplomaAccent: '#d97706',
+      sealColor: '#fef3c7',
+      sealText: '#b45309',
+    },
+    keyTopics: [
+      'AI-Assisted Prospecting & Contextual Outreach',
+      'CRM Integration & Call Transcript Summarization',
+      'Client Communication & Proposal Drafting',
+      'Sales Judgment & Deal Data Protection',
+    ],
+  },
+
+  developers: {
+    id: 'developers',
+    category: 'role',
+    levelNumber: 6,
+    title: 'Jnachi for Developers',
+    badgeLabel: 'JNACHI CERTIFIED IN APPLIED AI FOR DEVELOPERS',
+    roleName: 'Software Engineering',
+    shortDescription: 'Harness AI for code generation, debugging, IDE agents, security reviews, and architecture.',
+    fullDescription: 'Evaluates developer fluency in using AI tools responsibly and productively. Assesses contextual code generation, multi-file agent workflows, debugging complex stack traces, security vulnerability audits, and licensing/IP hygiene.',
+    targetAudience: 'Software Engineers, Full-Stack Developers, DevOps, Tech Leads, and QA Engineers.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#2563eb', // Royal Blue
+      secondary: '#1d4ed8',
+      border: '#bfdbfe',
+      bgBadge: '#eff6ff',
+      textBadge: '#1e40af',
+      gradientFrom: '#172554',
+      gradientTo: '#1d4ed8',
+      diplomaParchment: '#f0f9ff',
+      diplomaPrimary: '#1e3a8a',
+      diplomaAccent: '#2563eb',
+      sealColor: '#dbeafe',
+      sealText: '#1e40af',
+    },
+    keyTopics: [
+      'AI-Assisted Coding & Precision Debugging',
+      'Tool & Coding Agent Workflows (IDE/CLI)',
+      'Code Quality, Security & Hallucination Audits',
+      'Responsible AI Use & Codebase Confidentiality',
+    ],
+  },
+
+  marketers: {
+    id: 'marketers',
+    category: 'role',
+    levelNumber: 7,
+    title: 'Jnachi for Marketers',
+    badgeLabel: 'JNACHI CERTIFIED IN APPLIED AI FOR MARKETERS',
+    roleName: 'Marketing & Growth',
+    shortDescription: 'Deliver high-converting campaign ideation, omnichannel copywriting, and marketing analytics.',
+    fullDescription: 'Validates marketing professionals on leveraging AI to accelerate content production without sacrificing brand voice or authenticity. Covers multi-channel campaigns, performance analytics narratives, and copyright/ethics safeguards.',
+    targetAudience: 'Content Marketers, Growth Leads, Copywriters, Product Marketers, and Digital Strategists.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#db2777', // Pink / Rose
+      secondary: '#be185d',
+      border: '#fbcfe8',
+      bgBadge: '#fdf2f8',
+      textBadge: '#9d174d',
+      gradientFrom: '#500724',
+      gradientTo: '#be185d',
+      diplomaParchment: '#fff1f2',
+      diplomaPrimary: '#831843',
+      diplomaAccent: '#db2777',
+      sealColor: '#fce7f3',
+      sealText: '#9d174d',
+    },
+    keyTopics: [
+      'AI-Assisted Content Creation & Brand Voice',
+      'Campaign Ideation & Multi-Channel Strategy',
+      'AI-Assisted Analytics & Reporting Narratives',
+      'Brand Voice, Ethics, Originality & Disclosures',
+    ],
+  },
+
+  support: {
+    id: 'support',
+    category: 'role',
+    levelNumber: 8,
+    title: 'Jnachi for Customer Support',
+    badgeLabel: 'JNACHI CERTIFIED IN APPLIED AI FOR CUSTOMER SUPPORT',
+    roleName: 'Customer Support',
+    shortDescription: 'Accelerate resolution times, intelligent ticket triage, empathetic drafting, and escalation.',
+    fullDescription: 'Tests front-line customer success and support operators on using AI tools to resolve tickets rapidly while maintaining accuracy, empathy, and customer data privacy.',
+    targetAudience: 'Support Specialists, Customer Success Managers, CX Leads, and Helpdesk Admins.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#0d9488', // Teal
+      secondary: '#0f766e',
+      border: '#99f6e4',
+      bgBadge: '#f0fdfa',
+      textBadge: '#115e59',
+      gradientFrom: '#042f2e',
+      gradientTo: '#0f766e',
+      diplomaParchment: '#f0fdfa',
+      diplomaPrimary: '#134e4a',
+      diplomaAccent: '#0d9488',
+      sealColor: '#ccfbf1',
+      sealText: '#115e59',
+    },
+    keyTopics: [
+      'Ticket Triage & Priority Classification',
+      'AI-Assisted Accurate Response Drafting',
+      'Escalation Judgment & Empathy Boundaries',
+      'Customer PII & Data Privacy Protection',
+    ],
+  },
+
+  hr: {
+    id: 'hr',
+    category: 'role',
+    levelNumber: 9,
+    title: 'Jnachi for HR & People Ops',
+    badgeLabel: 'JNACHI CERTIFIED IN APPLIED AI FOR HR & PEOPLE OPS',
+    roleName: 'HR & People Ops',
+    shortDescription: 'Fair hiring workflows, employee policy drafting, bias mitigation, and workplace governance.',
+    fullDescription: 'Validates People Operations professionals on utilizing AI responsibly. Assesses inclusive JD creation, unbiased candidate evaluation guidelines, internal policy communications, and employee confidentiality protection.',
+    targetAudience: 'HR Managers, Talent Acquisition Leads, People Ops, Recruiters, and HRBPs.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#ea580c', // Orange
+      secondary: '#c2410c',
+      border: '#fed7aa',
+      bgBadge: '#fff7ed',
+      textBadge: '#9a3412',
+      gradientFrom: '#431407',
+      gradientTo: '#c2410c',
+      diplomaParchment: '#fff7ed',
+      diplomaPrimary: '#7c2d12',
+      diplomaAccent: '#ea580c',
+      sealColor: '#ffedd5',
+      sealText: '#9a3412',
+    },
+    keyTopics: [
+      'Responsible AI in Hiring & Job Descriptions',
+      'Employee Communications & Policy Drafting',
+      'Bias Awareness & Candidate Data Privacy',
+      'Practical Internal AI Policy & Governance',
+    ],
+  },
+
+  managers: {
+    id: 'managers',
+    category: 'role',
+    levelNumber: 10,
+    title: 'Jnachi for Managers & Team Leads',
+    badgeLabel: 'JNACHI CERTIFIED IN APPLIED AI FOR MANAGERS & TEAM LEADS',
+    roleName: 'Management & Leadership',
+    shortDescription: 'Team AI adoption strategy, tool evaluation, enablement, and measuring sustainable ROI.',
+    fullDescription: 'Assesses people managers on leading team-wide AI adoption effectively. Covers identifying high-ROI workflows, evaluating tool security/cost, coaching direct reports, and preventing unhealthy over-reliance.',
+    targetAudience: 'Engineering Managers, Department Heads, Team Leads, Directors, and Operations Managers.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#475569', // Slate / Steel
+      secondary: '#334155',
+      border: '#cbd5e1',
+      bgBadge: '#f8fafc',
+      textBadge: '#1e293b',
+      gradientFrom: '#0f172a',
+      gradientTo: '#334155',
+      diplomaParchment: '#f8fafc',
+      diplomaPrimary: '#0f172a',
+      diplomaAccent: '#f59e0b',
+      sealColor: '#fef3c7',
+      sealText: '#b45309',
+    },
+    keyTopics: [
+      'Team AI Adoption Strategy & Workflow Selection',
+      'Evaluating & Selecting AI Tools (Cost/Privacy)',
+      'Enabling & Upskilling Direct Reports',
+      'Measuring Real Impact & Preventing Skill Atrophy',
+    ],
+  },
 };
 
-export const TIER_ORDER: CertTier[] = ['beginner', 'practitioner', 'builder', 'master'];
+export const CORE_TIER_ORDER: CertTier[] = ['beginner', 'practitioner', 'builder', 'master'];
+export const ROLE_TIER_ORDER: CertTier[] = ['sales', 'developers', 'marketers', 'support', 'hr', 'managers'];
+export const TIER_ORDER: CertTier[] = [...CORE_TIER_ORDER, ...ROLE_TIER_ORDER];
+

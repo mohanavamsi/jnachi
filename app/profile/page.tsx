@@ -49,11 +49,12 @@ export default function ProfilePage() {
   const { user, userProfile, loading, updateUserProfile } = useAuth();
   const [scores, setScores] = useState<Score[]>([]);
   const [certifications, setCertifications] = useState<Certification[]>([]);
-  const [tierStatuses, setTierStatuses] = useState<Record<CertTier, CertLadderStatus>>({
-    beginner: { tier: 'beginner', passed: false, totalAttempts: 0 },
-    practitioner: { tier: 'practitioner', passed: false, totalAttempts: 0 },
-    builder: { tier: 'builder', passed: false, totalAttempts: 0 },
-    master: { tier: 'master', passed: false, totalAttempts: 0 },
+  const [tierStatuses, setTierStatuses] = useState<Record<CertTier, CertLadderStatus>>(() => {
+    const initial = {} as Record<CertTier, CertLadderStatus>;
+    TIER_ORDER.forEach((t) => {
+      initial[t] = { tier: t, passed: false, totalAttempts: 0 };
+    });
+    return initial;
   });
   const [fetching, setFetching] = useState(true);
 

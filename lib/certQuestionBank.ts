@@ -40,6 +40,13 @@ import {
   ALL_MASTER_QUESTIONS,
 } from './certQuestions/architect';
 
+import { SALES_QUESTIONS_BY_SECTION } from './certQuestions/sales';
+import { DEVELOPERS_QUESTIONS_BY_SECTION } from './certQuestions/developers';
+import { MARKETERS_QUESTIONS_BY_SECTION } from './certQuestions/marketers';
+import { SUPPORT_QUESTIONS_BY_SECTION } from './certQuestions/support';
+import { HR_QUESTIONS_BY_SECTION } from './certQuestions/hr';
+import { MANAGERS_QUESTIONS_BY_SECTION } from './certQuestions/managers';
+
 export type { CertSection, CertOption, CertQuestion, ClientCertQuestion };
 
 export {
@@ -53,6 +60,12 @@ export {
   ALL_ARCHITECT_QUESTIONS,
   MASTER_QUESTIONS_BY_SECTION,
   ALL_MASTER_QUESTIONS,
+  SALES_QUESTIONS_BY_SECTION,
+  DEVELOPERS_QUESTIONS_BY_SECTION,
+  MARKETERS_QUESTIONS_BY_SECTION,
+  SUPPORT_QUESTIONS_BY_SECTION,
+  HR_QUESTIONS_BY_SECTION,
+  MANAGERS_QUESTIONS_BY_SECTION,
 };
 
 export const CERT_SECTIONS: { id: CertSection; title: string; description: string }[] = [
@@ -86,14 +99,22 @@ export const CERT_SECTION_LABELS: Record<CertSection, string> = {
 };
 
 // =========================================================================
-// ASSEMBLED COMPLETE QUESTION BANKS PER TIER
+// ASSEMBLED COMPLETE QUESTION BANKS PER TIER (CORE + ROLES)
 // =========================================================================
 
 export const TIER_QUESTION_BANK: Record<CertTier, Record<CertSection, CertQuestion[]>> = {
+  // Core Levels
   beginner: BEGINNER_QUESTIONS_BY_SECTION,
   practitioner: PRACTITIONER_QUESTIONS_BY_SECTION,
   builder: BUILDER_QUESTIONS_BY_SECTION,
   master: ARCHITECT_QUESTIONS_BY_SECTION,
+  // Role-Based Tracks
+  sales: SALES_QUESTIONS_BY_SECTION,
+  developers: DEVELOPERS_QUESTIONS_BY_SECTION,
+  marketers: MARKETERS_QUESTIONS_BY_SECTION,
+  support: SUPPORT_QUESTIONS_BY_SECTION,
+  hr: HR_QUESTIONS_BY_SECTION,
+  managers: MANAGERS_QUESTIONS_BY_SECTION,
 };
 
 // Backward compatibility alias for Beginner bank

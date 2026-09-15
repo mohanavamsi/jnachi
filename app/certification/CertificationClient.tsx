@@ -55,7 +55,7 @@ import {
   EXAM_DURATION_MS,
   PASSING_THRESHOLD,
 } from '@/lib/certService';
-import { CertTier, CERT_TIERS, TIER_ORDER } from '@/lib/certTypes';
+import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, CertCategory } from '@/lib/certTypes';
 import { LESSONS, CategoryKey } from '@/lib/lessonsData';
 import BeginnerCertificateModal from '@/components/BeginnerCertificateModal';
 import ExamSyllabusModal from '@/components/ExamSyllabusModal';
@@ -106,6 +106,7 @@ export default function CertificationClient() {
 
   const [view, setView] = useState<ExamView>('gate');
   const [selectedTier, setSelectedTier] = useState<CertTier>('beginner');
+  const [activeTrackTab, setActiveTrackTab] = useState<CertCategory>('core');
 
   // Gate Form & Auth State
   const [authMode, setAuthMode] = useState<AuthGateMode>('signup');
@@ -985,18 +986,58 @@ export default function CertificationClient() {
           </p>
         </div>
 
-        {/* 4-TIER PROGRESSION LADDER SELECTOR */}
+        {/* TRACK CATEGORY SELECTOR TABS */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-              <Layers className="w-4 h-4 text-indigo-600" />
-              <span>Select Certification Tier</span>
-            </h2>
-            <span className="text-xs text-slate-500">Tier {activeTierConfig.levelNumber} of 4</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
+                <Layers className="w-4 h-4 text-indigo-600" />
+                <span>Select Certification Track</span>
+              </h2>
+              <p className="text-xs text-slate-500">Choose between foundational engineering tiers or dedicated role certifications.</p>
+            </div>
+
+            <div className="flex p-1 bg-slate-200/80 rounded-2xl shrink-0 self-start sm:self-auto">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTrackTab('core');
+                  if (!CORE_TIER_ORDER.includes(selectedTier)) {
+                    setSelectedTier('beginner');
+                    if (effectiveEmail) handleCheckStatus(effectiveEmail, 'beginner');
+                  }
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeTrackTab === 'core'
+                    ? 'bg-white text-indigo-700 shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Core Ladder (Tiers 01 - 04)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTrackTab('role');
+                  if (!ROLE_TIER_ORDER.includes(selectedTier)) {
+                    setSelectedTier('sales');
+                    if (effectiveEmail) handleCheckStatus(effectiveEmail, 'sales');
+                  }
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeTrackTab === 'role'
+                    ? 'bg-white text-indigo-700 shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Role-Based Tracks (6 Roles)
+              </button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {TIER_ORDER.map((tierKey) => {
+          {/* TIER CARDS GRID */}
+          <div className={`grid gap-4 ${activeTrackTab === 'core' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
+            {(activeTrackTab === 'core' ? CORE_TIER_ORDER : ROLE_TIER_ORDER).map((tierKey) => {
               const tier = CERT_TIERS[tierKey];
               const isSelected = selectedTier === tierKey;
               const tierProgress = statusResponse?.allTiersProgress?.[tierKey];
@@ -1025,14 +1066,14 @@ export default function CertificationClient() {
                           color: tier.colorScheme.textBadge,
                         }}
                       >
-                        Tier 0{tier.levelNumber}
+                        {tier.category === 'core' ? `Tier 0${tier.levelNumber}` : (tier.roleName || 'Role Certified')}
                       </span>
                       {isPassed ? (
                         <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
                           <Check className="w-3 h-3" /> Earned
                         </span>
                       ) : (
-                        <span className="text-xs text-slate-400 font-medium">80% Pass</span>
+                        <span className="text-xs text-slate-400 font-medium">80% Standard</span>
                       )}
                     </div>
                     <h3 className="font-extrabold text-slate-900 text-lg leading-snug">{tier.title}</h3>
@@ -1040,7 +1081,7 @@ export default function CertificationClient() {
                   </div>
 
                   <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
-                    <span>40 Questions</span>
+                    <span>40 Proctored Qs</span>
                     <span className="font-semibold text-slate-900">45 Mins</span>
                   </div>
                 </button>

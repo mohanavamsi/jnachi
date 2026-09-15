@@ -121,6 +121,18 @@ export function generateCertId(tier: CertTier, email: string): string {
       ? 'BLD'
       : tier === 'practitioner'
       ? 'PRAC'
+      : tier === 'sales'
+      ? 'SALES'
+      : tier === 'developers'
+      ? 'DEV'
+      : tier === 'marketers'
+      ? 'MKT'
+      : tier === 'support'
+      ? 'SUP'
+      : tier === 'hr'
+      ? 'HR'
+      : tier === 'managers'
+      ? 'MGR'
       : 'BEG';
   return `JNACHI-${tierPrefix}-${new Date().getFullYear()}-${hex}-${randPart}`;
 }
@@ -722,6 +734,18 @@ export async function getVerifiedCertificate(
         tier = 'builder';
       } else if (/(?:^|-)(MSTR|MASTER|L4)(?:-|$)/i.test(cleanId)) {
         tier = 'master';
+      } else if (/(?:^|-)(SALES)(?:-|$)/i.test(cleanId)) {
+        tier = 'sales';
+      } else if (/(?:^|-)(DEV|DEVELOPER|DEVELOPERS)(?:-|$)/i.test(cleanId)) {
+        tier = 'developers';
+      } else if (/(?:^|-)(MKT|MARKETER|MARKETERS|MARKETING)(?:-|$)/i.test(cleanId)) {
+        tier = 'marketers';
+      } else if (/(?:^|-)(SUP|SUPPORT|CX)(?:-|$)/i.test(cleanId)) {
+        tier = 'support';
+      } else if (/(?:^|-)(HR|PEOPLE)(?:-|$)/i.test(cleanId)) {
+        tier = 'hr';
+      } else if (/(?:^|-)(MGR|MANAGER|MANAGERS|LEAD)(?:-|$)/i.test(cleanId)) {
+        tier = 'managers';
       } else if (/(?:^|-)(BEG|BEGINNER|L1)(?:-|$)/i.test(cleanId)) {
         tier = 'beginner';
       }
