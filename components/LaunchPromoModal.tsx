@@ -230,7 +230,7 @@ export function LaunchPromoModal() {
           <div className="flex items-center justify-between bg-slate-50 border border-slate-200/80 rounded-2xl p-4">
             <div>
               <span className="text-xs text-slate-600 uppercase font-bold tracking-wider block">Standard Exam Fee</span>
-              <span className="text-base text-slate-500 line-through font-bold">$149 / Exam</span>
+              <span className="text-base text-slate-500 line-through font-bold">$49 / Exam</span>
             </div>
             <div className="text-right">
               <span className="text-xs text-emerald-700 uppercase font-bold tracking-wider block">Launch Promo</span>
