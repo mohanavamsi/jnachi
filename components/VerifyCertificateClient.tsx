@@ -90,7 +90,11 @@ export default function VerifyCertificateClient({
     setSearchError(null);
 
     try {
-      const cleanId = searchInput.trim().toUpperCase();
+      const cleanId = searchInput
+        .trim()
+        .toUpperCase()
+        .replace(/[\u2010-\u2015\u2212]/g, '-')
+        .replace(/\s+/g, '');
       const res = await fetch(`/api/certification/verify?certId=${encodeURIComponent(cleanId)}`);
       const data = await res.json();
 
@@ -99,7 +103,7 @@ export default function VerifyCertificateClient({
         setRecord(null);
       } else {
         setRecord(data.certificate);
-        window.history.pushState({}, '', `/verify/${cleanId}`);
+        window.history.pushState({}, '', `/verify/${encodeURIComponent(cleanId)}`);
       }
     } catch (err: unknown) {
       setSearchError('Network error verifying certificate. Please try again.');
