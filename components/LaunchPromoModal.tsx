@@ -69,10 +69,10 @@ export function PromoBanner() {
             30-Day Free Launch
           </span>
           <span className="font-medium text-slate-100 hidden sm:inline">
-            All 10 Professional AI Certifications are <strong className="text-white font-bold underline decoration-amber-400 underline-offset-2">100% Free</strong> for the next 30 days!
+            Jnachi Beginner + All 6 Role-Based AI Certifications are <strong className="text-white font-bold underline decoration-amber-400 underline-offset-2">100% Free</strong> for the next 30 days!
           </span>
           <span className="font-medium text-slate-100 sm:hidden">
-            All 10 AI Certifications 100% Free!
+            Beginner & All 6 Role Certifications Free!
           </span>
 
           {timeLeft && (
@@ -179,11 +179,11 @@ export function LaunchPromoModal() {
           </div>
 
           <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
-            Earn Your Official AI Certification for <span className="text-amber-400 underline decoration-amber-400/50">100% Free</span>
+            Earn Your Official Beginner & Role-Based Certifications for <span className="text-amber-400 underline decoration-amber-400/50">100% Free</span>
           </h3>
 
           <p className="mt-2 text-indigo-100 text-sm sm:text-base leading-relaxed">
-            To celebrate the official launch of Jnachi, all 10 Core Ladder & Role-Based proctored examination fees are completely waived for the next 30 days.
+            To celebrate the official launch of Jnachi, all 6 Role-Based Examinations (Sales, Developers, Marketers, Support, HR, Managers) plus Tier 01 Beginner fees are 100% waived for the next 30 days.
           </p>
 
           {/* Live Countdown Grid */}
@@ -215,7 +215,7 @@ export function LaunchPromoModal() {
             <div className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
               <p className="text-sm text-slate-700">
-                <strong>All 10 Tracks Included:</strong> Core Ladder (Beginner, Practitioner, Specialist, Master) + 6 Specialized Role Tracks (Sales, Dev, Mkt, Support, HR, Managers).
+                <strong>Free Launch Access:</strong> Tier 01: Beginner + All 6 Role-Based Tracks (Sales, Developers, Marketers, Customer Support, HR & People Ops, Managers & Leads).
               </p>
             </div>
             <div className="flex items-start gap-3">

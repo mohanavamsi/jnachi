@@ -34,7 +34,7 @@ export default function HomePage() {
               >
                 <span className="flex h-2 w-2 rounded-full bg-amber-500 animate-ping" />
                 <span className="text-amber-900 font-black uppercase tracking-wider text-[11px]">Limited 30-Day Launch:</span>
-                <span className="text-slate-800">All 10 AI Certifications 100% Free</span>
+                <span className="text-slate-800">Beginner & All 6 Role Certifications 100% Free</span>
                 <ArrowRight className="w-3.5 h-3.5 text-indigo-600 group-hover:translate-x-0.5 transition-transform" />
               </Link>
 
@@ -168,9 +168,23 @@ export default function HomePage() {
                       >
                         Tier 0{tier.levelNumber}
                       </span>
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                        Free Launch
-                      </span>
+                      {tierKey === 'beginner' ? (
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                          100% Free
+                        </span>
+                      ) : tierKey === 'practitioner' ? (
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                          ₹1,499 / $29
+                        </span>
+                      ) : tierKey === 'builder' ? (
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                          ₹2,499 / $49
+                        </span>
+                      ) : (
+                        <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                          ₹3,999 / $79
+                        </span>
+                      )}
                     </div>
                     <h3 className="text-xl font-bold text-white group-hover:text-indigo-300 transition-colors">{tier.title}</h3>
                     <p className="text-xs text-slate-300 leading-relaxed">{tier.shortDescription}</p>
@@ -179,7 +193,7 @@ export default function HomePage() {
                   <div className="pt-3 border-t border-slate-700/80 flex items-center justify-between text-xs text-slate-400">
                     <span>40 Questions (45m)</span>
                     <span className="text-indigo-400 font-bold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                      Start →
+                      {tierKey === 'beginner' ? 'Start Free →' : 'Enroll →'}
                     </span>
                   </div>
                 </Link>
@@ -190,21 +204,26 @@ export default function HomePage() {
           {/* Role Track Highlights Strip */}
           <div className="p-6 rounded-3xl bg-indigo-950/60 border border-indigo-800/60 flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-indigo-600/40 border border-indigo-400/40 flex items-center justify-center shrink-0">
-                <Briefcase className="w-5 h-5 text-indigo-300" />
+              <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center shrink-0">
+                <Sparkles className="w-5 h-5 text-amber-300" />
               </div>
               <div>
-                <h4 className="text-sm font-bold text-white">6 Specialized Role-Based Certifications Also Available</h4>
-                <p className="text-xs text-indigo-200">
+                <div className="flex items-center gap-2">
+                  <h4 className="text-sm font-bold text-white">All 6 Specialized Role-Based Certifications</h4>
+                  <span className="text-[10px] font-black uppercase bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full">
+                    100% Free for 30 Days
+                  </span>
+                </div>
+                <p className="text-xs text-indigo-200 mt-0.5">
                   Sales • Developers • Marketers • Customer Support • HR & People Ops • Managers & Leads
                 </p>
               </div>
             </div>
             <Link
               href="/certification"
-              className="inline-flex items-center gap-2 text-amber-300 hover:text-amber-200 text-xs font-bold uppercase tracking-wider shrink-0"
+              className="inline-flex items-center gap-2 text-amber-300 hover:text-amber-200 text-xs font-bold uppercase tracking-wider shrink-0 bg-amber-400/10 border border-amber-400/30 px-3.5 py-2 rounded-xl"
             >
-              <span>View Role Certifications</span>
+              <span>Explore Role Tracks (Free)</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>

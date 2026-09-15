@@ -27,11 +27,14 @@ export async function POST(req: NextRequest) {
     const tierConfig = CERT_TIERS[tier];
     const pricing = TIER_PRICING[tier];
 
-    // Check if 100% free tier (e.g. beginner)
-    if (pricing.isFree) {
+    // Check if 100% free tier (beginner) or free during 30-day launch (all 6 role tracks)
+    if (pricing.isFree || pricing.isLaunchFree) {
       return NextResponse.json({
         isFree: true,
-        message: 'This certification is 100% free. No payment required.',
+        isLaunchFree: pricing.isLaunchFree,
+        message: pricing.isFree
+          ? 'Jnachi Beginner is 100% free. No payment required.'
+          : '30-Day Launch Event: Examination fees for this Role Track are 100% waived.',
         tier,
       });
     }
@@ -45,7 +48,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Calculate final price
+    // Calculate final price for paid core ladder tiers (Practitioner, Specialist, Master)
     let baseAmount = currency === 'INR' ? pricing.amountInr : pricing.amountUsd;
     let finalAmount = baseAmount * (1 - discountPercent / 100);
 
