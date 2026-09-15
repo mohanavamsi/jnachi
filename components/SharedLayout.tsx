@@ -116,24 +116,151 @@ export function Navigation() {
 
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-slate-50 py-12 mt-auto">
-      <div className="container mx-auto px-4 max-w-6xl flex flex-col md:flex-row justify-between items-center gap-6">
-        <div className="flex flex-col items-center md:items-start gap-2">
-          <Logo className="opacity-80" />
-          <p className="text-slate-500 text-sm italic">Pronounced &quot;juh-NAH-chee&quot;</p>
-          <p className="text-slate-500 text-sm mt-2">Where knowing becomes doing.</p>
+    <footer className="border-t border-slate-200 bg-slate-900 text-slate-300 py-16 mt-auto">
+      <div className="container mx-auto px-4 max-w-6xl space-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+          {/* Column 1: Brand & Contact Info */}
+          <div className="lg:col-span-2 space-y-4">
+            <Link href="/" className="hover:opacity-90 transition-opacity inline-block">
+              <Logo className="text-white" />
+            </Link>
+            <p className="text-slate-400 text-xs italic">Pronounced &quot;juh-NAH-chee&quot; • Where knowing becomes doing.</p>
+            <p className="text-slate-400 text-xs leading-relaxed max-w-sm">
+              The premier platform for measuring applied AI momentum and earning official, proctored industry credentials.
+            </p>
+            <div className="pt-2 space-y-1.5 text-xs text-slate-300">
+              <div className="flex items-center gap-2">
+                <span className="text-slate-400">Support Email:</span>
+                <a href="mailto:jnachiteam@gmail.com" className="text-amber-400 hover:text-amber-300 font-semibold underline decoration-amber-400/40">
+                  jnachiteam@gmail.com
+                </a>
+              </div>
+              <div className="text-slate-400">Response SLA: Within 24 business hours</div>
+            </div>
+          </div>
+
+          {/* Column 2: Platform & Learning */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Platform</h4>
+            <ul className="space-y-2 text-xs text-slate-400">
+              <li>
+                <Link href="/certification" className="hover:text-white transition-colors">
+                  10 AI Certifications
+                </Link>
+              </li>
+              <li>
+                <Link href="/lessons" className="hover:text-white transition-colors">
+                  17 Practical Lessons
+                </Link>
+              </li>
+              <li>
+                <Link href="/assessment" className="hover:text-white transition-colors">
+                  Momentum Assessment
+                </Link>
+              </li>
+              <li>
+                <Link href="/pricing" className="hover:text-white transition-colors">
+                  Pricing & Plans
+                </Link>
+              </li>
+              <li>
+                <Link href="/verify" className="hover:text-white transition-colors">
+                  Verify Credentials
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Role Certifications */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Role Tracks</h4>
+            <ul className="space-y-2 text-xs text-slate-400">
+              <li>
+                <Link href="/certification" className="hover:text-white transition-colors">
+                  Jnachi for Sales
+                </Link>
+              </li>
+              <li>
+                <Link href="/certification" className="hover:text-white transition-colors">
+                  Jnachi for Developers
+                </Link>
+              </li>
+              <li>
+                <Link href="/certification" className="hover:text-white transition-colors">
+                  Jnachi for Marketers
+                </Link>
+              </li>
+              <li>
+                <Link href="/certification" className="hover:text-white transition-colors">
+                  Jnachi for Support
+                </Link>
+              </li>
+              <li>
+                <Link href="/certification" className="hover:text-white transition-colors">
+                  Jnachi for HR & Ops
+                </Link>
+              </li>
+              <li>
+                <Link href="/certification" className="hover:text-white transition-colors">
+                  Jnachi for Managers
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 4: Legal & Razorpay Compliance */}
+          <div className="space-y-3">
+            <h4 className="text-xs font-bold text-white uppercase tracking-wider">Legal & Compliance</h4>
+            <ul className="space-y-2 text-xs text-slate-400">
+              <li>
+                <Link href="/terms" className="hover:text-white transition-colors">
+                  Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link href="/privacy" className="hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/refund-policy" className="hover:text-white transition-colors">
+                  Cancellation & Refund Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/shipping-policy" className="hover:text-white transition-colors">
+                  Shipping & Delivery Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition-colors">
+                  Contact Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-white transition-colors">
+                  About Jnachi
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
-        
-        <div className="flex flex-wrap gap-6 sm:gap-8 text-sm text-slate-600">
-          <Link href="/lessons" className="hover:text-indigo-600 transition-colors font-medium text-indigo-600">Learning Hub (17 Lessons)</Link>
-          <Link href="/certification" className="hover:text-indigo-600 transition-colors font-medium">4-Tier Certifications</Link>
-          <Link href="/assessment" className="hover:text-indigo-600 transition-colors">Quick Assessment</Link>
-          <Link href="/about" className="hover:text-indigo-600 transition-colors">About Jnachi</Link>
-          <Link href="/profile" className="hover:text-indigo-600 transition-colors">My Profile</Link>
+
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <div>
+            &copy; {new Date().getFullYear()} Jnachi. All rights reserved. Registered Provider of Applied AI Competency Credentials.
+          </div>
+          <div className="flex items-center gap-4">
+            <Link href="/terms" className="hover:text-slate-300">Terms</Link>
+            <span>•</span>
+            <Link href="/privacy" className="hover:text-slate-300">Privacy</Link>
+            <span>•</span>
+            <Link href="/refund-policy" className="hover:text-slate-300">Refunds</Link>
+            <span>•</span>
+            <Link href="/contact" className="hover:text-slate-300">Contact</Link>
+          </div>
         </div>
-      </div>
-      <div className="container mx-auto px-4 max-w-6xl mt-8 pt-8 border-t border-slate-200 text-center text-slate-400 text-xs">
-        &copy; {new Date().getFullYear()} Jnachi. All rights reserved.
       </div>
     </footer>
   );
