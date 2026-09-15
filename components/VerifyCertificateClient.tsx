@@ -32,6 +32,8 @@ import {
   downloadBeginnerCertificatePdf,
   downloadBeginnerCertificatePng,
 } from '@/lib/certificate';
+import { db, auth } from '@/lib/firebase';
+import { doc, getDoc, collection, query, where, getDocs, limit } from 'firebase/firestore';
 
 interface VerifyCertificateClientProps {
   initialRecord: VerifiedCertificateRecord | null;
@@ -57,54 +59,120 @@ export default function VerifyCertificateClient({
   // Automatically resolve candidate real name if record has placeholder
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    try {
-      const urlParams = new URLSearchParams(window.location.search);
-      const nameParam = urlParams.get('name') || urlParams.get('candidate');
 
-      let candidateName = nameParam || '';
-      let candidateLocation = '';
-      let candidateCompany = '';
+    async function resolveCandidateName() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const nameParam = urlParams.get('name') || urlParams.get('candidate');
 
-      // Check specific certificate record saved in localStorage
-      const lookupId = (record?.certificateId || certId || '').toUpperCase();
-      if (lookupId) {
-        const certKey = `jnachi_cert_${lookupId}`;
-        const specificCertRaw = localStorage.getItem(certKey);
-        if (specificCertRaw) {
-          const parsed = JSON.parse(specificCertRaw);
-          if (parsed.recipientName) candidateName = parsed.recipientName;
-          if (parsed.location) candidateLocation = parsed.location;
-          if (parsed.company) candidateCompany = parsed.company;
+        let candidateName = nameParam || '';
+        let candidateLocation = '';
+        let candidateCompany = '';
+
+        // Check specific certificate record saved in localStorage
+        const lookupId = (record?.certificateId || certId || '').toUpperCase().trim();
+        if (lookupId) {
+          const certKey = `jnachi_cert_${lookupId}`;
+          const specificCertRaw = localStorage.getItem(certKey);
+          if (specificCertRaw) {
+            const parsed = JSON.parse(specificCertRaw);
+            if (parsed.recipientName && parsed.recipientName !== 'Verified Candidate') {
+              candidateName = parsed.recipientName;
+            }
+            if (parsed.location) candidateLocation = parsed.location;
+            if (parsed.company) candidateCompany = parsed.company;
+          }
         }
-      }
 
-      // Check candidate session stored on this device
-      if (!candidateName) {
-        const sessionRaw = localStorage.getItem('jnachi_candidate_session');
-        if (sessionRaw) {
-          const parsed = JSON.parse(sessionRaw);
-          if (parsed.name) candidateName = parsed.name;
-          if (parsed.location) candidateLocation = candidateLocation || parsed.location;
-          if (parsed.company) candidateCompany = candidateCompany || parsed.company;
+        // Check candidate session stored on this device
+        if (!candidateName) {
+          const sessionRaw = localStorage.getItem('jnachi_candidate_session');
+          if (sessionRaw) {
+            const parsed = JSON.parse(sessionRaw);
+            if (parsed.name && parsed.name !== 'Verified Candidate') {
+              candidateName = parsed.name;
+            }
+            if (parsed.location) candidateLocation = candidateLocation || parsed.location;
+            if (parsed.company) candidateCompany = candidateCompany || parsed.company;
+          }
         }
-      }
 
-      // If we found a real name and the current record is using the placeholder
-      if (candidateName && (!record || record.recipientName === 'Verified Candidate' || !record.recipientName)) {
-        setRecord((prev) => {
-          if (!prev) return null;
-          return {
-            ...prev,
-            recipientName: candidateName,
-            location: candidateLocation || prev.location,
-            company: candidateCompany || prev.company,
-          };
-        });
+        // Check current Firebase Auth user
+        if (!candidateName && auth.currentUser?.displayName) {
+          candidateName = auth.currentUser.displayName;
+        }
+
+        // Check Firebase Auth in localStorage keys
+        if (!candidateName) {
+          for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.startsWith('firebase:authUser:')) {
+              try {
+                const authData = JSON.parse(localStorage.getItem(key) || '{}');
+                if (authData.displayName) {
+                  candidateName = authData.displayName;
+                  break;
+                }
+              } catch {
+                // ignore
+              }
+            }
+          }
+        }
+
+        // Query Firestore directly from client if still placeholder
+        if ((!candidateName || candidateName === 'Verified Candidate') && lookupId) {
+          try {
+            // 1. Direct certificate doc
+            const certDocRef = doc(db, 'certificates', lookupId);
+            const certDocSnap = await getDoc(certDocRef);
+            if (certDocSnap.exists()) {
+              const cData = certDocSnap.data();
+              if (cData.recipientName && cData.recipientName !== 'Verified Candidate') {
+                candidateName = cData.recipientName;
+                candidateLocation = cData.location || candidateLocation;
+                candidateCompany = cData.company || candidateCompany;
+              }
+            }
+
+            // 2. Query attempts
+            if (!candidateName || candidateName === 'Verified Candidate') {
+              const attemptsRef = collection(db, 'cert_attempts');
+              const q = query(attemptsRef, where('certificateId', '==', lookupId), limit(1));
+              const querySnap = await getDocs(q);
+              if (!querySnap.empty) {
+                const aData = querySnap.docs[0].data();
+                if (aData.recipientName && aData.recipientName !== 'Verified Candidate') {
+                  candidateName = aData.recipientName;
+                  candidateLocation = aData.location || candidateLocation;
+                  candidateCompany = aData.company || candidateCompany;
+                }
+              }
+            }
+          } catch (fsErr) {
+            console.warn('Client-side Firestore lookup warning:', fsErr);
+          }
+        }
+
+        // If we resolved a real name and current record is using the fallback
+        if (candidateName && candidateName !== 'Verified Candidate') {
+          setRecord((prev) => {
+            if (!prev) return null;
+            return {
+              ...prev,
+              recipientName: candidateName,
+              location: candidateLocation || prev.location,
+              company: candidateCompany || prev.company,
+            };
+          });
+        }
+      } catch (err) {
+        console.warn('Error resolving candidate name:', err);
       }
-    } catch {
-      // Ignore
     }
-  }, [certId, record?.certificateId, record?.recipientName]);
+
+    resolveCandidateName();
+  }, [certId, record?.certificateId]);
 
   // Render Diploma Canvas
   const renderDiploma = useCallback(() => {

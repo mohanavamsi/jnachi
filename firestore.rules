@@ -116,8 +116,14 @@ service cloud.firestore {
 
     match /cert_attempts/{attemptId} {
       allow get: if attemptId is string && attemptId.size() <= 128;
-      allow list: if false;
+      allow list: if true;
       allow create, update: if attemptId is string && attemptId.size() <= 128;
+    }
+
+    match /certificates/{certificateId} {
+      allow get: if certificateId is string && certificateId.size() <= 128;
+      allow list: if false;
+      allow create, update: if certificateId is string && certificateId.size() <= 128;
     }
   }
 }
