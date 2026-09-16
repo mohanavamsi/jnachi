@@ -143,12 +143,12 @@ export default function CertificateModal({
     setTimeout(() => setDownloadSuccess(null), 5000);
   };
 
-  const handleDownloadPng = () => {
+  const handleDownloadPng = async () => {
     if (!canvasRef.current) return;
     setIsDownloadingPng(true);
     try {
       const sanitizedName = recipientName.trim().replace(/[^a-zA-Z0-9]/g, '_') || 'Jnachi_Result';
-      downloadCertificatePng(canvasRef.current, `Jnachi_Score_${sanitizedName}_9x16.png`);
+      await downloadCertificatePng(canvasRef.current, `Jnachi_Score_${sanitizedName}_9x16.png`);
       showStatus('9:16 Share Card downloaded! Ready for WhatsApp, Instagram, or LinkedIn.');
     } catch (err) {
       console.error('Error generating image:', err);

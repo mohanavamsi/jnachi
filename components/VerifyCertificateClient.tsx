@@ -24,6 +24,8 @@ import {
   Zap,
   TrendingUp,
   ShieldAlert,
+  Smartphone,
+  RefreshCw,
 } from 'lucide-react';
 import { VerifiedCertificateRecord } from '@/lib/certService';
 import { CERT_TIERS } from '@/lib/certTypes';
@@ -31,6 +33,7 @@ import {
   drawBeginnerCertificate,
   downloadBeginnerCertificatePdf,
   downloadBeginnerCertificatePng,
+  shareCertificateCanvas,
 } from '@/lib/certificate';
 import { db, auth } from '@/lib/firebase';
 import { doc, getDoc, collection, query, where, getDocs, limit } from 'firebase/firestore';
@@ -244,11 +247,11 @@ export default function VerifyCertificateClient({
     setTimeout(() => setCopiedId(false), 2500);
   };
 
-  const handleDownloadPng = () => {
+  const handleDownloadPng = async () => {
     if (!canvasRef.current || !record) return;
     setIsGeneratingDownload(true);
     try {
-      downloadBeginnerCertificatePng(canvasRef.current, `${record.certificateId}.png`);
+      await downloadBeginnerCertificatePng(canvasRef.current, `${record.certificateId}.png`);
     } finally {
       setIsGeneratingDownload(false);
     }
@@ -261,6 +264,23 @@ export default function VerifyCertificateClient({
       downloadBeginnerCertificatePdf(canvasRef.current, `${record.certificateId}.pdf`);
     } finally {
       setIsGeneratingDownload(false);
+    }
+  };
+
+  const [isSharing, setIsSharing] = useState(false);
+  const handleSharePng = async () => {
+    if (!canvasRef.current || !record) return;
+    setIsSharing(true);
+    try {
+      await shareCertificateCanvas({
+        canvas: canvasRef.current,
+        filename: `${record.certificateId}.png`,
+        title: `${record.tierTitle} Credential • ${record.recipientName}`,
+        text: `Verified Applied AI Credential issued by Jnachi to ${record.recipientName}. Verification ID: ${record.certificateId}`,
+        url: shareUrl,
+      });
+    } finally {
+      setIsSharing(false);
     }
   };
 
@@ -406,6 +426,17 @@ export default function VerifyCertificateClient({
               {/* ACTION TOOLBAR: DOWNLOADS + SHARE */}
               <div className="mt-6 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex flex-wrap items-center gap-2.5">
+                  {/* Share Certificate PNG */}
+                  <button
+                    type="button"
+                    onClick={handleSharePng}
+                    disabled={isSharing}
+                    className="px-4 py-2 bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-black rounded-xl shadow-md transition-all flex items-center gap-1.5 active:scale-95 disabled:opacity-50"
+                  >
+                    <Share2 className="w-3.5 h-3.5 text-slate-950" />
+                    <span>{isSharing ? 'Sharing...' : 'Share Certificate PNG'}</span>
+                  </button>
+
                   {/* PDF Download */}
                   <button
                     type="button"
@@ -425,7 +456,7 @@ export default function VerifyCertificateClient({
                     className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-xl border border-white/15 transition-all flex items-center gap-1.5"
                   >
                     <Download className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Download PNG</span>
+                    <span>{isGeneratingDownload ? 'Saving...' : 'Download PNG'}</span>
                   </button>
                 </div>
 

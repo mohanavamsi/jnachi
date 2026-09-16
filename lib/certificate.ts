@@ -376,38 +376,124 @@ function roundRect(
 }
 
 /**
- * Converts canvas to a PNG Blob.
+/**
+ * Converts canvas to a PNG Blob with fallback.
  */
 export function getCertificateBlob(canvas: HTMLCanvasElement): Promise<Blob> {
   return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        reject(new Error('Failed to generate image blob from canvas'));
-        return;
-      }
-      resolve(blob);
-    }, 'image/png', 1.0);
+    try {
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          try {
+            // Fallback for browsers with toBlob canvas security glitches
+            const dataUrl = canvas.toDataURL('image/png', 1.0);
+            const byteString = atob(dataUrl.split(',')[1]);
+            const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+              ia[i] = byteString.charCodeAt(i);
+            }
+            resolve(new Blob([ab], { type: mimeString }));
+          } catch (fallbackErr) {
+            reject(fallbackErr || new Error('Failed to generate image blob from canvas'));
+          }
+          return;
+        }
+        resolve(blob);
+      }, 'image/png', 1.0);
+    } catch (err) {
+      reject(err);
+    }
   });
 }
 
 /**
  * Converts canvas to a PNG File suitable for Web Share API navigator.share({ files: [file] }).
  */
-export async function getCertificateFile(canvas: HTMLCanvasElement, filename = 'Jnachi-Result-Card.png'): Promise<File> {
+export async function getCertificateFile(canvas: HTMLCanvasElement, filename = 'Jnachi-Certificate.png'): Promise<File> {
   const blob = await getCertificateBlob(canvas);
   return new File([blob], filename, { type: 'image/png' });
 }
 
 /**
- * Downloads a crisp 9:16 PNG image file.
+ * Downloads a crisp PNG image file using Blob Object URL (cross-browser and mobile safe).
  */
-export function downloadCertificatePng(canvas: HTMLCanvasElement, filename = 'Jnachi-Result-Card.png') {
-  const link = document.createElement('a');
-  link.download = filename;
-  link.href = canvas.toDataURL('image/png', 1.0);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+export async function downloadCertificatePng(canvas: HTMLCanvasElement, filename = 'Jnachi-Result-Card.png'): Promise<void> {
+  try {
+    const blob = await getCertificateBlob(canvas);
+    const blobUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = blobUrl;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl);
+    }, 500);
+  } catch (err) {
+    console.warn('Blob download fallback to dataURL:', err);
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = canvas.toDataURL('image/png', 1.0);
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+      document.body.removeChild(link);
+    }, 500);
+  }
+}
+
+/**
+ * Universal Share Helper for Canvas:
+ * Uses Web Share API with File when supported (Mobile iOS/Android -> Instagram, WhatsApp, Stories, Camera Roll),
+ * and gracefully falls back to PNG Download + Caption Copy on Desktop.
+ */
+export async function shareCertificateCanvas(params: {
+  canvas: HTMLCanvasElement;
+  filename: string;
+  title: string;
+  text: string;
+  url?: string;
+}): Promise<{ success: boolean; method: 'native' | 'download_fallback' | 'cancelled' }> {
+  const { canvas, filename, title, text, url } = params;
+  try {
+    const file = await getCertificateFile(canvas, filename);
+    const isMobile = typeof navigator !== 'undefined' && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          files: [file],
+          title,
+          text: url ? `${text}\n${url}` : text,
+          url,
+        });
+        return { success: true, method: 'native' };
+      } catch (shareErr: unknown) {
+        if (shareErr instanceof Error && shareErr.name === 'AbortError') {
+          return { success: false, method: 'cancelled' };
+        }
+        console.warn('Native share failed, falling back:', shareErr);
+      }
+    }
+  } catch (err) {
+    console.warn('File preparation error:', err);
+  }
+
+  // Fallback for browsers without file sharing (Desktop / unsupported webviews)
+  await downloadCertificatePng(canvas, filename);
+  if (typeof navigator !== 'undefined' && navigator.clipboard) {
+    try {
+      await navigator.clipboard.writeText(url ? `${text}\n${url}` : text);
+    } catch {
+      // ignore
+    }
+  }
+  return { success: true, method: 'download_fallback' };
 }
 
 /**
@@ -658,13 +744,8 @@ export const drawTierDiploma = drawBeginnerCertificate;
 /**
  * Downloads a crisp landscape Diploma PNG.
  */
-export function downloadBeginnerCertificatePng(canvas: HTMLCanvasElement, filename = 'Jnachi-Certificate.png') {
-  const link = document.createElement('a');
-  link.download = filename;
-  link.href = canvas.toDataURL('image/png', 1.0);
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+export async function downloadBeginnerCertificatePng(canvas: HTMLCanvasElement, filename = 'Jnachi-Certificate.png'): Promise<void> {
+  return downloadCertificatePng(canvas, filename);
 }
 
 export const downloadTierCertificatePng = downloadBeginnerCertificatePng;
@@ -673,14 +754,17 @@ export const downloadTierCertificatePng = downloadBeginnerCertificatePng;
  * Downloads a crisp landscape Diploma PDF.
  */
 export function downloadBeginnerCertificatePdf(canvas: HTMLCanvasElement, filename = 'Jnachi-Certificate.pdf') {
+  const pdfWidth = 842;
+  const pdfHeight = 595;
+
   const pdf = new jsPDF({
     orientation: 'landscape',
     unit: 'pt',
-    format: [842, 595], // A4 Landscape approx in pt
+    format: [pdfWidth, pdfHeight], // A4 Landscape in pt
   });
 
   const imgData = canvas.toDataURL('image/png', 1.0);
-  pdf.addImage(imgData, 'PNG', 0, 0, 842, 595, undefined, 'FAST');
+  pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
   pdf.save(filename);
 }
 
