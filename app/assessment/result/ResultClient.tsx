@@ -365,17 +365,28 @@ export default function ResultClient() {
         </div>
 
         {/* Actions */}
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link 
             href="/assessment" 
-            className="inline-flex items-center justify-center gap-2 bg-slate-100 text-slate-700 px-6 py-3.5 rounded-full font-medium hover:bg-slate-200 transition-colors"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-100 text-slate-700 px-6 py-3.5 rounded-full font-medium hover:bg-slate-200 transition-colors text-sm"
           >
             <RefreshCw className="w-4 h-4" />
             Retake Assessment
           </Link>
+
+          <a
+            href={`https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${encodeURIComponent(`Jnachi AI Score: ${overallScore}/100 (${overallLevel})`)}&organizationName=Jnachi&issueYear=${new Date().getFullYear()}&issueMonth=${new Date().getMonth() + 1}&certUrl=${encodeURIComponent('https://jnachi.com')}&certId=${encodeURIComponent(`JNACHI-${overallScore}-${Date.now().toString().slice(-4)}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#0a66c2] hover:bg-[#004182] text-white px-7 py-3.5 rounded-full font-bold transition-all shadow-md hover:shadow-lg active:scale-95 text-sm"
+          >
+            <Linkedin className="w-4 h-4 fill-current" />
+            <span>Add to LinkedIn Profile</span>
+          </a>
+
           <button 
             onClick={() => setIsCertModalOpen(true)}
-            className="inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-7 py-3.5 rounded-full font-medium hover:bg-indigo-700 transition-all shadow hover:shadow-md active:scale-95"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-7 py-3.5 rounded-full font-bold hover:bg-indigo-700 transition-all shadow hover:shadow-md active:scale-95 text-sm"
           >
             <Share2 className="w-4 h-4" />
             Share / Download Card (9:16)
