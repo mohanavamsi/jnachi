@@ -123,5 +123,15 @@ service cloud.firestore {
       allow get, list: if true;
       allow create, update: if certificateId is string && certificateId.size() <= 128;
     }
+
+    match /certifications/{certId} {
+      allow get, list: if true;
+      allow create, update: if certId is string && certId.size() <= 128;
+    }
+
+    match /userCertifications/{docId} {
+      allow get, list: if true;
+      allow create, update: if docId is string && docId.size() <= 128;
+    }
   }
 }

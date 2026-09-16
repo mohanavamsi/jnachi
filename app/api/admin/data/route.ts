@@ -261,7 +261,7 @@ export async function GET(req: NextRequest) {
       console.warn('Error fetching cert_attempts collection:', e);
     }
 
-    // 5. Fetch `certificates`
+    // 5. Fetch `certificates`, `certifications`, `userCertifications`
     const certificatesList: AdminCertificateItem[] = [];
     try {
       const certsSnap = await getDocs(collection(db, 'certificates'));
@@ -287,6 +287,41 @@ export async function GET(req: NextRequest) {
       });
     } catch (e) {
       console.warn('Error fetching certificates collection:', e);
+    }
+
+    try {
+      const certificationsSnap = await getDocs(collection(db, 'certifications'));
+      certificationsSnap.forEach((d) => {
+        const c = d.data();
+        const rawEmail = c.email || c.userEmail || c.recipientEmail || '';
+        const email = cleanEmail(rawEmail);
+        if (email && email.includes('@')) {
+          const contact = getOrCreateContact(email);
+          if (!contact.types.includes('certified_alumni')) contact.types.push('certified_alumni');
+          if (c.recipientName && !contact.name) contact.name = c.recipientName;
+          const issuedAt = extractTimestamp(c.issuedAt || c.createdAt);
+          contact.firstSeenAt = Math.min(contact.firstSeenAt, issuedAt);
+          contact.lastActivityAt = Math.max(contact.lastActivityAt, issuedAt);
+        }
+      });
+    } catch (e) {
+      console.warn('Error fetching certifications collection:', e);
+    }
+
+    try {
+      const userCertSnap = await getDocs(collection(db, 'userCertifications'));
+      userCertSnap.forEach((d) => {
+        const c = d.data();
+        const rawEmail = c.email || c.userEmail || '';
+        const email = cleanEmail(rawEmail);
+        if (email && email.includes('@')) {
+          const contact = getOrCreateContact(email);
+          if (!contact.types.includes('certified_alumni')) contact.types.push('certified_alumni');
+          if (c.recipientName && !contact.name) contact.name = c.recipientName;
+        }
+      });
+    } catch (e) {
+      console.warn('Error fetching userCertifications collection:', e);
     }
 
     // Link certificates back to matching contacts by name / ID in attempts
