@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { CertTier } from '@/lib/certTypes';
 
+function cleanEnv(val: string | undefined): string {
+  if (!val) return '';
+  return val.trim().replace(/^["']|["']$/g, '');
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -37,7 +42,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+    const keySecret = cleanEnv(process.env.RAZORPAY_KEY_SECRET);
     if (!keySecret) {
       // If secret is missing but not simulated, return error
       return NextResponse.json(

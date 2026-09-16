@@ -3,6 +3,11 @@ import Razorpay from 'razorpay';
 import { CertTier, CERT_TIERS } from '@/lib/certTypes';
 import { TIER_PRICING, VALID_PROMO_CODES } from '@/lib/pricing';
 
+function cleanEnv(val: string | undefined): string {
+  if (!val) return '';
+  return val.trim().replace(/^["']|["']$/g, '');
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -62,8 +67,8 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const keyId = process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID;
-    const keySecret = process.env.RAZORPAY_KEY_SECRET;
+    const keyId = cleanEnv(process.env.RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID);
+    const keySecret = cleanEnv(process.env.RAZORPAY_KEY_SECRET);
 
     // Convert to smallest currency unit (paise for INR, cents for USD)
     const amountInSmallestUnit = Math.round(finalAmount * 100);
@@ -107,10 +112,16 @@ export async function POST(req: NextRequest) {
           (rzpErr as { error?: { description?: string } })?.error?.description ||
           (rzpErr as { description?: string })?.description ||
           (rzpErr instanceof Error ? rzpErr.message : 'Razorpay gateway error.');
-        
+
+        const isAuthError =
+          typeof rzpMsg === 'string' &&
+          (rzpMsg.toLowerCase().includes('auth') || rzpMsg.toLowerCase().includes('key'));
+
         return NextResponse.json(
           {
-            error: `Razorpay Error: ${rzpMsg}`,
+            error: isAuthError
+              ? `Razorpay Authentication Failed: The RAZORPAY_KEY_ID (${keyId.slice(0, 8)}...) and RAZORPAY_KEY_SECRET do not match or are expired in your Razorpay Dashboard. Check Settings -> API Keys (ensure you didn't mix Test and Live keys).`
+              : `Razorpay Error: ${rzpMsg}`,
           },
           { status: 400 }
         );
