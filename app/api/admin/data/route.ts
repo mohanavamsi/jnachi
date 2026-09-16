@@ -159,17 +159,19 @@ export async function GET(req: NextRequest) {
       const leadsSnap = await getDocs(collection(db, 'leads'));
       leadsSnap.forEach((d) => {
         const l = d.data();
-        const email = cleanEmail(l.email || l.userEmail || l.mail || l.candidateEmail);
-        if (email && email.includes('@')) {
-          const createdAt = extractTimestamp(l.createdAt);
-          leadsList.push({
-            id: d.id,
-            email,
-            score: Number(l.score) || 0,
-            level: l.level || 'Diagnostic',
-            createdAt,
-          });
+        const rawEmail = l.email || l.userEmail || l.mail || l.candidateEmail || l.emailAddress || l.user_email || l.contactEmail || '';
+        const email = cleanEmail(rawEmail);
+        const createdAt = extractTimestamp(l.createdAt);
 
+        leadsList.push({
+          id: d.id,
+          email: email || (rawEmail ? String(rawEmail) : `lead_${d.id.slice(0, 8)}@lead.jnachi.com`),
+          score: Number(l.score) || 0,
+          level: l.level || 'Diagnostic',
+          createdAt,
+        });
+
+        if (email && email.includes('@')) {
           const contact = getOrCreateContact(email);
           if (!contact.types.includes('lead')) contact.types.push('lead');
           contact.highestScore = Math.max(contact.highestScore || 0, Number(l.score) || 0);
