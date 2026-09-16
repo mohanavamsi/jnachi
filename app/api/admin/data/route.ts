@@ -66,6 +66,30 @@ export interface AdminCertificateItem {
   status: string;
 }
 
+function extractTimestamp(val: unknown): number {
+  if (!val) return Date.now();
+  if (typeof val === 'number') return val;
+  if (typeof (val as { toMillis?: () => number }).toMillis === 'function') {
+    return (val as { toMillis: () => number }).toMillis();
+  }
+  if (typeof (val as { toDate?: () => Date }).toDate === 'function') {
+    return (val as { toDate: () => Date }).toDate().getTime();
+  }
+  if (typeof (val as { seconds?: number }).seconds === 'number') {
+    return (val as { seconds: number }).seconds * 1000;
+  }
+  if (typeof val === 'string') {
+    const parsed = Date.parse(val);
+    if (!isNaN(parsed)) return parsed;
+  }
+  return Date.now();
+}
+
+function cleanEmail(raw: unknown): string {
+  if (typeof raw !== 'string') return '';
+  return raw.trim().toLowerCase();
+}
+
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
@@ -83,7 +107,7 @@ export async function GET(req: NextRequest) {
     const contactsMap = new Map<string, UnifiedContact>();
 
     const getOrCreateContact = (rawEmail: string): UnifiedContact => {
-      const email = rawEmail.trim().toLowerCase();
+      const email = cleanEmail(rawEmail);
       if (!contactsMap.has(email)) {
         contactsMap.set(email, {
           email,
@@ -104,9 +128,9 @@ export async function GET(req: NextRequest) {
       const usersSnap = await getDocs(collection(db, 'users'));
       usersSnap.forEach((d) => {
         const u = d.data();
-        const email = u.email || '';
+        const email = cleanEmail(u.email || u.userEmail || u.mail);
         if (email && email.includes('@')) {
-          const createdAt = u.createdAt?.toMillis?.() || u.createdAt || Date.now();
+          const createdAt = extractTimestamp(u.createdAt);
           usersList.push({
             uid: d.id,
             email,
@@ -135,9 +159,9 @@ export async function GET(req: NextRequest) {
       const leadsSnap = await getDocs(collection(db, 'leads'));
       leadsSnap.forEach((d) => {
         const l = d.data();
-        const email = l.email || '';
+        const email = cleanEmail(l.email || l.userEmail || l.mail || l.candidateEmail);
         if (email && email.includes('@')) {
-          const createdAt = l.createdAt?.toMillis?.() || l.createdAt || Date.now();
+          const createdAt = extractTimestamp(l.createdAt);
           leadsList.push({
             id: d.id,
             email,
@@ -162,7 +186,7 @@ export async function GET(req: NextRequest) {
       const certProfilesSnap = await getDocs(collection(db, 'cert_profiles'));
       certProfilesSnap.forEach((d) => {
         const cp = d.data();
-        const email = cp.email || '';
+        const email = cleanEmail(cp.email || cp.userEmail || cp.candidateEmail);
         if (email && email.includes('@')) {
           const contact = getOrCreateContact(email);
           if (!contact.types.includes('exam_candidate')) contact.types.push('exam_candidate');
@@ -176,7 +200,8 @@ export async function GET(req: NextRequest) {
             contact.totalAttempts = Math.max(contact.totalAttempts, cp.totalAttempts);
           }
           if (cp.lastAttemptAt) {
-            contact.lastActivityAt = Math.max(contact.lastActivityAt, cp.lastAttemptAt);
+            const lastAt = extractTimestamp(cp.lastAttemptAt);
+            contact.lastActivityAt = Math.max(contact.lastActivityAt, lastAt);
           }
         }
       });
@@ -190,12 +215,12 @@ export async function GET(req: NextRequest) {
       const attemptsSnap = await getDocs(collection(db, 'cert_attempts'));
       attemptsSnap.forEach((d) => {
         const a = d.data();
-        const email = a.email || '';
+        const email = cleanEmail(a.email || a.candidateEmail || a.recipientEmail);
         if (email && email.includes('@')) {
           const rawTier = (a.tier as CertTier) || 'beginner';
           const tierTitle = CERT_TIERS[rawTier]?.title || 'Jnachi Certification';
-          const startedAt = Number(a.startedAt) || Date.now();
-          const completedAt = a.completedAt ? Number(a.completedAt) : undefined;
+          const startedAt = extractTimestamp(a.startedAt);
+          const completedAt = a.completedAt ? extractTimestamp(a.completedAt) : undefined;
 
           attemptsList.push({
             id: d.id,
@@ -243,7 +268,7 @@ export async function GET(req: NextRequest) {
         const certId = c.certificateId || d.id;
         const rawTier = (c.tier as CertTier) || 'beginner';
         const tierTitle = CERT_TIERS[rawTier]?.title || 'Certified AI';
-        const issuedAt = Number(c.issuedAt) || Date.now();
+        const issuedAt = extractTimestamp(c.issuedAt);
 
         certificatesList.push({
           certificateId: certId,

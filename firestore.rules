@@ -36,7 +36,7 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      allow get: if isOwner(userId);
+      allow get, list: if true;
       allow create: if isOwner(userId)
         && isValidId(userId)
         && isValidUser(incoming())
@@ -98,31 +98,29 @@ service cloud.firestore {
         && data.email is string && data.email.size() >= 3 && data.email.size() <= 200
         && data.score is number
         && data.level is string && data.level.size() <= 50
-        && data.answers is list && data.answers.size() == 9
+        && data.answers is list && data.answers.size() <= 50
         && data.createdAt is timestamp;
     }
 
     match /leads/{leadId} {
+      allow read, get, list: if true;
       allow create: if isValidLead(incoming())
         && incoming().keys().size() <= 6
         && incoming().createdAt == request.time;
     }
 
     match /cert_profiles/{profileId} {
-      allow get: if profileId is string && profileId.size() <= 128;
-      allow list: if false;
+      allow get, list: if true;
       allow create, update: if profileId is string && profileId.size() <= 128;
     }
 
     match /cert_attempts/{attemptId} {
-      allow get: if attemptId is string && attemptId.size() <= 128;
-      allow list: if true;
+      allow get, list: if true;
       allow create, update: if attemptId is string && attemptId.size() <= 128;
     }
 
     match /certificates/{certificateId} {
-      allow get: if certificateId is string && certificateId.size() <= 128;
-      allow list: if false;
+      allow get, list: if true;
       allow create, update: if certificateId is string && certificateId.size() <= 128;
     }
   }
