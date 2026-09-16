@@ -135,7 +135,35 @@ export default function RazorpayModal({
         return;
       }
 
-      // 2. Open Razorpay Checkout Modal
+      // If in Sandbox/Test Mode (Razorpay keys not yet added to .env)
+      if (orderData.isSimulated) {
+        const verifyRes = await fetch('/api/razorpay/verify-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            razorpay_order_id: orderData.orderId,
+            razorpay_payment_id: `pay_sim_${Date.now()}`,
+            razorpay_signature: 'simulated_test_sig',
+            tier: selectedTier,
+            candidateEmail: email,
+            candidateName: name,
+            isSimulated: true,
+          }),
+        });
+
+        const verifyData = await verifyRes.json();
+        if (verifyRes.ok && verifyData.verified) {
+          if (onPaymentSuccess) {
+            onPaymentSuccess(selectedTier, verifyData.paymentId);
+          }
+          onClose();
+        } else {
+          setErrorMessage(verifyData.error || 'Failed to initialize test voucher.');
+        }
+        return;
+      }
+
+      // 2. Open Official Razorpay Checkout Modal
       const options = {
         key: orderData.keyId,
         amount: orderData.amount,
@@ -165,7 +193,7 @@ export default function RazorpayModal({
                 tier: selectedTier,
                 candidateEmail: email,
                 candidateName: name,
-                isSimulated: orderData.isSimulated,
+                isSimulated: false,
               }),
             });
 
@@ -192,15 +220,13 @@ export default function RazorpayModal({
 
       if (window.Razorpay) {
         const rzp = new window.Razorpay(options);
+        rzp.on('payment.failed', function (resp: any) {
+          setErrorMessage(resp?.error?.description || 'Payment transaction failed or was cancelled.');
+          setIsLoading(false);
+        });
         rzp.open();
       } else {
-        // Fallback simulation if script didn't load (e.g. offline dev)
-        setTimeout(() => {
-          if (onPaymentSuccess) {
-            onPaymentSuccess(selectedTier, `demo_pay_${Date.now()}`);
-          }
-          onClose();
-        }, 1200);
+        throw new Error('Razorpay SDK script is still loading. Please try again in 2 seconds.');
       }
     } catch (err: unknown) {
       console.error('Checkout error:', err);

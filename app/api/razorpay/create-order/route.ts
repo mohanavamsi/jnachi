@@ -70,35 +70,51 @@ export async function POST(req: NextRequest) {
     const receipt = `rcpt_${tier.slice(0, 4)}_${Date.now().toString().slice(-8)}`;
 
     // If Razorpay keys are configured, create real Razorpay Order
-    if (keyId && keySecret) {
-      const razorpay = new Razorpay({
-        key_id: keyId,
-        key_secret: keySecret,
-      });
+    if (keyId && keySecret && !keyId.includes('placeholder') && !keySecret.includes('placeholder')) {
+      try {
+        const razorpay = new Razorpay({
+          key_id: keyId,
+          key_secret: keySecret,
+        });
 
-      const order = await razorpay.orders.create({
-        amount: amountInSmallestUnit,
-        currency,
-        receipt,
-        notes: {
+        const order = await razorpay.orders.create({
+          amount: amountInSmallestUnit,
+          currency,
+          receipt,
+          notes: {
+            tier,
+            tierTitle: tierConfig.title,
+            candidateEmail: candidateEmail || '',
+            candidateName: candidateName || '',
+            promoCode: promoCode || 'NONE',
+          },
+        });
+
+        return NextResponse.json({
+          success: true,
+          isSimulated: false,
+          orderId: order.id,
+          amount: order.amount,
+          currency: order.currency,
+          keyId,
           tier,
           tierTitle: tierConfig.title,
-          candidateEmail: candidateEmail || '',
-          candidateName: candidateName || '',
-          promoCode: promoCode || 'NONE',
-        },
-      });
-
-      return NextResponse.json({
-        success: true,
-        orderId: order.id,
-        amount: order.amount,
-        currency: order.currency,
-        keyId,
-        tier,
-        tierTitle: tierConfig.title,
-        receipt,
-      });
+          receipt,
+        });
+      } catch (rzpErr: unknown) {
+        console.error('Razorpay SDK order creation error:', rzpErr);
+        const rzpMsg =
+          (rzpErr as { error?: { description?: string } })?.error?.description ||
+          (rzpErr as { description?: string })?.description ||
+          (rzpErr instanceof Error ? rzpErr.message : 'Razorpay gateway error.');
+        
+        return NextResponse.json(
+          {
+            error: `Razorpay Error: ${rzpMsg}`,
+          },
+          { status: 400 }
+        );
+      }
     } else {
       // Fallback Demo / Sandbox Order when keys are pending setup
       const simulatedOrderId = `order_sim_${Date.now().toString()}`;
@@ -108,7 +124,7 @@ export async function POST(req: NextRequest) {
         orderId: simulatedOrderId,
         amount: amountInSmallestUnit,
         currency,
-        keyId: keyId || 'rzp_test_placeholder_key',
+        keyId: keyId || '',
         tier,
         tierTitle: tierConfig.title,
         receipt,
@@ -116,10 +132,13 @@ export async function POST(req: NextRequest) {
       });
     }
   } catch (error: unknown) {
-    console.error('Razorpay order creation error:', error);
+    console.error('Razorpay create-order top-level error:', error);
+    const msg =
+      (error as { error?: { description?: string } })?.error?.description ||
+      (error instanceof Error ? error.message : 'Failed to create payment order.');
     return NextResponse.json(
       {
-        error: error instanceof Error ? error.message : 'Failed to create payment order.',
+        error: msg,
       },
       { status: 500 }
     );
