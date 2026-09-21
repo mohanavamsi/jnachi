@@ -157,101 +157,101 @@ export function LaunchPromoModal() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-lg bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden animate-in zoom-in-95 duration-200"
+        className="relative w-full max-w-md max-h-[92vh] flex flex-col bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-100 overflow-hidden animate-in zoom-in-95 duration-200"
         role="dialog"
         aria-modal="true"
       >
         {/* Top Gradient Banner with Badge */}
-        <div className="bg-gradient-to-br from-indigo-900 via-indigo-800 to-purple-900 p-6 sm:p-8 text-white relative">
+        <div className="bg-gradient-to-br from-indigo-950 via-indigo-900 to-purple-950 p-4 sm:p-5 text-white relative shrink-0">
           <button
             onClick={handleDismiss}
-            className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white transition-colors"
+            className="absolute top-3 right-3 p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white transition-colors"
             aria-label="Close modal"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
 
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-black uppercase tracking-wider mb-4 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5" />
-            Limited 30-Day Launch Offer
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 text-[10px] font-black uppercase tracking-wider mb-2.5 shadow-sm">
+            <Sparkles className="w-3 h-3" />
+            30-Day Launch Celebration
           </div>
 
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
-            Earn Your Official AI Foundations & Role-Based Certifications for <span className="text-amber-400 underline decoration-amber-400/50">100% Free</span>
+          <h3 className="text-lg sm:text-xl font-extrabold text-white tracking-tight leading-snug pr-6">
+            Get Certified for <span className="text-amber-400 underline decoration-amber-400/50">100% Free</span>
           </h3>
 
-          <p className="mt-2 text-indigo-100 text-sm sm:text-base leading-relaxed">
-            To celebrate the official launch of Jnachi, all 6 Role-Based Examinations (Sales, Developers, Marketers, Support, HR, Managers) plus Tier 01 AI Foundations fees are 100% waived for the next 30 days.
+          <p className="mt-1 text-indigo-200 text-xs sm:text-sm leading-relaxed">
+            All 6 Role-Based Certifications + AI Foundations fees are fully waived for 30 days.
           </p>
 
-          {/* Live Countdown Grid */}
+          {/* Live Countdown Grid - Compact */}
           {timeLeft && (
-            <div className="mt-5 grid grid-cols-4 gap-2 bg-black/30 border border-white/10 rounded-2xl p-3 text-center">
+            <div className="mt-3 grid grid-cols-4 gap-1.5 bg-black/40 border border-white/10 rounded-xl p-2 text-center">
               <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-black text-amber-300 font-mono">{timeLeft.days}</span>
-                <span className="text-[10px] uppercase font-bold text-slate-300 tracking-wider">Days</span>
+                <span className="text-base sm:text-lg font-black text-amber-300 font-mono leading-none">{timeLeft.days}</span>
+                <span className="text-[9px] uppercase font-bold text-slate-400 tracking-wider mt-0.5">Days</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-black text-amber-300 font-mono">{timeLeft.hours}</span>
-                <span className="text-[10px] uppercase font-bold text-slate-300 tracking-wider">Hours</span>
+                <span className="text-base sm:text-lg font-black text-amber-300 font-mono leading-none">{timeLeft.hours}</span>
+                <span className="text-[9px] uppercase font-bold text-slate-400 tracking-wider mt-0.5">Hours</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-black text-amber-300 font-mono">{timeLeft.minutes}</span>
-                <span className="text-[10px] uppercase font-bold text-slate-300 tracking-wider">Mins</span>
+                <span className="text-base sm:text-lg font-black text-amber-300 font-mono leading-none">{timeLeft.minutes}</span>
+                <span className="text-[9px] uppercase font-bold text-slate-400 tracking-wider mt-0.5">Mins</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-xl sm:text-2xl font-black text-amber-300 font-mono">{timeLeft.seconds}</span>
-                <span className="text-[10px] uppercase font-bold text-slate-300 tracking-wider">Secs</span>
+                <span className="text-base sm:text-lg font-black text-amber-300 font-mono leading-none">{timeLeft.seconds}</span>
+                <span className="text-[9px] uppercase font-bold text-slate-400 tracking-wider mt-0.5">Secs</span>
               </div>
             </div>
           )}
         </div>
 
-        {/* Benefits & CTA Body */}
-        <div className="p-6 sm:p-8 space-y-6">
-          <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-              <p className="text-sm text-slate-700">
-                <strong>Free Launch Access:</strong> Tier 01: AI Foundations + All 6 Role-Based Tracks (Sales, Developers, Marketers, Customer Support, HR & People Ops, Managers & Leads).
+        {/* Benefits & CTA Body - Compact */}
+        <div className="p-4 sm:p-5 space-y-3.5 overflow-y-auto">
+          <div className="space-y-2">
+            <div className="flex items-start gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+              <p className="text-xs sm:text-sm text-slate-700 leading-snug">
+                <strong>7 Free Tracks:</strong> AI Foundations + Sales, Developers, Marketers, Support, HR & Managers.
               </p>
             </div>
-            <div className="flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
-              <p className="text-sm text-slate-700">
-                <strong>Verifiable Digital Diplomas:</strong> Permanent public verification URL (<code className="text-xs bg-slate-100 px-1 py-0.5 rounded text-indigo-600 font-mono">/verify/[id]</code>) and 1-Click LinkedIn Credential Integration.
+            <div className="flex items-start gap-2.5">
+              <ShieldCheck className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+              <p className="text-xs sm:text-sm text-slate-700 leading-snug">
+                <strong>Verifiable Credentials:</strong> Permanent verification URL (<code className="text-[11px] bg-slate-100 px-1 py-0.5 rounded text-indigo-600 font-mono">/verify/[id]</code>) + 1-Click LinkedIn addition.
               </p>
             </div>
           </div>
 
-          {/* Pricing Comparison Bar */}
-          <div className="flex items-center justify-between bg-slate-50 border border-slate-200/80 rounded-2xl p-4">
+          {/* Pricing Comparison Bar - Compact */}
+          <div className="flex items-center justify-between bg-slate-50 border border-slate-200/80 rounded-xl px-3.5 py-2.5">
             <div>
-              <span className="text-xs text-slate-600 uppercase font-bold tracking-wider block">Standard Exam Fee</span>
-              <span className="text-base text-slate-500 line-through font-bold">$49 / Exam</span>
+              <span className="text-[10px] text-slate-500 uppercase font-bold tracking-wider block">Standard Fee</span>
+              <span className="text-xs sm:text-sm text-slate-400 line-through font-bold">$49 / Exam</span>
             </div>
             <div className="text-right">
-              <span className="text-xs text-emerald-700 uppercase font-bold tracking-wider block">Launch Promo</span>
-              <span className="text-2xl font-black text-emerald-600">$0 Free</span>
+              <span className="text-[10px] text-emerald-700 uppercase font-bold tracking-wider block">Launch Promo</span>
+              <span className="text-lg sm:text-xl font-black text-emerald-600 leading-none">$0 Free</span>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+          <div className="flex flex-col gap-2 pt-1">
             <Link
               href="/certification"
               onClick={handleDismiss}
-              className="w-full inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-6 rounded-2xl transition-all shadow-md hover:shadow-lg text-sm sm:text-base group"
+              className="w-full inline-flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 active:scale-[0.98] text-white font-bold py-2.5 sm:py-3 px-4 rounded-xl transition-all shadow-md text-xs sm:text-sm group"
             >
-              <Award className="w-5 h-5 text-amber-300" />
+              <Award className="w-4 h-4 text-amber-300" />
               <span>Explore Certifications & Start Free</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <button
               onClick={handleDismiss}
-              className="w-full sm:w-auto text-xs text-slate-600 hover:text-slate-800 font-medium py-2 px-3 transition-colors"
+              className="text-[11px] text-slate-500 hover:text-slate-800 font-medium py-1 transition-colors text-center"
             >
               Remind me later
             </button>
