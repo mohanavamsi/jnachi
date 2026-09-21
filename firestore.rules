@@ -36,7 +36,8 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      allow get, list: if true;
+      allow get: if isOwner(userId);
+      allow list: if false;
       allow create: if isOwner(userId)
         && isValidId(userId)
         && isValidUser(incoming())
@@ -103,35 +104,44 @@ service cloud.firestore {
     }
 
     match /leads/{leadId} {
-      allow read, get, list: if true;
+      // Disallow public listing or reading of lead contact details
+      allow get, list: if false;
       allow create: if isValidLead(incoming())
         && incoming().keys().size() <= 6
         && incoming().createdAt == request.time;
     }
 
     match /cert_profiles/{profileId} {
-      allow get, list: if true;
-      allow create, update: if profileId is string && profileId.size() <= 128;
+      // Disallow bulk scraping of all candidate profile hashes
+      allow list: if false;
+      allow get: if isValidId(profileId);
+      allow create, update: if isValidId(profileId);
     }
 
     match /cert_attempts/{attemptId} {
-      allow get, list: if true;
-      allow create, update: if attemptId is string && attemptId.size() <= 128;
+      // Disallow listing all attempts and answer sheets
+      allow list: if false;
+      allow get: if isValidId(attemptId);
+      allow create, update: if isValidId(attemptId);
     }
 
     match /certificates/{certificateId} {
-      allow get, list: if true;
-      allow create, update: if certificateId is string && certificateId.size() <= 128;
+      // Allow individual certificate verification by ID, but disallow database-wide listing
+      allow get: if isValidId(certificateId);
+      allow list: if false;
+      allow create, update: if isValidId(certificateId);
     }
 
     match /certifications/{certId} {
-      allow get, list: if true;
-      allow create, update: if certId is string && certId.size() <= 128;
+      allow get: if isValidId(certId);
+      allow list: if false;
+      allow create, update: if isValidId(certId);
     }
 
     match /userCertifications/{docId} {
-      allow get, list: if true;
-      allow create, update: if docId is string && docId.size() <= 128;
+      allow get: if isValidId(docId);
+      allow list: if false;
+      allow create, update: if isValidId(docId);
     }
   }
 }

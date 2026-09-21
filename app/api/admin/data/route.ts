@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import crypto from 'crypto';
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import {
   getFirestore,
@@ -94,10 +95,17 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   try {
-    const authHeader = req.headers.get('x-admin-key') || req.nextUrl.searchParams.get('key');
-    const expectedPasscode = process.env.ADMIN_PASSCODE || 'jnachi-admin-2026';
+    const authHeader = (req.headers.get('x-admin-key') || req.nextUrl.searchParams.get('key') || '').trim();
+    const expectedPasscode = (process.env.ADMIN_PASSCODE || 'jnachi-admin-2026').trim();
 
-    if (authHeader !== expectedPasscode) {
+    const authBuffer = Buffer.from(authHeader);
+    const expectedBuffer = Buffer.from(expectedPasscode);
+
+    const isMatch =
+      authBuffer.length === expectedBuffer.length &&
+      crypto.timingSafeEqual(authBuffer, expectedBuffer);
+
+    if (!isMatch) {
       return NextResponse.json(
         { error: 'Unauthorized. Invalid Admin Passcode.' },
         { status: 401 }
