@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCertStatus } from '@/lib/certService';
-import { CertTier } from '@/lib/certTypes';
+import { CertTier, isValidTier } from '@/lib/certTypes';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,9 +9,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const email = searchParams.get('email');
     const rawTier = searchParams.get('tier') || 'beginner';
-    const tier: CertTier = ['beginner', 'practitioner', 'builder', 'master'].includes(rawTier)
-      ? (rawTier as CertTier)
-      : 'beginner';
+    const tier: CertTier = isValidTier(rawTier) ? rawTier : 'beginner';
 
     if (!email) {
       return NextResponse.json({ error: 'Email parameter is required' }, { status: 400 });
@@ -29,9 +27,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { email, tier = 'beginner' } = body;
-    const validTier: CertTier = ['beginner', 'practitioner', 'builder', 'master'].includes(tier)
-      ? (tier as CertTier)
-      : 'beginner';
+    const validTier: CertTier = isValidTier(tier) ? tier : 'beginner';
 
     if (!email) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });

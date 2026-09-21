@@ -128,10 +128,27 @@ export default function RazorpayModal({
 
       // If 100% Free / Promo waiver
       if (orderData.isFree) {
-        if (onPaymentSuccess) {
-          onPaymentSuccess(selectedTier, `free_promo_${Date.now()}`);
+        const waiverRes = await fetch('/api/razorpay/verify-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tier: selectedTier,
+            candidateEmail: email,
+            candidateName: name,
+            promoCode: appliedPromo?.code,
+            isPromoWaiver: true,
+          }),
+        });
+
+        const waiverData = await waiverRes.json();
+        if (waiverRes.ok && waiverData.verified) {
+          if (onPaymentSuccess) {
+            onPaymentSuccess(selectedTier, waiverData.paymentId || `waiver_${Date.now()}`);
+          }
+          onClose();
+        } else {
+          setErrorMessage(waiverData.error || 'Failed to claim promotional voucher.');
         }
-        onClose();
         return;
       }
 

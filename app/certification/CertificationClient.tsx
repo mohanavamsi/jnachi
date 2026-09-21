@@ -41,6 +41,7 @@ import {
   Minimize2,
   AlertOctagon,
   ExternalLink,
+  CreditCard,
 } from 'lucide-react';
 import {
   CertSection,
@@ -1468,20 +1469,35 @@ export default function CertificationClient() {
                         <span className="text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full font-bold">
                           24-Hour Cooldown Active
                         </span>
+                      ) : statusResponse.isLocked && statusResponse.lockReason === 'payment_required' ? (
+                        <span className="text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full font-bold">
+                          Voucher / Payment Required
+                        </span>
                       ) : statusResponse.isLocked ? (
                         <span className="text-rose-700 bg-rose-100 px-2 py-0.5 rounded-full font-bold">
                           3 Attempts Exhausted
                         </span>
                       ) : (
                         <span className="text-indigo-700 bg-indigo-100 px-2 py-0.5 rounded-full font-bold">
-                          Eligible to Launch
+                          Eligible & Unlocked ✓
                         </span>
                       )}
                     </div>
                     <p className="text-xs text-slate-500">
-                      Attempts Used: {statusResponse.totalAttempts} / 3 • Remaining: {statusResponse.attemptsRemaining}
+                      {statusResponse.message || `Attempts Used: ${statusResponse.totalAttempts} / 3 • Remaining: ${statusResponse.attemptsRemaining}`}
                     </p>
                   </div>
+
+                  {statusResponse.isLocked && statusResponse.lockReason === 'payment_required' && (
+                    <button
+                      type="button"
+                      onClick={() => setIsRazorpayModalOpen(true)}
+                      className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold rounded-xl transition-colors shadow-sm flex items-center gap-1.5 shrink-0"
+                    >
+                      <CreditCard className="w-4 h-4" />
+                      <span>Unlock with Voucher / Checkout</span>
+                    </button>
+                  )}
 
                   {statusResponse.cooldownActive && cooldownRemaining && !cooldownRemaining.expired && (
                     <div className="flex items-center gap-2 px-3 py-1.5 bg-amber-100 text-amber-900 rounded-xl font-mono text-xs font-bold shrink-0">
@@ -1501,30 +1517,41 @@ export default function CertificationClient() {
 
               {/* Start Exam CTA Button */}
               <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-                <button
-                  type="button"
-                  onClick={() => handleStartExam(selectedTier)}
-                  disabled={
-                    Boolean(
-                      isStartingExam ||
-                      isMissingRequiredProfile ||
-                      (statusResponse && (!statusResponse.eligible || statusResponse.cooldownActive || statusResponse.isLocked))
-                    )
-                  }
-                  className="px-10 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-base rounded-2xl shadow-lg shadow-indigo-600/25 transition-all flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {isStartingExam ? (
-                    <>
-                      <RefreshCw className="w-5 h-5 animate-spin" />
-                      Generating 40 Questions...
-                    </>
-                  ) : (
-                    <>
-                      <span>Begin {activeTierConfig.title} Exam</span>
-                      <ArrowRight className="w-5 h-5" />
-                    </>
-                  )}
-                </button>
+                {statusResponse?.isLocked && statusResponse?.lockReason === 'payment_required' ? (
+                  <button
+                    type="button"
+                    onClick={() => setIsRazorpayModalOpen(true)}
+                    className="px-10 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-base rounded-2xl shadow-lg shadow-indigo-600/25 transition-all flex items-center justify-center gap-2.5"
+                  >
+                    <CreditCard className="w-5 h-5" />
+                    <span>Unlock {activeTierConfig.title} Voucher</span>
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => handleStartExam(selectedTier)}
+                    disabled={
+                      Boolean(
+                        isStartingExam ||
+                        isMissingRequiredProfile ||
+                        (statusResponse && (!statusResponse.eligible || statusResponse.cooldownActive || statusResponse.isLocked))
+                      )
+                    }
+                    className="px-10 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-base rounded-2xl shadow-lg shadow-indigo-600/25 transition-all flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isStartingExam ? (
+                      <>
+                        <RefreshCw className="w-5 h-5 animate-spin" />
+                        Generating 40 Questions...
+                      </>
+                    ) : (
+                      <>
+                        <span>Begin {activeTierConfig.title} Exam</span>
+                        <ArrowRight className="w-5 h-5" />
+                      </>
+                    )}
+                  </button>
+                )}
 
                 <div className="text-xs text-slate-500 flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-slate-400" />
@@ -1536,7 +1563,7 @@ export default function CertificationClient() {
                   onClick={() => setIsRazorpayModalOpen(true)}
                   className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-colors shrink-0"
                 >
-                  Claim Voucher / Razorpay Checkout
+                  Claim Voucher / Pricing
                 </button>
               </div>
             </div>

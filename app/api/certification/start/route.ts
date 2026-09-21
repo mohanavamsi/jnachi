@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { startExamAttempt } from '@/lib/certService';
-import { CertTier } from '@/lib/certTypes';
+import { CertTier, isValidTier } from '@/lib/certTypes';
 
 export const dynamic = 'force-dynamic';
 
@@ -25,9 +25,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Current Company / Organization is required before starting the exam' }, { status: 400 });
     }
 
-    const validTier: CertTier = ['beginner', 'practitioner', 'builder', 'master'].includes(tier)
-      ? (tier as CertTier)
-      : 'beginner';
+    const validTier: CertTier = isValidTier(tier) ? tier : 'beginner';
 
     const attempt = await startExamAttempt(
       email,

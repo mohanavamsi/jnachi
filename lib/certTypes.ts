@@ -393,3 +393,8 @@ export const CORE_TIER_ORDER: CertTier[] = ['beginner', 'practitioner', 'builder
 export const ROLE_TIER_ORDER: CertTier[] = ['sales', 'developers', 'marketers', 'support', 'hr', 'managers'];
 export const TIER_ORDER: CertTier[] = [...CORE_TIER_ORDER, ...ROLE_TIER_ORDER];
 
+export function isValidTier(tier: unknown): tier is CertTier {
+  return typeof tier === 'string' && tier in CERT_TIERS;
+}
+
+

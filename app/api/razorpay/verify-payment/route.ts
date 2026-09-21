@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
-import { CertTier } from '@/lib/certTypes';
+import { CertTier, isValidTier } from '@/lib/certTypes';
+import { unlockTierForCandidate } from '@/lib/certService';
 
 function cleanEnv(val: string | undefined): string {
   if (!val) return '';
@@ -17,37 +18,95 @@ export async function POST(req: NextRequest) {
       tier,
       candidateEmail,
       candidateName,
+      promoCode,
+      isPromoWaiver,
       isSimulated,
     } = body as {
-      razorpay_order_id: string;
-      razorpay_payment_id: string;
-      razorpay_signature: string;
+      razorpay_order_id?: string;
+      razorpay_payment_id?: string;
+      razorpay_signature?: string;
       tier: CertTier;
       candidateEmail: string;
-      candidateName: string;
+      candidateName?: string;
+      promoCode?: string;
+      isPromoWaiver?: boolean;
       isSimulated?: boolean;
     };
 
-    if (isSimulated) {
-      // In sandbox mode without production keys
+    if (!candidateEmail || !candidateEmail.includes('@')) {
+      return NextResponse.json({ error: 'Valid candidate email is required for voucher unlock.' }, { status: 400 });
+    }
+
+    if (!isValidTier(tier)) {
+      return NextResponse.json({ error: 'Invalid certification tier specified.' }, { status: 400 });
+    }
+
+    // 1. Promo / Free Waiver Unlock
+    if (isPromoWaiver) {
+      const unlockResult = await unlockTierForCandidate({
+        email: candidateEmail,
+        tier,
+        paymentId: `waiver_${Date.now()}`,
+        orderId: razorpay_order_id || `order_waiver_${Date.now()}`,
+        amount: 0,
+        promoCode: promoCode || 'LAUNCH_WAIVER',
+        candidateName,
+        isSimulated: false,
+      });
+
       return NextResponse.json({
         verified: true,
-        isSimulated: true,
-        paymentId: razorpay_payment_id || `pay_sim_${Date.now()}`,
+        isWaiver: true,
+        paymentId: `waiver_${Date.now()}`,
         orderId: razorpay_order_id,
         tier,
         candidateEmail,
         candidateName,
-        message: 'Sandbox payment verified successfully.',
+        unlockedTiers: unlockResult.unlockedTiers,
+        message: 'Promotional voucher verified and tier unlocked successfully.',
       });
     }
 
+    // 2. Sandbox / Simulated Mode
+    if (isSimulated) {
+      const paymentId = razorpay_payment_id || `pay_sim_${Date.now()}`;
+      const unlockResult = await unlockTierForCandidate({
+        email: candidateEmail,
+        tier,
+        paymentId,
+        orderId: razorpay_order_id || `order_sim_${Date.now()}`,
+        amount: 0,
+        promoCode,
+        candidateName,
+        isSimulated: true,
+      });
+
+      return NextResponse.json({
+        verified: true,
+        isSimulated: true,
+        paymentId,
+        orderId: razorpay_order_id,
+        tier,
+        candidateEmail,
+        candidateName,
+        unlockedTiers: unlockResult.unlockedTiers,
+        message: 'Sandbox payment verified and tier unlocked successfully.',
+      });
+    }
+
+    // 3. Real Live Razorpay Verification
     const keySecret = cleanEnv(process.env.RAZORPAY_KEY_SECRET);
     if (!keySecret) {
-      // If secret is missing but not simulated, return error
       return NextResponse.json(
         { error: 'Server configuration error: Razorpay secret key is not set.' },
         { status: 500 }
+      );
+    }
+
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
+      return NextResponse.json(
+        { error: 'Missing payment signature verification parameters.' },
+        { status: 400 }
       );
     }
 
@@ -67,7 +126,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Record verified transaction record
+    // Unlock candidate tier in Firestore
+    const unlockResult = await unlockTierForCandidate({
+      email: candidateEmail,
+      tier,
+      paymentId: razorpay_payment_id,
+      orderId: razorpay_order_id,
+      promoCode,
+      candidateName,
+      isSimulated: false,
+    });
+
     return NextResponse.json({
       verified: true,
       paymentId: razorpay_payment_id,
@@ -75,6 +144,7 @@ export async function POST(req: NextRequest) {
       tier,
       candidateEmail,
       candidateName,
+      unlockedTiers: unlockResult.unlockedTiers,
       timestamp: new Date().toISOString(),
       message: 'Payment verified and examination unlocked successfully.',
     });

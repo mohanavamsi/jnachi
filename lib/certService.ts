@@ -13,7 +13,8 @@ import {
 } from 'firebase/firestore';
 import crypto from 'crypto';
 import firebaseConfig from '../firebase-applet-config.json';
-import { CertTier, CERT_TIERS } from './certTypes';
+import { CertTier, CERT_TIERS, TIER_ORDER } from './certTypes';
+import { TIER_PRICING } from './pricing';
 import {
   drawExamQuestions,
   stripAnswersForClient,
@@ -56,6 +57,15 @@ export interface CertProfileData {
   company?: string;
   usedQuestionIds?: string[];
   tierProgress?: Partial<Record<CertTier, TierProgressData>>;
+  unlockedTiers?: CertTier[];
+  payments?: Record<string, {
+    paymentId: string;
+    orderId?: string;
+    amount?: number;
+    promoCode?: string | null;
+    isSimulated?: boolean;
+    unlockedAt: number;
+  }>;
 }
 
 export interface CertAttemptData {
@@ -96,8 +106,11 @@ export interface CertStatusResponse {
   timeRemainingMs?: number;
   nextAvailableAt?: number;
   isLocked: boolean;
+  lockReason?: 'attempts_exhausted' | 'payment_required' | 'cooldown';
+  isPaidTier?: boolean;
+  isUnlocked?: boolean;
   message?: string;
-  allTiersProgress?: Partial<Record<CertTier, { passed: boolean; certificateId?: string; attempts: number }>>;
+  allTiersProgress?: Partial<Record<CertTier, { passed: boolean; certificateId?: string; attempts: number; isUnlocked?: boolean }>>;
 }
 
 export function normalizeEmail(email: string): string {
@@ -167,7 +180,73 @@ function getTierData(profile: CertProfileData | null, tier: CertTier): TierProgr
 }
 
 /**
- * Checks exam status, attempt limits, and 24-hour cooldown for an email and specific tier.
+ * Unlocks a certification tier for a candidate upon verified payment or promo code waiver.
+ */
+export async function unlockTierForCandidate(params: {
+  email: string;
+  tier: CertTier;
+  paymentId?: string;
+  orderId?: string;
+  amount?: number;
+  promoCode?: string;
+  candidateName?: string;
+  isSimulated?: boolean;
+}): Promise<{ success: boolean; profileId: string; unlockedTiers: CertTier[] }> {
+  const normEmail = normalizeEmail(params.email);
+  if (!normEmail || !normEmail.includes('@')) {
+    throw new Error('Please provide a valid email address');
+  }
+
+  const profileId = getProfileId(normEmail);
+  const profileRef = doc(db, 'cert_profiles', profileId);
+  const snap = await getDoc(profileRef);
+
+  let existingUnlocked: CertTier[] = [];
+  let existingPayments: Record<string, any> = {};
+  let existingRecipientName = params.candidateName || '';
+
+  if (snap.exists()) {
+    const data = snap.data() as CertProfileData;
+    existingUnlocked = data.unlockedTiers || [];
+    existingPayments = data.payments || {};
+    if (!existingRecipientName && data.recipientName) {
+      existingRecipientName = data.recipientName;
+    }
+  }
+
+  const updatedUnlocked = Array.from(new Set([...existingUnlocked, params.tier]));
+  const paymentRecord = {
+    paymentId: params.paymentId || `pay_${Date.now()}`,
+    orderId: params.orderId || `order_${Date.now()}`,
+    amount: params.amount || 0,
+    promoCode: params.promoCode || null,
+    isSimulated: Boolean(params.isSimulated),
+    unlockedAt: Date.now(),
+  };
+
+  await setDoc(
+    profileRef,
+    {
+      email: normEmail,
+      ...(existingRecipientName ? { recipientName: existingRecipientName.trim() } : {}),
+      unlockedTiers: updatedUnlocked,
+      payments: {
+        ...existingPayments,
+        [params.tier]: paymentRecord,
+      },
+    },
+    { merge: true }
+  );
+
+  return {
+    success: true,
+    profileId,
+    unlockedTiers: updatedUnlocked,
+  };
+}
+
+/**
+ * Checks exam status, attempt limits, payment unlock status, and 24-hour cooldown for an email and specific tier.
  */
 export async function getCertStatus(email: string, tier: CertTier = 'beginner'): Promise<CertStatusResponse> {
   const normEmail = normalizeEmail(email);
@@ -176,11 +255,34 @@ export async function getCertStatus(email: string, tier: CertTier = 'beginner'):
   }
 
   const tierConfig = CERT_TIERS[tier] || CERT_TIERS.beginner;
+  const pricing = TIER_PRICING[tier] || { isFree: false, isLaunchFree: false };
+  const isPaidTier = !pricing.isFree && !pricing.isLaunchFree;
+
   const profileId = getProfileId(normEmail);
   const profileRef = doc(db, 'cert_profiles', profileId);
   const snap = await getDoc(profileRef);
 
   if (!snap.exists()) {
+    // If it's a paid tier and profile doesn't exist yet, it is locked requiring payment/voucher
+    if (isPaidTier) {
+      return {
+        email: normEmail,
+        tier,
+        tierTitle: tierConfig.title,
+        eligible: false,
+        totalAttempts: 0,
+        attemptsRemaining: MAX_ATTEMPTS,
+        passed: false,
+        cooldownActive: false,
+        isLocked: true,
+        lockReason: 'payment_required',
+        isPaidTier: true,
+        isUnlocked: false,
+        message: `An examination voucher is required to take the ${tierConfig.title} Exam. Please complete checkout or claim a promo voucher to unlock.`,
+        allTiersProgress: {},
+      };
+    }
+
     return {
       email: normEmail,
       tier,
@@ -191,22 +293,30 @@ export async function getCertStatus(email: string, tier: CertTier = 'beginner'):
       passed: false,
       cooldownActive: false,
       isLocked: false,
+      isPaidTier: false,
+      isUnlocked: true,
       allTiersProgress: {},
     };
   }
 
   const profile = snap.data() as CertProfileData;
   const tierData = getTierData(profile, tier);
+  const unlockedTiers = profile.unlockedTiers || [];
+  const isUnlocked = !isPaidTier || unlockedTiers.includes(tier) || Boolean(tierData.passed) || (tierData.totalAttempts || 0) > 0;
   const attemptsRemaining = Math.max(0, MAX_ATTEMPTS - (tierData.totalAttempts || 0));
 
   // Build high-level summary of all tiers for UI ladder
-  const allTiersProgress: Partial<Record<CertTier, { passed: boolean; certificateId?: string; attempts: number }>> = {};
-  (['beginner', 'practitioner', 'builder', 'master'] as CertTier[]).forEach((t) => {
+  const allTiersProgress: Partial<Record<CertTier, { passed: boolean; certificateId?: string; attempts: number; isUnlocked?: boolean }>> = {};
+  TIER_ORDER.forEach((t) => {
     const d = getTierData(profile, t);
+    const tPricing = TIER_PRICING[t] || { isFree: false, isLaunchFree: false };
+    const tPaid = !tPricing.isFree && !tPricing.isLaunchFree;
+    const tUnlocked = !tPaid || unlockedTiers.includes(t) || Boolean(d.passed) || (d.totalAttempts || 0) > 0;
     allTiersProgress[t] = {
       passed: d.passed,
       certificateId: d.latestCertificateId,
       attempts: d.totalAttempts,
+      isUnlocked: tUnlocked,
     };
   });
 
@@ -227,8 +337,34 @@ export async function getCertStatus(email: string, tier: CertTier = 'beginner'):
       company: profile.company,
       cooldownActive: false,
       isLocked: false,
+      isPaidTier,
+      isUnlocked: true,
       allTiersProgress,
       message: `You have already earned your ${tierConfig.title} Certification!`,
+    };
+  }
+
+  // If paid tier is NOT unlocked
+  if (!isUnlocked) {
+    return {
+      email: normEmail,
+      tier,
+      tierTitle: tierConfig.title,
+      eligible: false,
+      totalAttempts: tierData.totalAttempts || 0,
+      attemptsRemaining,
+      passed: false,
+      highestScore: tierData.highestScore,
+      recipientName: profile.recipientName,
+      location: profile.location,
+      company: profile.company,
+      cooldownActive: false,
+      isLocked: true,
+      lockReason: 'payment_required',
+      isPaidTier: true,
+      isUnlocked: false,
+      allTiersProgress,
+      message: `An examination voucher is required to take the ${tierConfig.title} Exam. Please complete checkout or claim a promo voucher to unlock.`,
     };
   }
 
@@ -248,6 +384,9 @@ export async function getCertStatus(email: string, tier: CertTier = 'beginner'):
       company: profile.company,
       cooldownActive: false,
       isLocked: true,
+      lockReason: 'attempts_exhausted',
+      isPaidTier,
+      isUnlocked: true,
       allTiersProgress,
       message: `You've used all 3 attempts for ${tierConfig.title}. Contact us to discuss a retake.`,
     };
@@ -272,9 +411,12 @@ export async function getCertStatus(email: string, tier: CertTier = 'beginner'):
       location: profile.location,
       company: profile.company,
       cooldownActive: true,
+      lockReason: 'cooldown',
       timeRemainingMs,
       nextAvailableAt,
       isLocked: false,
+      isPaidTier,
+      isUnlocked: true,
       allTiersProgress,
       message: `24-hour cooldown required between attempts for ${tierConfig.title}.`,
     };
@@ -294,6 +436,8 @@ export async function getCertStatus(email: string, tier: CertTier = 'beginner'):
     company: profile.company,
     cooldownActive: false,
     isLocked: false,
+    isPaidTier,
+    isUnlocked: true,
     allTiersProgress,
   };
 }
