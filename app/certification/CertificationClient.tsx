@@ -56,7 +56,7 @@ import {
   EXAM_DURATION_MS,
   PASSING_THRESHOLD,
 } from '@/lib/certService';
-import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, CertCategory } from '@/lib/certTypes';
+import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, PYTHON_TIER_ORDER, CertCategory } from '@/lib/certTypes';
 import { LESSONS, CategoryKey } from '@/lib/lessonsData';
 import BeginnerCertificateModal from '@/components/BeginnerCertificateModal';
 import ExamSyllabusModal from '@/components/ExamSyllabusModal';
@@ -997,10 +997,10 @@ export default function CertificationClient() {
                 <Layers className="w-4 h-4 text-indigo-600" />
                 <span>Select Certification Track</span>
               </h2>
-              <p className="text-xs text-slate-500">Choose between foundational engineering tiers or dedicated role certifications.</p>
+              <p className="text-xs text-slate-500">Choose between foundational engineering tiers, role certifications, or Python tracks.</p>
             </div>
 
-            <div className="flex p-1 bg-slate-200/80 rounded-2xl shrink-0 self-start sm:self-auto">
+            <div className="flex p-1 bg-slate-200/80 rounded-2xl shrink-0 self-start sm:self-auto gap-1">
               <button
                 type="button"
                 onClick={() => {
@@ -1016,7 +1016,7 @@ export default function CertificationClient() {
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                Core Ladder (Tiers 01 - 04)
+                Core Ladder (4 Tiers)
               </button>
               <button
                 type="button"
@@ -1033,14 +1033,31 @@ export default function CertificationClient() {
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                Role-Based Tracks (6 Roles)
+                Role Tracks (6 Roles)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTrackTab('python');
+                  if (!PYTHON_TIER_ORDER.includes(selectedTier)) {
+                    setSelectedTier('python_ai');
+                    if (effectiveEmail) handleCheckStatus(effectiveEmail, 'python_ai');
+                  }
+                }}
+                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  activeTrackTab === 'python'
+                    ? 'bg-white text-emerald-700 shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                Python Tracks (2 Tracks)
               </button>
             </div>
           </div>
 
           {/* TIER CARDS GRID */}
-          <div className={`grid gap-4 ${activeTrackTab === 'core' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
-            {(activeTrackTab === 'core' ? CORE_TIER_ORDER : ROLE_TIER_ORDER).map((tierKey) => {
+          <div className={`grid gap-4 ${activeTrackTab === 'core' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : activeTrackTab === 'python' ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
+            {(activeTrackTab === 'core' ? CORE_TIER_ORDER : activeTrackTab === 'python' ? PYTHON_TIER_ORDER : ROLE_TIER_ORDER).map((tierKey) => {
               const tier = CERT_TIERS[tierKey];
               const isSelected = selectedTier === tierKey;
               const tierProgress = statusResponse?.allTiersProgress?.[tierKey];

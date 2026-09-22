@@ -18,7 +18,7 @@ import {
   ChevronRight,
   ExternalLink,
 } from 'lucide-react';
-import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER } from '@/lib/certTypes';
+import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, PYTHON_TIER_ORDER } from '@/lib/certTypes';
 import { CERT_SYLLABUS, SyllabusSection } from '@/lib/certSyllabus';
 import { CertSection } from '@/lib/certQuestions/types';
 
@@ -124,6 +124,28 @@ export default function ExamSyllabusModal({
             <div className="flex flex-wrap items-center gap-1.5 pt-1">
               <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mr-1">Roles:</span>
               {ROLE_TIER_ORDER.map((tierKey) => {
+                const cfg = CERT_TIERS[tierKey];
+                const isSelected = activeTier === tierKey;
+                return (
+                  <button
+                    key={tierKey}
+                    type="button"
+                    onClick={() => handleTierChange(tierKey)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                      isSelected
+                        ? 'bg-white text-slate-950 shadow-md font-extrabold'
+                        : 'bg-white/10 text-slate-300 hover:bg-white/20 hover:text-white'
+                    }`}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: cfg.colorScheme.primary }} />
+                    {cfg.roleName || cfg.title}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="flex flex-wrap items-center gap-1.5 pt-1">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-400 mr-1">Python:</span>
+              {PYTHON_TIER_ORDER.map((tierKey) => {
                 const cfg = CERT_TIERS[tierKey];
                 const isSelected = activeTier === tierKey;
                 return (

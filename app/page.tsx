@@ -127,14 +127,14 @@ export default function HomePage() {
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-bold uppercase tracking-wider">
                   <Layers className="w-3.5 h-3.5" />
-                  10 Official Credentials
+                  12 Official Credentials
                 </span>
               </div>
               <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
                 Professional AI Certification Suite
               </h2>
               <p className="text-slate-300 text-base leading-relaxed">
-                4 Core Career Progression Milestones plus 6 Role-Based Examinations (Sales, Devs, Marketers, Support, HR, Managers). Proctored, verifiable, and free for the next 30 days.
+                4 Core Progression Milestones, 6 Role-Based Tracks (Sales, Devs, Marketers, Support, HR, Managers), plus 2 Python AI & Automation Specializations. Proctored, verifiable, and free for the next 30 days.
               </p>
             </div>
 
@@ -142,7 +142,7 @@ export default function HomePage() {
               href="/certification"
               className="inline-flex items-center gap-2 px-6 py-3.5 bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-sm rounded-xl transition-all shadow-md shrink-0 hover:scale-102"
             >
-              <span>Explore All 10 Certifications</span>
+              <span>Explore All 12 Certifications</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -201,7 +201,7 @@ export default function HomePage() {
             })}
           </div>
 
-          {/* Role Track Highlights Strip */}
+          {/* Role & Python Track Highlights Strip */}
           <div className="p-6 rounded-3xl bg-indigo-950/60 border border-indigo-800/60 flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center shrink-0">
@@ -209,13 +209,13 @@ export default function HomePage() {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h4 className="text-sm font-bold text-white">All 6 Specialized Role-Based Certifications</h4>
+                  <h4 className="text-sm font-bold text-white">8 Specialized Tracks: 6 Roles & 2 Python Certifications</h4>
                   <span className="text-[10px] font-black uppercase bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full">
                     100% Free for 30 Days
                   </span>
                 </div>
                 <p className="text-xs text-indigo-200 mt-0.5">
-                  Sales • Developers • Marketers • Customer Support • HR & People Ops • Managers & Leads
+                  Python for AI • Applied Python Automation • Sales • Developers • Marketers • Support • HR • Managers
                 </p>
               </div>
             </div>
@@ -223,7 +223,7 @@ export default function HomePage() {
               href="/certification"
               className="inline-flex items-center gap-2 text-amber-300 hover:text-amber-200 text-xs font-bold uppercase tracking-wider shrink-0 bg-amber-400/10 border border-amber-400/30 px-3.5 py-2 rounded-xl"
             >
-              <span>Explore Role Tracks (Free)</span>
+              <span>Explore Specializations (Free)</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>

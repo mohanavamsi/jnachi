@@ -935,6 +935,184 @@ export const CERT_SYLLABUS: Record<CertTier, CertSyllabusData> = {
     },
     preparationPath: COMMON_PREP_PATH,
   },
+
+  // 11. PYTHON FOR AI & PROMPT ENGINEERING
+  python_ai: {
+    tier: 'python_ai',
+    title: 'Jnachi Certified Python for AI & Prompt Engineering',
+    overview: 'Validates Python engineers and AI practitioners on integrating LLMs into production applications, including OpenAI/Anthropic SDKs, Pydantic structured extraction, function calling, agent loops, RAG, and token cost optimization.',
+    targetRole: 'Python Developers, AI Engineers, Data Engineers, and Technical Builders developing LLM-powered applications.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'LLM APIs, Structured Outputs & Streaming',
+        weightPercent: 25,
+        overview: 'Mastery of official Python SDKs, streaming token generators, Pydantic schema constraints, and prompt formatting.',
+        topics: [
+          {
+            title: 'Official SDKs & Parameter Calibration',
+            description: 'Configuring client sessions, temperature, top_p, seeds, and system/user message orchestration.',
+            skillsAssessed: ['OpenAI/Anthropic SDKs', 'Async Streaming', 'Temperature Tuning'],
+          },
+          {
+            title: 'Pydantic & Strict Structured Outputs',
+            description: 'Using BaseModel schemas to guarantee runtime JSON validation and type safety.',
+            skillsAssessed: ['Pydantic Validation', 'Structured Extraction', 'JSON Schemas'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Function Calling, Tools & Agentic Loops',
+        weightPercent: 25,
+        overview: 'Designing external tool schemas, parsing function call arguments, and building resilient ReAct/graph agent loops.',
+        topics: [
+          {
+            title: 'Function Calling & Tool Execution',
+            description: 'Declarative tool schemas, parameter parsing, error boundaries, and dynamic tool selection.',
+            skillsAssessed: ['Tool Calling', 'Schema Definition', 'Safe Execution'],
+          },
+          {
+            title: 'Agent Orchestration & ReAct Loops',
+            description: 'Implementing multi-step agent iterations, state persistence, recursion breakers, and memory buffers.',
+            skillsAssessed: ['Agent Loops', 'State Management', 'Recursion Control'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Security, Key Management & Redaction',
+        weightPercent: 25,
+        overview: 'Hardening Python AI pipelines against prompt injection, secret leaks, SSRF, and sensitive PII exposure.',
+        topics: [
+          {
+            title: 'Credential Hygiene & Zero Retention',
+            description: 'Loading environment variables securely, KMS vaulting, and verifying enterprise ZDR policies.',
+            skillsAssessed: ['Secret Management', 'ZDR Policies', 'Security Posture'],
+          },
+          {
+            title: 'Prompt Injection Defense & PII Redaction',
+            description: 'Sanitizing dynamic user input with delimiters/guardrails and masking personal identifiers before egress.',
+            skillsAssessed: ['Prompt Injection Defense', 'Presidio/PII Masking', 'SSRF Prevention'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'RAG Pipelines, Vector Search & Optimization',
+        weightPercent: 25,
+        overview: 'Building scalable retrieval pipelines, vector embeddings, re-ranking, token caching, and performance evals.',
+        topics: [
+          {
+            title: 'RAG Architecture & Hybrid Search',
+            description: 'Chunking strategies, embedding generation, dense vs. BM25 hybrid search, and cross-encoder re-ranking.',
+            skillsAssessed: ['RAG Design', 'Embedding Generation', 'Hybrid Search'],
+          },
+          {
+            title: 'Token Optimization & LLM Evals',
+            description: 'Semantic caching, model cascading, prompt compression, and automated evaluation metrics (Faithfulness/Recall).',
+            skillsAssessed: ['Cost/Token Optimization', 'Semantic Caching', 'Ragas/Evals'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 12. APPLIED PYTHON & AUTOMATION
+  python_dev: {
+    tier: 'python_dev',
+    title: 'Jnachi Certified Applied Python & Automation',
+    overview: 'Evaluates proficiency in writing production-grade, maintainable Python code for task automation, async workflows, HTTP/REST integrations, secret management, and robust backend scripting.',
+    targetRole: 'Software Engineers, Automation Specialists, Backend Developers, DevOps, and Data Professionals.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Idiomatic Python, Typing & Data Structures',
+        weightPercent: 25,
+        overview: 'Modern Python 3.10+ syntax, structural pattern matching, dataclasses, generators, and static typing.',
+        topics: [
+          {
+            title: 'Modern Idioms & Pattern Matching',
+            description: 'Utilizing match/case, slots, context managers, and expressive type annotations.',
+            skillsAssessed: ['Pattern Matching', 'Dataclasses', 'Type Annotations'],
+          },
+          {
+            title: 'Memory Optimization & Generators',
+            description: 'Lazy generator evaluation, iterator protocols, and low-memory data transformation.',
+            skillsAssessed: ['Generators', 'Memory Profiling', 'Efficiency'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Async Workflows, Scraping & OS Scripting',
+        weightPercent: 25,
+        overview: 'Building concurrent network pipelines with asyncio, cross-platform pathlib automation, and subprocess orchestration.',
+        topics: [
+          {
+            title: 'Asyncio & Structured Concurrency',
+            description: 'Async task groups, non-blocking HTTP clients (HTTPX), rate limiters, and graceful shutdown handling.',
+            skillsAssessed: ['Asyncio', 'TaskGroups', 'Non-blocking I/O'],
+          },
+          {
+            title: 'System & ETL Automation',
+            description: 'Pathlib filesystem manipulation, subprocess streaming, streaming CSV/JSON, and CLI development.',
+            skillsAssessed: ['Pathlib', 'Subprocess', 'CLI Tooling'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Security, Cryptography & Dependency Auditing',
+        weightPercent: 25,
+        overview: 'Preventing deserialization vulnerabilities, SQL injection, timing attacks, and securing containerized credentials.',
+        topics: [
+          {
+            title: 'Secure Serialization & Injection Defense',
+            description: 'Avoiding unsafe pickle deserialization, parameterized database execution, and path traversal guards.',
+            skillsAssessed: ['Safe Serialization', 'SQL Injection Defense', 'Path Sanitization'],
+          },
+          {
+            title: 'Constant-Time Hashing & Dependency Scans',
+            description: 'Using `secrets` and constant-time comparison, bcrypt hashing, and automated `pip-audit` security checks.',
+            skillsAssessed: ['Constant-Time Auth', 'Password Hashing', 'Vulnerability Auditing'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Resilience, Testing, CI/CD & Performance',
+        weightPercent: 25,
+        overview: 'Implementing exponential retry backoffs, structured JSON logging, pytest fixtures, and pyproject.toml packaging.',
+        topics: [
+          {
+            title: 'Fault Tolerance & Profiling',
+            description: 'Exponential retry decorators (tenacity), circuit breakers, cProfile analysis, and connection pooling.',
+            skillsAssessed: ['Tenacity Retries', 'Circuit Breakers', 'cProfile'],
+          },
+          {
+            title: 'Testing, Static Analysis & CI/CD',
+            description: 'Advanced pytest fixtures, hypothesis property testing, mypy strict type checking, and modern packaging.',
+            skillsAssessed: ['Pytest Fixtures', 'Property Testing', 'Mypy Strict CI'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
 };
 
 export const CERT_SYLLABI = CERT_SYLLABUS;

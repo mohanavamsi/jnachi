@@ -76,23 +76,23 @@ export default function PricingClient() {
               <div className="space-y-4">
                 <span className="text-xs font-bold uppercase text-amber-300 tracking-wider flex items-center gap-1.5">
                   <Briefcase className="w-3.5 h-3.5" />
-                  All 6 Role-Based Tracks
+                  Role & Python Tracks (8 Tracks)
                 </span>
-                <h2 className="text-2xl font-bold text-white">Role-Based Certifications</h2>
+                <h2 className="text-2xl font-bold text-white">Specialized Certifications</h2>
                 <div className="flex items-baseline gap-2">
                   <span className="text-4xl font-black text-amber-300">₹0</span>
                   <span className="text-sm text-slate-400 line-through font-bold">₹2,499 / $49</span>
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  Specialized applied AI exams for Sales, Developers, Marketers, Support, HR, and Managers.
+                  Specialized applied AI & Python exams for Python AI, Python Devs, Sales, Engineering, Marketing, Support, HR, and Managers.
                 </p>
 
                 <ul className="space-y-2.5 text-xs text-slate-200 pt-4 border-t border-white/10">
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-amber-400" /> <strong>All 6 Role-Based Tracks included</strong></li>
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-amber-400" /> Sales, Devs, Marketers, Support, HR, Managers</li>
+                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-amber-400" /> <strong>All 8 Specializations included free</strong></li>
+                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-amber-400" /> Python for AI, Python Dev, Sales, Devs, Marketers, Support, HR, Managers</li>
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-amber-400" /> Official verifiable digital diploma</li>
                   <li className="flex items-center gap-2"><Check className="w-4 h-4 text-amber-400" /> Permanent verification link (<code className="text-amber-300">/verify/[id]</code>)</li>
-                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-amber-400" /> 3 proctored exam attempts per role</li>
+                  <li className="flex items-center gap-2"><Check className="w-4 h-4 text-amber-400" /> 3 proctored exam attempts per specialization</li>
                 </ul>
               </div>
 

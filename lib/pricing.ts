@@ -96,6 +96,25 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
     promoPriceInr: 0,
     promoPriceUsd: 0,
   },
+  // Python Specialization Tracks: 100% Free for Launch Period
+  python_ai: {
+    tier: 'python_ai',
+    amountInr: 2499,
+    amountUsd: 49,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  python_dev: {
+    tier: 'python_dev',
+    amountInr: 2499,
+    amountUsd: 49,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
 };
 
 // Valid promo discount codes

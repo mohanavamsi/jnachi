@@ -1,4 +1,4 @@
-export type CertCategory = 'core' | 'role';
+export type CertCategory = 'core' | 'role' | 'python';
 
 export type CertTier =
   | 'beginner'
@@ -10,7 +10,9 @@ export type CertTier =
   | 'marketers'
   | 'support'
   | 'hr'
-  | 'managers';
+  | 'managers'
+  | 'python_ai'
+  | 'python_dev';
 
 export interface TierConfig {
   id: CertTier;
@@ -387,11 +389,83 @@ export const CERT_TIERS: Record<CertTier, TierConfig> = {
       'Measuring Real Impact & Preventing Skill Atrophy',
     ],
   },
+
+  // PYTHON CERTIFICATIONS
+  python_ai: {
+    id: 'python_ai',
+    category: 'python',
+    levelNumber: 11,
+    title: 'Jnachi Certified Python for AI & Prompt Engineering',
+    badgeLabel: 'JNACHI CERTIFIED PYTHON FOR AI & PROMPT ENGINEERING',
+    roleName: 'Python for AI',
+    shortDescription: 'Master LLM API integration, LangChain/LlamaIndex, structured Pydantic outputs, function calling, and RAG pipelines in Python.',
+    fullDescription: 'Validates Python engineers and AI practitioners on integrating state-of-the-art LLMs into production applications. Assesses OpenAI/Anthropic SDK usage, streaming, structured JSON extraction via Pydantic, vector database embeddings, tool/agent orchestration, and token cost optimization.',
+    targetAudience: 'Python Developers, AI Engineers, Data Engineers, and Technical Builders developing LLM-powered applications.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#0284c7', // Python Cyan/Blue & Warm Amber
+      secondary: '#0369a1',
+      border: '#bae6fd',
+      bgBadge: '#f0f9ff',
+      textBadge: '#0369a1',
+      gradientFrom: '#082f49',
+      gradientTo: '#0284c7',
+      diplomaParchment: '#f8fafc',
+      diplomaPrimary: '#0f172a',
+      diplomaAccent: '#eab308',
+      sealColor: '#fef3c7',
+      sealText: '#b45309',
+    },
+    keyTopics: [
+      'LLM APIs (OpenAI/Anthropic) & Streaming in Python',
+      'Structured Outputs, Pydantic & JSON Validation',
+      'Function Calling, Tool Execution & Agentic Loops',
+      'RAG Pipelines, Vector Embeddings & Token Optimization',
+    ],
+  },
+
+  python_dev: {
+    id: 'python_dev',
+    category: 'python',
+    levelNumber: 12,
+    title: 'Jnachi Certified Applied Python & Automation',
+    badgeLabel: 'JNACHI CERTIFIED IN APPLIED PYTHON & AUTOMATION',
+    roleName: 'Python & Automation',
+    shortDescription: 'Validate mastery in writing idiomatic Python, async workflows, task automation, API orchestration, and resilient backend scripts.',
+    fullDescription: 'Evaluates proficiency in writing production-grade, maintainable Python code for automation, backend scripting, and developer workflows. Assesses type annotations, async/await pipelines, HTTP/REST integrations, error handling, secret hygiene, and automated testing.',
+    targetAudience: 'Software Engineers, Automation Specialists, Backend Developers, DevOps, and Data Professionals.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#16a34a', // Python Green & Slate
+      secondary: '#15803d',
+      border: '#bbf7d0',
+      bgBadge: '#f0fdf4',
+      textBadge: '#166534',
+      gradientFrom: '#052e16',
+      gradientTo: '#15803d',
+      diplomaParchment: '#f0fdf4',
+      diplomaPrimary: '#14532d',
+      diplomaAccent: '#ca8a04',
+      sealColor: '#fef9c3',
+      sealText: '#854d0e',
+    },
+    keyTopics: [
+      'Idiomatic Python, Typing, Dataclasses & Generators',
+      'Asyncio, HTTPX & Concurrent API Orchestration',
+      'Robust Error Handling, Retries & Logging Systems',
+      'Secure Secret Management, Testing & Package Hygiene',
+    ],
+  },
 };
 
 export const CORE_TIER_ORDER: CertTier[] = ['beginner', 'practitioner', 'builder', 'master'];
 export const ROLE_TIER_ORDER: CertTier[] = ['sales', 'developers', 'marketers', 'support', 'hr', 'managers'];
-export const TIER_ORDER: CertTier[] = [...CORE_TIER_ORDER, ...ROLE_TIER_ORDER];
+export const PYTHON_TIER_ORDER: CertTier[] = ['python_ai', 'python_dev'];
+export const TIER_ORDER: CertTier[] = [...CORE_TIER_ORDER, ...ROLE_TIER_ORDER, ...PYTHON_TIER_ORDER];
 
 export function isValidTier(tier: unknown): tier is CertTier {
   return typeof tier === 'string' && tier in CERT_TIERS;

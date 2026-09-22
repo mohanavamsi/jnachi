@@ -3,11 +3,14 @@ import CertificationClient from './CertificationClient';
 import { CERT_TIERS, TIER_ORDER } from '@/lib/certTypes';
 
 export const metadata: Metadata = {
-  title: 'Official AI Certifications & Industry Credentials | Jnachi',
+  title: 'Official AI & Python Certifications | Jnachi Industry Credentials',
   description:
-    'Earn official, proctored AI certifications across 10 specialized tiers: Core Engineering Ladder (Beginner, Practitioner, Specialist, Master) and Role-Based Tracks (Sales, Developers, Marketers, Customer Support, HR, Managers). 100% free launch access with verifiable LinkedIn digital badges.',
+    'Earn official, proctored AI & Python certifications across 12 specialized tiers: Core Engineering Ladder (Beginner, Practitioner, Builder, Master), Role Tracks (Sales, Developers, Marketers, Support, HR, Managers), and Python AI & Automation Specializations. Verifiable LinkedIn digital badges.',
   keywords: [
     'AI Certification',
+    'Python AI Certification',
+    'Applied Python Certification',
+    'Python Prompt Engineering Certificate',
     'Applied AI Credentials',
     'AI for Sales Certification',
     'AI for Developers Certification',
@@ -15,15 +18,14 @@ export const metadata: Metadata = {
     'AI for Customer Support Certification',
     'AI for HR Certification',
     'AI for Managers Certification',
-    'AI Prompt Engineering Certificate',
     'Proctored AI Exam',
     'Verifiable AI Diploma',
     'Jnachi AI Certification',
   ],
   openGraph: {
-    title: 'Jnachi AI Certifications | 10 Official Industry Credentials',
+    title: 'Jnachi AI & Python Certifications | 12 Official Industry Credentials',
     description:
-      'Proctored examinations evaluating applied AI fluency across Core Career Ladders and Role-Based Tracks. Verifiable credentials with 1-click LinkedIn badges.',
+      'Proctored examinations evaluating applied AI and Python fluency across Core Ladders, Role Tracks, and Python Specializations. Verifiable credentials with 1-click LinkedIn badges.',
     url: 'https://jnachi.com/certification',
     siteName: 'Jnachi',
     type: 'website',
@@ -32,15 +34,15 @@ export const metadata: Metadata = {
         url: '/og-default.png',
         width: 1200,
         height: 630,
-        alt: 'Jnachi Official AI Certifications',
+        alt: 'Jnachi Official AI & Python Certifications',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jnachi AI Certifications | 10 Official Industry Credentials',
+    title: 'Jnachi AI & Python Certifications | 12 Official Industry Credentials',
     description:
-      'Proctored examinations evaluating applied AI fluency across Core Career Ladders and Role-Based Tracks. Free 30-day launch access.',
+      'Proctored examinations evaluating applied AI and Python fluency across Core Ladders, Role Tracks, and Python Specializations. Free 30-day launch access.',
     images: ['/og-default.png'],
   },
   alternates: {
