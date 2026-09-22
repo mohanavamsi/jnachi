@@ -80,7 +80,7 @@ function AssessmentContent() {
         createdAt: serverTimestamp()
       });
 
-      // Optional: Also save to Firebase if the user happens to be logged in
+      // Optional: Also save score to Firebase if the user happens to be logged in
       if (user) {
         const scoresRef = collection(db, 'users', user.uid, 'scores');
         await addDoc(scoresRef, {
@@ -88,14 +88,6 @@ function AssessmentContent() {
           level: level.split(':')[0].toLowerCase().replace('level ', ''),
           createdAt: serverTimestamp()
         });
-        
-        if (score >= 76) {
-          const certsRef = collection(db, 'users', user.uid, 'certifications');
-          await addDoc(certsRef, {
-            title: 'Jnachi Architect',
-            issuedAt: serverTimestamp()
-          });
-        }
       }
     } catch (error) {
       console.error("Error saving assessment results:", error);

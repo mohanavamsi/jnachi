@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 import {
   X,
   Download,
@@ -17,6 +18,7 @@ import {
   Copy,
   Check,
   ExternalLink,
+  ArrowRight,
 } from 'lucide-react';
 import { Category } from '@/lib/assessmentData';
 import {
@@ -397,20 +399,17 @@ export default function CertificateModal({
               </button>
             </div>
 
-            {/* Quick Web Links for LinkedIn & Twitter */}
+            {/* Social Share & Official Certification Link */}
             <div className="flex flex-wrap items-center justify-between mt-3 pt-3 border-t border-indigo-100/60 text-xs text-slate-500 gap-2">
-              <div className="flex items-center gap-1.5">
-                <a
-                  href={`https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${encodeURIComponent(`Jnachi AI Score: ${overallScore}/100 (${overallLevel})`)}&organizationName=Jnachi&issueYear=${new Date().getFullYear()}&issueMonth=${new Date().getMonth() + 1}&certUrl=${encodeURIComponent(shareUrl)}&certId=${encodeURIComponent(certificateId)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#0a66c2]/10 text-[#0a66c2] hover:bg-[#0a66c2]/20 font-bold transition-colors"
-                >
-                  <Linkedin className="w-3.5 h-3.5 fill-current" />
-                  <span>Add to LinkedIn</span>
-                  <ExternalLink className="w-3 h-3 opacity-70" />
-                </a>
-              </div>
+              <Link
+                href="/certification"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 hover:bg-indigo-100 font-bold transition-colors"
+                onClick={onClose}
+              >
+                <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
+                <span>Get Certified for LinkedIn</span>
+                <ArrowRight className="w-3 h-3" />
+              </Link>
 
               <div className="flex items-center gap-3">
                 <a

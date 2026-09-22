@@ -364,32 +364,56 @@ export default function ResultClient() {
           </div>
         </div>
 
+        {/* Official Certification LinkedIn CTA Banner */}
+        <div className="mb-12 p-8 rounded-3xl bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white shadow-xl relative overflow-hidden border border-indigo-500/20">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-2 text-center md:text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 text-xs font-bold uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                <span>Verified Credentials</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                Want to add an official credential to your LinkedIn?
+              </h3>
+              <p className="text-slate-300 text-sm max-w-xl">
+                This diagnostic measures your readiness. To earn an official, tamper-proof credential with a 1-Click LinkedIn Certification Badge and verifiable license ID, complete an official Jnachi Certification Exam.
+              </p>
+            </div>
+            <Link
+              href="/certification"
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-4 bg-gradient-to-r from-indigo-500 to-violet-600 hover:from-indigo-400 hover:to-violet-500 text-white font-extrabold rounded-2xl shadow-lg hover:shadow-indigo-500/25 transition-all text-sm whitespace-nowrap active:scale-95 flex-shrink-0"
+            >
+              <span>Explore Certifications</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+
         {/* Actions */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link 
             href="/assessment" 
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-100 text-slate-700 px-6 py-3.5 rounded-full font-medium hover:bg-slate-200 transition-colors text-sm"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-100 text-slate-700 px-6 py-3.5 rounded-full font-semibold hover:bg-slate-200 transition-colors text-sm"
           >
             <RefreshCw className="w-4 h-4" />
-            Retake Assessment
+            <span>Retake Diagnostic</span>
           </Link>
 
-          <a
-            href={`https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${encodeURIComponent(`Jnachi AI Score: ${overallScore}/100 (${overallLevel})`)}&organizationName=Jnachi&issueYear=${new Date().getFullYear()}&issueMonth=${new Date().getMonth() + 1}&certUrl=${encodeURIComponent('https://jnachi.com')}&certId=${encodeURIComponent(`JNACHI-${overallScore}-${Date.now().toString().slice(-4)}`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#0a66c2] hover:bg-[#004182] text-white px-7 py-3.5 rounded-full font-bold transition-all shadow-md hover:shadow-lg active:scale-95 text-sm"
+          <Link
+            href="/certification"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white px-7 py-3.5 rounded-full font-bold transition-all shadow-md hover:shadow-lg active:scale-95 text-sm"
           >
-            <Linkedin className="w-4 h-4 fill-current" />
-            <span>Add to LinkedIn Profile</span>
-          </a>
+            <Sparkles className="w-4 h-4 text-amber-300" />
+            <span>Get Certified for LinkedIn</span>
+          </Link>
 
           <button 
             onClick={() => setIsCertModalOpen(true)}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-indigo-600 text-white px-7 py-3.5 rounded-full font-bold hover:bg-indigo-700 transition-all shadow hover:shadow-md active:scale-95 text-sm"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-slate-900 text-white px-7 py-3.5 rounded-full font-bold hover:bg-slate-800 transition-all shadow hover:shadow-md active:scale-95 text-sm"
           >
             <Share2 className="w-4 h-4" />
-            Share / Download Card (9:16)
+            <span>Share Diagnostic Card (9:16)</span>
           </button>
         </div>
 
