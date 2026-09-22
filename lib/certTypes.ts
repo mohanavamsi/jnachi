@@ -668,4 +668,53 @@ export function isValidTier(tier: unknown): tier is CertTier {
   return typeof tier === 'string' && tier in CERT_TIERS;
 }
 
+export const TIER_SLUGS: Record<CertTier, string> = {
+  beginner: 'ai-foundations',
+  practitioner: 'ai-practitioner',
+  builder: 'ai-systems-builder',
+  master: 'ai-strategic-master',
+  sales: 'ai-for-sales',
+  developers: 'ai-for-developers',
+  marketers: 'ai-for-marketers',
+  support: 'ai-for-customer-support',
+  hr: 'ai-for-hr',
+  managers: 'ai-for-managers',
+  python_ai: 'python-ai',
+  python_dev: 'python-engineering',
+  mulesoft: 'mulesoft-integration',
+  salesforce_integration: 'salesforce-integration',
+  ibm_mq: 'ibm-mq',
+  ibm_ace: 'ibm-app-connect-enterprise',
+  boomi: 'boomi-integration',
+};
+
+export const SLUG_TO_TIER: Record<string, CertTier> = Object.entries(TIER_SLUGS).reduce(
+  (acc, [tier, slug]) => {
+    acc[slug] = tier as CertTier;
+    // Also support raw tier ID as fallback
+    acc[tier] = tier as CertTier;
+    return acc;
+  },
+  {} as Record<string, CertTier>
+);
+
+export function getTierBySlug(slug: string): CertTier | null {
+  if (!slug) return null;
+  const normalized = slug.toLowerCase().trim();
+  return SLUG_TO_TIER[normalized] || null;
+}
+
+export function getSlugByTier(tier: CertTier): string {
+  return TIER_SLUGS[tier] || tier;
+}
+
+export function getAllTierSlugs(): { slug: string; tier: CertTier; config: TierConfig }[] {
+  return TIER_ORDER.map((tier) => ({
+    slug: TIER_SLUGS[tier],
+    tier,
+    config: CERT_TIERS[tier],
+  }));
+}
+
+
 

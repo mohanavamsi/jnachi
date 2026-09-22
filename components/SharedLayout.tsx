@@ -145,7 +145,7 @@ export function Footer() {
             <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <Link href="/certification" className="hover:text-white transition-colors">
-                  10 AI Certifications
+                  17 Industry Certifications
                 </Link>
               </li>
               <li>
@@ -176,33 +176,38 @@ export function Footer() {
             <h4 className="text-xs font-bold text-white uppercase tracking-wider">Role Tracks</h4>
             <ul className="space-y-2 text-xs text-slate-400">
               <li>
-                <Link href="/certification" className="hover:text-white transition-colors">
+                <Link href="/certification/ai-for-sales" className="hover:text-white transition-colors">
                   Jnachi for Sales
                 </Link>
               </li>
               <li>
-                <Link href="/certification" className="hover:text-white transition-colors">
+                <Link href="/certification/ai-for-developers" className="hover:text-white transition-colors">
                   Jnachi for Developers
                 </Link>
               </li>
               <li>
-                <Link href="/certification" className="hover:text-white transition-colors">
+                <Link href="/certification/ai-for-marketers" className="hover:text-white transition-colors">
                   Jnachi for Marketers
                 </Link>
               </li>
               <li>
-                <Link href="/certification" className="hover:text-white transition-colors">
+                <Link href="/certification/ai-for-customer-support" className="hover:text-white transition-colors">
                   Jnachi for Support
                 </Link>
               </li>
               <li>
-                <Link href="/certification" className="hover:text-white transition-colors">
+                <Link href="/certification/ai-for-hr" className="hover:text-white transition-colors">
                   Jnachi for HR & Ops
                 </Link>
               </li>
               <li>
-                <Link href="/certification" className="hover:text-white transition-colors">
+                <Link href="/certification/ai-for-managers" className="hover:text-white transition-colors">
                   Jnachi for Managers
+                </Link>
+              </li>
+              <li>
+                <Link href="/certification/mulesoft-integration" className="hover:text-white transition-colors">
+                  MuleSoft Integration
                 </Link>
               </li>
             </ul>

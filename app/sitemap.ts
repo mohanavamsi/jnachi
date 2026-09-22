@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { LESSONS } from '@/lib/lessonsData';
+import { getAllTierSlugs } from '@/lib/certTypes';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://jnachi.com';
@@ -80,6 +81,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
+  // Dedicated Certification Track pages (SEO Hub & Spoke)
+  const certificationRoutes: MetadataRoute.Sitemap = getAllTierSlugs().map(({ slug }) => ({
+    url: `${baseUrl}/certification/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.9,
+  }));
+
   // Dynamic lesson curriculum pages
   const lessonRoutes: MetadataRoute.Sitemap = LESSONS.map((lesson) => ({
     url: `${baseUrl}/lessons/${lesson.slug}`,
@@ -88,5 +97,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
-  return [...staticRoutes, ...lessonRoutes];
+  return [...staticRoutes, ...certificationRoutes, ...lessonRoutes];
 }
+
