@@ -1,3 +1,5 @@
+import { ENTERPRISE_INTEGRATION_LESSONS } from './lessons/enterpriseIntegration';
+
 export type LessonCategory = 
   | 'AI Literacy & Prompting'
   | 'Workflow Automation'
@@ -1432,6 +1434,10 @@ Focus your energy on **depth of prompting and workflow integration** within one 
       },
     ],
   },
+  // -------------------------------------------------------------
+  // Enterprise Integration (Lessons 18–32)
+  // -------------------------------------------------------------
+  ...ENTERPRISE_INTEGRATION_LESSONS,
 ];
 
 export function getAllLessons(): Lesson[] {
