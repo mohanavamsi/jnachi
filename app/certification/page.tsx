@@ -5,11 +5,14 @@ import { CERT_TIERS, TIER_ORDER, TIER_SLUGS } from '@/lib/certTypes';
 export const metadata: Metadata = {
   title: 'Official AI, Python & Enterprise Integration Certifications | Jnachi',
   description:
-    'Earn official, proctored industry certifications across 17 specialized tracks: Core AI Ladder, Role Specializations (Sales, Devs, Marketers, Support, HR, Managers), Applied Python, and Enterprise Integration (MuleSoft, Salesforce, IBM MQ, IBM ACE, Boomi). Verifiable LinkedIn digital badges.',
+    'Earn official, proctored industry certifications across 18 specialized tracks: Core AI Ladder, Role Specializations (Sales, Devs, Marketers, Support, HR, Managers), Applied Python, and Enterprise Integration (MuleSoft, Salesforce, IBM MQ, IBM ACE, Boomi, IBM webMethods / Software AG). Verifiable LinkedIn digital badges.',
   keywords: [
     'AI Certification',
     'Python AI Certification',
     'Applied Python Certification',
+    'webMethods Certification',
+    'IBM webMethods Certification',
+    'Software AG webMethods Certification',
     'MuleSoft Certification',
     'Salesforce Integration Certification',
     'IBM MQ Certification',
@@ -26,7 +29,7 @@ export const metadata: Metadata = {
     'Jnachi Industry Certification',
   ],
   openGraph: {
-    title: 'Jnachi Professional Certifications | 17 Official Industry Credentials',
+    title: 'Jnachi Professional Certifications | 18 Official Industry Credentials',
     description:
       'Proctored examinations evaluating applied capability across Core AI Ladders, Role Tracks, Python Specializations, and Enterprise Integration systems. Verifiable credentials with 1-click LinkedIn badges.',
     url: 'https://jnachi.com/certification',
@@ -43,7 +46,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jnachi Professional Certifications | 17 Official Industry Credentials',
+    title: 'Jnachi Professional Certifications | 18 Official Industry Credentials',
     description:
       'Proctored examinations evaluating applied capability across Core AI Ladders, Role Tracks, Python Specializations, and Enterprise Integration systems. Free launch access.',
     images: ['/og-default.png'],
@@ -60,7 +63,7 @@ export default function CertificationPage() {
     '@type': 'ItemList',
     name: 'Jnachi Professional Certification Suite',
     description:
-      'A comprehensive suite of 17 proctored industry examinations spanning core AI career levels, specialized role tracks, Python engineering, and enterprise integration platforms.',
+      'A comprehensive suite of 18 proctored industry examinations spanning core AI career levels, specialized role tracks, Python engineering, and enterprise integration platforms.',
     itemListElement: TIER_ORDER.map((tierKey, index) => {
       const tier = CERT_TIERS[tierKey];
       const tierSlug = TIER_SLUGS[tierKey] || tierKey;

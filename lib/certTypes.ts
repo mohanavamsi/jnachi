@@ -17,7 +17,8 @@ export type CertTier =
   | 'salesforce_integration'
   | 'ibm_mq'
   | 'ibm_ace'
-  | 'boomi';
+  | 'boomi'
+  | 'webmethods';
 
 export interface TierConfig {
   id: CertTier;
@@ -651,12 +652,46 @@ export const CERT_TIERS: Record<CertTier, TierConfig> = {
       'Boomi DataHub (MDM), Molecule Tuning & Platform APIs',
     ],
   },
+  webmethods: {
+    id: 'webmethods',
+    category: 'integration',
+    levelNumber: 18,
+    title: 'Jnachi Enterprise Integration Specialist Certification — IBM webMethods / Software AG',
+    badgeLabel: 'JNACHI ENTERPRISE INTEGRATION SPECIALIST — WEBMETHODS',
+    roleName: 'IBM & Software AG webMethods',
+    shortDescription: 'Validate comprehensive skills in Integration Server, Universal Messaging, Flow services, API Gateway, Trading Networks (B2B/EDI), and Microservices Runtime.',
+    fullDescription: 'Evaluates hands-on capability in architecting and delivering enterprise integrations on the Software AG & IBM webMethods integration platform. Covers Integration Server runtime, Flow and Java services, Universal Messaging pub/sub architecture, JDBC/SAP adapters, API Gateway security policies, Trading Networks B2B EDI routing, and containerized Microservices Runtime (MSR) deployments.',
+    targetAudience: 'webMethods Integration Developers, Enterprise Architects, EDI/B2B Specialists, and Middleware Engineers.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#0f62fe', // IBM & SAG Blue
+      secondary: '#0043ce',
+      border: '#a6c8ff',
+      bgBadge: '#edf5ff',
+      textBadge: '#0043ce',
+      gradientFrom: '#001141',
+      gradientTo: '#0f62fe',
+      diplomaParchment: '#f8faff',
+      diplomaPrimary: '#002d9c',
+      diplomaAccent: '#0f62fe',
+      sealColor: '#d0e2ff',
+      sealText: '#0043ce',
+    },
+    keyTopics: [
+      'Integration Server Runtime, Flow & Java Services, Pipeline Lifecycle',
+      'Universal Messaging (UM) Channels, Queues & Trigger Processing',
+      'webMethods API Gateway Policies, OAuth2/JWT & Port Security',
+      'Trading Networks (TN) B2B/EDI, MSR Containerization & CI/CD',
+    ],
+  },
 };
 
 export const CORE_TIER_ORDER: CertTier[] = ['beginner', 'practitioner', 'builder', 'master'];
 export const ROLE_TIER_ORDER: CertTier[] = ['sales', 'developers', 'marketers', 'support', 'hr', 'managers'];
 export const PYTHON_TIER_ORDER: CertTier[] = ['python_ai', 'python_dev'];
-export const INTEGRATION_TIER_ORDER: CertTier[] = ['mulesoft', 'salesforce_integration', 'ibm_mq', 'ibm_ace', 'boomi'];
+export const INTEGRATION_TIER_ORDER: CertTier[] = ['mulesoft', 'salesforce_integration', 'ibm_mq', 'ibm_ace', 'boomi', 'webmethods'];
 export const TIER_ORDER: CertTier[] = [
   ...CORE_TIER_ORDER,
   ...ROLE_TIER_ORDER,
@@ -686,6 +721,7 @@ export const TIER_SLUGS: Record<CertTier, string> = {
   ibm_mq: 'ibm-mq',
   ibm_ace: 'ibm-app-connect-enterprise',
   boomi: 'boomi-integration',
+  webmethods: 'webmethods-integration',
 };
 
 export const SLUG_TO_TIER: Record<string, CertTier> = Object.entries(TIER_SLUGS).reduce(

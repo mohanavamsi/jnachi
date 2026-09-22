@@ -74,6 +74,10 @@ import {
   BOOMI_QUESTIONS_BY_SECTION,
   ALL_BOOMI_QUESTIONS,
 } from './certQuestions/boomi';
+import {
+  WEBMETHODS_QUESTIONS_BY_SECTION,
+  ALL_WEBMETHODS_QUESTIONS,
+} from './certQuestions/webmethods';
 
 export type { CertSection, CertOption, CertQuestion, ClientCertQuestion };
 
@@ -108,6 +112,8 @@ export {
   ALL_IBM_ACE_QUESTIONS,
   BOOMI_QUESTIONS_BY_SECTION,
   ALL_BOOMI_QUESTIONS,
+  WEBMETHODS_QUESTIONS_BY_SECTION,
+  ALL_WEBMETHODS_QUESTIONS,
 };
 
 export const CERT_SECTIONS: { id: CertSection; title: string; description: string }[] = [
@@ -166,6 +172,7 @@ export const TIER_QUESTION_BANK: Record<CertTier, Record<CertSection, CertQuesti
   ibm_mq: IBM_MQ_QUESTIONS_BY_SECTION,
   ibm_ace: IBM_ACE_QUESTIONS_BY_SECTION,
   boomi: BOOMI_QUESTIONS_BY_SECTION,
+  webmethods: WEBMETHODS_QUESTIONS_BY_SECTION,
 };
 
 // Backward compatibility alias for Beginner bank

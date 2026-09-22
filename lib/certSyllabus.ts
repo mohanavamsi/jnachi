@@ -1558,6 +1558,95 @@ export const CERT_SYLLABUS: Record<CertTier, CertSyllabusData> = {
     },
     preparationPath: COMMON_PREP_PATH,
   },
+
+  // 18. IBM WEBMETHODS / SOFTWARE AG INTEGRATION SPECIALIST
+  webmethods: {
+    tier: 'webmethods',
+    title: 'Jnachi Enterprise Integration Specialist Certification — IBM webMethods / Software AG',
+    overview: 'Validates enterprise engineering capability across webMethods Integration Server, Universal Messaging, Flow/Java services, API Gateway, Trading Networks (B2B/EDI), and Microservices Runtime (MSR).',
+    targetRole: 'webMethods Integration Developers, Enterprise Architects, EDI/B2B Specialists, and Middleware Engineers.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Integration Server Runtime, Flow & Java Services',
+        weightPercent: 25,
+        overview: 'Integration Server execution model, Flow language steps (MAP, BRANCH, LOOP, REPEAT), IData pipeline manipulation, Document Types, and try-catch error handling.',
+        topics: [
+          {
+            title: 'Flow Service Architecture & Pipeline Lifecycle',
+            description: 'Managing IData memory, dropping pipeline variables, BRANCH evaluation modes, LOOP iteration, and try-catch-finally compensation patterns.',
+            skillsAssessed: ['Flow Services', 'Pipeline Management', 'Error Handling (pub.flow:getLastError)'],
+          },
+          {
+            title: 'Document Types, Schemas & Java Services',
+            description: 'Flat File schemas, XML/JSON parsing, custom Java services using IDataCursor, and package dependency management.',
+            skillsAssessed: ['IS Document Types', 'Flat File / JSON Parsing', 'Java Services & IDataCursor'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Universal Messaging, IS Triggers & Adapters',
+        weightPercent: 25,
+        overview: 'Universal Messaging channels/queues, publish/subscribe messaging, concurrent/serial triggers, exactly-once delivery, and JDBC/SAP adapters.',
+        topics: [
+          {
+            title: 'Universal Messaging & Trigger Governance',
+            description: 'Pub/sub event channels, durable subscriptions, trigger retry handling, dead-letter queues, and exactly-once execution.',
+            skillsAssessed: ['Universal Messaging', 'IS Triggers', 'Exactly-Once Delivery'],
+          },
+          {
+            title: 'Enterprise Adapters & Transaction Boundaries',
+            description: 'JDBC Adapter templates (DynamicSQL, CustomSQL, StoredProcedures), connection pooling, SAP IDoc/BAPI adapters, and XA two-phase commit transactions.',
+            skillsAssessed: ['JDBC Adapter', 'SAP Adapter', 'XA Transactions'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'API Gateway Security, OAuth2/JWT & Access Control',
+        weightPercent: 25,
+        overview: 'webMethods API Gateway policy enforcement, OAuth2 / OpenID Connect, JWT validation, Access Control Lists (ACLs), keystores/truststores, and mTLS security.',
+        topics: [
+          {
+            title: 'API Gateway Policies & Threat Protection',
+            description: 'OAuth2/JWT token validation, rate limiting/throttling, threat protection, CORS handling, and outbound payload field redaction.',
+            skillsAssessed: ['API Gateway', 'OAuth2 / JWT Policies', 'Rate Limiting'],
+          },
+          {
+            title: 'Integration Server Port Security & Cryptography',
+            description: 'Configuring Execute/Read/Write ACLs, IP whitelists/blacklists, HTTPS port certificate configuration (Keystores/Truststores), and pub.security encryption.',
+            skillsAssessed: ['Execute ACLs', 'Keystores & mTLS', 'pub.security Services'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Trading Networks (B2B/EDI), MSR Containers & CI/CD',
+        weightPercent: 25,
+        overview: 'Trading Networks partner profiles and processing rules, ANSI X12 / EDIFACT parsing, AS2/MDN protocol delivery, Microservices Runtime (MSR) containerization, and ABE Deployer CI/CD.',
+        topics: [
+          {
+            title: 'Trading Networks B2B Integration & EDI Standards',
+            description: 'Partner profiles, custom document attributes, processing rule execution, ANSI X12 / EDIFACT translation, 997/CONTRL acknowledgements, and AS2/MDN transport.',
+            skillsAssessed: ['Trading Networks (TN)', 'EDI Standards (X12/EDIFACT)', 'AS2 / MDN Protocols'],
+          },
+          {
+            title: 'Microservices Runtime (MSR), Terracotta & DevOps',
+            description: 'Building lightweight Docker containers with MSR, Kubernetes orchestration, Terracotta clustering, and Asset Build Environment (ABE) Deployer pipelines.',
+            skillsAssessed: ['Microservices Runtime (MSR)', 'Terracotta Clustering', 'CI/CD with ABE Deployer'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
 };
 
 export const CERT_SYLLABI = CERT_SYLLABUS;

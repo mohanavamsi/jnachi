@@ -1,0 +1,19 @@
+import { CertSection, CertQuestion } from '../types';
+import { WEBMETHODS_LITERACY_QUESTIONS } from './literacy';
+import { WEBMETHODS_AUTOMATION_QUESTIONS } from './automation';
+import { WEBMETHODS_PRIVACY_QUESTIONS } from './privacy';
+import { WEBMETHODS_GROWTH_QUESTIONS } from './growth';
+
+export const WEBMETHODS_QUESTIONS_BY_SECTION: Record<CertSection, CertQuestion[]> = {
+  literacy: WEBMETHODS_LITERACY_QUESTIONS,
+  automation: WEBMETHODS_AUTOMATION_QUESTIONS,
+  privacy: WEBMETHODS_PRIVACY_QUESTIONS,
+  growth: WEBMETHODS_GROWTH_QUESTIONS,
+};
+
+export const ALL_WEBMETHODS_QUESTIONS: CertQuestion[] = [
+  ...WEBMETHODS_LITERACY_QUESTIONS,
+  ...WEBMETHODS_AUTOMATION_QUESTIONS,
+  ...WEBMETHODS_PRIVACY_QUESTIONS,
+  ...WEBMETHODS_GROWTH_QUESTIONS,
+];

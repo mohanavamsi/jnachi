@@ -161,6 +161,15 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
     promoPriceInr: 0,
     promoPriceUsd: 0,
   },
+  webmethods: {
+    tier: 'webmethods',
+    amountInr: 3499,
+    amountUsd: 69,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
 };
 
 // Valid promo discount codes

@@ -145,7 +145,7 @@ export function Footer() {
             <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <Link href="/certification" className="hover:text-white transition-colors">
-                  17 Industry Certifications
+                  18 Industry Certifications
                 </Link>
               </li>
               <li>
@@ -208,6 +208,11 @@ export function Footer() {
               <li>
                 <Link href="/certification/mulesoft-integration" className="hover:text-white transition-colors">
                   MuleSoft Integration
+                </Link>
+              </li>
+              <li>
+                <Link href="/certification/webmethods-integration" className="hover:text-white transition-colors">
+                  IBM webMethods / SAG
                 </Link>
               </li>
             </ul>
