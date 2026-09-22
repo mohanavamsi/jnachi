@@ -120,5 +120,245 @@ export const PYTHON_DEV_PRIVACY_QUESTIONS: CertQuestion[] = [
       { id: "d", label: "It turns Python into a compiled binary." }
     ],
     correctOptionId: "b"
+  },
+  {
+    id: "pydev_priv_11",
+    section: "privacy",
+    prompt: "Why should PyYAML's `yaml.safe_load()` always be used instead of `yaml.load()` when parsing user-submitted YAML files in Python?",
+    options: [
+      { id: "a", label: "`yaml.load()` without a safe Loader can instantiate arbitrary Python objects and execute arbitrary OS commands embedded in YAML tags (`!!python/object/apply`)." },
+      { id: "b", label: "`yaml.safe_load()` runs 1,000x faster than C extensions." },
+      { id: "c", label: "`yaml.load()` only works on macOS." },
+      { id: "d", label: "There is no security difference between them." }
+    ],
+    correctOptionId: "a"
+  },
+  {
+    id: "pydev_priv_12",
+    section: "privacy",
+    prompt: "How can Python web scrapers and API proxy clients protect against Server-Side Request Forgery (SSRF) when fetching user-provided URLs?",
+    options: [
+      { id: "a", label: "Disabling DNS resolution completely." },
+      { id: "b", label: "Resolving the target host's IP address and rejecting requests targeting private, loopback, or cloud-metadata IP ranges (e.g. `127.0.0.1`, `10.0.0.0/8`, `169.254.169.254`)." },
+      { id: "c", label: "Adding `?safe=true` to all query parameters." },
+      { id: "d", label: "Only making requests using HTTP instead of HTTPS." }
+    ],
+    correctOptionId: "b"
+  },
+  {
+    id: "pydev_priv_13",
+    section: "privacy",
+    prompt: "When parsing XML documents from external third parties in Python, which package mitigates XML Entity Expansion (Billion Laughs) and XXE vulnerabilities?",
+    options: [
+      { id: "a", label: "The standard `xml.dom.minidom`." },
+      { id: "b", label: "Raw string regex replacement." },
+      { id: "c", label: "`defusedxml` which overrides standard XML parsers to disallow entity expansion and external DTD retrieval." },
+      { id: "d", label: "Writing custom XML parsers in bash." }
+    ],
+    correctOptionId: "c"
+  },
+  {
+    id: "pydev_priv_14",
+    section: "privacy",
+    prompt: "What is Regular Expression Denial of Service (ReDoS), and how can Python applications protect against it when evaluating user-supplied patterns?",
+    options: [
+      { id: "a", label: "A disk encryption bug caused by long regexes." },
+      { id: "b", label: "A network firewall misconfiguration." },
+      { id: "c", label: "A syntax error that halts the Python compiler." },
+      { id: "d", label: "Catastrophic backtracking in nested regex quantifiers causing 100% CPU lockup; prevented by avoiding ambiguous nested quantifiers, setting execution timeouts, or using linear-time regex engines like Google `re2`." }
+    ],
+    correctOptionId: "d"
+  },
+  {
+    id: "pydev_priv_15",
+    section: "privacy",
+    prompt: "When validating JSON Web Tokens (JWT) in a Python FastAPI/Flask service using `PyJWT`, what critical claim checks must never be skipped?",
+    options: [
+      { id: "a", label: "Verifying cryptographic signature with expected algorithm, checking expiration (`exp`), issuer (`iss`), and audience (`aud`)." },
+      { id: "b", label: "Decoding the token with `options={\"verify_signature\": False}`." },
+      { id: "c", label: "Trusting the `alg: none` header in the token payload." },
+      { id: "d", label: "Checking only the token length." }
+    ],
+    correctOptionId: "a"
+  },
+  {
+    id: "pydev_priv_16",
+    section: "privacy",
+    prompt: "When setting session or authentication cookies in Python web responses, which cookie flags prevent client-side JavaScript theft and interception?",
+    options: [
+      { id: "a", label: "`domain=*` and `max_age=99999999`." },
+      { id: "b", label: "`HttpOnly=True` (blocks JS access via `document.cookie`), `Secure=True` (HTTPS only), and `SameSite='Lax'` or `'Strict'`." },
+      { id: "c", label: "`HttpOnly=False` and `Secure=False`." },
+      { id: "d", label: "`SameSite='None'` without TLS encryption." }
+    ],
+    correctOptionId: "b"
+  },
+  {
+    id: "pydev_priv_17",
+    section: "privacy",
+    prompt: "How does the `cryptography.fernet.Fernet` recipe provide authenticated symmetric encryption for sensitive data in Python?",
+    options: [
+      { id: "a", label: "Uses ROT13 character substitution." },
+      { id: "b", label: "Encodes strings into base64 with no key." },
+      { id: "c", label: "Combines AES-128 in CBC mode with HMAC-SHA256 for integrity verification and PKCS7 padding, preventing tampering and eavesdropping." },
+      { id: "d", label: "Compresses strings using gzip." }
+    ],
+    correctOptionId: "c"
+  },
+  {
+    id: "pydev_priv_18",
+    section: "privacy",
+    prompt: "When executing shell commands using `subprocess.run()`, why is `shell=True` considered dangerous when combined with dynamic user inputs?",
+    options: [
+      { id: "a", label: "It slows down CPU clock frequency." },
+      { id: "b", label: "It forces the command to run on Windows only." },
+      { id: "c", label: "It deletes the current virtualenv directory." },
+      { id: "d", label: "It passes the string directly to the OS shell (`/bin/sh` or `cmd.exe`), allowing command injection attacks via characters like `;`, `&&`, or `|`." }
+    ],
+    correctOptionId: "d"
+  },
+  {
+    id: "pydev_priv_19",
+    section: "privacy",
+    prompt: "How can pre-commit hooks and CI pipelines prevent accidental commits of API keys, AWS credentials, and private keys in Python repositories?",
+    options: [
+      { id: "a", label: "Configuring automated secret detection tools like `trufflehog` or `gitleaks` in pre-commit configs and GitHub Actions." },
+      { id: "b", label: "Disabling git commit validation." },
+      { id: "c", label: "Renaming all secrets to `.txt` files." },
+      { id: "d", label: "Compressing repositories before pushing to GitHub." }
+    ],
+    correctOptionId: "a"
+  },
+  {
+    id: "pydev_priv_20",
+    section: "privacy",
+    prompt: "When building user-facing web apps in Python that accept rich text / HTML input, which library is the modern standard for sanitizing HTML to prevent Stored XSS?",
+    options: [
+      { id: "a", label: "Using string `.replace('<script>', '')`." },
+      { id: "b", label: "`nh3` (Rust-based fast sanitizer) or `bleach` with strict allowed tags and attribute whitelists." },
+      { id: "c", label: "Passing raw HTML directly into `eval()`." },
+      { id: "d", label: "Disabling JavaScript in all client web browsers." }
+    ],
+    correctOptionId: "b"
+  },
+  {
+    id: "pydev_priv_21",
+    section: "privacy",
+    prompt: "In Python microservices running behind a reverse proxy (e.g. Nginx, Cloudflare), why must the `Forwarded` or `X-Forwarded-For` header parser be configured with trusted proxy IPs?",
+    options: [
+      { id: "a", label: "To increase network download speeds." },
+      { id: "b", label: "To allow unauthenticated root access." },
+      { id: "c", label: "Without trusting only verified upstream proxies, attackers can spoof `X-Forwarded-For` to bypass IP-based rate limiters and geoblocking rules." },
+      { id: "d", label: "Because HTTP headers are case-sensitive." }
+    ],
+    correctOptionId: "c"
+  },
+  {
+    id: "pydev_priv_22",
+    section: "privacy",
+    prompt: "What is an Insecure Direct Object Reference (IDOR) in Python REST APIs, and how is it properly prevented?",
+    options: [
+      { id: "a", label: "A memory leak caused by Python circular references." },
+      { id: "b", label: "A broken file symlink on disk." },
+      { id: "c", label: "A missing Python package in `requirements.txt`." },
+      { id: "d", label: "Allowing users to access arbitrary records by modifying IDs in URL parameters (e.g. `/invoices/105`); prevented by enforcing row-level authorization asserting `record.owner_id == current_user.id`." }
+    ],
+    correctOptionId: "d"
+  },
+  {
+    id: "pydev_priv_23",
+    section: "privacy",
+    prompt: "When making outbound HTTPS requests in Python with `urllib` or `httpx`, what is the severe consequence of setting `verify=False` or `ssl._create_unverified_context()`?",
+    options: [
+      { id: "a", label: "Disables SSL certificate verification, making the connection vulnerable to Man-In-The-Middle (MITM) credential interception and payload tampering." },
+      { id: "b", label: "Encrypts data twice with double TLS." },
+      { id: "c", label: "Halts DNS resolution permanently." },
+      { id: "d", label: "Forces requests to execute synchronously." }
+    ],
+    correctOptionId: "a"
+  },
+  {
+    id: "pydev_priv_24",
+    section: "privacy",
+    prompt: "How should API rate limiting be implemented in Python FastAPI / Starlette applications to protect against brute-force attacks and abuse?",
+    options: [
+      { id: "a", label: "Relying on client browsers to voluntarily limit request rates." },
+      { id: "b", label: "Using rate-limiting middleware (e.g. `slowapi` or Redis-backed sliding window / token bucket limiters) keyed by client IP or API key." },
+      { id: "c", label: "Restarting the Python web server every 100 requests." },
+      { id: "d", label: "Sleeping 5 seconds inside every API endpoint handler." }
+    ],
+    correctOptionId: "b"
+  },
+  {
+    id: "pydev_priv_25",
+    section: "privacy",
+    prompt: "Why should sensitive credentials in enterprise Python applications be fetched from cloud secret managers (e.g. AWS Secrets Manager, HashiCorp Vault) rather than hardcoded in source files?",
+    options: [
+      { id: "a", label: "Hardcoded strings take up too much RAM." },
+      { id: "b", label: "Python does not support string constants longer than 32 characters." },
+      { id: "c", label: "Centralized secret managers provide dynamic rotation, fine-grained IAM access policies, comprehensive audit access logs, and eliminate secrets from source control." },
+      { id: "d", label: "Cloud secret managers compile Python scripts to WebAssembly." }
+    ],
+    correctOptionId: "c"
+  },
+  {
+    id: "pydev_priv_26",
+    section: "privacy",
+    prompt: "In Python Django and Flask web applications, what security mechanism defends against Cross-Site Request Forgery (CSRF) on state-changing POST/PUT requests?",
+    options: [
+      { id: "a", label: "Using TLS certificates on the domain." },
+      { id: "b", label: "Writing all forms in pure JavaScript." },
+      { id: "c", label: "Disabling HTTP POST requests completely." },
+      { id: "d", label: "Generating and validating a cryptographically random, unpredictable CSRF token linked to the user's session in form payloads / headers." }
+    ],
+    correctOptionId: "d"
+  },
+  {
+    id: "pydev_priv_27",
+    section: "privacy",
+    prompt: "When writing Python scripts that generate temporary files containing sensitive customer data, what standard library function creates files with secure `0600` permissions (readable/writable only by owner)?",
+    options: [
+      { id: "a", label: "`tempfile.NamedTemporaryFile()` or `tempfile.mkstemp()` which creates files with restricted user-only permissions by default." },
+      { id: "b", label: "`open('/tmp/test.txt', 'w+')`." },
+      { id: "c", label: "`os.system('touch /tmp/test.txt')`." },
+      { id: "d", label: "`file.create_insecure()`." }
+    ],
+    correctOptionId: "a"
+  },
+  {
+    id: "pydev_priv_28",
+    section: "privacy",
+    prompt: "What is the PKCE (Proof Key for Code Exchange) extension in OAuth 2.0 authorization code flows, and why is it essential for Python desktop/mobile/CLI applications?",
+    options: [
+      { id: "a", label: "It turns OAuth tokens into cryptographic NFT tokens." },
+      { id: "b", label: "Prevents authorization code interception attacks on public clients that cannot securely store a client secret, by using a dynamically generated `code_verifier` and `code_challenge`." },
+      { id: "c", label: "Eliminates the need for HTTPS connections." },
+      { id: "d", label: "Bypasses user login consent screens." }
+    ],
+    correctOptionId: "b"
+  },
+  {
+    id: "pydev_priv_29",
+    section: "privacy",
+    prompt: "How does setting Content Security Policy (CSP) headers in Python web responses mitigate XSS attacks?",
+    options: [
+      { id: "a", label: "Encrypts all HTML strings in transit." },
+      { id: "b", label: "Disables web browser caching." },
+      { id: "c", label: "Restricts the domains and sources from which the browser is allowed to load and execute scripts, stylesheets, images, and frames." },
+      { id: "d", label: "Translates HTML into JSON." }
+    ],
+    correctOptionId: "c"
+  },
+  {
+    id: "pydev_priv_30",
+    section: "privacy",
+    prompt: "Why should custom Python deserialization logic avoid using `eval()` or `exec()` on strings retrieved from remote databases or network payloads?",
+    options: [
+      { id: "a", label: "`eval()` runs 10x slower than `json.loads()`." },
+      { id: "b", label: "`eval()` only works on integer expressions." },
+      { id: "c", label: "`exec()` is deprecated in Python 3.12." },
+      { id: "d", label: "`eval()` and `exec()` execute arbitrary Python statements and expressions with full interpreter privileges, allowing catastrophic remote code execution." }
+    ],
+    correctOptionId: "d"
   }
 ];
