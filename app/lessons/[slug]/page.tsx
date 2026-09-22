@@ -23,8 +23,57 @@ import {
   Code2,
   Users2
 } from 'lucide-react';
-import { getLessonBySlug, getAdjacentLessons, CATEGORY_DETAILS, CategoryKey } from '@/lib/lessonsData';
+import { getLessonBySlug, getAdjacentLessons, CATEGORY_DETAILS, CategoryKey, LESSONS } from '@/lib/lessonsData';
 import { getLearningProgress, saveLessonProgress, toggleLessonActivated } from '@/lib/learningProgress';
+
+function LessonCodeBlock({ children, className }: { children: React.ReactNode; className?: string }) {
+  const [copied, setCopied] = useState(false);
+
+  const getText = (node: any): string => {
+    if (typeof node === 'string') return node;
+    if (Array.isArray(node)) return node.map(getText).join('');
+    if (node?.props?.children) return getText(node.props.children);
+    return '';
+  };
+
+  const handleCopy = () => {
+    const text = getText(children);
+    if (text) {
+      navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const langMatch = className?.match(/language-(\w+)/);
+  const rawLang = langMatch ? langMatch[1] : '';
+  const isMermaid = rawLang === 'mermaid';
+  const displayLang = isMermaid ? 'DIAGRAM / WORKFLOW' : rawLang ? rawLang.toUpperCase() : 'CODE / PROMPT';
+
+  return (
+    <div className="relative my-6 rounded-2xl bg-slate-900 border border-slate-800 shadow-md overflow-hidden group">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-slate-800/90 border-b border-slate-700/60 text-xs text-slate-300 font-mono">
+        <span className="flex items-center gap-1.5 font-semibold text-slate-300">
+          <Code2 className="w-3.5 h-3.5 text-indigo-400" />
+          <span>{displayLang}</span>
+        </span>
+        <button
+          onClick={handleCopy}
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-slate-300 hover:text-white bg-slate-700/60 hover:bg-slate-700 transition-colors"
+          title="Copy content"
+        >
+          {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+          <span>{copied ? 'Copied' : 'Copy'}</span>
+        </button>
+      </div>
+      <div className="p-4 sm:p-5 overflow-x-auto">
+        <pre className="text-xs sm:text-sm font-mono leading-relaxed text-slate-100 whitespace-pre-wrap break-words">
+          {children}
+        </pre>
+      </div>
+    </div>
+  );
+}
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -126,7 +175,7 @@ export default function LessonDetailPage({ params }: PageProps) {
 
           <div className="flex items-center gap-3">
             <span className="hidden sm:inline-block text-xs font-semibold text-slate-400">
-              Lesson #{lesson.lessonNumber} of 17
+              Lesson #{lesson.lessonNumber} of {LESSONS.length}
             </span>
             <button
               onClick={handleCopyLink}
@@ -141,7 +190,7 @@ export default function LessonDetailPage({ params }: PageProps) {
 
       <div className="container mx-auto max-w-4xl px-4 mt-8">
         {/* Header Card */}
-        <div className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-sm mb-8">
+        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm mb-8 overflow-hidden">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full ${catDetails.bg} ${catDetails.color}`}>
               <Icon className="w-3.5 h-3.5" />
@@ -193,7 +242,7 @@ export default function LessonDetailPage({ params }: PageProps) {
 
         {/* Key Takeaways Card */}
         {lesson.keyTakeaways && lesson.keyTakeaways.length > 0 && (
-          <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-6 mb-8">
+          <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-6 mb-8 overflow-hidden">
             <h2 className="text-xs font-bold uppercase tracking-wider text-indigo-700 mb-3 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Key Takeaways</span>
@@ -210,26 +259,63 @@ export default function LessonDetailPage({ params }: PageProps) {
         )}
 
         {/* The Problem & Context Callout */}
-        <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-6 mb-8 text-slate-800">
+        <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-6 mb-8 text-slate-800 overflow-hidden">
           <h2 className="text-xs font-bold uppercase tracking-wider text-amber-800 mb-2 flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" />
             <span>The Diagnostic Context</span>
           </h2>
           <p className="text-slate-700 leading-relaxed text-base">
             {lesson.body.intro}
-
           </p>
         </div>
 
         {/* Core Lesson Body */}
-        <div className="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm mb-8">
+        <div className="bg-white rounded-3xl p-6 sm:p-10 md:p-12 border border-slate-200 shadow-sm mb-8 overflow-hidden">
           <h2 className="text-2xl font-bold text-slate-900 mb-6 pb-4 border-b border-slate-100 flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-indigo-600" />
             <span>The Core Technique</span>
           </h2>
 
-          <div className="prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-p:text-slate-700 prose-p:leading-relaxed prose-li:text-slate-700 prose-code:text-indigo-600 prose-code:bg-indigo-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-pre:rounded-2xl prose-pre:p-5 prose-table:border-collapse prose-th:bg-slate-50 prose-th:p-3 prose-td:p-3 prose-td:border prose-td:border-slate-200">
-            <Markdown>{lesson.body.core}</Markdown>
+          <div className="prose prose-slate max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-p:text-slate-700 prose-p:leading-relaxed prose-li:text-slate-700">
+            <Markdown
+              components={{
+                pre: ({ children }) => <>{children}</>,
+                code: ({ node, inline, className, children, ...props }: any) => {
+                  if (inline) {
+                    return (
+                      <code className="text-indigo-600 bg-indigo-50 border border-indigo-100/80 px-1.5 py-0.5 rounded text-xs sm:text-sm font-mono break-words" {...props}>
+                        {children}
+                      </code>
+                    );
+                  }
+                  return <LessonCodeBlock className={className}>{children}</LessonCodeBlock>;
+                },
+                table: ({ children, ...props }) => (
+                  <div className="w-full overflow-x-auto my-6 rounded-2xl border border-slate-200 shadow-sm bg-white">
+                    <table className="w-full text-left border-collapse min-w-full text-sm" {...props}>
+                      {children}
+                    </table>
+                  </div>
+                ),
+                th: ({ children, ...props }) => (
+                  <th className="bg-slate-50 border-b border-slate-200 p-3.5 font-semibold text-slate-900 text-xs sm:text-sm whitespace-nowrap" {...props}>
+                    {children}
+                  </th>
+                ),
+                td: ({ children, ...props }) => (
+                  <td className="border-b border-slate-100 p-3.5 text-slate-700 text-xs sm:text-sm" {...props}>
+                    {children}
+                  </td>
+                ),
+                p: ({ children, ...props }) => (
+                  <p className="text-slate-700 leading-relaxed text-base mb-4 break-words" {...props}>
+                    {children}
+                  </p>
+                ),
+              }}
+            >
+              {lesson.body.core}
+            </Markdown>
           </div>
         </div>
 
