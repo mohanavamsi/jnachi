@@ -1,11 +1,11 @@
 /**
  * Jnachi Certification Exam Question Bank
  * 
- * Supports the 4-Tier Progression Ladder:
- * - Tier 1: Jnachi Beginner (40 Fresh, Calibrated Baseline Questions across 4 tracks)
- * - Tier 2: Jnachi Practitioner (40 In-Depth Scenario Questions across 4 tracks)
- * - Tier 3: Jnachi Builder (40 Pipeline & Automation Questions across 4 tracks)
- * - Tier 4: Jnachi Master / Architect (40 Governance, Judgment & Strategic Questions across 4 tracks)
+ * Supports the 4-Tier Progression Ladder & Enterprise Tracks:
+ * - Core Levels: Beginner, Practitioner, Builder, Master
+ * - Role-Based Tracks: Sales, Developers, Marketers, Support, HR, Managers
+ * - Python Specializations: Python AI, Python Dev
+ * - Enterprise Integration Tracks: MuleSoft, Salesforce Integration, IBM MQ, IBM ACE, Boomi
  * 
  * Each exam attempt samples 10 questions per section (40 questions total).
  */
@@ -54,6 +54,26 @@ import {
   PYTHON_DEV_QUESTIONS_BY_SECTION,
   ALL_PYTHON_DEV_QUESTIONS,
 } from './certQuestions/python_dev';
+import {
+  MULESOFT_QUESTIONS_BY_SECTION,
+  ALL_MULESOFT_QUESTIONS,
+} from './certQuestions/mulesoft';
+import {
+  SALESFORCE_INTEGRATION_QUESTIONS_BY_SECTION,
+  ALL_SALESFORCE_INTEGRATION_QUESTIONS,
+} from './certQuestions/salesforce_integration';
+import {
+  IBM_MQ_QUESTIONS_BY_SECTION,
+  ALL_IBM_MQ_QUESTIONS,
+} from './certQuestions/ibm_mq';
+import {
+  IBM_ACE_QUESTIONS_BY_SECTION,
+  ALL_IBM_ACE_QUESTIONS,
+} from './certQuestions/ibm_ace';
+import {
+  BOOMI_QUESTIONS_BY_SECTION,
+  ALL_BOOMI_QUESTIONS,
+} from './certQuestions/boomi';
 
 export type { CertSection, CertOption, CertQuestion, ClientCertQuestion };
 
@@ -78,40 +98,50 @@ export {
   ALL_PYTHON_AI_QUESTIONS,
   PYTHON_DEV_QUESTIONS_BY_SECTION,
   ALL_PYTHON_DEV_QUESTIONS,
+  MULESOFT_QUESTIONS_BY_SECTION,
+  ALL_MULESOFT_QUESTIONS,
+  SALESFORCE_INTEGRATION_QUESTIONS_BY_SECTION,
+  ALL_SALESFORCE_INTEGRATION_QUESTIONS,
+  IBM_MQ_QUESTIONS_BY_SECTION,
+  ALL_IBM_MQ_QUESTIONS,
+  IBM_ACE_QUESTIONS_BY_SECTION,
+  ALL_IBM_ACE_QUESTIONS,
+  BOOMI_QUESTIONS_BY_SECTION,
+  ALL_BOOMI_QUESTIONS,
 };
 
 export const CERT_SECTIONS: { id: CertSection; title: string; description: string }[] = [
   {
     id: 'literacy',
-    title: 'AI Literacy & Prompting',
-    description: 'Structure, persona modeling, output formatting, few-shot prompting, and context hygiene.',
+    title: 'AI Literacy & Architecture',
+    description: 'Core architectural principles, syntax, protocol definitions, specifications, and foundational knowledge.',
   },
   {
     id: 'automation',
-    title: 'Workflow Automation',
-    description: 'Transforming recurring manual tasks into resilient pipelines, templates, and batch workflows.',
+    title: 'Workflow Automation & Integration',
+    description: 'Data transformation, event streams, batch pipelines, connectors, message handlers, and orchestration.',
   },
   {
     id: 'privacy',
-    title: 'Data Privacy & Ethics',
-    description: 'Enterprise data retention, confidentiality boundaries, bias detection, and verification protocols.',
+    title: 'Security, Privacy & Governance',
+    description: 'Authentication (OAuth2, mTLS, JWT, Kerberos), encryption, access policies, audit logging, and compliance.',
   },
   {
     id: 'growth',
-    title: 'Growth & Problem Solving',
-    description: 'Multimodal analysis, cognitive sparring, strategic reasoning, and critical judgment.',
+    title: 'High Availability & Scaling',
+    description: 'Clustering, Disaster Recovery, CI/CD pipelines, automated testing, performance tuning, and resilience.',
   },
 ];
 
 export const CERT_SECTION_LABELS: Record<CertSection, string> = {
-  literacy: 'AI Literacy & Prompting',
-  automation: 'Workflow Automation',
-  privacy: 'Data Privacy & Ethics',
-  growth: 'Growth & Problem Solving',
+  literacy: 'AI Literacy & Architecture',
+  automation: 'Workflow Automation & Integration',
+  privacy: 'Security, Privacy & Governance',
+  growth: 'High Availability & Scaling',
 };
 
 // =========================================================================
-// ASSEMBLED COMPLETE QUESTION BANKS PER TIER (CORE + ROLES + PYTHON)
+// ASSEMBLED COMPLETE QUESTION BANKS PER TIER (CORE + ROLES + PYTHON + INTEGRATION)
 // =========================================================================
 
 export const TIER_QUESTION_BANK: Record<CertTier, Record<CertSection, CertQuestion[]>> = {
@@ -130,12 +160,18 @@ export const TIER_QUESTION_BANK: Record<CertTier, Record<CertSection, CertQuesti
   // Python Specializations
   python_ai: PYTHON_AI_QUESTIONS_BY_SECTION,
   python_dev: PYTHON_DEV_QUESTIONS_BY_SECTION,
+  // Enterprise Integration Tracks
+  mulesoft: MULESOFT_QUESTIONS_BY_SECTION,
+  salesforce_integration: SALESFORCE_INTEGRATION_QUESTIONS_BY_SECTION,
+  ibm_mq: IBM_MQ_QUESTIONS_BY_SECTION,
+  ibm_ace: IBM_ACE_QUESTIONS_BY_SECTION,
+  boomi: BOOMI_QUESTIONS_BY_SECTION,
 };
 
 // Backward compatibility alias for Beginner bank
 export const CERT_QUESTION_BANK: Record<CertSection, CertQuestion[]> = TIER_QUESTION_BANK.beginner;
 
-// Flat map of ALL questions across ALL 4 tiers for instant lookup by ID
+// Flat map of ALL questions across ALL tiers for instant lookup by ID
 export const ALL_QUESTIONS_MAP: Map<string, CertQuestion> = new Map();
 
 Object.values(TIER_QUESTION_BANK).forEach((sectionMap) => {

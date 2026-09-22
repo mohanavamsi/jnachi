@@ -115,6 +115,52 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
     promoPriceInr: 0,
     promoPriceUsd: 0,
   },
+  // Enterprise Integration & Middleware Tracks: 100% Free for Launch Period
+  mulesoft: {
+    tier: 'mulesoft',
+    amountInr: 3499,
+    amountUsd: 69,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  salesforce_integration: {
+    tier: 'salesforce_integration',
+    amountInr: 3499,
+    amountUsd: 69,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  ibm_mq: {
+    tier: 'ibm_mq',
+    amountInr: 3499,
+    amountUsd: 69,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  ibm_ace: {
+    tier: 'ibm_ace',
+    amountInr: 3499,
+    amountUsd: 69,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  boomi: {
+    tier: 'boomi',
+    amountInr: 3499,
+    amountUsd: 69,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
 };
 
 // Valid promo discount codes

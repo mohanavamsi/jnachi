@@ -26,6 +26,7 @@ import {
   CORE_TIER_ORDER,
   ROLE_TIER_ORDER,
   PYTHON_TIER_ORDER,
+  INTEGRATION_TIER_ORDER,
 } from '@/lib/certTypes';
 import { CERT_SYLLABUS, SyllabusSection } from '@/lib/certSyllabus';
 import { CertSection } from '@/lib/certQuestions/types';
@@ -59,32 +60,41 @@ export default function ExamSyllabusModal({
 }: ExamSyllabusModalProps) {
   const [activeTier, setActiveTier] = useState<CertTier>(initialTier);
   const [activeSection, setActiveSection] = useState<CertSection | 'all'>('all');
-  const [categoryTab, setCategoryTab] = useState<'core' | 'role' | 'python'>('core');
+  const [categoryTab, setCategoryTab] = useState<'core' | 'role' | 'python' | 'integration'>(
+    CERT_TIERS[initialTier]?.category || 'core'
+  );
 
+  // Sync state if initialTier changes from outside
   React.useEffect(() => {
-    if (isOpen && initialTier) {
-      setActiveTier(initialTier);
-      const tierConfig = CERT_TIERS[initialTier];
-      if (tierConfig) {
-        setCategoryTab(tierConfig.category);
-      }
-    }
-  }, [isOpen, initialTier]);
+    setActiveTier(initialTier);
+    setCategoryTab(CERT_TIERS[initialTier]?.category || 'core');
+  }, [initialTier]);
 
   if (!isOpen) return null;
 
+  const currentTierConfig = CERT_TIERS[activeTier] || CERT_TIERS.beginner;
   const syllabus = CERT_SYLLABUS[activeTier] || CERT_SYLLABUS.beginner;
-  const tierConfig = CERT_TIERS[activeTier] || CERT_TIERS.beginner;
 
   const handleTierChange = (tier: CertTier) => {
     setActiveTier(tier);
+    setActiveSection('all');
     if (onSelectTier) onSelectTier(tier);
   };
+
+  const sectionsToShow: CertSection[] =
+    activeSection === 'all'
+      ? ['literacy', 'automation', 'privacy', 'growth']
+      : [activeSection];
 
   const sectionsList: CertSection[] = ['literacy', 'automation', 'privacy', 'growth'];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="syllabus-modal-title"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200"
+    >
       <div className="relative w-full max-w-6xl bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[94vh] max-h-[950px]">
         {/* COMPACT & SLEEK MODAL HEADER */}
         <div className="px-6 py-4 bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 shrink-0">
@@ -92,15 +102,15 @@ export default function ExamSyllabusModal({
             <div
               className="w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm shrink-0"
               style={{
-                backgroundColor: tierConfig.colorScheme.bgBadge,
-                color: tierConfig.colorScheme.textBadge,
+                backgroundColor: currentTierConfig.colorScheme.bgBadge,
+                color: currentTierConfig.colorScheme.textBadge,
               }}
             >
-              0{tierConfig.levelNumber}
+              0{currentTierConfig.levelNumber}
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base sm:text-lg font-black text-white leading-tight">
+                <h2 id="syllabus-modal-title" className="text-base sm:text-lg font-black text-white leading-tight">
                   {syllabus.title}
                 </h2>
                 <span className="hidden sm:inline-block text-[11px] font-bold text-indigo-300 bg-indigo-950/80 px-2 py-0.5 rounded-md border border-indigo-800/50">
@@ -149,6 +159,17 @@ export default function ExamSyllabusModal({
               >
                 Python
               </button>
+              <button
+                type="button"
+                onClick={() => setCategoryTab('integration')}
+                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                  categoryTab === 'integration'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Integration
+              </button>
             </div>
 
             <button
@@ -170,7 +191,9 @@ export default function ExamSyllabusModal({
             ? CORE_TIER_ORDER
             : categoryTab === 'role'
             ? ROLE_TIER_ORDER
-            : PYTHON_TIER_ORDER
+            : categoryTab === 'python'
+            ? PYTHON_TIER_ORDER
+            : INTEGRATION_TIER_ORDER
           ).map((tierKey) => {
             const cfg = CERT_TIERS[tierKey];
             const isSelected = activeTier === tierKey;

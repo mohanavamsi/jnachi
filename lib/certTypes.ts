@@ -1,4 +1,4 @@
-export type CertCategory = 'core' | 'role' | 'python';
+export type CertCategory = 'core' | 'role' | 'python' | 'integration';
 
 export type CertTier =
   | 'beginner'
@@ -12,7 +12,12 @@ export type CertTier =
   | 'hr'
   | 'managers'
   | 'python_ai'
-  | 'python_dev';
+  | 'python_dev'
+  | 'mulesoft'
+  | 'salesforce_integration'
+  | 'ibm_mq'
+  | 'ibm_ace'
+  | 'boomi';
 
 export interface TierConfig {
   id: CertTier;
@@ -42,6 +47,20 @@ export interface TierConfig {
     sealText: string;
   };
   keyTopics: string[];
+}
+
+export interface Question {
+  id: string;
+  domain: 'literacy' | 'automation' | 'privacy' | 'growth';
+  text: string;
+  options: {
+    a: string;
+    b: string;
+    c: string;
+    d: string;
+  };
+  correctAnswer: 'a' | 'b' | 'c' | 'd';
+  explanation?: string;
 }
 
 export const CERT_TIERS: Record<CertTier, TierConfig> = {
@@ -460,12 +479,190 @@ export const CERT_TIERS: Record<CertTier, TierConfig> = {
       'Secure Secret Management, Testing & Package Hygiene',
     ],
   },
+
+  // ENTERPRISE INTEGRATION & MIDDLEWARE CERTIFICATIONS
+  mulesoft: {
+    id: 'mulesoft',
+    category: 'integration',
+    levelNumber: 13,
+    title: 'Jnachi Integration Architect Certification — MuleSoft API-Led Track',
+    badgeLabel: 'JNACHI INTEGRATION ARCHITECT — MULESOFT API-LED',
+    roleName: 'MuleSoft API-Led',
+    shortDescription: 'Validate mastery in RAML/OAS 3-tier API-Led architectures, DataWeave 2.0 transformations, CloudHub 2.0, and Anypoint security.',
+    fullDescription: 'Evaluates production expertise in designing, building, and governing enterprise integrations using the MuleSoft Anypoint Platform. Assesses API-Led connectivity (System, Process, Experience APIs), DataWeave 2.0 data shaping, Batch Processing, CloudHub 2.0 / RTF deployments, API Manager policies, and MUnit automated testing.',
+    targetAudience: 'Integration Architects, MuleSoft Developers, Enterprise Middleware Engineers, and API Specialists.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#00a1df', // MuleSoft Cyan & Indigo
+      secondary: '#0284c7',
+      border: '#bae6fd',
+      bgBadge: '#f0f9ff',
+      textBadge: '#0369a1',
+      gradientFrom: '#082f49',
+      gradientTo: '#0284c7',
+      diplomaParchment: '#f0f9ff',
+      diplomaPrimary: '#075985',
+      diplomaAccent: '#0ea5e9',
+      sealColor: '#e0f2fe',
+      sealText: '#0369a1',
+    },
+    keyTopics: [
+      'RAML 1.0 / OAS 3.0 & 3-Tier API-Led Connectivity',
+      'DataWeave 2.0 Functional Transformations & Streaming',
+      'Anypoint API Manager Security, OAuth2 & mTLS Policies',
+      'CloudHub 2.0, Runtime Fabric (RTF), MUnit & CI/CD',
+    ],
+  },
+  salesforce_integration: {
+    id: 'salesforce_integration',
+    category: 'integration',
+    levelNumber: 14,
+    title: 'Jnachi Enterprise Integration Specialist Certification — Salesforce Track',
+    badgeLabel: 'JNACHI ENTERPRISE INTEGRATION SPECIALIST — SALESFORCE',
+    roleName: 'Salesforce Integration',
+    shortDescription: 'Demonstrate deep expertise in Salesforce REST/SOAP APIs, Bulk API 2.0, Platform Events, CDC, and Named Credentials.',
+    fullDescription: 'Validates architectural and developer capabilities in integrating Salesforce with enterprise ERPs, data warehouses, and microservices. Assesses REST/SOAP APIs, Bulk API 2.0 high-volume ingest, Change Data Capture (CDC), Platform Events, Named Credentials, and Salesforce Connect OData endpoints.',
+    targetAudience: 'Salesforce Developers, Technical Architects, CRM Integrators, and Enterprise Application Leads.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#0070d2', // Salesforce Blue & Amber
+      secondary: '#014486',
+      border: '#bfdbfe',
+      bgBadge: '#eff6ff',
+      textBadge: '#1d4ed8',
+      gradientFrom: '#1e3a8a',
+      gradientTo: '#2563eb',
+      diplomaParchment: '#eff6ff',
+      diplomaPrimary: '#1e40af',
+      diplomaAccent: '#f59e0b',
+      sealColor: '#fef3c7',
+      sealText: '#b45309',
+    },
+    keyTopics: [
+      'REST, SOAP, Bulk API 2.0 & Composite Graph Payloads',
+      'Platform Events, Change Data Capture (CDC) & Streaming',
+      'Named Credentials, JWT Bearer OAuth2 & Mutual TLS',
+      'Salesforce Connect, Large Data Volume (LDV) & Recovery',
+    ],
+  },
+  ibm_mq: {
+    id: 'ibm_mq',
+    category: 'integration',
+    levelNumber: 15,
+    title: 'Jnachi Messaging Architect Certification — IBM MQ Track',
+    badgeLabel: 'JNACHI MESSAGING ARCHITECT — IBM MQ',
+    roleName: 'IBM MQ Messaging',
+    shortDescription: 'Verify enterprise competency in IBM MQ Queue Managers, Clustering, TLS 1.3 security, Native HA, and XA distributed transactions.',
+    fullDescription: 'Assesses critical engineering skills for mission-critical enterprise messaging infrastructure using IBM MQ. Covers Queue Manager configuration, Uniform Clusters, Channel Security with TLS 1.3 / CHLAUTH / CONNAUTH, Dead Letter Queue (DLQ) automation, Native HA on Kubernetes/OpenShift, and XA Two-Phase Commit transaction coordination.',
+    targetAudience: 'IBM MQ Administrators, Enterprise Messaging Engineers, Middleware Architects, and Infrastructure Engineers.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#0f62fe', // IBM Blue & Slate
+      secondary: '#0043ce',
+      border: '#a6c8ff',
+      bgBadge: '#edf5ff',
+      textBadge: '#002d9c',
+      gradientFrom: '#001141',
+      gradientTo: '#0f62fe',
+      diplomaParchment: '#edf5ff',
+      diplomaPrimary: '#002d9c',
+      diplomaAccent: '#0f62fe',
+      sealColor: '#d0e2ff',
+      sealText: '#0043ce',
+    },
+    keyTopics: [
+      'Queue Managers, Channels, Message Descriptors & Groups',
+      'Full/Partial Clustering, Pub/Sub Trees & DLQ Rules',
+      'TLS 1.3 Channel Security, CHLAUTH, CONNAUTH & AMS',
+      'Multi-Instance, Native HA on OpenShift & XA 2PC Resilience',
+    ],
+  },
+  ibm_ace: {
+    id: 'ibm_ace',
+    category: 'integration',
+    levelNumber: 16,
+    title: 'Jnachi Integration Developer Certification — IBM App Connect Enterprise (ACE) Track',
+    badgeLabel: 'JNACHI INTEGRATION DEVELOPER — IBM ACE',
+    roleName: 'IBM App Connect (ACE)',
+    shortDescription: 'Prove expertise in IBM ACE v12 Message Flows, advanced ESQL, DFDL modeling, Java Compute, and CP4I cloud integration.',
+    fullDescription: 'Validates hands-on developer mastery in building complex enterprise integration flows using IBM App Connect Enterprise (ACE v11/v12) and IIB. Assesses message parsing with DFDL/MRM, advanced ESQL logic, Java Compute integration, REST/SOAP services, security profiles, and containerized deployments in IBM Cloud Pak for Integration (CP4I).',
+    targetAudience: 'ACE / IIB Integration Developers, SOA Architects, ESB Engineers, and Middleware Consultants.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#8a3ffc', // IBM Purple
+      secondary: '#6929c4',
+      border: '#d4bbff',
+      bgBadge: '#f6f2ff',
+      textBadge: '#491d8b',
+      gradientFrom: '#1c0f30',
+      gradientTo: '#6929c4',
+      diplomaParchment: '#f6f2ff',
+      diplomaPrimary: '#491d8b',
+      diplomaAccent: '#8a3ffc',
+      sealColor: '#e8daff',
+      sealText: '#6929c4',
+    },
+    keyTopics: [
+      'Integration Server Architecture, Message Trees & DFDL',
+      'Advanced ESQL Transformations & Java Compute Nodes',
+      'REST / SOAP Web Services, Kafka & Policy Projects',
+      'Containerized ACE on CP4I OpenShift & Test Framework',
+    ],
+  },
+  boomi: {
+    id: 'boomi',
+    category: 'integration',
+    levelNumber: 17,
+    title: 'Jnachi Cloud Integration Specialist Certification — Boomi Track',
+    badgeLabel: 'JNACHI CLOUD INTEGRATION SPECIALIST — BOOMI',
+    roleName: 'Boomi Cloud Integration',
+    shortDescription: 'Validate mastery in Boomi AtomSphere process architecture, DataHub (MDM), Map Shapes, Groovy scripting, and B2B/EDI governance.',
+    fullDescription: 'Evaluates comprehensive skills in architecting and delivering cloud integrations on the Boomi AtomSphere platform. Covers Atom and Molecule runtime infrastructure, complex data mapping with Groovy/JavaScript, Master Data Hub (MDM) Golden Records, API Gateway governance, and AS2/EDI trading partner workflows.',
+    targetAudience: 'Boomi Integration Developers, Cloud Architects, iPaaS Specialists, and Enterprise Integrators.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#002f6c', // Boomi Navy & Cyan
+      secondary: '#005ea2',
+      border: '#99c3eb',
+      bgBadge: '#eef5fc',
+      textBadge: '#002f6c',
+      gradientFrom: '#001a3d',
+      gradientTo: '#005ea2',
+      diplomaParchment: '#eef5fc',
+      diplomaPrimary: '#002f6c',
+      diplomaAccent: '#00a3e0',
+      sealColor: '#d6e8f8',
+      sealText: '#003e7e',
+    },
+    keyTopics: [
+      'Atom, Molecule & Cloud Runtime Process Architecture',
+      'Boomi Map Shapes, Custom Groovy & Business Rules',
+      'API Gateway, Tokens, AS2 / EDIFACT / X12 Governance',
+      'Boomi DataHub (MDM), Molecule Tuning & Platform APIs',
+    ],
+  },
 };
 
 export const CORE_TIER_ORDER: CertTier[] = ['beginner', 'practitioner', 'builder', 'master'];
 export const ROLE_TIER_ORDER: CertTier[] = ['sales', 'developers', 'marketers', 'support', 'hr', 'managers'];
 export const PYTHON_TIER_ORDER: CertTier[] = ['python_ai', 'python_dev'];
-export const TIER_ORDER: CertTier[] = [...CORE_TIER_ORDER, ...ROLE_TIER_ORDER, ...PYTHON_TIER_ORDER];
+export const INTEGRATION_TIER_ORDER: CertTier[] = ['mulesoft', 'salesforce_integration', 'ibm_mq', 'ibm_ace', 'boomi'];
+export const TIER_ORDER: CertTier[] = [
+  ...CORE_TIER_ORDER,
+  ...ROLE_TIER_ORDER,
+  ...PYTHON_TIER_ORDER,
+  ...INTEGRATION_TIER_ORDER,
+];
 
 export function isValidTier(tier: unknown): tier is CertTier {
   return typeof tier === 'string' && tier in CERT_TIERS;

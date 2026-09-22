@@ -30,6 +30,12 @@ export default function AboutPage() {
             In a fast-moving field like artificial intelligence, accumulating facts isn&apos;t enough. We believe in kinetic knowledge. The Jnachi platform is designed to give you a clear, judgment-free reading of where you stand today, illuminating the path toward full activation.
           </p>
 
+          <div className="bg-slate-100 rounded-2xl p-6 border border-slate-200 text-xs text-slate-600 leading-relaxed mb-8">
+            <p>
+              <strong>Trademark & Independence Notice:</strong> Jnachi certifications are independently developed and administered by Jnachi. They are not issued, endorsed, or affiliated with IBM, Salesforce, MuleSoft, or Boomi. All enterprise product names and marks referenced are trademarks of their respective owners.
+            </p>
+          </div>
+
           <div className="bg-indigo-50 rounded-2xl p-8 border border-indigo-100 flex flex-col items-center text-center">
             <h3 className="text-2xl font-bold text-indigo-900 mb-4">Discover Your Current Reading</h3>
             <p className="text-indigo-800 mb-8">

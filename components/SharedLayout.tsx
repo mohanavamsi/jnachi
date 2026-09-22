@@ -246,10 +246,17 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Trademark & Independence Disclaimer */}
+        <div className="pt-6 pb-2 border-t border-slate-800 text-[11px] text-slate-400 leading-relaxed max-w-4xl">
+          <p>
+            <strong>Disclaimer:</strong> Jnachi certifications are independently developed and administered by Jnachi. They are not issued, endorsed, or affiliated with IBM, Salesforce, MuleSoft, or Boomi. Product names and logos referenced are trademarks or registered trademarks of their respective owners.
+          </p>
+        </div>
+
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-4 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div>
-            &copy; {new Date().getFullYear()} Jnachi. All rights reserved. Registered Provider of Applied AI Competency Credentials.
+            &copy; {new Date().getFullYear()} Jnachi. All rights reserved. Registered Provider of Applied AI & Integration Competency Credentials.
           </div>
           <div className="flex items-center gap-4">
             <Link href="/terms" className="hover:text-slate-300">Terms</Link>

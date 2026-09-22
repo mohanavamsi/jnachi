@@ -1113,6 +1113,451 @@ export const CERT_SYLLABUS: Record<CertTier, CertSyllabusData> = {
     },
     preparationPath: COMMON_PREP_PATH,
   },
+
+  // 13. MULESOFT INTEGRATION ARCHITECT
+  mulesoft: {
+    tier: 'mulesoft',
+    title: 'Jnachi Integration Architect Certification — MuleSoft API-Led Track',
+    overview: 'Validates production mastery in 3-Tier API-Led architecture, RAML/OAS design, DataWeave 2.0 transformations, CloudHub 2.0 deployments, and Anypoint security governance.',
+    targetRole: 'Integration Architects, MuleSoft Developers, Enterprise Middleware Leads, and API Designers.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'RAML / OAS & API-Led Architecture',
+        weightPercent: 25,
+        overview: 'Designing RESTful API specifications with RAML 1.0 / OAS 3.0, 3-tier layering (System, Process, Experience), and contract-first workflows.',
+        topics: [
+          {
+            title: 'API-Led Connectivity & Layering',
+            description: 'Decomposing monolithic workflows into System, Process, and Experience APIs to maximize reusability and decoupling.',
+            skillsAssessed: ['API-Led 3-Tier', 'Reusability', 'Contract Governance'],
+          },
+          {
+            title: 'RAML 1.0 & OAS 3.0 Contract Design',
+            description: 'Data types, traits, resource types, mocking service simulation, and API versioning strategies.',
+            skillsAssessed: ['RAML 1.0 / OAS 3.0', 'Traits & ResourceTypes', 'Mocking Services'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'DataWeave 2.0 & Workflow Orchestration',
+        weightPercent: 25,
+        overview: 'Advanced functional transformations with DataWeave 2.0, streaming payloads, batch processing, and connector orchestration.',
+        topics: [
+          {
+            title: 'DataWeave 2.0 Functional Shaping',
+            description: 'Pattern matching, higher-order functions, custom modules, XML/JSON/CSV formatting, and memory-efficient streaming.',
+            skillsAssessed: ['DataWeave 2.0', 'Streaming Transformations', 'Pattern Matching'],
+          },
+          {
+            title: 'Batch Processing & Messaging Connectors',
+            description: 'Batch Jobs with commit steps, For-Each vs Parallel For-Each, Anypoint MQ publish/consume, and Salesforce integration.',
+            skillsAssessed: ['Batch Processing', 'Anypoint MQ', 'Salesforce Connector'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Security, Policies & API Governance',
+        weightPercent: 25,
+        overview: 'Securing APIs with OAuth 2.0, JWT validation, Client ID enforcement, mTLS, VPC peering, and Secrets Manager.',
+        topics: [
+          {
+            title: 'API Manager Policy Enforcement',
+            description: 'Configuring rate-limiting, spike control, IP whitelisting, OAuth2 / OpenID Connect token validation, and header injection.',
+            skillsAssessed: ['API Policies', 'OAuth2 / OIDC', 'Spike Control'],
+          },
+          {
+            title: 'Transport Security & Secret Management',
+            description: 'Mutual TLS (mTLS) on Dedicated Load Balancers (DLB), Anypoint Secrets Manager, VPC peering, and Edge security.',
+            skillsAssessed: ['mTLS Security', 'Dedicated Load Balancer', 'Secrets Manager'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'CloudHub 2.0, RTF, Reliability & MUnit',
+        weightPercent: 25,
+        overview: 'Scaling deployments on CloudHub 2.0 and Runtime Fabric, Mule clustering, automated MUnit test suites, and CI/CD pipelines.',
+        topics: [
+          {
+            title: 'Deployment Models & High Availability',
+            description: 'vCore sizing, CloudHub 2.0 shared spaces vs private spaces, Runtime Fabric (RTF) Kubernetes topologies, and zero-downtime releases.',
+            skillsAssessed: ['CloudHub 2.0', 'Runtime Fabric', 'Mule Clustering'],
+          },
+          {
+            title: 'MUnit Automated Testing & CI/CD',
+            description: 'Unit and integration testing with MUnit, mocking processors, test spy verifications, Maven plugins, and GitHub Actions pipelines.',
+            skillsAssessed: ['MUnit Testing', 'Processor Mocking', 'CI/CD Pipelines'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 14. SALESFORCE ENTERPRISE INTEGRATION SPECIALIST
+  salesforce_integration: {
+    tier: 'salesforce_integration',
+    title: 'Jnachi Enterprise Integration Specialist Certification — Salesforce Track',
+    overview: 'Validates enterprise integration skills across Salesforce REST/SOAP APIs, Bulk API 2.0, Change Data Capture, Platform Events, Named Credentials, and OData Connect.',
+    targetRole: 'Salesforce Developers, Technical Architects, CRM Integrators, and Enterprise Application Leads.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Salesforce API Landscape & Callout Architecture',
+        weightPercent: 25,
+        overview: 'Architectural selection across REST, SOAP, Bulk API 2.0, Composite Graph APIs, and managing Governor execution limits.',
+        topics: [
+          {
+            title: 'API Selection & Governor Limits Management',
+            description: 'Comparing synchronous REST/SOAP vs Bulk API 2.0 vs Composite Graph APIs based on payload size, concurrency, and rate limits.',
+            skillsAssessed: ['REST / SOAP APIs', 'Bulk API 2.0', 'Governor Limits'],
+          },
+          {
+            title: 'Apex HTTP Callouts & Mocking',
+            description: 'Building robust HttpRequest/HttpResponse handlers, JSON deserialization, and HttpCalloutMock unit test frameworks.',
+            skillsAssessed: ['Apex Callouts', 'JSON Parsing', 'HttpCalloutMock'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Event-Driven Architecture & Salesforce Connect',
+        weightPercent: 25,
+        overview: 'Publishing and subscribing to Platform Events, Change Data Capture (CDC), Async Apex (Queueable/Continuation), and OData External Objects.',
+        topics: [
+          {
+            title: 'Platform Events & Change Data Capture (CDC)',
+            description: 'Publishing high-volume events, EmpApi streaming client subscriptions, replay IDs, and Pub/Sub API integration.',
+            skillsAssessed: ['Platform Events', 'Change Data Capture', 'Replay ID Recovery'],
+          },
+          {
+            title: 'Salesforce Connect & Asynchronous Apex',
+            description: 'Accessing on-prem ERP data via External Objects (OData 2.0/4.0) without data replication, Queueable Apex chaining, and Continuations.',
+            skillsAssessed: ['Salesforce Connect', 'OData Adapters', 'Queueable Apex'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Authentication, Named Credentials & Security',
+        weightPercent: 25,
+        overview: 'Securing integrations with Named Credentials, External Credentials, JWT Bearer OAuth2 flows, mTLS callouts, and Shield monitoring.',
+        topics: [
+          {
+            title: 'Named Credentials & Modern OAuth2 Flows',
+            description: 'Eliminating hardcoded secrets with External Credentials, JWT Bearer Token Flow, Web Server Flow, and Connected App policies.',
+            skillsAssessed: ['Named Credentials', 'JWT Bearer Flow', 'Connected Apps'],
+          },
+          {
+            title: 'Mutual TLS & Shield Event Auditing',
+            description: 'Enforcing client certificate authentication (mTLS) on outbound callouts, IP restrictions, and monitoring API abuse with Shield Event Monitoring.',
+            skillsAssessed: ['mTLS Callouts', 'Shield Event Monitoring', 'Field-Level Encryption'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Large Data Volumes (LDV), PK Chunking & Recovery',
+        weightPercent: 25,
+        overview: 'Ingesting millions of records, eliminating UNABLE_TO_LOCK_ROW race conditions, deterministic external ID upserts, and Dead Letter recovery.',
+        topics: [
+          {
+            title: 'Large Data Volumes & Bulk Processing',
+            description: 'Optimizing Bulk API 2.0 ingest with parallel batching, PK Chunking, indexing, and skinny tables for high-throughput sync.',
+            skillsAssessed: ['Large Data Volumes', 'PK Chunking', 'Skinny Tables'],
+          },
+          {
+            title: 'Concurrency, Idempotency & Error Recovery',
+            description: 'Preventing row locking collisions, designing idempotent upserts keyed on External IDs, and building automated retry/DLQ patterns.',
+            skillsAssessed: ['Row Lock Prevention', 'Idempotent Upserts', 'Dead Letter Recovery'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 15. IBM MQ MESSAGING ARCHITECT
+  ibm_mq: {
+    tier: 'ibm_mq',
+    title: 'Jnachi Messaging Architect Certification — IBM MQ Track',
+    overview: 'Validates mission-critical messaging competency across IBM MQ Queue Managers, Uniform Clusters, TLS 1.3 Channel Security, Native HA on OpenShift, and XA transactions.',
+    targetRole: 'IBM MQ Administrators, Enterprise Messaging Engineers, Middleware Architects, and Infrastructure Engineers.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Queue Manager & Messaging Anatomy',
+        weightPercent: 25,
+        overview: 'Queue Manager core concepts, Local/Remote/Alias/Model queues, Transmission queues, Message Channel Agents, and MQMD descriptors.',
+        topics: [
+          {
+            title: 'Queue Object Topologies & Message Flow',
+            description: 'Designing local, remote, alias, and dynamic model queues, transmission routing, and Message Channel Agent (MCA) topologies.',
+            skillsAssessed: ['Queue Topologies', 'Remote Queues', 'Transmission Channels'],
+          },
+          {
+            title: 'Message Descriptors & Grouping',
+            description: 'MQMD properties (MsgId, CorrelId, Persistence, Expiry, Priority), message segmentation, and logical message grouping.',
+            skillsAssessed: ['MQMD Anatomy', 'Persistence & Expiry', 'Message Segmentation'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Clustering, Routing & Dead Letter Processing',
+        weightPercent: 25,
+        overview: 'Full and Partial repository clustering, workload balancing algorithms, Pub/Sub topic trees, trigger monitors, and DLQ handler rules.',
+        topics: [
+          {
+            title: 'Queue Manager Clustering & Workload Balancing',
+            description: 'Configuring full and partial repositories, cluster queues, cluster sender/receiver channels, and dynamic workload routing.',
+            skillsAssessed: ['MQ Clustering', 'Repository Config', 'Workload Balancing'],
+          },
+          {
+            title: 'Topic Trees & Dead Letter Handler Automation',
+            description: 'Hierarchical Pub/Sub topic trees, administrative subscriptions, Dead Letter Queue (DLQ) automated rule tables and reprocessing scripts.',
+            skillsAssessed: ['Pub/Sub Trees', 'DLQ Rule Tables', 'Trigger Monitors'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Channel Security, Authentication & AMS',
+        weightPercent: 25,
+        overview: 'Enforcing TLS 1.3 channel encryption, CipherSpecs, CHLAUTH rules, CONNAUTH user mapping, and Advanced Message Security (AMS) payload encryption.',
+        topics: [
+          {
+            title: 'TLS 1.3 Encryption & Channel Authentication (CHLAUTH)',
+            description: 'Configuring TLS CipherSpecs, digital certificates (KDB/CMS), blocking unauthorized client connections with CHLAUTH and CONNAUTH.',
+            skillsAssessed: ['TLS 1.3 Channels', 'CHLAUTH Rules', 'CONNAUTH Policies'],
+          },
+          {
+            title: 'Object Authority & Advanced Message Security (AMS)',
+            description: 'Setting granular queue authorities via `setmqaut`/OAM, and enabling end-to-end payload encryption at rest and in motion using IBM MQ AMS.',
+            skillsAssessed: ['OAM Authorities', 'MQ AMS Encryption', 'Audit Logging'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Native HA, OpenShift, XA 2PC & Performance Tuning',
+        weightPercent: 25,
+        overview: 'Deploying Native HA on Kubernetes/OpenShift, Multi-Instance Queue Managers, Uniform Clusters, XA distributed two-phase commit transactions, and buffer tuning.',
+        topics: [
+          {
+            title: 'High Availability & Containerized OpenShift Topologies',
+            description: 'Native HA 3-node Raft consensus on Red Hat OpenShift, Multi-Instance shared disk setups, and Uniform Clusters for automatic client load rebalancing.',
+            skillsAssessed: ['Native HA Raft', 'Uniform Clusters', 'OpenShift Containers'],
+          },
+          {
+            title: 'XA Two-Phase Commit & Performance Optimization',
+            description: 'Coordinating distributed transactions across MQ and relational databases with XA, linear vs circular logging, and buffer pool optimization.',
+            skillsAssessed: ['XA 2-Phase Commit', 'Logging Strategies', 'Buffer Tuning'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 16. IBM APP CONNECT ENTERPRISE (ACE) DEVELOPER
+  ibm_ace: {
+    tier: 'ibm_ace',
+    title: 'Jnachi Integration Developer Certification — IBM App Connect Enterprise (ACE) Track',
+    overview: 'Validates developer proficiency in IBM ACE v11/v12 Message Flows, advanced ESQL, DFDL data modeling, Java Compute, REST/SOAP services, and CP4I cloud integration.',
+    targetRole: 'ACE / IIB Integration Developers, SOA Architects, ESB Engineers, and Middleware Consultants.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Message Flow Architecture & DFDL Modeling',
+        weightPercent: 25,
+        overview: 'Integration Node / Server topology, Message Flow lifecycle, Message Tree structure (Root, Properties, Environment, ExceptionList), and DFDL parsing.',
+        topics: [
+          {
+            title: 'Integration Server Topology & Message Trees',
+            description: 'Independent Integration Servers, flow lifecycles, and navigating the logical Message Tree (Root, Environment, LocalEnvironment, ExceptionList).',
+            skillsAssessed: ['Integration Servers', 'Message Tree Structure', 'Exception Handling'],
+          },
+          {
+            title: 'DFDL Data Modeling & Schema Parsing',
+            description: 'Parsing non-XML binary, COBOL copybook, CSV, and fixed-length records using Data Format Description Language (DFDL).',
+            skillsAssessed: ['DFDL Modeling', 'Binary / Flat File Parsing', 'MRM Migration'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Advanced ESQL, Java Compute & Connector Orchestration',
+        weightPercent: 25,
+        overview: 'Developing advanced ESQL transformations, Java Compute nodes, REST / SOAP service provider and consumer flows, and Kafka integration.',
+        topics: [
+          {
+            title: 'Advanced ESQL Scripting & State Management',
+            description: 'Manipulating complex ROW/LIST trees, DATABASE queries with passthru statements, user-defined functions, and Environment state propagation.',
+            skillsAssessed: ['Advanced ESQL', 'Database Integration', 'ROW/LIST Operations'],
+          },
+          {
+            title: 'Java Compute Nodes & Web Service APIs',
+            description: 'Building custom Java Compute logic using `MbMessage`, implementing REST APIs with OpenAPI specifications, and SOAP Web Services.',
+            skillsAssessed: ['Java Compute Nodes', 'REST / SOAP Flows', 'Kafka Nodes'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Security Profiles, WS-Security & Policy Projects',
+        weightPercent: 25,
+        overview: 'Enforcing HTTPS/TLS, WS-Security, Security Profiles with LDAP / WS-Trust, OAuth 2.0 token validation, and ACE v12 Policy Projects.',
+        topics: [
+          {
+            title: 'Security Profiles & Identity Propagation',
+            description: 'Configuring Authentication, Authorization, and Identity Propagation on flow input nodes using LDAP and WS-Trust Security Profiles.',
+            skillsAssessed: ['Security Profiles', 'LDAP Authentication', 'Identity Propagation'],
+          },
+          {
+            title: 'Transport Security & Policy Projects',
+            description: 'Setting up keystores/truststores for HTTPS and MQ nodes, and dynamic configuration via ACE v12 Policy Projects.',
+            skillsAssessed: ['HTTPS / SSL Nodes', 'Policy Projects', 'Keystore Config'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'CP4I Cloud Pak, OpenShift, Test Framework & Tuning',
+        weightPercent: 25,
+        overview: 'Deploying containerized ACE flows to IBM Cloud Pak for Integration (CP4I) and OpenShift, ACE v12 unit test framework, and global cache tuning.',
+        topics: [
+          {
+            title: 'Containerized Deployments on CP4I & OpenShift',
+            description: 'Building BAR files, deploying containerized Integration Runtimes on Red Hat OpenShift, App Connect Dashboard monitoring, and autoscaling.',
+            skillsAssessed: ['CP4I Cloud Pak', 'OpenShift Runtimes', 'BAR Deployments'],
+          },
+          {
+            title: 'ACE v12 Test Framework & Global Cache Tuning',
+            description: 'Automated unit testing with message assembly recorders, using the embedded Global Cache (WXS) for low-latency state sharing.',
+            skillsAssessed: ['ACE Test Framework', 'Global Cache', 'Performance Profiling'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 17. BOOMI CLOUD INTEGRATION SPECIALIST
+  boomi: {
+    tier: 'boomi',
+    title: 'Jnachi Cloud Integration Specialist Certification — Boomi Track',
+    overview: 'Validates production capabilities in Boomi AtomSphere process architecture, DataHub (MDM), Map Shapes, Groovy scripting, and B2B/EDI trading partner governance.',
+    targetRole: 'Boomi Integration Developers, Cloud Architects, iPaaS Specialists, and Enterprise Integrators.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'AtomSphere Runtime Architecture & Process Flow',
+        weightPercent: 25,
+        overview: 'Atom, Molecule, and Cloud Runtime architecture, Document Flow concepts, Dynamic Document Properties, and Process Properties.',
+        topics: [
+          {
+            title: 'Atom & Molecule Runtime Topologies',
+            description: 'Selecting Local Atom vs Molecule (Clustered) vs Boomi Atom Cloud runtime topologies, release lifecycles, and shared directories.',
+            skillsAssessed: ['Atom vs Molecule', 'Runtime Topologies', 'Cloud Architecture'],
+          },
+          {
+            title: 'Document Flow & Property Scoping',
+            description: 'Understanding single vs batch document execution, Dynamic Document Properties (DDP) vs Dynamic Process Properties (DPP), and document splitting.',
+            skillsAssessed: ['Document Flow', 'Property Scoping (DDP vs DPP)', 'Document Splitting'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Data Mapping, Custom Scripting & Process Logic',
+        weightPercent: 25,
+        overview: 'Designing complex Boomi Map Shapes, Custom Groovy/JavaScript scripting, Map Functions, Business Rules, and Flow Control shapes.',
+        topics: [
+          {
+            title: 'Boomi Map Shapes & Custom Groovy Scripting',
+            description: 'Building multi-format maps (XML, JSON, Flat File, Database), Cross Reference Tables (CRT), and inline Groovy transformation scripts.',
+            skillsAssessed: ['Map Shape Transformations', 'Groovy Scripting', 'Cross-Reference Tables'],
+          },
+          {
+            title: 'Flow Control, Branching & Decision Logic',
+            description: 'Implementing Business Rules shapes, Branch vs Decision shapes, and Flow Control with parallel execution (threads/processes).',
+            skillsAssessed: ['Business Rules Shape', 'Parallel Execution', 'Branching Logic'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'API Management & B2B / EDI Governance',
+        weightPercent: 25,
+        overview: 'Boomi API Gateway governance, API authentication, Trading Partner Management (TPM), AS2 / EDI standards, and PII masking.',
+        topics: [
+          {
+            title: 'API Gateway & Security Policies',
+            description: 'Publishing REST/SOAP APIs via Boomi API Management, API Keys, JWT/OAuth2 authentication, and rate limiting.',
+            skillsAssessed: ['API Gateway', 'API Authentication', 'Rate Limiting'],
+          },
+          {
+            title: 'B2B / EDI Trading Partner Management',
+            description: 'Configuring AS2 communication, EDIFACT / X12 document standards, Trading Partner component routing, and certificate renewals.',
+            skillsAssessed: ['AS2 / EDI Standards', 'Trading Partner Setup', 'Certificate Renewal'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Boomi DataHub (MDM), Molecule Tuning & DevOps',
+        weightPercent: 25,
+        overview: 'Master Data Management with Boomi DataHub (Golden Records, Quarantine), Molecule shared filesystem tuning, Platform APIs, and CI/CD.',
+        topics: [
+          {
+            title: 'Boomi DataHub (MDM) Golden Records & Quarantine',
+            description: 'Designing master domain models, source rankings, match rules, staging channels, and resolving quarantine record conflicts.',
+            skillsAssessed: ['DataHub (MDM)', 'Golden Records', 'Quarantine Resolution'],
+          },
+          {
+            title: 'Molecule Performance Tuning & Platform CI/CD',
+            description: 'Tuning JVM heap, Molecule shared NFS storage, automated deployments using Boomi Platform APIs, and error notification pipelines.',
+            skillsAssessed: ['Molecule Tuning', 'Platform APIs', 'CI/CD Pipelines'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
 };
 
 export const CERT_SYLLABI = CERT_SYLLABUS;
