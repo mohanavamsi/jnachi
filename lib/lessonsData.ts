@@ -1,4 +1,5 @@
 import { ENTERPRISE_INTEGRATION_LESSONS } from './lessons/enterpriseIntegration';
+import { PYTHON_DEVELOPMENT_LESSONS } from './lessons/pythonDevelopment';
 
 export type LessonCategory = 
   | 'AI Literacy & Prompting'
@@ -1438,6 +1439,10 @@ Focus your energy on **depth of prompting and workflow integration** within one 
   // Enterprise Integration (Lessons 18–32)
   // -------------------------------------------------------------
   ...ENTERPRISE_INTEGRATION_LESSONS,
+  // -------------------------------------------------------------
+  // Python Development (Lessons 33–42)
+  // -------------------------------------------------------------
+  ...PYTHON_DEVELOPMENT_LESSONS,
 ];
 
 export function getAllLessons(): Lesson[] {
