@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { email, recipientName, location, company, tier = 'beginner' } = body;
+    const { email, recipientName, location, company, tier = 'beginner', phone } = body;
 
     if (!email) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
@@ -32,7 +32,8 @@ export async function POST(req: NextRequest) {
       recipientName || '',
       location || '',
       company || '',
-      validTier
+      validTier,
+      phone || ''
     );
     return NextResponse.json(attempt);
   } catch (err: unknown) {

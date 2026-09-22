@@ -30,6 +30,7 @@ import {
   WifiOff,
   MapPin,
   Building,
+  Phone,
   LogIn,
   UserPlus,
   Zap,
@@ -81,6 +82,7 @@ interface ExamState {
   recipientName: string;
   location?: string;
   company?: string;
+  phone?: string;
   startedAt: number;
   questions: ClientCertQuestion[];
   answers: Record<string, string>; // questionId -> optionId ('a' | 'b' | 'c' | 'd')
@@ -98,6 +100,7 @@ interface ExamSubmissionResult {
   recipientName: string;
   location?: string;
   company?: string;
+  phone?: string;
   grading: ExamGradingResult;
   certificateId?: string;
   attemptsRemaining: number;
@@ -118,6 +121,7 @@ export default function CertificationClient() {
   const [authName, setAuthName] = useState('');
   const [authLocation, setAuthLocation] = useState('');
   const [authCompany, setAuthCompany] = useState('');
+  const [authPhone, setAuthPhone] = useState('');
   const [authError, setAuthError] = useState<string | null>(null);
   const [isSubmittingAuth, setIsSubmittingAuth] = useState(false);
   const [candidateSessionEmail, setCandidateSessionEmail] = useState<string>('');
@@ -126,6 +130,7 @@ export default function CertificationClient() {
   const [candidateName, setCandidateName] = useState('');
   const [candidateLocation, setCandidateLocation] = useState('');
   const [candidateCompany, setCandidateCompany] = useState('');
+  const [candidatePhone, setCandidatePhone] = useState('');
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
 
   // Eligibility Status State
@@ -349,10 +354,12 @@ export default function CertificationClient() {
       const name = userProfile?.displayName || user.displayName || email.split('@')[0] || '';
       const loc = userProfile?.location || '';
       const comp = userProfile?.company || '';
+      const ph = userProfile?.phone || '';
 
       setCandidateName((prev) => prev || name);
       setCandidateLocation((prev) => prev || loc);
       setCandidateCompany((prev) => prev || comp);
+      setCandidatePhone((prev) => prev || ph);
 
       handleCheckStatus(email, selectedTier);
     } else if (typeof window !== 'undefined') {
@@ -365,6 +372,7 @@ export default function CertificationClient() {
             if (parsed.name) setCandidateName((prev) => prev || parsed.name);
             if (parsed.location) setCandidateLocation((prev) => prev || parsed.location);
             if (parsed.company) setCandidateCompany((prev) => prev || parsed.company);
+            if (parsed.phone) setCandidatePhone((prev) => prev || parsed.phone);
             handleCheckStatus(parsed.email, selectedTier);
           }
         }
@@ -398,6 +406,7 @@ export default function CertificationClient() {
               setCandidateName(parsed.recipientName);
               setCandidateLocation(parsed.location || '');
               setCandidateCompany(parsed.company || '');
+              if (parsed.phone) setCandidatePhone(parsed.phone);
               setView('exam');
             }
           }
@@ -562,6 +571,7 @@ export default function CertificationClient() {
       if (data.recipientName && !candidateName) setCandidateName(data.recipientName);
       if (data.location && !candidateLocation) setCandidateLocation(data.location);
       if (data.company && !candidateCompany) setCandidateCompany(data.company);
+      if (data.phone && !candidatePhone) setCandidatePhone(data.phone);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Error checking eligibility';
       setGateError(msg);
@@ -579,6 +589,7 @@ export default function CertificationClient() {
     const cleanName = authName.trim();
     const cleanLocation = authLocation.trim();
     const cleanCompany = authCompany.trim();
+    const cleanPhone = authPhone.trim();
 
     if (!cleanName) {
       setAuthError('Full Name is required for official certificate issuance.');
@@ -609,6 +620,7 @@ export default function CertificationClient() {
           displayName: cleanName,
           location: cleanLocation,
           company: cleanCompany,
+          phone: cleanPhone || undefined,
         });
       } catch {
         // Non-blocking firestore profile sync
@@ -629,6 +641,7 @@ export default function CertificationClient() {
     setCandidateName(cleanName);
     setCandidateLocation(cleanLocation);
     setCandidateCompany(cleanCompany);
+    setCandidatePhone(cleanPhone);
     setCandidateSessionEmail(cleanEmail);
 
     if (typeof window !== 'undefined') {
@@ -639,6 +652,7 @@ export default function CertificationClient() {
           name: cleanName,
           location: cleanLocation,
           company: cleanCompany,
+          phone: cleanPhone,
         })
       );
     }
@@ -677,6 +691,7 @@ export default function CertificationClient() {
               name: candidateName,
               location: candidateLocation,
               company: candidateCompany,
+              phone: candidatePhone,
             })
           );
         }
@@ -714,6 +729,8 @@ export default function CertificationClient() {
     setCandidateName('');
     setCandidateLocation('');
     setCandidateCompany('');
+    setCandidatePhone('');
+    setAuthPhone('');
     setStatusResponse(null);
     if (typeof window !== 'undefined') {
       localStorage.removeItem('jnachi_candidate_session');
@@ -744,6 +761,7 @@ export default function CertificationClient() {
           displayName: candidateName.trim(),
           location: candidateLocation.trim(),
           company: candidateCompany.trim(),
+          phone: candidatePhone.trim() || undefined,
         });
       }
       if (typeof window !== 'undefined') {
@@ -754,6 +772,7 @@ export default function CertificationClient() {
             name: candidateName.trim(),
             location: candidateLocation.trim(),
             company: candidateCompany.trim(),
+            phone: candidatePhone.trim(),
           })
         );
       }
@@ -774,6 +793,7 @@ export default function CertificationClient() {
     const cleanName = (candidateName || userProfile?.displayName || user?.displayName || '').trim();
     const cleanLocation = (candidateLocation || userProfile?.location || '').trim();
     const cleanCompany = (candidateCompany || userProfile?.company || '').trim();
+    const cleanPhone = (candidatePhone || userProfile?.phone || '').trim();
 
     if (!cleanName) {
       setGateError('Full legal name is required for certificate issuance.');
@@ -799,6 +819,7 @@ export default function CertificationClient() {
           recipientName: cleanName,
           location: cleanLocation,
           company: cleanCompany,
+          phone: cleanPhone,
           tier: tierToLaunch,
         }),
       });
@@ -816,6 +837,7 @@ export default function CertificationClient() {
         recipientName: cleanName,
         location: cleanLocation,
         company: cleanCompany,
+        phone: cleanPhone,
         startedAt: data.startedAt,
         questions: data.questions,
         answers: {},
@@ -855,6 +877,7 @@ export default function CertificationClient() {
           recipientName: examState.recipientName,
           location: examState.location,
           company: examState.company,
+          phone: examState.phone,
         }),
       });
 
@@ -1224,7 +1247,7 @@ export default function CertificationClient() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="space-y-1.5">
                       <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
                         Password <span className="text-rose-500">*</span>
@@ -1272,6 +1295,22 @@ export default function CertificationClient() {
                           value={authCompany}
                           onChange={(e) => setAuthCompany(e.target.value)}
                           placeholder="e.g. Anthropic / Independent"
+                          className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                        Mobile Number <span className="text-slate-400 font-normal lowercase">(optional)</span>
+                      </label>
+                      <div className="relative">
+                        <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                        <input
+                          type="tel"
+                          value={authPhone}
+                          onChange={(e) => setAuthPhone(e.target.value)}
+                          placeholder="+1 (555) 000-0000"
                           className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"
                         />
                       </div>
@@ -1383,6 +1422,7 @@ export default function CertificationClient() {
                     </div>
                     <p className="text-xs text-slate-500">
                       {effectiveEmail} • {candidateLocation || 'Location required'} • {candidateCompany || 'Company required'}
+                      {candidatePhone ? ` • ${candidatePhone}` : ''}
                     </p>
                   </div>
                 </div>
@@ -1403,7 +1443,7 @@ export default function CertificationClient() {
                     <AlertTriangle className="w-4 h-4 text-amber-600" />
                     <span>Please provide Location and Company before starting {activeTierConfig.title}:</span>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <input
                       type="text"
                       value={candidateLocation}
@@ -1416,6 +1456,13 @@ export default function CertificationClient() {
                       value={candidateCompany}
                       onChange={(e) => setCandidateCompany(e.target.value)}
                       placeholder="Organization (e.g. Acme Corp)"
+                      className="px-3 py-2 bg-white border border-amber-200 rounded-xl text-xs"
+                    />
+                    <input
+                      type="tel"
+                      value={candidatePhone}
+                      onChange={(e) => setCandidatePhone(e.target.value)}
+                      placeholder="Mobile Number (Optional)"
                       className="px-3 py-2 bg-white border border-amber-200 rounded-xl text-xs"
                     />
                   </div>

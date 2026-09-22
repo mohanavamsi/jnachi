@@ -10,6 +10,7 @@ export interface UserProfile {
   email?: string;
   location?: string;
   company?: string;
+  phone?: string;
   createdAt?: unknown;
   updatedAt?: unknown;
 }
@@ -18,7 +19,7 @@ interface AuthContextType {
   user: User | null;
   userProfile: UserProfile | null;
   loading: boolean;
-  updateUserProfile: (data: { displayName?: string; location?: string; company?: string }) => Promise<void>;
+  updateUserProfile: (data: { displayName?: string; location?: string; company?: string; phone?: string }) => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
 

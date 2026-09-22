@@ -12,6 +12,7 @@ import {
   FileText,
   MapPin,
   Building,
+  Phone,
   Edit2,
   Check,
   X,
@@ -63,6 +64,7 @@ export default function ProfilePage() {
   const [nameInput, setNameInput] = useState('');
   const [locInput, setLocInput] = useState('');
   const [compInput, setCompInput] = useState('');
+  const [phoneInput, setPhoneInput] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
@@ -74,6 +76,7 @@ export default function ProfilePage() {
       setNameInput(userProfile.displayName || '');
       setLocInput(userProfile.location || '');
       setCompInput(userProfile.company || '');
+      setPhoneInput(userProfile.phone || '');
     } else if (user) {
       setNameInput(user.displayName || '');
     }
@@ -153,6 +156,7 @@ export default function ProfilePage() {
         displayName: nameInput.trim(),
         location: locInput.trim(),
         company: compInput.trim(),
+        phone: phoneInput.trim(),
       });
       setIsEditing(false);
       setSaveSuccess(true);
@@ -193,6 +197,7 @@ export default function ProfilePage() {
   const effectiveDisplayName = userProfile?.displayName || user.displayName || user.email?.split('@')[0] || 'Candidate';
   const effectiveLocation = userProfile?.location || '';
   const effectiveCompany = userProfile?.company || '';
+  const effectivePhone = userProfile?.phone || '';
 
   return (
     <div className="flex-1 bg-slate-50/50 py-12 px-4 sm:px-6">
@@ -224,6 +229,12 @@ export default function ProfilePage() {
                     {effectiveCompany}
                   </span>
                 )}
+                {effectivePhone && (
+                  <span className="flex items-center gap-1">
+                    <Phone className="w-3.5 h-3.5 text-slate-400" />
+                    {effectivePhone}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -247,7 +258,7 @@ export default function ProfilePage() {
             <p className="text-xs text-slate-500">
               These details are printed on all official Jnachi diplomas and verification records.
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="space-y-1">
                 <label className="text-xs font-bold text-slate-700">Full Name</label>
                 <input
@@ -268,12 +279,24 @@ export default function ProfilePage() {
                 />
               </div>
               <div className="space-y-1">
-                <label className="text-xs font-bold text-slate-700">Current Organization / Company</label>
+                <label className="text-xs font-bold text-slate-700">Organization / Company</label>
                 <input
                   type="text"
                   value={compInput}
                   onChange={(e) => setCompInput(e.target.value)}
                   placeholder="e.g. Anthropic"
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-bold text-slate-700">
+                  Mobile Number <span className="text-slate-400 font-normal">(Optional)</span>
+                </label>
+                <input
+                  type="tel"
+                  value={phoneInput}
+                  onChange={(e) => setPhoneInput(e.target.value)}
+                  placeholder="+1 (555) 000-0000"
                   className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white"
                 />
               </div>

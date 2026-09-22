@@ -55,6 +55,7 @@ export interface CertProfileData {
   recipientName?: string;
   location?: string;
   company?: string;
+  phone?: string;
   usedQuestionIds?: string[];
   tierProgress?: Partial<Record<CertTier, TierProgressData>>;
   unlockedTiers?: CertTier[];
@@ -75,6 +76,7 @@ export interface CertAttemptData {
   recipientName?: string;
   location?: string;
   company?: string;
+  phone?: string;
   attemptNumber: number;
   status: 'in_progress' | 'completed' | 'abandoned';
   startedAt: number;
@@ -102,6 +104,7 @@ export interface CertStatusResponse {
   recipientName?: string;
   location?: string;
   company?: string;
+  phone?: string;
   cooldownActive: boolean;
   timeRemainingMs?: number;
   nextAvailableAt?: number;
@@ -335,6 +338,7 @@ export async function getCertStatus(email: string, tier: CertTier = 'beginner'):
       recipientName: profile.recipientName,
       location: profile.location,
       company: profile.company,
+      phone: profile.phone,
       cooldownActive: false,
       isLocked: false,
       isPaidTier,
@@ -358,6 +362,7 @@ export async function getCertStatus(email: string, tier: CertTier = 'beginner'):
       recipientName: profile.recipientName,
       location: profile.location,
       company: profile.company,
+      phone: profile.phone,
       cooldownActive: false,
       isLocked: true,
       lockReason: 'payment_required',
@@ -382,6 +387,7 @@ export async function getCertStatus(email: string, tier: CertTier = 'beginner'):
       recipientName: profile.recipientName,
       location: profile.location,
       company: profile.company,
+      phone: profile.phone,
       cooldownActive: false,
       isLocked: true,
       lockReason: 'attempts_exhausted',
@@ -410,6 +416,7 @@ export async function getCertStatus(email: string, tier: CertTier = 'beginner'):
       recipientName: profile.recipientName,
       location: profile.location,
       company: profile.company,
+      phone: profile.phone,
       cooldownActive: true,
       lockReason: 'cooldown',
       timeRemainingMs,
@@ -434,6 +441,7 @@ export async function getCertStatus(email: string, tier: CertTier = 'beginner'):
     recipientName: profile.recipientName,
     location: profile.location,
     company: profile.company,
+    phone: profile.phone,
     cooldownActive: false,
     isLocked: false,
     isPaidTier,
@@ -451,7 +459,8 @@ export async function startExamAttempt(
   recipientName = '',
   location = '',
   company = '',
-  tier: CertTier = 'beginner'
+  tier: CertTier = 'beginner',
+  phone = ''
 ): Promise<{
   attemptId: string;
   tier: CertTier;
@@ -491,6 +500,7 @@ export async function startExamAttempt(
       recipientName: (recipientName || existingProfile?.recipientName || '').trim(),
       location: (location || existingProfile?.location || '').trim(),
       company: (company || existingProfile?.company || '').trim(),
+      phone: (phone || existingProfile?.phone || '').trim(),
       attemptNumber,
       status: 'in_progress',
       startedAt: now,
@@ -503,7 +513,7 @@ export async function startExamAttempt(
   }
 
   // Persist candidate profile info
-  if (location || company || recipientName) {
+  if (location || company || recipientName || phone) {
     try {
       await setDoc(
         profileRef,
@@ -512,6 +522,7 @@ export async function startExamAttempt(
           ...(recipientName ? { recipientName: recipientName.trim() } : {}),
           ...(location ? { location: location.trim() } : {}),
           ...(company ? { company: company.trim() } : {}),
+          ...(phone ? { phone: phone.trim() } : {}),
         },
         { merge: true }
       );
@@ -576,6 +587,7 @@ export async function submitExamAttempt(params: {
   recipientName?: string;
   location?: string;
   company?: string;
+  phone?: string;
 }): Promise<{
   attemptId: string;
   email: string;
@@ -585,12 +597,13 @@ export async function submitExamAttempt(params: {
   recipientName: string;
   location?: string;
   company?: string;
+  phone?: string;
   grading: ExamGradingResult;
   certificateId?: string;
   attemptsRemaining: number;
   cooldownNextAvailableAt?: number;
 }> {
-  const { attemptId, email, answers, recipientName = '', location = '', company = '' } = params;
+  const { attemptId, email, answers, recipientName = '', location = '', company = '', phone = '' } = params;
   const normEmail = normalizeEmail(email);
 
   const attemptRef = doc(db, 'cert_attempts', attemptId);
@@ -627,6 +640,7 @@ export async function submitExamAttempt(params: {
       recipientName: attemptData.recipientName || '',
       location: attemptData.location || undefined,
       company: attemptData.company || undefined,
+      phone: attemptData.phone || undefined,
       grading,
       certificateId: attemptData.certificateId || undefined,
       attemptsRemaining,
@@ -646,6 +660,7 @@ export async function submitExamAttempt(params: {
   const finalName = (recipientName || attemptData.recipientName || normEmail.split('@')[0]).trim();
   const finalLocation = (location || attemptData.location || '').trim();
   const finalCompany = (company || attemptData.company || '').trim();
+  const finalPhone = (phone || attemptData.phone || '').trim();
 
   // Update attempt record
   await updateDoc(attemptRef, {
@@ -660,6 +675,7 @@ export async function submitExamAttempt(params: {
     recipientName: finalName,
     location: finalLocation || null,
     company: finalCompany || null,
+    phone: finalPhone || null,
     sectionScores: grading.sectionScores,
   });
 
@@ -741,6 +757,9 @@ export async function submitExamAttempt(params: {
   if (finalCompany || prevProfile?.company) {
     profileUpdate.company = finalCompany || prevProfile?.company;
   }
+  if (finalPhone || prevProfile?.phone) {
+    profileUpdate.phone = finalPhone || prevProfile?.phone;
+  }
 
   await setDoc(profileRef, profileUpdate, { merge: true });
 
@@ -756,6 +775,7 @@ export async function submitExamAttempt(params: {
     recipientName: finalName,
     location: finalLocation,
     company: finalCompany,
+    phone: finalPhone || undefined,
     grading,
     certificateId,
     attemptsRemaining,
