@@ -120,5 +120,245 @@ export const PYTHON_AI_LITERACY_QUESTIONS: CertQuestion[] = [
       { id: "d", label: "Bypassing content moderation filters through prompt obfuscation." }
     ],
     correctOptionId: "c"
+  },
+  {
+    id: "pyai_lit_11",
+    section: "literacy",
+    prompt: "In Anthropic's Python SDK (`anthropic.Anthropic()`), how is the system prompt passed when invoking Messages API?",
+    options: [
+      { id: "a", label: "As a top-level `system=\"...\"` parameter in `client.messages.create()`, separate from the `messages` array." },
+      { id: "b", label: "Inside the `messages` list with `role: \"system\"` as the first element." },
+      { id: "c", label: "Appended to the end of the user prompt enclosed in brackets." },
+      { id: "d", label: "As a HTTP cookie in custom request headers." }
+    ],
+    correctOptionId: "a"
+  },
+  {
+    id: "pyai_lit_12",
+    section: "literacy",
+    prompt: "When using the `instructor` Python library to patch an OpenAI client, what is its primary mechanism for handling schema validation failures?",
+    options: [
+      { id: "a", label: "It crashes the script immediately on any type mismatch." },
+      { id: "b", label: "It feeds the Pydantic `ValidationError` message back to the LLM in an automated retry loop to self-correct." },
+      { id: "c", label: "It replaces invalid fields with random alphanumeric strings." },
+      { id: "d", label: "It converts JSON schemas into XML stylesheets." }
+    ],
+    correctOptionId: "b"
+  },
+  {
+    id: "pyai_lit_13",
+    section: "literacy",
+    prompt: "What is the difference between `temperature` and `top_p` (nucleus sampling) parameters in Python LLM clients?",
+    options: [
+      { id: "a", label: "`temperature` controls request timeout in seconds, while `top_p` sets the maximum token budget." },
+      { id: "b", label: "`temperature` enables GPU cooling, while `top_p` manages socket concurrency." },
+      { id: "c", label: "`temperature` scales the logits distribution globally, while `top_p` truncates the cumulative probability mass of candidate tokens." },
+      { id: "d", label: "They are completely identical aliases that perform the exact same calculation." }
+    ],
+    correctOptionId: "c"
+  },
+  {
+    id: "pyai_lit_14",
+    section: "literacy",
+    prompt: "When working with multi-modal inputs in Python (e.g. GPT-4o or Claude 3.5 Sonnet), how should local image files be prepared for transmission via JSON payloads?",
+    options: [
+      { id: "a", label: "Paste raw unencoded binary bytes directly into the text prompt string." },
+      { id: "b", label: "Print the image file name without file bytes." },
+      { id: "c", label: "Convert the image to a PDF and email it to the API endpoint." },
+      { id: "d", label: "Base64 encode the binary image bytes and format as a data URI (`data:image/jpeg;base64,...`) inside the image_url message object." }
+    ],
+    correctOptionId: "d"
+  },
+  {
+    id: "pyai_lit_15",
+    section: "literacy",
+    prompt: "Why should `seed` and `system_fingerprint` parameters be monitored in Python OpenAI requests during regression testing?",
+    options: [
+      { id: "a", label: "To determine which physical datacenter rack processed the request." },
+      { id: "b", label: "To facilitate deterministic sampling and detect backend model weight or infrastructure updates." },
+      { id: "c", label: "To bypass monthly billing limits." },
+      { id: "d", label: "To automatically convert English responses into Python bytecode." }
+    ],
+    correctOptionId: "b"
+  },
+  {
+    id: "pyai_lit_16",
+    section: "literacy",
+    prompt: "In Python LangChain Expression Language (LCEL), what does the pipe operator `|` represent in `chain = prompt | model | StrOutputParser()`?",
+    options: [
+      { id: "a", label: "Bitwise OR operation on integers." },
+      { id: "b", label: "A unix shell sub-process execution." },
+      { id: "c", label: "Composition of Runnable components, passing the output of the left component as input to the right." },
+      { id: "d", label: "A parallel thread synchronization barrier." }
+    ],
+    correctOptionId: "c"
+  },
+  {
+    id: "pyai_lit_17",
+    section: "literacy",
+    prompt: "When validating nested JSON schemas with Pydantic v2 in Python, which field validator decorator is used for custom cross-field validation logic?",
+    options: [
+      { id: "a", label: "`@unittest.mock.patch`." },
+      { id: "b", label: "`@functools.wraps`." },
+      { id: "c", label: "`@model_validator(mode='after')` or `@field_validator('field_name')`." },
+      { id: "d", label: "`@property.setter`." }
+    ],
+    correctOptionId: "c"
+  },
+  {
+    id: "pyai_lit_18",
+    section: "literacy",
+    prompt: "What is the primary function of `LiteLLM` in Python AI multi-model applications?",
+    options: [
+      { id: "a", label: "Provides an unified OpenAI-compatible interface to call 100+ LLMs (Bedrock, Anthropic, Vertex, Ollama) with consistent I/O and exception handling." },
+      { id: "b", label: "A lightweight SQLite database engine." },
+      { id: "c", label: "A Python GUI framework for desktop applications." },
+      { id: "d", label: "A compression tool for training dataset images." }
+    ],
+    correctOptionId: "a"
+  },
+  {
+    id: "pyai_lit_19",
+    section: "literacy",
+    prompt: "When constructing dynamic system prompts in Python with user variables, what is the best practice to prevent prompt injection and delimiter confusion?",
+    options: [
+      { id: "a", label: "Concatenate raw user input directly with `+` into the system directive without tags." },
+      { id: "b", label: "Encapsulate user-supplied context within strict XML/markdown tags (e.g. `<user_input>{sanitized_text}</user_input>`) and instruct the model never to treat content within tags as instructions." },
+      { id: "c", label: "Remove all whitespace from the prompt." },
+      { id: "d", label: "Translate user text to French before sending." }
+    ],
+    correctOptionId: "b"
+  },
+  {
+    id: "pyai_lit_20",
+    section: "literacy",
+    prompt: "In Python LlamaIndex, what is the core responsibility of a `ServiceContext` / `Settings` object?",
+    options: [
+      { id: "a", label: "Manages Windows operating system background services." },
+      { id: "b", label: "Configures local firewall ports for HTTP servers." },
+      { id: "c", label: "Generates cryptographic SSL certificates." },
+      { id: "d", label: "Configures global defaults for LLM, embedding model, node parser, and callback managers across index structures." }
+    ],
+    correctOptionId: "d"
+  },
+  {
+    id: "pyai_lit_21",
+    section: "literacy",
+    prompt: "What is the role of the `presence_penalty` parameter in Python OpenAI API completion requests?",
+    options: [
+      { id: "a", label: "Penalizes tokens based on their exact frequency count." },
+      { id: "b", label: "Penalizes tokens based on whether they have already appeared in the text so far, encouraging the model to introduce fresh topics." },
+      { id: "c", label: "Disconnects the API socket if the user is away from keyboard." },
+      { id: "d", label: "Forces the model to respond in under 500 milliseconds." }
+    ],
+    correctOptionId: "b"
+  },
+  {
+    id: "pyai_lit_22",
+    section: "literacy",
+    prompt: "When parsing partial/incomplete JSON during active token streaming in Python, which specialized library allows incremental JSON decoding?",
+    options: [
+      { id: "a", label: "Standard `json.loads()` which raises a `JSONDecodeError` on incomplete syntax." },
+      { id: "b", label: "`pickle.loads()`." },
+      { id: "c", label: "`jiter` or `partialjson` / `json-repair`." },
+      { id: "d", label: "`csv.reader()`." }
+    ],
+    correctOptionId: "c"
+  },
+  {
+    id: "pyai_lit_23",
+    section: "literacy",
+    prompt: "What does the `stop` parameter (e.g. `stop=[\"\\n\\n\", \"###\"]`) achieve in Python LLM completion requests?",
+    options: [
+      { id: "a", label: "Shuts down the Python interpreter." },
+      { id: "b", label: "Deletes the prompt history from the server." },
+      { id: "c", label: "Pauses execution for 5 seconds." },
+      { id: "d", label: "Instructs the API to immediately halt generation when any specified sequence is encountered, without including the stop token in the output." }
+    ],
+    correctOptionId: "d"
+  },
+  {
+    id: "pyai_lit_24",
+    section: "literacy",
+    prompt: "When writing Python code to compute text embeddings with `sentence-transformers` locally, which method generates normalized dense vectors?",
+    options: [
+      { id: "a", label: "`model.encode(texts, normalize_embeddings=True)`." },
+      { id: "b", label: "`model.predict_proba(texts)`." },
+      { id: "c", label: "`model.fit_transform(texts)`." },
+      { id: "d", label: "`model.to_json(texts)`." }
+    ],
+    correctOptionId: "a"
+  },
+  {
+    id: "pyai_lit_25",
+    section: "literacy",
+    prompt: "What is 'Chain-of-Thought (CoT)' prompting when implemented programmatically in Python pipelines?",
+    options: [
+      { id: "a", label: "Chaining 10 separate physical computers over Ethernet." },
+      { id: "b", label: "Prompting the model to output explicit step-by-step reasoning steps before producing the final answer, improving accuracy on complex logic." },
+      { id: "c", label: "Encrypting prompt text using blockchain technology." },
+      { id: "d", label: "Running multiple models in a circular infinite loop." }
+    ],
+    correctOptionId: "b"
+  },
+  {
+    id: "pyai_lit_26",
+    section: "literacy",
+    prompt: "In Python async programming, why is `asyncio.to_thread()` used when calling synchronous LLM libraries from within an async FastAPI handler?",
+    options: [
+      { id: "a", label: "Converts Python code into C++ binaries." },
+      { id: "b", label: "Multiplies API rate limits by 10x." },
+      { id: "c", label: "Executes the blocking I/O call in a separate worker thread to prevent freezing the server's main async event loop." },
+      { id: "d", label: "Suppresses all network timeout exceptions." }
+    ],
+    correctOptionId: "c"
+  },
+  {
+    id: "pyai_lit_27",
+    section: "literacy",
+    prompt: "How does OpenAI's `Strict JSON Schema` feature (Structured Outputs) differ from legacy JSON Mode (`type: \"json_object\"`)?",
+    options: [
+      { id: "a", label: "Strict mode only works with binary XML data." },
+      { id: "b", label: "Legacy JSON mode is faster but requires GPU overclocking." },
+      { id: "c", label: "Strict mode deletes all numeric fields." },
+      { id: "d", label: "Strict mode guarantees 100% adherence to supplied Pydantic/JSON schemas with zero missing or hallucinated keys via constrained decoding." }
+    ],
+    correctOptionId: "d"
+  },
+  {
+    id: "pyai_lit_28",
+    section: "literacy",
+    prompt: "When using prompt templates in Python, why should template variables be typed and validated with Pydantic before interpolation?",
+    options: [
+      { id: "a", label: "Catches missing, null, or malformed variables before invoking the remote API, saving unnecessary API token costs and failed requests." },
+      { id: "b", label: "Compiles prompt templates into assembly code." },
+      { id: "c", label: "Removes all token charges from the cloud provider." },
+      { id: "d", label: "Bypasses all model safety filters." }
+    ],
+    correctOptionId: "a"
+  },
+  {
+    id: "pyai_lit_29",
+    section: "literacy",
+    prompt: "In Python RAG pipelines, what is 'Context Stuffing' and why is it problematic?",
+    options: [
+      { id: "a", label: "Compressing images into text formats." },
+      { id: "b", label: "Overloading prompt context with hundreds of unranked chunks, leading to high latency, increased token costs, and the 'lost in the middle' retrieval degradation." },
+      { id: "c", label: "Running vector searches on encrypted databases." },
+      { id: "d", label: "A memory leak in Python's garbage collector." }
+    ],
+    correctOptionId: "b"
+  },
+  {
+    id: "pyai_lit_30",
+    section: "literacy",
+    prompt: "What is the recommended logging practice in Python when constructing production prompt pipelines?",
+    options: [
+      { id: "a", label: "Print raw API secret keys to stdout." },
+      { id: "b", label: "Disable all logging to reduce disk usage." },
+      { id: "c", label: "Log prompt metadata, token counts, and latency, while masking sensitive PII and API keys via structured loggers (e.g. structlog)." },
+      { id: "d", label: "Write unencrypted customer prompts to public text files." }
+    ],
+    correctOptionId: "c"
   }
 ];
