@@ -6,12 +6,12 @@ export const PYTHON_AI_AUTOMATION_QUESTIONS: CertQuestion[] = [
     section: "automation",
     prompt: "When implementing OpenAI Tool / Function Calling in Python, how should tool arguments returned by the LLM (`tool_call.function.arguments`) be processed safely?",
     options: [
-      { id: "a", label: "Parse arguments with `json.loads()` and validate them against a strict Pydantic model before executing the local Python function." },
-      { id: "b", label: "Execute the string directly with Python's built-in `eval()` to maximize performance." },
-      { id: "c", label: "Pass the raw string directly into a SQL database query string without sanitization." },
+      { id: "a", label: "Execute the string directly with Python's built-in `eval()` to maximize performance." },
+      { id: "b", label: "Pass the raw string directly into a SQL database query string without sanitization." },
+      { id: "c", label: "Parse arguments with `json.loads()` and validate them against a strict Pydantic model before executing the local Python function." },
       { id: "d", label: "Ignore the arguments and hardcode default parameters in the Python function." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "c"
   },
   {
     id: "pyai_aut_02",
@@ -30,36 +30,36 @@ export const PYTHON_AI_AUTOMATION_QUESTIONS: CertQuestion[] = [
     section: "automation",
     prompt: "When building a document ingestion pipeline in Python for RAG, what is the best chunking strategy for long technical manuals?",
     options: [
-      { id: "a", label: "Recursive character chunking with overlap (e.g. 800 tokens chunk size, 150 token overlap) preserving paragraph/code block boundaries." },
-      { id: "b", label: "Split strictly every 50 characters regardless of word or sentence boundaries." },
-      { id: "c", label: "Send the entire 500-page PDF as a single raw un-chunked string in every prompt." },
-      { id: "d", label: "Randomly delete alternate pages to fit into memory." }
+      { id: "a", label: "Split strictly every 50 characters regardless of word or sentence boundaries." },
+      { id: "b", label: "Send the entire 500-page PDF as a single raw un-chunked string in every prompt." },
+      { id: "c", label: "Randomly delete alternate pages to fit into memory." },
+      { id: "d", label: "Recursive character chunking with overlap (e.g. 800 tokens chunk size, 150 token overlap) preserving paragraph/code block boundaries." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "d"
   },
   {
     id: "pyai_aut_04",
     section: "automation",
     prompt: "How does `asyncio.gather()` optimize batch processing when generating embeddings for 1,000 document chunks in Python?",
     options: [
-      { id: "a", label: "It dispatches multiple asynchronous HTTP requests concurrently, reducing total elapsed wall-clock time compared to sequential blocking loops." },
-      { id: "b", label: "It executes requests sequentially with a 5-second mandatory sleep between each chunk." },
+      { id: "a", label: "It executes requests sequentially with a 5-second mandatory sleep between each chunk." },
+      { id: "b", label: "It dispatches multiple asynchronous HTTP requests concurrently, reducing total elapsed wall-clock time compared to sequential blocking loops." },
       { id: "c", label: "It merges all chunks into a single embedding vector without calling the API." },
       { id: "d", label: "It bypasses all cloud provider rate limits permanently." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "b"
   },
   {
     id: "pyai_aut_05",
     section: "automation",
     prompt: "When wrapping an external weather API or database as an LLM tool in Python, what must be included in the tool definition JSON schema?",
     options: [
-      { id: "a", label: "Function name, clear natural language description of what the tool does and when to call it, and typed parameter properties with required fields." },
-      { id: "b", label: "The raw source code of the Python interpreter." },
-      { id: "c", label: "The database root password and server SSH credentials." },
+      { id: "a", label: "The raw source code of the Python interpreter." },
+      { id: "b", label: "The database root password and server SSH credentials." },
+      { id: "c", label: "Function name, clear natural language description of what the tool does and when to call it, and typed parameter properties with required fields." },
       { id: "d", label: "Only the integer memory address of the Python function pointer." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "c"
   },
   {
     id: "pyai_aut_06",
@@ -78,36 +78,36 @@ export const PYTHON_AI_AUTOMATION_QUESTIONS: CertQuestion[] = [
     section: "automation",
     prompt: "When writing automated integration tests for Python LLM applications, how should non-deterministic API responses be handled in CI/CD pipelines?",
     options: [
-      { id: "a", label: "Mock API responses using libraries like `pytest-mock` or `vcrpy` to record/replay fixtures, and use LLM-as-a-judge / semantic evals for periodic regression benchmarks." },
-      { id: "b", label: "Disable all tests in CI/CD and only test manually in production." },
-      { id: "c", label: "Assert exact character-for-character string equality on non-deterministic generative text." },
+      { id: "a", label: "Disable all tests in CI/CD and only test manually in production." },
+      { id: "b", label: "Assert exact character-for-character string equality on non-deterministic generative text." },
+      { id: "c", label: "Mock API responses using libraries like `pytest-mock` or `vcrpy` to record/replay fixtures, and use LLM-as-a-judge / semantic evals for periodic regression benchmarks." },
       { id: "d", label: "Hardcode live production API keys into public test repositories." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "c"
   },
   {
     id: "pyai_aut_08",
     section: "automation",
     prompt: "What is the recommended design pattern in Python for handling transient 429 Rate Limit and 503 Overloaded errors from LLM providers?",
     options: [
-      { id: "a", label: "Exponential backoff with jitter using libraries like `tenacity` or `backoff`." },
-      { id: "b", label: "Immediate retry in a `while True:` loop without any sleep or delay." },
+      { id: "a", label: "Immediate retry in a `while True:` loop without any sleep or delay." },
+      { id: "b", label: "Exponential backoff with jitter using libraries like `tenacity` or `backoff`." },
       { id: "c", label: "Immediately crashing the application and terminating the worker process." },
       { id: "d", label: "Switching database credentials to a backup replica." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "b"
   },
   {
     id: "pyai_aut_09",
     section: "automation",
     prompt: "In LangChain / LlamaIndex Python pipelines, what is the role of `ConversationSummaryBufferMemory`?",
     options: [
-      { id: "a", label: "Maintains a buffer of recent interactions while progressively summarizing older conversational turns to stay strictly within token limits." },
-      { id: "b", label: "Stores all audio recordings from user microphones permanently." },
-      { id: "c", label: "Flushes Redis cache tables every 10 seconds." },
-      { id: "d", label: "Translates human text to machine bytecodes directly." }
+      { id: "a", label: "Stores all audio recordings from user microphones permanently." },
+      { id: "b", label: "Flushes Redis cache tables every 10 seconds." },
+      { id: "c", label: "Translates human text to machine bytecodes directly." },
+      { id: "d", label: "Maintains a buffer of recent interactions while progressively summarizing older conversational turns to stay strictly within token limits." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "d"
   },
   {
     id: "pyai_aut_10",

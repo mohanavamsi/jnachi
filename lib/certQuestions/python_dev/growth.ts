@@ -6,36 +6,36 @@ export const PYTHON_DEV_GROWTH_QUESTIONS: CertQuestion[] = [
     section: "growth",
     prompt: "When profiling Python applications to identify performance and memory bottlenecks in production, which tooling suite provides deterministic flamegraphs and line-by-line analysis?",
     options: [
-      { id: "a", label: "`cProfile` with SnakeViz, or sampling profilers like `py-spy` and `memray`." },
-      { id: "b", label: "Adding `print('checkpoint')` statements before and after every line." },
-      { id: "c", label: "Guessing based on the line length of functions." },
+      { id: "a", label: "Adding `print('checkpoint')` statements before and after every line." },
+      { id: "b", label: "Guessing based on the line length of functions." },
+      { id: "c", label: "`cProfile` with SnakeViz, or sampling profilers like `py-spy` and `memray`." },
       { id: "d", label: "Running the script inside a browser console." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "c"
   },
   {
     id: "pydev_grow_02",
     section: "growth",
     prompt: "What is the primary trade-off between Python's `threading` module and `asyncio` for I/O-bound network services?",
     options: [
-      { id: "a", label: "`asyncio` uses single-threaded cooperative multitasking with minimal memory overhead per connection, whereas `threading` uses OS threads with higher context-switching overhead." },
-      { id: "b", label: "`threading` is 100x faster than C++ while `asyncio` only works on Linux." },
+      { id: "a", label: "`threading` is 100x faster than C++ while `asyncio` only works on Linux." },
+      { id: "b", label: "`asyncio` uses single-threaded cooperative multitasking with minimal memory overhead per connection, whereas `threading` uses OS threads with higher context-switching overhead." },
       { id: "c", label: "`asyncio` executes Python code directly on the GPU." },
       { id: "d", label: "`threading` does not support network connections." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "b"
   },
   {
     id: "pydev_grow_03",
     section: "growth",
     prompt: "How does the `tenacity` library in Python implement resilient network retry strategies for unreliable third-party REST APIs?",
     options: [
-      { id: "a", label: "Provides declarative retry decorators with configurable exponential backoff, maximum attempts, random jitter, and retry-on-specific-exception filtering." },
-      { id: "b", label: "Spawns 50 duplicate requests simultaneously to overwhelm the remote server." },
-      { id: "c", label: "Automatically fixes invalid API request payloads." },
-      { id: "d", label: "Bypasses HTTP status 500 errors by forging 200 OK responses." }
+      { id: "a", label: "Spawns 50 duplicate requests simultaneously to overwhelm the remote server." },
+      { id: "b", label: "Automatically fixes invalid API request payloads." },
+      { id: "c", label: "Bypasses HTTP status 500 errors by forging 200 OK responses." },
+      { id: "d", label: "Provides declarative retry decorators with configurable exponential backoff, maximum attempts, random jitter, and retry-on-specific-exception filtering." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "d"
   },
   {
     id: "pydev_grow_04",
@@ -54,24 +54,24 @@ export const PYTHON_DEV_GROWTH_QUESTIONS: CertQuestion[] = [
     section: "growth",
     prompt: "In Python CI/CD workflows, what is the purpose of running `mypy --strict` alongside formatters like `ruff`?",
     options: [
-      { id: "a", label: "Enforces strict static type safety across the entire codebase to catch type bugs, None-pointer dereferences, and missing return values before deployment." },
-      { id: "b", label: "Compiles Python code into an installable `.exe` file." },
+      { id: "a", label: "Compiles Python code into an installable `.exe` file." },
+      { id: "b", label: "Enforces strict static type safety across the entire codebase to catch type bugs, None-pointer dereferences, and missing return values before deployment." },
       { id: "c", label: "Tests network firewall throughput." },
       { id: "d", label: "Checks if the code has more than 1,000 lines." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "b"
   },
   {
     id: "pydev_grow_06",
     section: "growth",
     prompt: "How should database connection pooling be managed in async Python applications (e.g. `asyncpg` or `SQLAlchemy[asyncio]`)?",
     options: [
-      { id: "a", label: "Initialize a shared connection pool during application startup (lifespan) and acquire/release connections per request, avoiding expensive per-query TCP handshakes." },
-      { id: "b", label: "Open a brand new database connection on every single SQL query and never close it." },
-      { id: "c", label: "Store all database records in a global Python dictionary in RAM." },
+      { id: "a", label: "Open a brand new database connection on every single SQL query and never close it." },
+      { id: "b", label: "Store all database records in a global Python dictionary in RAM." },
+      { id: "c", label: "Initialize a shared connection pool during application startup (lifespan) and acquire/release connections per request, avoiding expensive per-query TCP handshakes." },
       { id: "d", label: "Share a single raw socket without locking across 50 concurrent async tasks." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "c"
   },
   {
     id: "pydev_grow_07",
@@ -90,12 +90,12 @@ export const PYTHON_DEV_GROWTH_QUESTIONS: CertQuestion[] = [
     section: "growth",
     prompt: "When distributing a reusable Python library or internal package across an organization, what modern standard configuration file is used?",
     options: [
-      { id: "a", label: "`pyproject.toml` complying with PEP 517 / PEP 621 standards for build tools like Hatch, Flit, or Poetry." },
-      { id: "b", label: "A Windows batch file named `install.bat`." },
-      { id: "c", label: "Zipping the `.git` folder and emailing it to teammates." },
-      { id: "d", label: "A legacy `Makefile` with hardcoded local paths." }
+      { id: "a", label: "A Windows batch file named `install.bat`." },
+      { id: "b", label: "Zipping the `.git` folder and emailing it to teammates." },
+      { id: "c", label: "A legacy `Makefile` with hardcoded local paths." },
+      { id: "d", label: "`pyproject.toml` complying with PEP 517 / PEP 621 standards for build tools like Hatch, Flit, or Poetry." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "d"
   },
   {
     id: "pydev_grow_09",
@@ -114,11 +114,11 @@ export const PYTHON_DEV_GROWTH_QUESTIONS: CertQuestion[] = [
     section: "growth",
     prompt: "How does property-based testing with the `hypothesis` library in Python discover elusive edge cases in business logic?",
     options: [
-      { id: "a", label: "Generates hundreds of randomized, edge-case inputs (e.g. empty strings, extreme Unicode, huge numbers, NaN) and asserts invariant properties hold true." },
-      { id: "b", label: "Rewrites the Python interpreter in C." },
-      { id: "c", label: "Only tests with a single hardcoded happy-path string." },
+      { id: "a", label: "Rewrites the Python interpreter in C." },
+      { id: "b", label: "Only tests with a single hardcoded happy-path string." },
+      { id: "c", label: "Generates hundreds of randomized, edge-case inputs (e.g. empty strings, extreme Unicode, huge numbers, NaN) and asserts invariant properties hold true." },
       { id: "d", label: "Checks if the Python license is valid." }
     ],
-    correctOptionId: "a"
+    correctOptionId: "c"
   }
 ];
