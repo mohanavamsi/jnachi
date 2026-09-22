@@ -1188,16 +1188,13 @@ export default function CertificationClient({
                   const tierSlug = getSlugByTier(tierKey);
 
                   return (
-                    <div
+                    <Link
                       key={tierKey}
-                      onClick={() => {
-                        setSelectedTier(tierKey);
-                        if (effectiveEmail) handleCheckStatus(effectiveEmail, tierKey);
-                      }}
-                      className={`p-5 rounded-2xl text-left border-2 transition-all relative flex flex-col justify-between space-y-3 cursor-pointer ${
+                      href={`/certification/${tierSlug}`}
+                      className={`p-5 rounded-2xl text-left border-2 transition-all relative flex flex-col justify-between space-y-3 cursor-pointer group hover:shadow-md ${
                         isSelected
                           ? 'border-indigo-600 bg-indigo-50/50 shadow-md ring-2 ring-indigo-500/20'
-                          : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-xs'
+                          : 'border-slate-200 bg-white hover:border-indigo-300'
                       }`}
                     >
                       <div className="space-y-2">
@@ -1219,22 +1216,18 @@ export default function CertificationClient({
                             <span className="text-xs text-slate-400 font-medium">80% Standard</span>
                           )}
                         </div>
-                        <h3 className="font-extrabold text-slate-900 text-lg leading-snug">{tier.title}</h3>
+                        <h3 className="font-extrabold text-slate-900 text-lg leading-snug group-hover:text-indigo-600 transition-colors">{tier.title}</h3>
                         <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{tier.shortDescription}</p>
                       </div>
 
                       <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
                         <span>40 Proctored Qs</span>
-                        <Link
-                          href={`/certification/${tierSlug}`}
-                          onClick={(e) => e.stopPropagation()}
-                          className="font-semibold text-indigo-600 hover:text-indigo-800 hover:underline flex items-center gap-1"
-                        >
-                          <span>Dedicated Page</span>
-                          <ArrowRight className="w-3 h-3" />
-                        </Link>
+                        <span className="font-semibold text-indigo-600 group-hover:text-indigo-800 flex items-center gap-1">
+                          <span>View Exam</span>
+                          <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                        </span>
                       </div>
-                    </div>
+                    </Link>
                   );
                 })}
               </div>

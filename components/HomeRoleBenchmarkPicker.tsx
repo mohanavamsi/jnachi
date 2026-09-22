@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Code2, Sparkles, TrendingUp, Users, MessageSquare, Terminal, Shield, Briefcase, Zap, CheckCircle2 } from 'lucide-react';
+import { getSlugByTier, CertTier } from '@/lib/certTypes';
 
 interface RoleTrackInfo {
   id: string;
@@ -250,7 +251,7 @@ export function HomeRoleBenchmarkPicker() {
                 <span>Start {activeRole.name.split(' ')[0]} Assessment →</span>
               </Link>
               <Link
-                href="/certification"
+                href={`/certification/${getSlugByTier(activeRole.certSlug as CertTier)}`}
                 className="w-full inline-flex items-center justify-center text-xs text-slate-400 hover:text-white transition-colors"
               >
                 Or view official {activeRole.name.split(' ')[0]} Certification syllabus →

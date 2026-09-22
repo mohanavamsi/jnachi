@@ -14,7 +14,7 @@ import {
   Check,
   Terminal,
 } from 'lucide-react';
-import { CERT_TIERS, CORE_TIER_ORDER, ROLE_TIER_ORDER, PYTHON_TIER_ORDER } from '@/lib/certTypes';
+import { CERT_TIERS, CORE_TIER_ORDER, ROLE_TIER_ORDER, PYTHON_TIER_ORDER, getSlugByTier } from '@/lib/certTypes';
 import { LaunchPromoModal } from '@/components/LaunchPromoModal';
 import { HomeHeroInteractiveWidget } from '@/components/HomeHeroInteractiveWidget';
 import { HomeRoleBenchmarkPicker } from '@/components/HomeRoleBenchmarkPicker';
@@ -224,10 +224,11 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {CORE_TIER_ORDER.map((tierKey) => {
               const tier = CERT_TIERS[tierKey];
+              const tierSlug = getSlugByTier(tierKey);
               return (
                 <Link
                   key={tierKey}
-                  href="/certification"
+                  href={`/certification/${tierSlug}`}
                   className="p-6 rounded-3xl bg-slate-900/90 border border-white/10 hover:border-indigo-400 hover:bg-slate-900 transition-all flex flex-col justify-between space-y-4 group shadow-lg hover:shadow-indigo-500/10 hover:-translate-y-1"
                 >
                   <div className="space-y-3">
