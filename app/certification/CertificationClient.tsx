@@ -60,6 +60,7 @@ import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, PYT
 import { LESSONS, CategoryKey } from '@/lib/lessonsData';
 import BeginnerCertificateModal from '@/components/BeginnerCertificateModal';
 import ExamSyllabusModal from '@/components/ExamSyllabusModal';
+import ActiveTierCurriculumExplorer from '@/components/ActiveTierCurriculumExplorer';
 import RazorpayModal from '@/components/RazorpayModal';
 import { useAuth } from '@/components/AuthProvider';
 import {
@@ -1110,71 +1111,11 @@ export default function CertificationClient() {
           </div>
         </div>
 
-        {/* ACTIVE TIER SPOTLIGHT & CURRICULUM SYLLABUS */}
-        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-6 shadow-xs">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6">
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2">
-                <span
-                  className="text-xs font-extrabold uppercase px-2.5 py-0.5 rounded-full"
-                  style={{
-                    backgroundColor: activeTierConfig.colorScheme.bgBadge,
-                    color: activeTierConfig.colorScheme.textBadge,
-                  }}
-                >
-                  Tier 0{activeTierConfig.levelNumber} Exam
-                </span>
-                <span className="text-xs text-slate-500 font-medium">• 80% Passing Standard</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">{activeTierConfig.title}</h2>
-              <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">{activeTierConfig.fullDescription}</p>
-            </div>
-
-            <div className="flex items-center gap-2 shrink-0">
-              <div className="text-center p-3 bg-slate-50 border border-slate-200 rounded-2xl min-w-[90px]">
-                <div className="text-xl font-black text-slate-900">40</div>
-                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Questions</div>
-              </div>
-              <div className="text-center p-3 bg-slate-50 border border-slate-200 rounded-2xl min-w-[90px]">
-                <div className="text-xl font-black text-amber-600">45m</div>
-                <div className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Duration</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Key Topics Covered */}
-          <div className="space-y-3">
-            <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-              Core Competencies Assessed in {activeTierConfig.title}
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              {activeTierConfig.keyTopics.map((topic, i) => (
-                <div
-                  key={i}
-                  className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center gap-2 text-xs font-semibold text-slate-800"
-                >
-                  <CheckCircle2 className="w-4 h-4 text-indigo-600 shrink-0" />
-                  <span>{topic}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Syllabus & Study Guide CTA */}
-          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-100">
-            <div className="text-xs text-slate-500">
-              Want to review the 4-track curriculum breakdown, assessed competencies, and preparation checklist?
-            </div>
-            <button
-              type="button"
-              onClick={() => setIsSyllabusModalOpen(true)}
-              className="w-full sm:w-auto px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold rounded-xl border border-indigo-200 transition-colors flex items-center justify-center gap-2 shrink-0 shadow-2xs"
-            >
-              <BookOpen className="w-4 h-4" />
-              View Exam Syllabus & Study Guide
-            </button>
-          </div>
-        </div>
+        {/* ACTIVE TIER SPOTLIGHT & INTERACTIVE CURRICULUM EXPLORER */}
+        <ActiveTierCurriculumExplorer
+          tier={selectedTier}
+          onOpenFullSyllabusModal={() => setIsSyllabusModalOpen(true)}
+        />
 
         {/* CANDIDATE PORTAL SIGN-UP & VERIFICATION GATE */}
         <div className="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 sm:p-10 space-y-8">
