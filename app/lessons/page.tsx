@@ -13,7 +13,10 @@ import {
   Zap, 
   TrendingUp, 
   Compass,
-  Check
+  Check,
+  Cpu,
+  Code2,
+  Users2
 } from 'lucide-react';
 import { LESSONS, CATEGORY_DETAILS, CategoryKey, Lesson } from '@/lib/lessonsData';
 import { getLearningProgress, LearningProgressMap } from '@/lib/learningProgress';
@@ -51,6 +54,9 @@ export default function LessonsHubPage() {
     automation: Zap,
     privacy: ShieldCheck,
     growth: TrendingUp,
+    integration: Cpu,
+    python: Code2,
+    role: Users2,
   };
 
   return (
@@ -62,7 +68,7 @@ export default function LessonsHubPage() {
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-semibold mb-4">
                 <BookOpen className="w-3.5 h-3.5" />
-                <span>17 Practical Micro-Lessons</span>
+                <span>{LESSONS.length} Practical Micro-Lessons</span>
               </div>
               <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-3">
                 The Jnachi Learning Hub
@@ -207,17 +213,26 @@ export default function LessonsHubPage() {
                   className="group block bg-white rounded-2xl p-6 border border-slate-200 hover:border-indigo-300 hover:shadow-md transition-all relative overflow-hidden"
                 >
                   <div className="flex items-start justify-between gap-4 mb-3">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-xs font-bold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-md">
                         #{lesson.lessonNumber.toString().padStart(2, '0')}
                       </span>
                       <span className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-md ${CATEGORY_DETAILS[lesson.categoryKey].bg} ${CATEGORY_DETAILS[lesson.categoryKey].color}`}>
                         <Icon className="w-3 h-3" />
-                        <span>{lesson.category}</span>
+                        <span>{lesson.category.split(' ')[0]}</span>
                       </span>
+                      {lesson.difficulty && (
+                        <span className={`text-xs font-semibold px-2 py-0.5 rounded-md ${
+                          lesson.difficulty === 'Beginner' ? 'bg-green-50 text-green-700 border border-green-200' :
+                          lesson.difficulty === 'Intermediate' ? 'bg-amber-50 text-amber-700 border border-amber-200' :
+                          'bg-red-50 text-red-700 border border-red-200'
+                        }`}>
+                          {lesson.difficulty}
+                        </span>
+                      )}
                     </div>
 
-                    <div className="flex items-center gap-1.5 text-xs text-slate-400">
+                    <div className="flex items-center gap-1.5 text-xs text-slate-400 flex-shrink-0">
                       <Clock className="w-3.5 h-3.5" />
                       <span>{lesson.readTime}</span>
                     </div>
@@ -235,11 +250,11 @@ export default function LessonsHubPage() {
                     {isCompleted ? (
                       <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
                         <Check className="w-3.5 h-3.5" />
-                        <span>{hasScore ? `Quiz: ${progress[lesson.id].quizScore}/3` : 'Activated'}</span>
+                        <span>{hasScore ? `Quiz: ${progress[lesson.id].quizScore}/${lesson.quiz.length}` : 'Activated'}</span>
                       </div>
                     ) : (
                       <span className="text-xs font-medium text-slate-400 group-hover:text-slate-600">
-                        3-Question Check included
+                        {lesson.quiz.length}-Question Check included
                       </span>
                     )}
 

@@ -18,7 +18,10 @@ import {
   TrendingUp, 
   BookOpen,
   RotateCcw,
-  Copy
+  Copy,
+  Cpu,
+  Code2,
+  Users2
 } from 'lucide-react';
 import { getLessonBySlug, getAdjacentLessons, CATEGORY_DETAILS, CategoryKey } from '@/lib/lessonsData';
 import { getLearningProgress, saveLessonProgress, toggleLessonActivated } from '@/lib/learningProgress';
@@ -56,6 +59,9 @@ export default function LessonDetailPage({ params }: PageProps) {
     automation: Zap,
     privacy: ShieldCheck,
     growth: TrendingUp,
+    integration: Cpu,
+    python: Code2,
+    role: Users2,
   };
 
   const Icon = categoryIcons[lesson.categoryKey];
@@ -147,6 +153,16 @@ export default function LessonDetailPage({ params }: PageProps) {
               <span>{lesson.readTime}</span>
             </span>
 
+            {lesson.difficulty && (
+              <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${
+                lesson.difficulty === 'Beginner' ? 'bg-green-50 text-green-700 border-green-200' :
+                lesson.difficulty === 'Intermediate' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                'bg-red-50 text-red-700 border-red-200'
+              }`}>
+                {lesson.difficulty}
+              </span>
+            )}
+
             {isActivated && (
               <span className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
                 <Check className="w-3 h-3" />
@@ -159,10 +175,39 @@ export default function LessonDetailPage({ params }: PageProps) {
             {lesson.title}
           </h1>
 
-          <p className="text-lg text-slate-600 leading-relaxed">
+          <p className="text-lg text-slate-600 leading-relaxed mb-4">
             {lesson.description}
           </p>
+
+          {lesson.tools && lesson.tools.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-slate-100">
+              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mr-1">Works with:</span>
+              {lesson.tools.map(tool => (
+                <span key={tool} className="text-xs font-medium bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">
+                  {tool}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
+
+        {/* Key Takeaways Card */}
+        {lesson.keyTakeaways && lesson.keyTakeaways.length > 0 && (
+          <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-6 mb-8">
+            <h2 className="text-xs font-bold uppercase tracking-wider text-indigo-700 mb-3 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Key Takeaways</span>
+            </h2>
+            <ul className="space-y-2">
+              {lesson.keyTakeaways.map((takeaway, i) => (
+                <li key={i} className="flex items-start gap-2.5 text-sm text-indigo-900">
+                  <Check className="w-4 h-4 text-indigo-500 flex-shrink-0 mt-0.5" />
+                  <span className="leading-relaxed">{takeaway}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {/* The Problem & Context Callout */}
         <div className="bg-amber-50/70 border border-amber-200/80 rounded-2xl p-6 mb-8 text-slate-800">
@@ -172,6 +217,7 @@ export default function LessonDetailPage({ params }: PageProps) {
           </h2>
           <p className="text-slate-700 leading-relaxed text-base">
             {lesson.body.intro}
+
           </p>
         </div>
 
@@ -243,7 +289,7 @@ export default function LessonDetailPage({ params }: PageProps) {
                 <span>Comprehension Check</span>
               </div>
               <h3 className="text-2xl font-bold text-slate-900">
-                Test Your Instincts (3 Questions)
+                Test Your Instincts ({lesson.quiz.length} Questions)
               </h3>
             </div>
 
@@ -339,8 +385,8 @@ export default function LessonDetailPage({ params }: PageProps) {
               <CheckCircle2 className="w-8 h-8 text-indigo-600 mx-auto mb-2" />
               <h4 className="text-lg font-bold text-slate-900 mb-1">
                 {correctCount === lesson.quiz.length
-                  ? 'All 3 Correct — Concept Mastered!'
-                  : `Knowledge Check Complete (${correctCount} of 3 correct)`}
+                  ? 'All Correct — Concept Mastered!'
+                  : `Knowledge Check Complete (${correctCount} of ${lesson.quiz.length} correct)`}
               </h4>
               <p className="text-sm text-slate-600 mb-4 max-w-md mx-auto">
                 Your progress has been recorded. Apply this technique in your next working prompt.

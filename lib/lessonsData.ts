@@ -2,9 +2,14 @@ export type LessonCategory =
   | 'AI Literacy & Prompting'
   | 'Workflow Automation'
   | 'Data Privacy & Ethics'
-  | 'Growth & Problem Solving';
+  | 'Growth & Problem Solving'
+  | 'Enterprise Integration'
+  | 'Python Development'
+  | 'Role-Specific AI';
 
-export type CategoryKey = 'literacy' | 'automation' | 'privacy' | 'growth';
+export type CategoryKey = 'literacy' | 'automation' | 'privacy' | 'growth' | 'integration' | 'python' | 'role';
+
+export type LessonDifficulty = 'Beginner' | 'Intermediate' | 'Advanced';
 
 export interface QuizQuestion {
   question: string;
@@ -22,6 +27,13 @@ export interface Lesson {
   categoryKey: CategoryKey;
   readTime: string;
   lessonNumber: number;
+  difficulty?: LessonDifficulty;
+  keyTakeaways?: string[];
+  tools?: string[];
+  relatedCertifications?: string[];
+  estimatedPracticeTime?: string;
+  prerequisites?: string[];
+  updatedAt?: string;
   body: {
     intro: string;
     core: string;
@@ -55,6 +67,24 @@ export const CATEGORY_DETAILS: Record<CategoryKey, { title: LessonCategory; desc
     color: 'text-purple-600',
     bg: 'bg-purple-50 border-purple-200',
   },
+  integration: {
+    title: 'Enterprise Integration',
+    description: 'Master iPaaS platforms — MuleSoft, Boomi, IBM MQ, IBM ACE, and WebMethods — to design resilient enterprise integration architectures.',
+    color: 'text-orange-600',
+    bg: 'bg-orange-50 border-orange-200',
+  },
+  python: {
+    title: 'Python Development',
+    description: 'Build AI-powered applications, REST APIs, RAG pipelines, and agentic workflows using Python.',
+    color: 'text-yellow-700',
+    bg: 'bg-yellow-50 border-yellow-200',
+  },
+  role: {
+    title: 'Role-Specific AI',
+    description: 'Targeted AI productivity skills for Sales, Marketing, HR, Support, Managers, and Developers.',
+    color: 'text-pink-600',
+    bg: 'bg-pink-50 border-pink-200',
+  },
 };
 
 export const LESSONS: Lesson[] = [
@@ -70,6 +100,18 @@ export const LESSONS: Lesson[] = [
     category: 'AI Literacy & Prompting',
     categoryKey: 'literacy',
     readTime: '5 min read',
+    difficulty: 'Beginner',
+    keyTakeaways: [
+      'Role anchors the model\'s perspective and professional vocabulary',
+      'Context supplies raw material so the model does not guess',
+      'Deliverable names the exact artifact — not just a vague task',
+      'Constraints eliminate generic filler and narrow the probability space',
+      'All four elements together produce repeatable, predictable outputs',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini', 'Copilot', 'Mistral'],
+    relatedCertifications: ['beginner', 'practitioner'],
+    estimatedPracticeTime: '8 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'When prompts produce generic or unhelpful responses, the issue is almost never the model’s vocabulary—it is missing boundaries. Without explicit instructions on perspective and limits, an LLM defaults to the average response across its entire dataset. Structuring your request around four explicit components transforms unpredictable guessing into a repeatable tool.',
       core: `Every dependable prompt contains four core elements:
@@ -141,6 +183,19 @@ When you assemble these four blocks, the model no longer has to guess what you m
     category: 'AI Literacy & Prompting',
     categoryKey: 'literacy',
     readTime: '5 min read',
+    difficulty: 'Beginner',
+    prerequisites: ['anatomy-of-a-great-prompt'],
+    keyTakeaways: [
+      'Your first prompt is an anchor, not a final answer',
+      'Phase 1 generates a baseline; Phase 2 critiques; Phase 3 polishes format',
+      'Point to specific sections when requesting adjustments — never rewrite the full prompt',
+      'Start a fresh thread when prior context contradicts new instructions',
+      'Iteration is faster than crafting the perfect single-turn prompt upfront',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini'],
+    relatedCertifications: ['beginner', 'practitioner'],
+    estimatedPracticeTime: '10 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'Expecting an AI model to produce a publication-ready output on the very first prompt is the equivalent of expecting a human direct report to nail a complex proposal without a preliminary review. When you abandon single-turn expectations, you stop spending twenty minutes crafting an over-engineered first prompt. Real speed comes from fast initial framing followed by deliberate conversational calibration.',
       core: `Single-shot prompting fails because writing all specifications up front requires anticipating every misinterpretation. A multi-turn workflow moves in three distinct phases:
@@ -205,6 +260,19 @@ Iterating in the existing thread preserves context while allowing you to guide t
     category: 'AI Literacy & Prompting',
     categoryKey: 'literacy',
     readTime: '6 min read',
+    difficulty: 'Intermediate',
+    prerequisites: ['from-one-shot-to-iteration'],
+    keyTakeaways: [
+      'LLMs generate statistically probable text, not verified facts',
+      'Citations, URLs, statistics, and legal references are highest-risk for hallucination',
+      'Force source-grounding by pasting reference text directly into the prompt',
+      'Use the "Quote It" rule: ask the model to cite the exact sentence justifying its claim',
+      'Verify edges independently — three numbers in a paragraph means three individual checks',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini', 'Perplexity AI'],
+    relatedCertifications: ['beginner', 'practitioner', 'builder'],
+    estimatedPracticeTime: '12 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'AI models do not lie maliciously; they generate statistically probable sequences of words. When a fact is missing from their training or context window, the model bridges the gap with language that looks right, often in the same authoritative tone as factual statements. Treating AI text as an unverified draft rather than an authoritative source is the foundational safety habit of applied AI work.',
       core: `Hallucinations follow distinct patterns. They most commonly occur when models are asked to produce:
@@ -270,6 +338,19 @@ To systematically catch fabrications before they circulate:
     category: 'AI Literacy & Prompting',
     categoryKey: 'literacy',
     readTime: '5 min read',
+    difficulty: 'Beginner',
+    prerequisites: ['from-one-shot-to-iteration'],
+    keyTakeaways: [
+      'Vague personas produce buzzwords; strong personas define function, worldview, and priorities',
+      'Specify what the persona cares about most (the metric or goal)',
+      'Include what the persona actively looks for — skepticism and bias',
+      'Define the vocabulary level and how practitioners at that level communicate',
+      'An adversarial persona stress-tests proposals better than any review checklist',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini', 'Copilot'],
+    relatedCertifications: ['beginner', 'practitioner', 'sales', 'marketers'],
+    estimatedPracticeTime: '8 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'When you ask an AI model to "review this proposal," you will usually get surface-level grammar checks and polite encouragement. This happens because the model has no standard for critique. Assigning a sharp, defined persona gives the model an operational worldview, a distinct lens through which to evaluate information, and the vocabulary of a specialist.',
       core: `A weak persona is vague: *"Act as an expert marketer."* This produces buzzwords. A strong persona defines **function, worldview, and priorities**:
@@ -332,6 +413,19 @@ The second prompt suppresses generic cheerleading. It primes the model’s atten
     category: 'AI Literacy & Prompting',
     categoryKey: 'literacy',
     readTime: '5 min read',
+    difficulty: 'Beginner',
+    prerequisites: ['anatomy-of-a-great-prompt'],
+    keyTakeaways: [
+      'Prescribe the exact output syntax, not just "make it organized"',
+      'Define markdown table columns explicitly to get consistent structure',
+      'One-shot schema examples constrain the model to match your pattern',
+      'Use negative constraints like "no backticks" to get clean parseable output',
+      'Machine-readable formats (JSON, CSV) enable direct integration into tools',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini', 'Copilot'],
+    relatedCertifications: ['beginner', 'practitioner', 'builder'],
+    estimatedPracticeTime: '10 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'Getting good information from an AI model is only half the battle; if it arrives as six meandering paragraphs, you still have to spend ten minutes extracting and reformatting the key takeaways. AI models are native processors of structured syntax. When you explicitly dictate the target output schema, you get clean, copy-paste-ready artifacts immediately.',
       core: `To get exact structural compliance, stop saying "make it organized" and instead prescribe the syntax:
@@ -405,6 +499,18 @@ Specifying the structure also improves reasoning quality: when a model is constr
     category: 'Workflow Automation',
     categoryKey: 'automation',
     readTime: '5 min read',
+    difficulty: 'Beginner',
+    keyTakeaways: [
+      'Automate tasks with structured input, predictable transformation, and low consequence for an imperfect first pass',
+      'The "Human Copy-Paste Audit" reveals prime automation candidates in your own calendar',
+      'Start with micro-tasks (15–30 min weekly) not complex milestones',
+      'An 85% correct first draft still saves substantial manual effort',
+      'Automation thrives on consistent rules — not high-nuance judgment calls',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini', 'Zapier', 'Make.com'],
+    relatedCertifications: ['beginner', 'practitioner', 'automation'],
+    estimatedPracticeTime: '8 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'Most people stall on workflow automation because they attempt to automate large, complex milestones like "marketing strategy" or "quarterly planning." High-impact automation actually starts with unglamorous, repetitive micro-tasks that consume 15–30 minutes several times a week. Pinpointing where predictable text transformation happens in your schedule is the fastest path to sustainable time reclamation.',
       core: `An automation-ready task meets three specific criteria:
@@ -467,6 +573,19 @@ Review your calendar and sent items from the past two weeks. Look for instances 
     category: 'Workflow Automation',
     categoryKey: 'automation',
     readTime: '6 min read',
+    difficulty: 'Intermediate',
+    prerequisites: ['finding-your-first-automation-win'],
+    keyTakeaways: [
+      'Templates use variable slots so instructions stay fixed while raw material changes',
+      'Three components: System Objective, Variable Slots, and Execution Trigger',
+      'Wrap dynamic inputs in delimiters (triple quotes) to prevent prompt injection',
+      'Store templates in tools with near-zero retrieval friction (text expanders, pinned notes)',
+      'A reusable template turns a 20-min prompt crafting session into a 30-second paste-and-go',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Notion', 'Raycast', 'TextExpander'],
+    relatedCertifications: ['beginner', 'practitioner'],
+    estimatedPracticeTime: '12 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'Typing fresh, off-the-cuff prompts for recurring tasks is like writing a fresh Python script every time you want to calculate a monthly budget. If you find yourself typing instructions like "summarize this clearly, don\'t use buzzwords, and make bullet points" more than once a week, you are wasting operational momentum. A prompt library turns ad-hoc chat sessions into standardized, repeatable internal tooling.',
       core: `A durable prompt template uses **variables** (placeholders inside brackets like \`[INPUT_DATA]\`) so the instructions stay fixed while the raw material changes.
@@ -543,6 +662,19 @@ Store these templates where you already work—in a pinned Notion page, Apple No
     category: 'Workflow Automation',
     categoryKey: 'automation',
     readTime: '6 min read',
+    difficulty: 'Intermediate',
+    prerequisites: ['building-a-prompt-library'],
+    keyTakeaways: [
+      'Each step in a chain has one job: extract, evaluate, or format',
+      'Human checkpoints between steps catch errors before they compound',
+      'Step 1 should always be pure extraction — never suggest solutions yet',
+      'Passing intermediate output as input dramatically improves reasoning depth',
+      'Chaining enables quality at each milestone rather than hoping one mega-prompt succeeds',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini', 'Zapier'],
+    relatedCertifications: ['practitioner', 'builder'],
+    estimatedPracticeTime: '15 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'When you ask an AI model to take raw customer interview notes, synthesize the findings, draft a roadmap proposal, and format an executive update all in a single prompt, the result is usually shallow. The model attempts to balance too many cognitive objectives simultaneously, leading to diluted reasoning. Chaining solves this by breaking the project into sequential, bite-sized stages where the output of one step becomes the structured input for the next.',
       core: `In prompt chaining, you manage quality at the checkpoints. Each step has one job:
@@ -610,6 +742,19 @@ By checking the work between steps, you catch misinterpretations early before th
     category: 'Workflow Automation',
     categoryKey: 'automation',
     readTime: '5 min read',
+    difficulty: 'Beginner',
+    prerequisites: ['finding-your-first-automation-win'],
+    keyTakeaways: [
+      'AI generates working clay; you are the editor, not the typist',
+      'Provide messy bullet dumps — AI structures them, you refine the result',
+      'AI responsibility: rapid structure and generation; Your responsibility: judgment and verification',
+      'Blank page resistance drops to near-zero when you have a rough draft to critique',
+      'Never copy-paste AI draft directly — always step into the editor chair',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini', 'Notion AI'],
+    relatedCertifications: ['beginner', 'practitioner'],
+    estimatedPracticeTime: '10 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'The psychological friction of starting from a blank page is where projects lose the most time. Staring at an empty white screen invites hesitation, procrastination, and premature editing. When you shift your mental model of AI from an "oracle that gives final answers" to a "first draft machine that generates raw clay," your workflow accelerates dramatically.',
       core: `A first draft does not need to be perfect; it simply needs to exist so you have something tangible to critique, reshape, and refine.
@@ -675,6 +820,18 @@ By checking the work between steps, you catch misinterpretations early before th
     category: 'Data Privacy & Ethics',
     categoryKey: 'privacy',
     readTime: '5 min read',
+    difficulty: 'Beginner',
+    keyTakeaways: [
+      'Session context is transient working memory — it does not persist after the conversation ends',
+      'Consumer-tier prompts may be logged and used to train future model versions',
+      'Enterprise/API tiers process data in isolated environments with no training rights granted',
+      'Check the Data Controls toggle in settings to see if your account is opted into model training',
+      'A Data Processing Agreement (DPA) is the legal guarantee of enterprise data isolation',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini', 'Microsoft Copilot'],
+    relatedCertifications: ['beginner', 'practitioner'],
+    estimatedPracticeTime: '8 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'When you paste text into an AI chat box, that information is not broadcast to the public immediately, but neither is it a private vault by default. Confusion between what a model holds in memory during your conversation versus what it absorbs into future model updates causes both unnecessary paranoia and reckless data leakage. Knowing the clear technical boundary between session context and training data gives you complete control over your inputs.',
       core: `Every time you interact with an AI model, your data travels along two distinct paths:
@@ -738,6 +895,18 @@ By checking the work between steps, you catch misinterpretations early before th
     category: 'Data Privacy & Ethics',
     categoryKey: 'privacy',
     readTime: '5 min read',
+    difficulty: 'Beginner',
+    keyTakeaways: [
+      'A personal red line is a categorical rule with zero exceptions',
+      'The 4 red lines: PII, credentials/keys, unreleased financials, and core IP',
+      'Anonymization lets you use AI for sensitive tasks without exposing actual data',
+      'Replace names and IDs with generic placeholders like [Customer A] before prompting',
+      'Pre-deciding your boundaries turns data security into an automatic reflex, not a judgment call',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini'],
+    relatedCertifications: ['beginner', 'practitioner'],
+    estimatedPracticeTime: '8 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'When you are in the middle of a busy workday trying to finish a deck or debug a problem, you do not have time to conduct a 10-point legal analysis before every prompt. Without pre-decided personal boundaries, convenience wins and sensitive data eventually slips through. Setting clear, simple red lines turns data security from an anxious guessing game into an automatic reflex.',
       core: `A personal red line is a categorical rule: if an input touches this category, it never enters an unverified or consumer AI model—no exceptions.
@@ -802,6 +971,19 @@ You can often still use AI for these tasks by **abstracting the entity**:
     category: 'Data Privacy & Ethics',
     categoryKey: 'privacy',
     readTime: '6 min read',
+    difficulty: 'Intermediate',
+    prerequisites: ['what-happens-to-the-data-you-paste'],
+    keyTakeaways: [
+      'Zero Data Retention (ZDR) means prompts are processed in RAM and never written to disk',
+      'No-Training Default legally bars the vendor from using your data to improve models',
+      'A DPA is a binding contract making the vendor a processor, not an owner, of your data',
+      'SOC 2 Type II confirms third-party auditors have verified internal access controls',
+      'TLS (in-transit) + AES-256 (at-rest) encryption together form the full data protection stack',
+    ],
+    tools: ['ChatGPT Enterprise', 'Claude Teams', 'Microsoft Copilot', 'Google Workspace AI'],
+    relatedCertifications: ['practitioner', 'builder'],
+    estimatedPracticeTime: '10 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'Enterprise software sales pages are full of security acronyms—ZDR, SOC 2, HIPAA compliance, encryption at rest, and DPA agreements. If you don\'t know what these terms actually guarantee, it is easy to assume you are protected when you aren\'t, or conversely, to block safe AI tools out of fear. Understanding zero-data-retention and enterprise tiers allows you to evaluate software based on real technical controls.',
       core: `Here is what enterprise AI privacy settings actually control under the hood:
@@ -868,6 +1050,18 @@ The provider legally and architecturally guarantees that your inputs, outputs, a
     category: 'Data Privacy & Ethics',
     categoryKey: 'privacy',
     readTime: '5 min read',
+    difficulty: 'Beginner',
+    keyTakeaways: [
+      'Only use tools that have passed your organization\'s vendor security review',
+      'Client NDA agreements can make unauthorized AI tool use a breach of contract',
+      'AI-generated content cannot always be copyrighted — humans must own final work products',
+      '"Shadow AI" use in personal accounts bypasses corporate compliance and creates career risk',
+      'Proactively asking IT for approved tools frames you as a responsible leader, not a risk',
+    ],
+    tools: ['ChatGPT Enterprise', 'Microsoft Copilot', 'Google Workspace AI'],
+    relatedCertifications: ['beginner', 'practitioner'],
+    estimatedPracticeTime: '10 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'Many professionals use AI in secret because their organization either has a vague, restrictive policy or no clear guidelines at all. This "shadow AI" habit creates severe career and legal risks—not because using AI is inherently bad, but because unauthorized tools bypass corporate compliance. Knowing how corporate governance actually evaluates AI use allows you to work openly, safely, and with organizational support.',
       core: `Company AI policies are built around three core legal and operational pillars:
@@ -936,8 +1130,20 @@ When in doubt, initiate transparency: ask your IT or legal team, *"What is our a
     category: 'Growth & Problem Solving',
     categoryKey: 'growth',
     readTime: '6 min read',
+    difficulty: 'Intermediate',
+    keyTakeaways: [
+      'AI\'s greatest capability is cognitive sparring, not just task execution',
+      'Premortem prompts overcome optimism bias by assuming failure upfront',
+      'Socratic prompts (ask me diagnostic questions) surface implicit assumptions before you commit',
+      'Alternative perspective simulation reveals stakeholder objections before the meeting',
+      'Steel-manning opposing views ensures your position is truly defensible',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini'],
+    relatedCertifications: ['practitioner', 'builder', 'strategist'],
+    estimatedPracticeTime: '15 min practice',
+    updatedAt: '2026-09-01',
     body: {
-      intro: 'Most people treat AI purely as a clerical task-doer: "Summarize this," "Draft this email," or "Fix this code." While this saves time on surface execution, it leaves the model’s greatest capability untapped: cognitive sparring. When you use AI to challenge your reasoning, surface unexamined assumptions, and explore second-order consequences, your decision-making sharpens before you commit resources.',
+      intro: 'Most people treat AI purely as a clerical task-doer: "Summarize this," "Draft this email," or "Fix this code." While this saves time on surface execution, it leaves the model\'s greatest capability untapped: cognitive sparring. When you use AI to challenge your reasoning, surface unexamined assumptions, and explore second-order consequences, your decision-making sharpens before you commit resources.',
       core: `Collaborative thinking requires changing how you prompt: instead of asking for answers, you ask for friction, counter-arguments, and diagnostic questions.
 
 Four high-leverage thinking partner patterns:
@@ -1004,6 +1210,19 @@ Before entering a negotiation or debate, ask the model to construct the stronges
     category: 'Growth & Problem Solving',
     categoryKey: 'growth',
     readTime: '6 min read',
+    difficulty: 'Intermediate',
+    prerequisites: ['using-ai-as-a-thinking-partner'],
+    keyTakeaways: [
+      'Speaking is ~3x faster than typing — use voice for unfiltered brain dumps',
+      'Screenshots communicate spatial, visual, and layout information that text cannot',
+      'Upload full PDFs to cross-reference across sections rather than copy-pasting excerpts',
+      'Multimodal prompts eliminate hours of manual transcription of whiteboards and diagrams',
+      'Error code screenshots beat typed descriptions for debugging — the model sees the exact syntax',
+    ],
+    tools: ['ChatGPT-4o', 'Claude 3.5 Sonnet', 'Gemini 1.5 Pro', 'Copilot'],
+    relatedCertifications: ['practitioner', 'builder'],
+    estimatedPracticeTime: '12 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'When most people get stuck on a problem, they type long, exhaustive paragraphs into a chat window trying to describe a visual layout, a handwritten diagram, or a complex spreadsheet. This is the slowest possible way to communicate context. Modern multimodal models can see, hear, and parse visual relationships natively. Using image and voice inputs directly bypasses hours of manual transcription and explanation.',
       core: `Multimodality means using the right sensory medium for the information you possess:
@@ -1068,6 +1287,18 @@ Instead of copying and pasting sections, upload full PDFs (technical manuals, ve
     category: 'Growth & Problem Solving',
     categoryKey: 'growth',
     readTime: '5 min read',
+    difficulty: 'Intermediate',
+    keyTakeaways: [
+      'Most "new AI tools" are wrappers around the same foundation models — depth beats breadth',
+      'Apply the 3-Question Leverage Filter before creating any new AI account',
+      'A tool is worth adopting only when it solves an existing, painful bottleneck',
+      'Value tools that integrate directly into your primary workspace, not new silos',
+      'Tool-churn fatigue is real — mastering two platforms outperforms dabbling in 20',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini', 'Perplexity AI', 'Copilot'],
+    relatedCertifications: ['practitioner', 'builder'],
+    estimatedPracticeTime: '10 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'Every single morning, social media feeds declare that three new AI tools will "replace your entire job by Friday." If you spend your time testing every shiny wrapper, browser extension, and niche generator, you will suffer perpetual tool-churn fatigue without building real capability. The professionals gaining genuine advantage are not using 40 different apps—they master core foundation models and apply a strict adoption filter.',
       core: `Most "new AI tools" are simply lightweight wrappers around the exact same underlying foundation models. Before creating a new account or paying a subscription, run the tool through the **3-Question Leverage Filter**:
@@ -1130,6 +1361,19 @@ Focus your energy on **depth of prompting and workflow integration** within one 
     category: 'Growth & Problem Solving',
     categoryKey: 'growth',
     readTime: '6 min read',
+    difficulty: 'Advanced',
+    prerequisites: ['spotting-ai-hallucinations', 'using-ai-as-a-thinking-partner'],
+    keyTakeaways: [
+      'High Delegation Zone: format, brainstorm, transform — Trust & Scan',
+      'Calibrated Verification Zone: factual claims, citations, legal, financial — verify at source',
+      'Human Override Zone: ethics, novel judgment, interpersonal decisions — model informs, human decides',
+      'Domain expertise should feel dissonance when trusting AI outputs in your specialty',
+      'The ultimate mark of AI literacy is knowing when to discard AI\'s output, not just use it',
+    ],
+    tools: ['ChatGPT', 'Claude', 'Gemini', 'Copilot'],
+    relatedCertifications: ['practitioner', 'builder', 'strategist'],
+    estimatedPracticeTime: '15 min practice',
+    updatedAt: '2026-09-01',
     body: {
       intro: 'The ultimate mark of AI literacy is not how frequently you use the technology—it is how accurately you know when to discard its recommendations. Blind acceptance leads to catastrophic blunders in public, while cynical refusal to use AI leads to severe operational inefficiency. Professional mastery means developing an internal calibration matrix: knowing when the model is in its zone of genius and when human expertise must step in and override it.',
       core: `Calibrate your reliance across three distinct operational zones:
