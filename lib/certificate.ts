@@ -401,7 +401,7 @@ export interface BeginnerCertData {
 export type TierCertData = BeginnerCertData;
 
 /**
- * Draws the world-class, modern, ultra-professional landscape diploma for Jnachi Certifications.
+ * Draws the official, balanced, world-class landscape diploma for Jnachi Certifications.
  * Dimensions: 1920 x 1080 (16:9 Full HD official credential diploma format).
  */
 export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: BeginnerCertData) {
@@ -416,344 +416,413 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   canvas.width = width;
   canvas.height = height;
 
-  // 1. BASE CANVAS: Clean Architectural Pearl Background
-  const baseGrad = ctx.createRadialGradient(
-    width / 2 + 100,
+  // 1. BASE CANVAS: Luxury Ivory-Pearl Background with Radiant Ambient Glow
+  const bgGrad = ctx.createRadialGradient(
+    width / 2,
     height / 2,
-    100,
+    150,
     width / 2,
     height / 2,
     width / 1.1
   );
-  baseGrad.addColorStop(0, '#ffffff');
-  baseGrad.addColorStop(0.6, '#fafcff');
-  baseGrad.addColorStop(1, '#f1f5f9');
-  ctx.fillStyle = baseGrad;
+  bgGrad.addColorStop(0, '#ffffff');
+  bgGrad.addColorStop(0.55, '#fafcff');
+  bgGrad.addColorStop(1, '#f1f5f9');
+  ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, width, height);
 
-  // 2. FINE SECURITY BACKGROUND MATRIX (Mathematical Guilloché Rosette + Precision Grid)
-  drawSecurityGuilloche(ctx, width / 2 + 100, height / 2 + 30, 260, tierConfig.colorScheme.primary);
+  // 2. FINE SECURITY BACKGROUND WATERMARK (Guilloché Rosette + Dot Matrix)
+  drawSecurityGuilloche(ctx, width / 2, height / 2 + 10, 320, tierConfig.colorScheme.primary);
 
   // Subtle background dot matrix
-  ctx.fillStyle = 'rgba(100, 116, 139, 0.04)';
-  for (let x = 140; x < width - 60; x += 32) {
-    for (let y = 60; y < height - 60; y += 32) {
+  ctx.fillStyle = 'rgba(100, 116, 139, 0.035)';
+  for (let x = 70; x < width - 70; x += 32) {
+    for (let y = 70; y < height - 70; y += 32) {
       ctx.beginPath();
       ctx.arc(x, y, 1.2, 0, Math.PI * 2);
       ctx.fill();
     }
   }
 
-  // 3. LEFT MODERN ARCHITECTURAL SECURITY PILLAR (Width: 90px)
-  const pillarW = 86;
-  const pillarGrad = ctx.createLinearGradient(0, 0, pillarW, height);
-  pillarGrad.addColorStop(0, '#0f172a');
-  pillarGrad.addColorStop(0.5, tierConfig.colorScheme.diplomaPrimary || '#1e1b4b');
-  pillarGrad.addColorStop(1, '#090d16');
-  ctx.fillStyle = pillarGrad;
-  ctx.fillRect(0, 0, pillarW, height);
+  // 3. NEOCLASSICAL GOLD & OBSIDIAN MULTI-LAYER PRECISION BORDER
+  const margin = 48;
+  const contentWidth = width - margin * 2;
+  const contentHeight = height - margin * 2;
+  const centerX = width / 2;
 
-  // Pillar Inner Metallic Stripe
-  const stripeGrad = ctx.createLinearGradient(pillarW - 6, 0, pillarW, height);
-  stripeGrad.addColorStop(0, tierConfig.colorScheme.diplomaAccent || '#d97706');
-  stripeGrad.addColorStop(0.5, '#fbbf24');
-  stripeGrad.addColorStop(1, tierConfig.colorScheme.diplomaAccent || '#d97706');
-  ctx.fillStyle = stripeGrad;
-  ctx.fillRect(pillarW - 5, 0, 5, height);
-
-  // Security text rotated vertically along the pillar
-  ctx.save();
-  ctx.translate(34, height - 120);
-  ctx.rotate(-Math.PI / 2);
-  ctx.font = '700 13px "Plus Jakarta Sans", system-ui, sans-serif';
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
-  ctx.letterSpacing = '3px';
-  ctx.fillText('JNACHI APPLIED INTELLIGENCE CERTIFICATION COUNCIL • OFFICIAL CREDENTIAL REGISTRY', 0, 0);
-  ctx.letterSpacing = '0px';
-  ctx.restore();
-
-  // Pillar Decorative Tech Accents
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-  for (let i = 0; i < 4; i++) {
-    ctx.beginPath();
-    ctx.arc(42, 60 + i * 16, 2.5, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  // 4. NEOCLASSICAL MODERN DOUBLE PRECISION FRAME
-  const frameLeft = pillarW + 36;
-  const frameTop = 36;
-  const frameRight = width - 36;
-  const frameBottom = height - 36;
-  const frameW = frameRight - frameLeft;
-  const frameH = frameBottom - frameTop;
-
-  // Outer primary frame
+  // Outer primary dark border
   ctx.strokeStyle = '#0f172a';
-  ctx.lineWidth = 2.5;
-  ctx.strokeRect(frameLeft, frameTop, frameW, frameH);
+  ctx.lineWidth = 3.5;
+  ctx.strokeRect(margin, margin, contentWidth, contentHeight);
 
-  // Inner metallic pinstripe frame
-  const innerOffset = 10;
-  ctx.strokeStyle = tierConfig.colorScheme.diplomaAccent || '#d97706';
-  ctx.lineWidth = 1;
-  ctx.strokeRect(
-    frameLeft + innerOffset,
-    frameTop + innerOffset,
-    frameW - innerOffset * 2,
-    frameH - innerOffset * 2
-  );
+  // Inner metallic gold foil pinstripe
+  const innerMargin = margin + 12;
+  const innerWidth = width - innerMargin * 2;
+  const innerHeight = height - innerMargin * 2;
 
-  // Precision Technical Corner Brackets / Registration Crosshairs
-  drawCornerBracket(ctx, frameLeft, frameTop, 24, true, true);
-  drawCornerBracket(ctx, frameRight, frameTop, 24, false, true);
-  drawCornerBracket(ctx, frameLeft, frameBottom, 24, true, false);
-  drawCornerBracket(ctx, frameRight, frameBottom, 24, false, false);
+  const goldGrad = ctx.createLinearGradient(innerMargin, innerMargin, width - innerMargin, height - innerMargin);
+  goldGrad.addColorStop(0, '#d97706');
+  goldGrad.addColorStop(0.25, '#fbbf24');
+  goldGrad.addColorStop(0.5, '#f59e0b');
+  goldGrad.addColorStop(0.75, '#fbbf24');
+  goldGrad.addColorStop(1, '#b45309');
+
+  ctx.strokeStyle = goldGrad;
+  ctx.lineWidth = 1.5;
+  ctx.strokeRect(innerMargin, innerMargin, innerWidth, innerHeight);
+
+  // Precision Corner Rosettes & Crosshairs
+  drawCornerOrnament(ctx, innerMargin, innerMargin, 28, true, true);
+  drawCornerOrnament(ctx, width - innerMargin, innerMargin, 28, false, true);
+  drawCornerOrnament(ctx, innerMargin, height - innerMargin, 28, true, false);
+  drawCornerOrnament(ctx, width - innerMargin, height - innerMargin, 28, false, false);
 
   // Microprint security line along bottom border
-  ctx.font = '600 10px "Plus Jakarta Sans", monospace, sans-serif';
+  ctx.font = '600 11px "Plus Jakarta Sans", monospace, sans-serif';
   ctx.fillStyle = '#94a3b8';
   ctx.textAlign = 'center';
   ctx.fillText(
     `• JNACHI GLOBAL CERTIFICATION REGISTRY • TAMPER-RESISTANT CREDENTIAL ID: ${data.certificateId} • CRYPTOGRAPHICALLY VALIDATED •`,
-    frameLeft + frameW / 2,
-    frameBottom - 3
+    centerX,
+    height - margin - 4
   );
 
-  // 5. TOP HEADER: Jnachi Crest & Digital Verification Matrix
-  const headerY = frameTop + 42;
-  const contentCenter = frameLeft + frameW / 2;
+  // 4. TOP HEADER BAR (y: 80 - 150)
+  const headerY = margin + 36;
 
-  // Jnachi Emblem (Top Left)
-  const emblemX = frameLeft + 52;
-  const emblemY = headerY + 18;
-  const emblemR = 26;
+  // Exact Official Jnachi Logo (Left)
+  const logoX = margin + 44;
+  const logoY = headerY + 12;
+  drawOfficialJnachiLogo(ctx, logoX, logoY, 44, '#4f46e5');
 
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(emblemX, emblemY, emblemR, 0.4, Math.PI * 1.95, false);
-  ctx.strokeStyle = tierConfig.colorScheme.primary;
-  ctx.lineWidth = 5.5;
-  ctx.lineCap = 'round';
-  ctx.stroke();
+  // Top Right Security Badge & Procedural QR Matrix
+  const secBoxW = 270;
+  const secBoxH = 68;
+  const secBoxX = width - margin - secBoxW - 44;
+  const secBoxY = headerY - 14;
 
-  ctx.beginPath();
-  ctx.arc(emblemX, emblemY, emblemR - 9, Math.PI * 0.9, Math.PI * 2.3, false);
-  ctx.strokeStyle = tierConfig.colorScheme.diplomaAccent || '#d97706';
-  ctx.lineWidth = 3;
-  ctx.lineCap = 'round';
-  ctx.stroke();
-  ctx.restore();
-
-  // Jnachi Brand Wordmark & Council Title
-  ctx.textAlign = 'left';
-  ctx.font = '800 32px "Plus Jakarta Sans", "Outfit", system-ui, sans-serif';
-  ctx.fillStyle = '#0f172a';
-  ctx.fillText('Jnachi', emblemX + 42, emblemY + 2);
-
-  ctx.font = '700 12px "Plus Jakarta Sans", system-ui, sans-serif';
-  ctx.fillStyle = '#64748b';
-  ctx.fillText('EXECUTIVE LEARNING & CERTIFICATION COUNCIL', emblemX + 42, emblemY + 22);
-
-  // Top Right Security Badge & Digital QR Pattern
-  const secBoxW = 260;
-  const secBoxH = 64;
-  const secBoxX = frameRight - secBoxW - 30;
-  const secBoxY = headerY - 6;
-
-  ctx.fillStyle = '#f8fafc';
-  roundRect(ctx, secBoxX, secBoxY, secBoxW, secBoxH, 12, true, false);
+  ctx.fillStyle = '#ffffff';
+  roundRect(ctx, secBoxX, secBoxY, secBoxW, secBoxH, 14, true, false);
   ctx.strokeStyle = '#e2e8f0';
   ctx.lineWidth = 1.5;
-  roundRect(ctx, secBoxX, secBoxY, secBoxW, secBoxH, 12, false, true);
+  roundRect(ctx, secBoxX, secBoxY, secBoxW, secBoxH, 14, false, true);
 
-  // Mini Digital Matrix / Procedural QR Pattern
-  drawProceduralQR(ctx, secBoxX + 12, secBoxY + 12, 40, data.certificateId);
+  // Mini Digital Matrix / Procedural QR
+  drawProceduralQR(ctx, secBoxX + 14, secBoxY + 14, 40, data.certificateId);
 
   ctx.textAlign = 'left';
   ctx.font = '800 11px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#15803d';
-  ctx.fillText('OFFICIALLY VERIFIED', secBoxX + 62, secBoxY + 26);
+  ctx.fillText('OFFICIALLY VERIFIED', secBoxX + 66, secBoxY + 28);
 
   ctx.font = '700 12px monospace';
   ctx.fillStyle = '#0f172a';
-  ctx.fillText(data.certificateId, secBoxX + 62, secBoxY + 44);
+  ctx.fillText(data.certificateId, secBoxX + 66, secBoxY + 48);
 
   // Subtle Header Rule
   ctx.strokeStyle = '#e2e8f0';
   ctx.lineWidth = 1;
   ctx.beginPath();
-  ctx.moveTo(frameLeft + 40, headerY + 70);
-  ctx.lineTo(frameRight - 40, headerY + 70);
+  ctx.moveTo(margin + 44, headerY + 68);
+  ctx.lineTo(width - margin - 44, headerY + 68);
   ctx.stroke();
 
-  // 6. MAIN CERTIFICATE TITLE & DIPLOMA TEXT
-  const bodyStartY = headerY + 115;
-
-  // Main Heading: CERTIFICATE OF ACHIEVEMENT
+  // 5. AUTHORITY TITLE & MAIN CERTIFICATE HEADING (y: 195 - 280)
   ctx.textAlign = 'center';
-  ctx.font = '800 44px "Cinzel", "Playfair Display", Georgia, serif';
-  ctx.fillStyle = tierConfig.colorScheme.diplomaPrimary || '#0f172a';
+  ctx.font = '700 15px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.fillStyle = tierConfig.colorScheme.primary || '#4f46e5';
   ctx.letterSpacing = '3px';
-  ctx.fillText('CERTIFICATE OF ACHIEVEMENT', contentCenter, bodyStartY);
+  ctx.fillText('JNACHI EXECUTIVE LEARNING & CERTIFICATION COUNCIL', centerX, headerY + 105);
   ctx.letterSpacing = '0px';
 
-  // Subtitle
-  ctx.font = '600 15px "Plus Jakarta Sans", system-ui, sans-serif';
-  ctx.fillStyle = '#64748b';
-  ctx.fillText('THIS OFFICIAL CREDENTIAL IS PROUDLY CONFERRED UPON', contentCenter, bodyStartY + 42);
+  ctx.font = '800 48px "Cinzel", "Playfair Display", Georgia, serif';
+  ctx.fillStyle = tierConfig.colorScheme.diplomaPrimary || '#0f172a';
+  ctx.letterSpacing = '2px';
+  ctx.fillText('CERTIFICATE OF ACHIEVEMENT', centerX, headerY + 165);
+  ctx.letterSpacing = '0px';
 
-  // Candidate Name
+  // 6. CANDIDATE CONFERRAL SECTION (y: 310 - 450)
+  ctx.font = '600 16px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.fillStyle = '#64748b';
+  ctx.fillText('THIS IS TO OFFICIALLY CERTIFY THAT', centerX, headerY + 215);
+
+  // Candidate Name in Majestic Serif Typography
   const candidateName = data.recipientName || 'Candidate';
   ctx.font = '700 52px "Playfair Display", "Plus Jakarta Sans", Georgia, serif';
   ctx.fillStyle = '#0f172a';
-  ctx.fillText(candidateName, contentCenter, bodyStartY + 108);
+  ctx.fillText(candidateName, centerX, headerY + 285);
 
-  // Underline with Center Diamond Flourish
-  const lineW = 320;
-  const lineY = bodyStartY + 130;
+  // Double Underline with Center Diamond Flourish
+  const lineW = 340;
+  const lineY = headerY + 312;
   ctx.strokeStyle = '#cbd5e1';
   ctx.lineWidth = 1.5;
   ctx.beginPath();
-  ctx.moveTo(contentCenter - lineW, lineY);
-  ctx.lineTo(contentCenter - 18, lineY);
-  ctx.moveTo(contentCenter + 18, lineY);
-  ctx.lineTo(contentCenter + lineW, lineY);
+  ctx.moveTo(centerX - lineW, lineY);
+  ctx.lineTo(centerX - 18, lineY);
+  ctx.moveTo(centerX + 18, lineY);
+  ctx.lineTo(centerX + lineW, lineY);
   ctx.stroke();
 
-  // Diamond flourish in center
+  // Center Diamond
   ctx.fillStyle = tierConfig.colorScheme.diplomaAccent || '#d97706';
   ctx.beginPath();
-  ctx.moveTo(contentCenter, lineY - 6);
-  ctx.lineTo(contentCenter + 7, lineY);
-  ctx.lineTo(contentCenter, lineY + 6);
-  ctx.lineTo(contentCenter - 7, lineY);
+  ctx.moveTo(centerX, lineY - 6);
+  ctx.lineTo(centerX + 7, lineY);
+  ctx.lineTo(centerX, lineY + 6);
+  ctx.lineTo(centerX - 7, lineY);
   ctx.closePath();
   ctx.fill();
 
-  // Location / Meta line if available
+  // Optional Location line
   if (data.location && data.location.trim()) {
     ctx.font = '500 15px "Plus Jakarta Sans", sans-serif';
     ctx.fillStyle = '#64748b';
-    ctx.fillText(data.location.trim(), contentCenter, lineY + 22);
+    ctx.fillText(data.location.trim(), centerX, lineY + 22);
   }
 
-  // Conferral Statement
-  const statementY = bodyStartY + 172;
+  // Conferral text
+  const textOffset = data.location && data.location.trim() ? 28 : 0;
   ctx.font = '400 19px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#334155';
   ctx.fillText(
-    'having satisfied all rigorous competency benchmarks and proctored examination standards in:',
-    contentCenter,
-    statementY
+    'has satisfied all rigorous competency criteria across the proctored examination evaluations',
+    centerX,
+    headerY + 360 + textOffset
+  );
+  ctx.fillText(
+    'and is hereby conferred the official credential:',
+    centerX,
+    headerY + 390 + textOffset
   );
 
-  // 7. OFFICIAL CREDENTIAL TITLE PLAQUE (Modern Luxury Plaque)
-  const plaqueW = 780;
-  const plaqueH = 80;
-  const plaqueX = contentCenter - plaqueW / 2;
-  const plaqueY = statementY + 26;
+  // 7. OFFICIAL CREDENTIAL BOX (y: 490 - 585)
+  const plaqueW = 820;
+  const plaqueH = 88;
+  const plaqueX = centerX - plaqueW / 2;
+  const plaqueY = headerY + 420 + textOffset;
 
-  // Deep luxury background
   const plaqueGrad = ctx.createLinearGradient(plaqueX, plaqueY, plaqueX + plaqueW, plaqueY + plaqueH);
   plaqueGrad.addColorStop(0, '#0f172a');
   plaqueGrad.addColorStop(0.5, tierConfig.colorScheme.diplomaPrimary || '#1e1b4b');
   plaqueGrad.addColorStop(1, '#0f172a');
   ctx.fillStyle = plaqueGrad;
-  roundRect(ctx, plaqueX, plaqueY, plaqueW, plaqueH, 14, true, false);
+  roundRect(ctx, plaqueX, plaqueY, plaqueW, plaqueH, 16, true, false);
 
-  // Metallic border
   ctx.strokeStyle = tierConfig.colorScheme.diplomaAccent || '#d97706';
   ctx.lineWidth = 2;
-  roundRect(ctx, plaqueX + 3, plaqueY + 3, plaqueW - 6, plaqueH - 6, 11, false, true);
+  roundRect(ctx, plaqueX + 4, plaqueY + 4, plaqueW - 8, plaqueH - 8, 12, false, true);
 
   // Plaque Title Text
   ctx.fillStyle = tierConfig.colorScheme.diplomaAccent === '#d97706' ? '#fbbf24' : '#ffffff';
-  ctx.font = '800 27px "Plus Jakarta Sans", system-ui, sans-serif';
-  ctx.fillText(tierConfig.badgeLabel, contentCenter, plaqueY + 44);
+  ctx.font = '800 28px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.fillText(tierConfig.badgeLabel, centerX, plaqueY + 48);
 
-  ctx.font = '600 12px "Plus Jakarta Sans", system-ui, sans-serif';
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+  ctx.font = '600 13px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
   ctx.fillText(
-    `Official Specialization • Tier 0${tierConfig.levelNumber} • Proctored Assessment Verified`,
-    contentCenter,
-    plaqueY + 66
+    `Official Specialization Track • Tier 0${tierConfig.levelNumber} • Proctored Examination Passed`,
+    centerX,
+    plaqueY + 72
   );
 
-  // 8. FOUR CORE COMPETENCY PILLARS (Clean modern verification chips)
-  const chipY = plaqueY + 104;
+  // 8. FOUR VERIFIED CORE COMPETENCY PILLARS (y: 625 - 735)
+  // Perfectly fills the middle section with verified competency detail cards!
+  const gridY = plaqueY + 115;
   const competencies = [
-    '✓ AI Literacy & Prompting',
-    '✓ Workflow Automation',
-    '✓ Data Privacy & Ethics',
-    '✓ Strategic Judgment',
+    { title: 'AI Literacy & Prompting', desc: 'Precision Reasoning & Instruction Design' },
+    { title: 'Workflow Automation', desc: 'Multi-Step Execution & Tool Chaining' },
+    { title: 'Data Privacy & Ethics', desc: 'Confidentiality Redlines & Safety Governance' },
+    { title: 'Strategic Judgment', desc: 'Critical Evaluation & Applied AI Impact' },
   ];
-  const pillW = 168;
-  const pillGap = 16;
-  const startPillX = contentCenter - (competencies.length * pillW + (competencies.length - 1) * pillGap) / 2;
+
+  const cardW = 320;
+  const cardH = 68;
+  const cardGapX = 24;
+  const cardGapY = 16;
+  const gridStartX = centerX - (cardW * 2 + cardGapX) / 2;
 
   competencies.forEach((comp, idx) => {
-    const px = startPillX + idx * (pillW + pillGap);
-    ctx.fillStyle = '#f8fafc';
-    roundRect(ctx, px, chipY, pillW, 28, 14, true, false);
-    ctx.strokeStyle = '#e2e8f0';
-    ctx.lineWidth = 1;
-    roundRect(ctx, px, chipY, pillW, 28, 14, false, true);
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const cx = gridStartX + col * (cardW + cardGapX);
+    const cy = gridY + row * (cardH + cardGapY);
 
+    ctx.fillStyle = '#ffffff';
+    roundRect(ctx, cx, cy, cardW, cardH, 12, true, false);
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth = 1.5;
+    roundRect(ctx, cx, cy, cardW, cardH, 12, false, true);
+
+    // Left green verified checkmark circle
+    ctx.fillStyle = '#dcfce7';
+    ctx.beginPath();
+    ctx.arc(cx + 26, cy + cardH / 2, 14, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#15803d';
+    ctx.font = '700 13px "Plus Jakarta Sans", sans-serif';
     ctx.textAlign = 'center';
-    ctx.font = '700 12px "Plus Jakarta Sans", system-ui, sans-serif';
-    ctx.fillStyle = '#334155';
-    ctx.fillText(comp, px + pillW / 2, chipY + 18);
+    ctx.fillText('✓', cx + 26, cy + cardH / 2 + 4.5);
+
+    // Competency title & description
+    ctx.textAlign = 'left';
+    ctx.font = '700 14px "Plus Jakarta Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#0f172a';
+    ctx.fillText(comp.title, cx + 50, cy + 28);
+
+    ctx.font = '500 11px "Plus Jakarta Sans", system-ui, sans-serif';
+    ctx.fillStyle = '#64748b';
+    ctx.fillText(comp.desc, cx + 50, cy + 48);
   });
 
-  // 9. FOOTER AUTHORITY & 3D EMBOSSED GOLD MEDALLION BLOCK (y: 910 - 1020)
-  const footerBaseY = 930;
+  // Verification status banner line
+  const statusLineY = gridY + cardH * 2 + cardGapY + 30;
+  ctx.textAlign = 'center';
+  ctx.font = '600 14px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.fillStyle = '#475569';
+  ctx.fillText(
+    'Official Examination Status: Verified Pass • Conferred by Jnachi Certification Council',
+    centerX,
+    statusLineY
+  );
 
-  // LEFT AUTHORITY BLOCK
-  const leftAuthX = frameLeft + 60;
+  // 9. FOOTER AUTHORITY & SIGNATURES BLOCK (y: 890 - 1000)
+  const footerBaseY = 920;
+
+  // LEFT AUTHORITY & REGISTRY BLOCK
+  const leftAuthX = margin + 50;
   ctx.textAlign = 'left';
-  ctx.font = '700 13px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.font = '700 12px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#64748b';
   ctx.fillText('ISSUING AUTHORITY', leftAuthX, footerBaseY);
 
-  ctx.font = '800 18px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.font = '800 17px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#0f172a';
-  ctx.fillText('Jnachi Certification Council', leftAuthX, footerBaseY + 24);
-
-  ctx.font = '500 14px "Plus Jakarta Sans", system-ui, sans-serif';
-  ctx.fillStyle = '#64748b';
-  ctx.fillText('Online Verification: jnachi.com/verify', leftAuthX, footerBaseY + 46);
-
-  // CENTER 3D EMBOSSED GOLD FOIL MEDALLION & RIBBON
-  const sealCenterX = contentCenter;
-  const sealCenterY = footerBaseY + 14;
-  drawEmbossedGoldSeal(ctx, sealCenterX, sealCenterY, 50, tierConfig.colorScheme.diplomaAccent || '#d97706');
-
-  // RIGHT SIGNATURE BLOCK
-  const rightAuthX = frameRight - 60;
-  ctx.textAlign = 'right';
-
-  // Executive Cursive Calligraphy Signature
-  drawExecutiveSignature(ctx, rightAuthX - 160, footerBaseY - 6);
-
-  // Signature rule
-  ctx.strokeStyle = '#94a3b8';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(rightAuthX - 220, footerBaseY + 18);
-  ctx.lineTo(rightAuthX, footerBaseY + 18);
-  ctx.stroke();
-
-  ctx.font = '700 15px "Plus Jakarta Sans", system-ui, sans-serif';
-  ctx.fillStyle = '#0f172a';
-  ctx.fillText('Director of Certification Standards', rightAuthX, footerBaseY + 38);
+  ctx.fillText('Jnachi Certification Council', leftAuthX, footerBaseY + 22);
 
   ctx.font = '500 13px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#64748b';
-  ctx.fillText(`Conferred: ${data.issuedDate}`, rightAuthX, footerBaseY + 58);
+  ctx.fillText('Online Verification: jnachi.com/verify', leftAuthX, footerBaseY + 42);
+
+  // CENTER 3D EMBOSSED GOLD FOIL MEDALLION & RIBBON
+  const sealCenterX = centerX;
+  const sealCenterY = footerBaseY + 12;
+  drawEmbossedGoldSeal(ctx, sealCenterX, sealCenterY, 52, tierConfig.colorScheme.diplomaAccent || '#d97706');
+
+  // RIGHT AUTHORIZED SIGNATORY BLOCK (Mohanavamsi Chidipilli)
+  const rightAuthX = width - margin - 50;
+  ctx.textAlign = 'right';
+
+  // Elegant Executive Script Signature for Mohanavamsi Chidipilli
+  drawAuthorizedSignature(ctx, rightAuthX - 220, footerBaseY - 10);
+
+  // Signature Baseline Rule
+  ctx.strokeStyle = '#94a3b8';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(rightAuthX - 240, footerBaseY + 16);
+  ctx.lineTo(rightAuthX, footerBaseY + 16);
+  ctx.stroke();
+
+  ctx.font = '800 16px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.fillStyle = '#0f172a';
+  ctx.fillText('Mohanavamsi Chidipilli', rightAuthX, footerBaseY + 36);
+
+  ctx.font = '600 13px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.fillStyle = '#4f46e5';
+  ctx.fillText('Founder & Chair, Certification Council', rightAuthX, footerBaseY + 54);
+
+  ctx.font = '500 12px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.fillStyle = '#64748b';
+  ctx.fillText(`Conferred: ${data.issuedDate}`, rightAuthX, footerBaseY + 70);
 }
 
 export const drawTierDiploma = drawBeginnerCertificate;
+
+/**
+ * Draws the exact official Jnachi comet swept-ring emblem & lowercase wordmark.
+ */
+function drawOfficialJnachiLogo(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  size: number,
+  primaryColor = '#4f46e5'
+) {
+  ctx.save();
+  const scale = size / 32;
+
+  // Comet Swept Ring Path
+  // SVG: M 28 16 C 28 22.627 22.627 28 16 28 C 9.373 28 4 22.627 4 16 C 4 9.373 9.373 4 16 4 C 18 4 19.8 4.6 21.4 5.5
+  ctx.save();
+  ctx.translate(x, y - size / 2);
+  ctx.scale(scale, scale);
+
+  ctx.beginPath();
+  ctx.moveTo(28, 16);
+  ctx.bezierCurveTo(28, 22.627, 22.627, 28, 16, 28);
+  ctx.bezierCurveTo(9.373, 28, 4, 22.627, 4, 16);
+  ctx.bezierCurveTo(4, 9.373, 9.373, 4, 16, 4);
+  ctx.bezierCurveTo(18, 4, 19.8, 4.6, 21.4, 5.5);
+  ctx.strokeStyle = primaryColor;
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'round';
+  ctx.globalAlpha = 0.75;
+  ctx.stroke();
+
+  // Solid dot (seed of knowledge)
+  ctx.beginPath();
+  ctx.arc(22, 10, 5, 0, Math.PI * 2);
+  ctx.fillStyle = primaryColor;
+  ctx.globalAlpha = 1.0;
+  ctx.fill();
+  ctx.restore();
+
+  // Exact lowercase wordmark "jnachi"
+  ctx.textAlign = 'left';
+  ctx.font = '700 32px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.fillStyle = '#0f172a';
+  ctx.fillText('jnachi', x + size + 14, y + 6);
+
+  ctx.font = '700 11px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.fillStyle = '#64748b';
+  ctx.letterSpacing = '1px';
+  ctx.fillText('APPLIED INTELLIGENCE COUNCIL', x + size + 14, y + 24);
+  ctx.letterSpacing = '0px';
+
+  ctx.restore();
+}
+
+/**
+ * Draws the authorized cursive executive signature for Mohanavamsi Chidipilli.
+ */
+function drawAuthorizedSignature(ctx: CanvasRenderingContext2D, startX: number, startY: number) {
+  ctx.save();
+  ctx.strokeStyle = '#0f172a';
+  ctx.lineWidth = 2.4;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  ctx.beginPath();
+  // Capital 'M' with dynamic stroke
+  ctx.moveTo(startX, startY + 10);
+  ctx.bezierCurveTo(startX + 6, startY - 24, startX + 14, startY - 28, startX + 22, startY - 8);
+  ctx.bezierCurveTo(startX + 28, startY + 8, startX + 34, startY - 26, startX + 42, startY - 20);
+  ctx.bezierCurveTo(startX + 48, startY - 14, startX + 50, startY + 6, startX + 54, startY + 2);
+
+  // 'Chidipilli' dynamic flourish
+  ctx.bezierCurveTo(startX + 65, startY - 18, startX + 78, startY + 4, startX + 90, startY - 14);
+  ctx.bezierCurveTo(startX + 100, startY - 28, startX + 112, startY + 6, startX + 125, startY - 10);
+  ctx.bezierCurveTo(startX + 138, startY - 24, startX + 152, startY + 4, startX + 165, startY - 8);
+  ctx.bezierCurveTo(startX + 178, startY - 20, startX + 190, startY + 2, startX + 205, startY - 6);
+
+  // Confident underline loop & extended flourish
+  ctx.bezierCurveTo(startX + 180, startY + 12, startX + 80, startY + 14, startX + 225, startY + 8);
+  ctx.stroke();
+
+  ctx.restore();
+}
 
 /**
  * Draws an authentic 3D embossed gold foil medallion seal with dual silk ribbon tails.
@@ -768,34 +837,34 @@ function drawEmbossedGoldSeal(
   ctx.save();
 
   // Dual Silk Ribbon Tails hanging below seal
-  const ribbonW = 24;
-  const ribbonH = 46;
+  const ribbonW = 26;
+  const ribbonH = 48;
 
-  // Left Ribbon
+  // Left Ribbon (Deep Indigo/Navy Silk)
   ctx.save();
-  ctx.translate(cx - 14, cy + 28);
+  ctx.translate(cx - 15, cy + 30);
   ctx.rotate(0.2);
   ctx.fillStyle = '#1e1b4b';
   ctx.beginPath();
   ctx.moveTo(-ribbonW / 2, 0);
   ctx.lineTo(ribbonW / 2, 0);
   ctx.lineTo(ribbonW / 2, ribbonH);
-  ctx.lineTo(0, ribbonH - 10);
+  ctx.lineTo(0, ribbonH - 12);
   ctx.lineTo(-ribbonW / 2, ribbonH);
   ctx.closePath();
   ctx.fill();
   ctx.restore();
 
-  // Right Ribbon
+  // Right Ribbon (Amber/Gold Silk)
   ctx.save();
-  ctx.translate(cx + 14, cy + 28);
+  ctx.translate(cx + 15, cy + 30);
   ctx.rotate(-0.2);
   ctx.fillStyle = '#b45309';
   ctx.beginPath();
   ctx.moveTo(-ribbonW / 2, 0);
   ctx.lineTo(ribbonW / 2, 0);
   ctx.lineTo(ribbonW / 2, ribbonH);
-  ctx.lineTo(0, ribbonH - 10);
+  ctx.lineTo(0, ribbonH - 12);
   ctx.lineTo(-ribbonW / 2, ribbonH);
   ctx.closePath();
   ctx.fill();
@@ -825,7 +894,7 @@ function drawEmbossedGoldSeal(
   sealGrad.addColorStop(1, '#92400e');
   ctx.fillStyle = sealGrad;
   ctx.shadowColor = 'rgba(0, 0, 0, 0.2)';
-  ctx.shadowBlur = 12;
+  ctx.shadowBlur = 14;
   ctx.shadowOffsetY = 4;
   ctx.fill();
 
@@ -850,40 +919,14 @@ function drawEmbossedGoldSeal(
   ctx.fillStyle = '#fef08a';
   ctx.textAlign = 'center';
   ctx.font = '800 11px "Plus Jakarta Sans", system-ui, sans-serif';
-  ctx.fillText('★ ★ ★ ★ ★', cx, cy - 8);
+  ctx.fillText('★ ★ ★ ★ ★', cx, cy - 9);
 
-  ctx.font = '900 11px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.font = '900 12px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillText('VERIFIED', cx, cy + 6);
 
-  ctx.font = '800 8px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.font = '800 9px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#fde68a';
-  ctx.fillText('PASS', cx, cy + 18);
-
-  ctx.restore();
-}
-
-/**
- * Draws an authentic cursive calligraphy executive signature.
- */
-function drawExecutiveSignature(ctx: CanvasRenderingContext2D, startX: number, startY: number) {
-  ctx.save();
-  ctx.strokeStyle = '#1e293b';
-  ctx.lineWidth = 2.2;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-
-  ctx.beginPath();
-  // Fluid cursive stroke for "A. M. Vance" / Executive Standards Chair
-  ctx.moveTo(startX, startY);
-  ctx.bezierCurveTo(startX + 15, startY - 26, startX + 30, startY - 28, startX + 40, startY);
-  ctx.bezierCurveTo(startX + 45, startY + 12, startX + 25, startY + 16, startX + 35, startY - 14);
-  ctx.bezierCurveTo(startX + 45, startY - 32, startX + 65, startY + 6, startX + 75, startY - 4);
-  ctx.bezierCurveTo(startX + 85, startY - 18, startX + 95, startY + 4, startX + 110, startY - 8);
-  ctx.bezierCurveTo(startX + 120, startY - 22, startX + 130, startY + 8, startX + 145, startY - 6);
-  ctx.bezierCurveTo(startX + 160, startY - 20, startX + 175, startY - 4, startX + 195, startY - 12);
-  // Loop & Flourish underline
-  ctx.bezierCurveTo(startX + 170, startY + 14, startX + 70, startY + 16, startX + 210, startY + 10);
-  ctx.stroke();
+  ctx.fillText('PASS', cx, cy + 19);
 
   ctx.restore();
 }
@@ -905,7 +948,6 @@ function drawProceduralQR(
   ctx.save();
   ctx.fillStyle = '#0f172a';
 
-  // Corner Position Finders (Top-Left, Top-Right, Bottom-Left)
   const drawFinder = (fx: number, fy: number) => {
     ctx.fillRect(fx, fy, cellSize * 2.5, cellSize * 2.5);
     ctx.clearRect(fx + cellSize * 0.5, fy + cellSize * 0.5, cellSize * 1.5, cellSize * 1.5);
@@ -916,7 +958,6 @@ function drawProceduralQR(
   drawFinder(x + size - cellSize * 2.5, y);
   drawFinder(x, y + size - cellSize * 2.5);
 
-  // Procedural Data Cells
   for (let r = 0; r < cells; r++) {
     for (let c = 0; c < cells; c++) {
       if (
@@ -964,7 +1005,6 @@ function drawSecurityGuilloche(
   }
   ctx.stroke();
 
-  // Secondary concentric fine ring
   ctx.beginPath();
   ctx.arc(cx, cy, radius * 0.65, 0, Math.PI * 2);
   ctx.stroke();
@@ -973,9 +1013,9 @@ function drawSecurityGuilloche(
 }
 
 /**
- * Draws technical corner registration brackets.
+ * Draws corner technical rosettes and crosshairs.
  */
-function drawCornerBracket(
+function drawCornerOrnament(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
@@ -988,7 +1028,7 @@ function drawCornerBracket(
 
   ctx.save();
   ctx.strokeStyle = '#0f172a';
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 2.5;
   ctx.beginPath();
   ctx.moveTo(x + dirX * len, y);
   ctx.lineTo(x, y);
@@ -996,7 +1036,7 @@ function drawCornerBracket(
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.arc(x + dirX * 6, y + dirY * 6, 2, 0, Math.PI * 2);
+  ctx.arc(x + dirX * 6, y + dirY * 6, 2.5, 0, Math.PI * 2);
   ctx.fillStyle = '#d97706';
   ctx.fill();
   ctx.restore();
