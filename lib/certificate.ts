@@ -493,7 +493,7 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   // Exact Official Jnachi Logo (Left)
   const logoX = margin + 44;
   const logoY = headerY + 12;
-  drawOfficialJnachiLogo(ctx, logoX, logoY, 44, '#4f46e5');
+  drawOfficialJnachiLogo(ctx, logoX, logoY, 52, '#4f46e5');
 
   // Top Right Security Badge & Procedural QR Matrix
   const secBoxW = 270;
@@ -627,7 +627,6 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   );
 
   // 8. FOUR VERIFIED CORE COMPETENCY PILLARS (y: 625 - 735)
-  // Perfectly fills the middle section with verified competency detail cards!
   const gridY = plaqueY + 115;
   const competencies = [
     { title: 'AI Literacy & Prompting', desc: 'Precision Reasoning & Instruction Design' },
@@ -687,7 +686,7 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
     statusLineY
   );
 
-  // 9. FOOTER AUTHORITY & SIGNATURES BLOCK (y: 890 - 1000)
+  // 9. FOOTER AUTHORITY BLOCK (Option 1: Institutional Council Authority)
   const footerBaseY = 920;
 
   // LEFT AUTHORITY & REGISTRY BLOCK
@@ -695,11 +694,11 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   ctx.textAlign = 'left';
   ctx.font = '700 12px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#64748b';
-  ctx.fillText('ISSUING AUTHORITY', leftAuthX, footerBaseY);
+  ctx.fillText('ISSUING REGISTRY', leftAuthX, footerBaseY);
 
   ctx.font = '800 17px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#0f172a';
-  ctx.fillText('Jnachi Certification Council', leftAuthX, footerBaseY + 22);
+  ctx.fillText('Jnachi Credential Authority', leftAuthX, footerBaseY + 22);
 
   ctx.font = '500 13px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#64748b';
@@ -710,44 +709,45 @@ export function drawBeginnerCertificate(canvas: HTMLCanvasElement, data: Beginne
   const sealCenterY = footerBaseY + 12;
   drawEmbossedGoldSeal(ctx, sealCenterX, sealCenterY, 52, tierConfig.colorScheme.diplomaAccent || '#d97706');
 
-  // RIGHT AUTHORIZED SIGNATORY BLOCK (Mohanavamsi Chidipilli)
+  // RIGHT INSTITUTIONAL COUNCIL SIGNATORY BLOCK
   const rightAuthX = width - margin - 50;
   ctx.textAlign = 'right';
 
-  // Elegant Executive Script Signature for Mohanavamsi Chidipilli
-  drawAuthorizedSignature(ctx, rightAuthX - 220, footerBaseY - 10);
+  ctx.font = '700 12px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.fillStyle = '#64748b';
+  ctx.fillText('CERTIFICATION AUTHORITY', rightAuthX, footerBaseY);
 
-  // Signature Baseline Rule
+  // Institutional Authority Baseline Rule
   ctx.strokeStyle = '#94a3b8';
   ctx.lineWidth = 1.5;
   ctx.beginPath();
-  ctx.moveTo(rightAuthX - 240, footerBaseY + 16);
-  ctx.lineTo(rightAuthX, footerBaseY + 16);
+  ctx.moveTo(rightAuthX - 260, footerBaseY + 10);
+  ctx.lineTo(rightAuthX, footerBaseY + 10);
   ctx.stroke();
 
-  ctx.font = '800 16px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.font = '800 17px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#0f172a';
-  ctx.fillText('Mohanavamsi Chidipilli', rightAuthX, footerBaseY + 36);
+  ctx.fillText('Jnachi Certification Council', rightAuthX, footerBaseY + 30);
 
   ctx.font = '600 13px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#4f46e5';
-  ctx.fillText('Founder & Chair, Certification Council', rightAuthX, footerBaseY + 54);
+  ctx.fillText('Academic & Technical Standards Board', rightAuthX, footerBaseY + 48);
 
   ctx.font = '500 12px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#64748b';
-  ctx.fillText(`Conferred: ${data.issuedDate}`, rightAuthX, footerBaseY + 70);
+  ctx.fillText(`Conferred: ${data.issuedDate}`, rightAuthX, footerBaseY + 66);
 }
 
 export const drawTierDiploma = drawBeginnerCertificate;
 
 /**
- * Draws the exact official Jnachi comet swept-ring emblem & lowercase wordmark.
+ * Draws the exact official Jnachi comet swept-ring emblem & lowercase wordmark with tagline.
  */
 function drawOfficialJnachiLogo(
   ctx: CanvasRenderingContext2D,
   x: number,
   y: number,
-  size: number,
+  size = 52,
   primaryColor = '#4f46e5'
 ) {
   ctx.save();
@@ -766,9 +766,9 @@ function drawOfficialJnachiLogo(
   ctx.bezierCurveTo(4, 9.373, 9.373, 4, 16, 4);
   ctx.bezierCurveTo(18, 4, 19.8, 4.6, 21.4, 5.5);
   ctx.strokeStyle = primaryColor;
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 3.2;
   ctx.lineCap = 'round';
-  ctx.globalAlpha = 0.75;
+  ctx.globalAlpha = 0.8;
   ctx.stroke();
 
   // Solid dot (seed of knowledge)
@@ -779,47 +779,16 @@ function drawOfficialJnachiLogo(
   ctx.fill();
   ctx.restore();
 
-  // Exact lowercase wordmark "jnachi"
+  // Exact lowercase wordmark "jnachi" with increased font size
   ctx.textAlign = 'left';
-  ctx.font = '700 32px "Plus Jakarta Sans", system-ui, sans-serif';
+  ctx.font = '800 38px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#0f172a';
-  ctx.fillText('jnachi', x + size + 14, y + 6);
+  ctx.fillText('jnachi', x + size + 16, y + 8);
 
-  ctx.font = '700 11px "Plus Jakarta Sans", system-ui, sans-serif';
+  // Tagline: "Know it. Use it. Prove it."
+  ctx.font = '600 13px "Plus Jakarta Sans", system-ui, sans-serif';
   ctx.fillStyle = '#64748b';
-  ctx.letterSpacing = '1px';
-  ctx.fillText('APPLIED INTELLIGENCE COUNCIL', x + size + 14, y + 24);
-  ctx.letterSpacing = '0px';
-
-  ctx.restore();
-}
-
-/**
- * Draws the authorized cursive executive signature for Mohanavamsi Chidipilli.
- */
-function drawAuthorizedSignature(ctx: CanvasRenderingContext2D, startX: number, startY: number) {
-  ctx.save();
-  ctx.strokeStyle = '#0f172a';
-  ctx.lineWidth = 2.4;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-
-  ctx.beginPath();
-  // Capital 'M' with dynamic stroke
-  ctx.moveTo(startX, startY + 10);
-  ctx.bezierCurveTo(startX + 6, startY - 24, startX + 14, startY - 28, startX + 22, startY - 8);
-  ctx.bezierCurveTo(startX + 28, startY + 8, startX + 34, startY - 26, startX + 42, startY - 20);
-  ctx.bezierCurveTo(startX + 48, startY - 14, startX + 50, startY + 6, startX + 54, startY + 2);
-
-  // 'Chidipilli' dynamic flourish
-  ctx.bezierCurveTo(startX + 65, startY - 18, startX + 78, startY + 4, startX + 90, startY - 14);
-  ctx.bezierCurveTo(startX + 100, startY - 28, startX + 112, startY + 6, startX + 125, startY - 10);
-  ctx.bezierCurveTo(startX + 138, startY - 24, startX + 152, startY + 4, startX + 165, startY - 8);
-  ctx.bezierCurveTo(startX + 178, startY - 20, startX + 190, startY + 2, startX + 205, startY - 6);
-
-  // Confident underline loop & extended flourish
-  ctx.bezierCurveTo(startX + 180, startY + 12, startX + 80, startY + 14, startX + 225, startY + 8);
-  ctx.stroke();
+  ctx.fillText('Know it. Use it. Prove it.', x + size + 16, y + 28);
 
   ctx.restore();
 }
