@@ -914,6 +914,12 @@ export async function getVerifiedCertificate(
         if (/PRAC|PRACTITIONER/i.test(cleanId)) matchedTier = 'practitioner';
         else if (/BLD|BUILDER/i.test(cleanId)) matchedTier = 'builder';
         else if (/MSTR|MASTER/i.test(cleanId)) matchedTier = 'master';
+        else if (/SALES/i.test(cleanId)) matchedTier = 'sales';
+        else if (/DEV/i.test(cleanId)) matchedTier = 'developers';
+        else if (/MKT/i.test(cleanId)) matchedTier = 'marketers';
+        else if (/SUP/i.test(cleanId)) matchedTier = 'support';
+        else if (/HR/i.test(cleanId)) matchedTier = 'hr';
+        else if (/MGR/i.test(cleanId)) matchedTier = 'managers';
 
         const tierConfig = CERT_TIERS[matchedTier] || CERT_TIERS.beginner;
         const lastAttempt = Number(pData.lastAttemptAt) || Date.now();
@@ -923,6 +929,7 @@ export async function getVerifiedCertificate(
           certificateId: cleanId,
           recipientName: pData.recipientName || 'Verified Candidate',
           location: pData.location || undefined,
+          company: pData.company || undefined,
           tier: matchedTier,
           tierTitle: tierConfig.title,
           tierLevel: tierConfig.levelNumber,
@@ -948,72 +955,12 @@ export async function getVerifiedCertificate(
       console.warn('Firestore query cert_profiles warning:', profileErr);
     }
 
-    // 3. Robust Pattern Parser for any official Jnachi Certificate format
-    // Supports:
-    // - JNACHI-PRAC-2026-21DB5-1831 (variable hex length 4-6 chars)
-    // - JNACHI-BEG-2026-ABCD-1234
-    // - JNACHI-BLD-2026-XXXX-XXXX
-    // - JNACHI-MSTR-2026-XXXX-XXXX
-    // - JNACHI-2026-XXXX-XXXX
-    // - JNACHI-L1-202609-XXXX-XXXX
-    if (/^JNACHI(-[A-Z0-9]+)+$/i.test(cleanId)) {
-      let tier: CertTier = 'beginner';
-      if (/(?:^|-)(PRAC|PRACTITIONER|L2)(?:-|$)/i.test(cleanId)) {
-        tier = 'practitioner';
-      } else if (/(?:^|-)(BLD|BUILDER|L3)(?:-|$)/i.test(cleanId)) {
-        tier = 'builder';
-      } else if (/(?:^|-)(MSTR|MASTER|L4)(?:-|$)/i.test(cleanId)) {
-        tier = 'master';
-      } else if (/(?:^|-)(SALES)(?:-|$)/i.test(cleanId)) {
-        tier = 'sales';
-      } else if (/(?:^|-)(DEV|DEVELOPER|DEVELOPERS)(?:-|$)/i.test(cleanId)) {
-        tier = 'developers';
-      } else if (/(?:^|-)(MKT|MARKETER|MARKETERS|MARKETING)(?:-|$)/i.test(cleanId)) {
-        tier = 'marketers';
-      } else if (/(?:^|-)(SUP|SUPPORT|CX)(?:-|$)/i.test(cleanId)) {
-        tier = 'support';
-      } else if (/(?:^|-)(HR|PEOPLE)(?:-|$)/i.test(cleanId)) {
-        tier = 'hr';
-      } else if (/(?:^|-)(MGR|MANAGER|MANAGERS|LEAD)(?:-|$)/i.test(cleanId)) {
-        tier = 'managers';
-      } else if (/(?:^|-)(BEG|BEGINNER|L1)(?:-|$)/i.test(cleanId)) {
-        tier = 'beginner';
-      }
-
-      const tierConfig = CERT_TIERS[tier] || CERT_TIERS.beginner;
-      const yearMatch = cleanId.match(/20\d{2}/);
-      const year = yearMatch ? parseInt(yearMatch[0], 10) : new Date().getFullYear();
-      const dateObj = new Date(year, 8, 15);
-
-      return {
-        certificateId: cleanId,
-        recipientName: 'Verified Candidate',
-        tier,
-        tierTitle: tierConfig.title,
-        tierLevel: tierConfig.levelNumber,
-        overallScore: 36,
-        overallPercentage: 90,
-        sectionScores: {
-          literacy: { correct: 9, total: 10, percentage: 90 },
-          automation: { correct: 9, total: 10, percentage: 90 },
-          privacy: { correct: 9, total: 10, percentage: 90 },
-          growth: { correct: 9, total: 10, percentage: 90 },
-        },
-        issuedAt: dateObj.getTime(),
-        issuedDateFormatted: dateObj.toLocaleDateString('en-US', {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-        }),
-        status: 'valid',
-        proctoringPassed: true,
-      };
-    }
-
+    // No matching valid certificate record in database
     return null;
   } catch (err) {
     console.error('Error verifying certificate:', err);
     return null;
   }
 }
+
 

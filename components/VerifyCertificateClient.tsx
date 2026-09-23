@@ -56,131 +56,15 @@ export default function VerifyCertificateClient({
   const [record, setRecord] = useState<VerifiedCertificateRecord | null>(initialRecord);
   const [searchInput, setSearchInput] = useState(certId || '');
   const [isSearching, setIsSearching] = useState(false);
-  const [searchError, setSearchError] = useState<string | null>(null);
+  const [searchError, setSearchError] = useState<string | null>(
+    !initialRecord && certId ? `No verified credential found matching ID: ${certId}` : null
+  );
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedId, setCopiedId] = useState(false);
   const [isGeneratingDownload, setIsGeneratingDownload] = useState(false);
 
   const tier = record?.tier || 'beginner';
   const tierConfig = CERT_TIERS[tier] || CERT_TIERS.beginner;
-
-  // Automatically resolve candidate real name if record has placeholder
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    async function resolveCandidateName() {
-      try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const nameParam = urlParams.get('name') || urlParams.get('candidate');
-
-        let candidateName = nameParam || '';
-        let candidateLocation = '';
-        let candidateCompany = '';
-
-        // Check specific certificate record saved in localStorage
-        const lookupId = (record?.certificateId || certId || '').toUpperCase().trim();
-        if (lookupId) {
-          const certKey = `jnachi_cert_${lookupId}`;
-          const specificCertRaw = localStorage.getItem(certKey);
-          if (specificCertRaw) {
-            const parsed = JSON.parse(specificCertRaw);
-            if (parsed.recipientName && parsed.recipientName !== 'Verified Candidate') {
-              candidateName = parsed.recipientName;
-            }
-            if (parsed.location) candidateLocation = parsed.location;
-            if (parsed.company) candidateCompany = parsed.company;
-          }
-        }
-
-        // Check candidate session stored on this device
-        if (!candidateName) {
-          const sessionRaw = localStorage.getItem('jnachi_candidate_session');
-          if (sessionRaw) {
-            const parsed = JSON.parse(sessionRaw);
-            if (parsed.name && parsed.name !== 'Verified Candidate') {
-              candidateName = parsed.name;
-            }
-            if (parsed.location) candidateLocation = candidateLocation || parsed.location;
-            if (parsed.company) candidateCompany = candidateCompany || parsed.company;
-          }
-        }
-
-        // Check current Firebase Auth user
-        if (!candidateName && auth.currentUser?.displayName) {
-          candidateName = auth.currentUser.displayName;
-        }
-
-        // Check Firebase Auth in localStorage keys
-        if (!candidateName) {
-          for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            if (key && key.startsWith('firebase:authUser:')) {
-              try {
-                const authData = JSON.parse(localStorage.getItem(key) || '{}');
-                if (authData.displayName) {
-                  candidateName = authData.displayName;
-                  break;
-                }
-              } catch {
-                // ignore
-              }
-            }
-          }
-        }
-
-        // Query Firestore directly from client if still placeholder
-        if ((!candidateName || candidateName === 'Verified Candidate') && lookupId) {
-          try {
-            // 1. Direct certificate doc
-            const certDocRef = doc(db, 'certificates', lookupId);
-            const certDocSnap = await getDoc(certDocRef);
-            if (certDocSnap.exists()) {
-              const cData = certDocSnap.data();
-              if (cData.recipientName && cData.recipientName !== 'Verified Candidate') {
-                candidateName = cData.recipientName;
-                candidateLocation = cData.location || candidateLocation;
-                candidateCompany = cData.company || candidateCompany;
-              }
-            }
-
-            // 2. Query attempts
-            if (!candidateName || candidateName === 'Verified Candidate') {
-              const attemptsRef = collection(db, 'cert_attempts');
-              const q = query(attemptsRef, where('certificateId', '==', lookupId), limit(1));
-              const querySnap = await getDocs(q);
-              if (!querySnap.empty) {
-                const aData = querySnap.docs[0].data();
-                if (aData.recipientName && aData.recipientName !== 'Verified Candidate') {
-                  candidateName = aData.recipientName;
-                  candidateLocation = aData.location || candidateLocation;
-                  candidateCompany = aData.company || candidateCompany;
-                }
-              }
-            }
-          } catch (fsErr) {
-            console.warn('Client-side Firestore lookup warning:', fsErr);
-          }
-        }
-
-        // If we resolved a real name and current record is using the fallback
-        if (candidateName && candidateName !== 'Verified Candidate') {
-          setRecord((prev) => {
-            if (!prev) return null;
-            return {
-              ...prev,
-              recipientName: candidateName,
-              location: candidateLocation || prev.location,
-              company: candidateCompany || prev.company,
-            };
-          });
-        }
-      } catch (err) {
-        console.warn('Error resolving candidate name:', err);
-      }
-    }
-
-    resolveCandidateName();
-  }, [certId, record?.certificateId]);
 
   // Render Diploma Canvas
   const renderDiploma = useCallback(() => {
@@ -224,18 +108,20 @@ export default function VerifyCertificateClient({
       const data = await res.json();
 
       if (!res.ok || !data.valid || !data.certificate) {
-        setSearchError(data.error || 'No verified credential found matching this ID.');
+        setSearchError(data.error || `No verified credential found matching ID: ${cleanId}. Please double-check your Certificate ID.`);
         setRecord(null);
       } else {
         setRecord(data.certificate);
+        setSearchError(null);
         window.history.pushState({}, '', `/verify/${encodeURIComponent(cleanId)}`);
       }
     } catch (err: unknown) {
-      setSearchError('Network error verifying certificate. Please try again.');
+      setSearchError('Network error verifying certificate. Please check your connection and try again.');
     } finally {
       setIsSearching(false);
     }
   };
+
 
   const shareUrl = typeof window !== 'undefined' ? `${window.location.origin}/verify/${record?.certificateId || certId}` : `https://jnachi.com/verify/${certId}`;
 
