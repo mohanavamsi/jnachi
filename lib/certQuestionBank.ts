@@ -78,6 +78,26 @@ import {
   WEBMETHODS_QUESTIONS_BY_SECTION,
   ALL_WEBMETHODS_QUESTIONS,
 } from './certQuestions/webmethods';
+import {
+  AGENTIC_AI_QUESTIONS_BY_SECTION,
+  ALL_AGENTIC_AI_QUESTIONS,
+} from './certQuestions/agentic_ai';
+import {
+  RAG_ARCHITECT_QUESTIONS_BY_SECTION,
+  ALL_RAG_ARCHITECT_QUESTIONS,
+} from './certQuestions/rag_architect';
+import {
+  LLMOPS_QUESTIONS_BY_SECTION,
+  ALL_LLMOPS_QUESTIONS,
+} from './certQuestions/llmops';
+import {
+  FINANCE_AI_QUESTIONS_BY_SECTION,
+  ALL_FINANCE_AI_QUESTIONS,
+} from './certQuestions/finance_ai';
+import {
+  FINOPS_ARCHITECT_QUESTIONS_BY_SECTION,
+  ALL_FINOPS_ARCHITECT_QUESTIONS,
+} from './certQuestions/finops_architect';
 
 export type { CertSection, CertOption, CertQuestion, ClientCertQuestion };
 
@@ -114,6 +134,16 @@ export {
   ALL_BOOMI_QUESTIONS,
   WEBMETHODS_QUESTIONS_BY_SECTION,
   ALL_WEBMETHODS_QUESTIONS,
+  AGENTIC_AI_QUESTIONS_BY_SECTION,
+  ALL_AGENTIC_AI_QUESTIONS,
+  RAG_ARCHITECT_QUESTIONS_BY_SECTION,
+  ALL_RAG_ARCHITECT_QUESTIONS,
+  LLMOPS_QUESTIONS_BY_SECTION,
+  ALL_LLMOPS_QUESTIONS,
+  FINANCE_AI_QUESTIONS_BY_SECTION,
+  ALL_FINANCE_AI_QUESTIONS,
+  FINOPS_ARCHITECT_QUESTIONS_BY_SECTION,
+  ALL_FINOPS_ARCHITECT_QUESTIONS,
 };
 
 export const CERT_SECTIONS: { id: CertSection; title: string; description: string }[] = [
@@ -147,7 +177,7 @@ export const CERT_SECTION_LABELS: Record<CertSection, string> = {
 };
 
 // =========================================================================
-// ASSEMBLED COMPLETE QUESTION BANKS PER TIER (CORE + ROLES + PYTHON + INTEGRATION)
+// ASSEMBLED COMPLETE QUESTION BANKS PER TIER (CORE + ROLES + PYTHON + INTEGRATION + ADVANCED)
 // =========================================================================
 
 export const TIER_QUESTION_BANK: Record<CertTier, Record<CertSection, CertQuestion[]>> = {
@@ -173,6 +203,13 @@ export const TIER_QUESTION_BANK: Record<CertTier, Record<CertSection, CertQuesti
   ibm_ace: IBM_ACE_QUESTIONS_BY_SECTION,
   boomi: BOOMI_QUESTIONS_BY_SECTION,
   webmethods: WEBMETHODS_QUESTIONS_BY_SECTION,
+  // Advanced Agentic AI & RAG Engineering Tracks
+  agentic_ai: AGENTIC_AI_QUESTIONS_BY_SECTION,
+  rag_architect: RAG_ARCHITECT_QUESTIONS_BY_SECTION,
+  llmops: LLMOPS_QUESTIONS_BY_SECTION,
+  // Advanced AI Finance & FinOps Cost Optimization Tracks
+  finance_ai: FINANCE_AI_QUESTIONS_BY_SECTION,
+  finops_architect: FINOPS_ARCHITECT_QUESTIONS_BY_SECTION,
 };
 
 // Backward compatibility alias for Beginner bank

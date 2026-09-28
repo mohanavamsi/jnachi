@@ -26,6 +26,8 @@ import {
   CORE_TIER_ORDER,
   ROLE_TIER_ORDER,
   PYTHON_TIER_ORDER,
+  AGENTIC_TIER_ORDER,
+  FINANCE_TIER_ORDER,
   INTEGRATION_TIER_ORDER,
 } from '@/lib/certTypes';
 import { CERT_SYLLABUS, SyllabusSection } from '@/lib/certSyllabus';
@@ -60,7 +62,7 @@ export default function ExamSyllabusModal({
 }: ExamSyllabusModalProps) {
   const [activeTier, setActiveTier] = useState<CertTier>(initialTier);
   const [activeSection, setActiveSection] = useState<CertSection | 'all'>('all');
-  const [categoryTab, setCategoryTab] = useState<'core' | 'role' | 'python' | 'integration'>(
+  const [categoryTab, setCategoryTab] = useState<'core' | 'agentic' | 'finance' | 'role' | 'python' | 'integration'>(
     CERT_TIERS[initialTier]?.category || 'core'
   );
 
@@ -125,7 +127,7 @@ export default function ExamSyllabusModal({
 
           <div className="flex items-center gap-3 self-end sm:self-auto">
             {/* Quick Track Switcher Dropdown / Category Selector */}
-            <div className="flex items-center bg-slate-800/80 p-1 rounded-xl border border-slate-700/80">
+            <div className="flex items-center bg-slate-800/80 p-1 rounded-xl border border-slate-700/80 overflow-x-auto scrollbar-none">
               <button
                 type="button"
                 onClick={() => setCategoryTab('core')}
@@ -136,6 +138,28 @@ export default function ExamSyllabusModal({
                 }`}
               >
                 Core
+              </button>
+              <button
+                type="button"
+                onClick={() => setCategoryTab('agentic')}
+                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                  categoryTab === 'agentic'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Agentic AI
+              </button>
+              <button
+                type="button"
+                onClick={() => setCategoryTab('finance')}
+                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                  categoryTab === 'finance'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Finance AI
               </button>
               <button
                 type="button"
@@ -189,6 +213,10 @@ export default function ExamSyllabusModal({
           </span>
           {(categoryTab === 'core'
             ? CORE_TIER_ORDER
+            : categoryTab === 'agentic'
+            ? AGENTIC_TIER_ORDER
+            : categoryTab === 'finance'
+            ? FINANCE_TIER_ORDER
             : categoryTab === 'role'
             ? ROLE_TIER_ORDER
             : categoryTab === 'python'

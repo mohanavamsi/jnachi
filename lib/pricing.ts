@@ -170,6 +170,53 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
     promoPriceInr: 0,
     promoPriceUsd: 0,
   },
+  // Advanced Agentic AI & RAG Engineering Tracks: 100% Free for Launch Period
+  agentic_ai: {
+    tier: 'agentic_ai',
+    amountInr: 3499,
+    amountUsd: 69,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  rag_architect: {
+    tier: 'rag_architect',
+    amountInr: 3499,
+    amountUsd: 69,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  llmops: {
+    tier: 'llmops',
+    amountInr: 3499,
+    amountUsd: 69,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  // Advanced AI Finance & FinOps Cost Optimization Tracks: 100% Free for Launch Period
+  finance_ai: {
+    tier: 'finance_ai',
+    amountInr: 3499,
+    amountUsd: 69,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  finops_architect: {
+    tier: 'finops_architect',
+    amountInr: 3499,
+    amountUsd: 69,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
 };
 
 // Valid promo discount codes

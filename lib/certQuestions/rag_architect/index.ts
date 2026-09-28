@@ -1,0 +1,19 @@
+import { RAG_ARCHITECT_LITERACY_QUESTIONS } from './literacy';
+import { RAG_ARCHITECT_AUTOMATION_QUESTIONS } from './automation';
+import { RAG_ARCHITECT_PRIVACY_QUESTIONS } from './privacy';
+import { RAG_ARCHITECT_GROWTH_QUESTIONS } from './growth';
+import { CertSection, CertQuestion } from '../types';
+
+export const RAG_ARCHITECT_QUESTIONS_BY_SECTION: Record<CertSection, CertQuestion[]> = {
+  literacy: RAG_ARCHITECT_LITERACY_QUESTIONS,
+  automation: RAG_ARCHITECT_AUTOMATION_QUESTIONS,
+  privacy: RAG_ARCHITECT_PRIVACY_QUESTIONS,
+  growth: RAG_ARCHITECT_GROWTH_QUESTIONS,
+};
+
+export const ALL_RAG_ARCHITECT_QUESTIONS: CertQuestion[] = [
+  ...RAG_ARCHITECT_LITERACY_QUESTIONS,
+  ...RAG_ARCHITECT_AUTOMATION_QUESTIONS,
+  ...RAG_ARCHITECT_PRIVACY_QUESTIONS,
+  ...RAG_ARCHITECT_GROWTH_QUESTIONS,
+];

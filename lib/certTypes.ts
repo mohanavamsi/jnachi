@@ -1,4 +1,4 @@
-export type CertCategory = 'core' | 'role' | 'python' | 'integration';
+export type CertCategory = 'core' | 'role' | 'python' | 'agentic' | 'finance' | 'integration';
 
 export type CertTier =
   | 'beginner'
@@ -13,6 +13,11 @@ export type CertTier =
   | 'managers'
   | 'python_ai'
   | 'python_dev'
+  | 'agentic_ai'
+  | 'rag_architect'
+  | 'llmops'
+  | 'finance_ai'
+  | 'finops_architect'
   | 'mulesoft'
   | 'salesforce_integration'
   | 'ibm_mq'
@@ -678,7 +683,7 @@ export const CERT_TIERS: Record<CertTier, TierConfig> = {
       diplomaAccent: '#0f62fe',
       sealColor: '#d0e2ff',
       sealText: '#0043ce',
-    },
+      },
     keyTopics: [
       'Integration Server Runtime, Flow & Java Services, Pipeline Lifecycle',
       'Universal Messaging (UM) Channels, Queues & Trigger Processing',
@@ -686,16 +691,190 @@ export const CERT_TIERS: Record<CertTier, TierConfig> = {
       'Trading Networks (TN) B2B/EDI, MSR Containerization & CI/CD',
     ],
   },
+  agentic_ai: {
+    id: 'agentic_ai',
+    category: 'agentic',
+    levelNumber: 19,
+    title: 'Jnachi Certified Agentic AI & Multi-Agent Systems Engineer',
+    badgeLabel: 'JNACHI CERTIFIED AGENTIC AI ENGINEER',
+    roleName: 'Agentic AI & Multi-Agent',
+    shortDescription: 'Master autonomous ReAct loops, multi-agent orchestration frameworks (LangGraph/CrewAI/AutoGen), MCP tools, and deterministic guardrails.',
+    fullDescription: 'Validates elite architectural competence in designing, testing, and deploying autonomous AI agent systems. Assesses ReAct/Plan-and-Solve cognitive loops, LangGraph state graphs, hierarchical multi-agent delegation, Model Context Protocol (MCP) integrations, human-in-the-loop governance, and resilience against infinite loops.',
+    targetAudience: 'AI Engineers, Full-Stack AI Builders, Technical Leads, and System Architects building autonomous workflows.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#059669', // Emerald & Teal
+      secondary: '#047857',
+      border: '#a7f3d0',
+      bgBadge: '#ecfdf5',
+      textBadge: '#065f46',
+      gradientFrom: '#064e3b',
+      gradientTo: '#059669',
+      diplomaParchment: '#f0fdf4',
+      diplomaPrimary: '#065f46',
+      diplomaAccent: '#10b981',
+      sealColor: '#d1fae5',
+      sealText: '#047857',
+    },
+    keyTopics: [
+      'ReAct, Plan-and-Solve Loops & Cognitive Architectures',
+      'LangGraph State Graphs, Memory & Checkpointing',
+      'Hierarchical Multi-Agent Orchestration & Tool Routing',
+      'Model Context Protocol (MCP), Guardrails & Safety Hooks',
+    ],
+  },
+  rag_architect: {
+    id: 'rag_architect',
+    category: 'agentic',
+    levelNumber: 20,
+    title: 'Jnachi Certified Enterprise RAG Architect & Vector Specialist',
+    badgeLabel: 'JNACHI CERTIFIED RAG ARCHITECT',
+    roleName: 'RAG & Vector Architecture',
+    shortDescription: 'Demonstrate advanced expertise in hybrid search (BM25 + Dense), semantic chunking, cross-encoder reranking, graph RAG, and hallucination evaluation.',
+    fullDescription: 'Validates industry-standard engineering mastery in architecting production-grade Retrieval-Augmented Generation systems. Assesses vector database indexing (HNSW/IVFFlat), hierarchical and semantic chunking strategies, reciprocal rank fusion (RRF), Cross-Encoder rerankers, Knowledge Graph RAG, and continuous RAG evaluation using RAGAS/TruLens.',
+    targetAudience: 'RAG Architects, Vector Database Engineers, Search Specialists, and Enterprise AI Leads.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#6366f1', // Indigo & Cyan
+      secondary: '#4f46e5',
+      border: '#c7d2fe',
+      bgBadge: '#eef2ff',
+      textBadge: '#3730a3',
+      gradientFrom: '#1e1b4b',
+      gradientTo: '#4f46e5',
+      diplomaParchment: '#f5f3ff',
+      diplomaPrimary: '#3730a3',
+      diplomaAccent: '#6366f1',
+      sealColor: '#e0e7ff',
+      sealText: '#4338ca',
+    },
+    keyTopics: [
+      'Vector Indexing (HNSW, IVFFlat) & Semantic Chunking',
+      'Hybrid Search (Dense + BM25) & Reciprocal Rank Fusion (RRF)',
+      'Cross-Encoder Rerankers & Graph RAG Knowledge Graphs',
+      'RAG Triad & Automated Metric Evaluation (RAGAS / TruLens)',
+    ],
+  },
+  llmops: {
+    id: 'llmops',
+    category: 'agentic',
+    levelNumber: 21,
+    title: 'Jnachi Certified LLMOps & Model Governance Specialist',
+    badgeLabel: 'JNACHI CERTIFIED LLMOPS SPECIALIST',
+    roleName: 'LLMOps & Governance',
+    shortDescription: 'Validate deep capability in LLM deployment, high-throughput inference (vLLM/TGI), prompt versioning, OpenTelemetry tracing, and EU AI Act compliance.',
+    fullDescription: 'Validates production infrastructure and operational governance for enterprise large language models. Assesses continuous evaluation pipelines, high-throughput serving architectures (vLLM, TensorRT-LLM, KV Cache optimization), distributed tracing with OpenTelemetry/Langfuse, prompt CI/CD versioning, red-teaming, and compliance with the EU AI Act and NIST AI RMF.',
+    targetAudience: 'LLMOps Engineers, MLOps Practitioners, Platform Engineers, and AI Governance Officers.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#e11d48', // Rose & Crimson
+      secondary: '#be123c',
+      border: '#fecdd3',
+      bgBadge: '#fff1f2',
+      textBadge: '#9f1239',
+      gradientFrom: '#4c0519',
+      gradientTo: '#be123c',
+      diplomaParchment: '#fff1f2',
+      diplomaPrimary: '#881337',
+      diplomaAccent: '#f43f5e',
+      sealColor: '#ffe4e6',
+      sealText: '#9f1239',
+    },
+    keyTopics: [
+      'High-Throughput Serving (vLLM, PagedAttention, KV Caching)',
+      'Distributed Tracing, Langfuse, OpenTelemetry & Observability',
+      'Prompt CI/CD Regression Testing & Fine-Tuning LoRA/QLoRA',
+      'EU AI Act, NIST AI RMF, Red-Teaming & Enterprise Guardrails',
+    ],
+  },
+  finance_ai: {
+    id: 'finance_ai',
+    category: 'finance',
+    levelNumber: 22,
+    title: 'Jnachi Certified AI for Financial Modeling & Valuation Specialist',
+    badgeLabel: 'JNACHI CERTIFIED AI FOR FINANCIAL MODELING',
+    roleName: 'AI for Financial Modeling',
+    shortDescription: 'Prove domain expertise in automated DCF/LBO model generation, 10-K/10-Q multi-table parsing, XBRL extraction, Monte Carlo simulations, and auditability.',
+    fullDescription: 'Validates high-stakes financial analysis and modeling capabilities augmented by generative AI. Assesses automated 3-statement financial modeling, DCF and LBO sensitivity tables, complex SEC 10-K/10-Q parsing, XBRL footnote extraction, Monte Carlo risk simulations, and institutional-grade mathematical verification without hallucination.',
+    targetAudience: 'Financial Analysts, Investment Bankers, PE/VC Associates, Corporate Finance Managers, and FinTech Specialists.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#0d9488', // Teal & Emerald
+      secondary: '#0f766e',
+      border: '#99f6e4',
+      bgBadge: '#f0fdfa',
+      textBadge: '#115e59',
+      gradientFrom: '#134e4a',
+      gradientTo: '#0d9488',
+      diplomaParchment: '#f0fdfa',
+      diplomaPrimary: '#115e59',
+      diplomaAccent: '#14b8a6',
+      sealColor: '#ccfbf1',
+      sealText: '#0f766e',
+    },
+    keyTopics: [
+      'Automated DCF, LBO & 3-Statement Financial Modeling',
+      'SEC 10-K / 10-Q Multi-Table Extraction & XBRL Parsing',
+      'Deterministic Calculation Guardrails & Python Code Execution',
+      'Institutional Audit Trail, Materiality & Compliance Reporting',
+    ],
+  },
+  finops_architect: {
+    id: 'finops_architect',
+    category: 'finance',
+    levelNumber: 23,
+    title: 'Jnachi Certified FinOps & Cloud AI Cost Optimization Architect',
+    badgeLabel: 'JNACHI CERTIFIED FINOPS ARCHITECT',
+    roleName: 'Cloud AI FinOps & Cost Optimization',
+    shortDescription: 'Master cloud GPU utilization, LLM token unit economics, model cascading/routing, semantic caching, and FinOps FOCUS framework allocation.',
+    fullDescription: 'Validates strategic financial operations and technical cost optimization across enterprise cloud and AI infrastructure. Assesses cloud GPU cluster economics (H100/A100 spot vs reservation pricing), LLM token unit cost modeling, semantic caching (GPTCache/Redis), model cascading/routing from SLMs to Frontier models, and FinOps Open Cost & Usage Spec (FOCUS) attribution.',
+    targetAudience: 'FinOps Practitioners, Cloud Architects, Engineering Directors, DevOps Leads, and AI Budget Owners.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#d97706', // Amber & Gold
+      secondary: '#b45309',
+      border: '#fde68a',
+      bgBadge: '#fffbeb',
+      textBadge: '#92400e',
+      gradientFrom: '#451a03',
+      gradientTo: '#b45309',
+      diplomaParchment: '#fffbeb',
+      diplomaPrimary: '#78350f',
+      diplomaAccent: '#f59e0b',
+      sealColor: '#fef3c7',
+      sealText: '#b45309',
+    },
+    keyTopics: [
+      'LLM Token Unit Economics & Cost per Inference Request',
+      'Semantic Prompt Caching & Model Cascading (SLMs to LLMs)',
+      'Cloud GPU Cluster Rightsizing (H100/A100 Spot, vLLM Optimization)',
+      'FinOps Foundation FOCUS Framework, Showback & Chargeback',
+    ],
+  },
 };
 
 export const CORE_TIER_ORDER: CertTier[] = ['beginner', 'practitioner', 'builder', 'master'];
 export const ROLE_TIER_ORDER: CertTier[] = ['sales', 'developers', 'marketers', 'support', 'hr', 'managers'];
 export const PYTHON_TIER_ORDER: CertTier[] = ['python_ai', 'python_dev'];
+export const AGENTIC_TIER_ORDER: CertTier[] = ['agentic_ai', 'rag_architect', 'llmops'];
+export const FINANCE_TIER_ORDER: CertTier[] = ['finance_ai', 'finops_architect'];
 export const INTEGRATION_TIER_ORDER: CertTier[] = ['mulesoft', 'salesforce_integration', 'ibm_mq', 'ibm_ace', 'boomi', 'webmethods'];
 export const TIER_ORDER: CertTier[] = [
   ...CORE_TIER_ORDER,
   ...ROLE_TIER_ORDER,
   ...PYTHON_TIER_ORDER,
+  ...AGENTIC_TIER_ORDER,
+  ...FINANCE_TIER_ORDER,
   ...INTEGRATION_TIER_ORDER,
 ];
 
@@ -716,6 +895,11 @@ export const TIER_SLUGS: Record<CertTier, string> = {
   managers: 'ai-for-managers',
   python_ai: 'python-ai',
   python_dev: 'python-engineering',
+  agentic_ai: 'agentic-ai-engineer',
+  rag_architect: 'rag-architect',
+  llmops: 'llmops-specialist',
+  finance_ai: 'ai-financial-modeling',
+  finops_architect: 'finops-architect',
   mulesoft: 'mulesoft-integration',
   salesforce_integration: 'salesforce-integration',
   ibm_mq: 'ibm-mq',

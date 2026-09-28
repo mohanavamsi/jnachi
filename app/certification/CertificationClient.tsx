@@ -57,7 +57,7 @@ import {
   EXAM_DURATION_MS,
   PASSING_THRESHOLD,
 } from '@/lib/certService';
-import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, PYTHON_TIER_ORDER, INTEGRATION_TIER_ORDER, CertCategory, TIER_SLUGS, getSlugByTier } from '@/lib/certTypes';
+import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, PYTHON_TIER_ORDER, AGENTIC_TIER_ORDER, FINANCE_TIER_ORDER, INTEGRATION_TIER_ORDER, CertCategory, TIER_SLUGS, getSlugByTier } from '@/lib/certTypes';
 import { LESSONS, CategoryKey } from '@/lib/lessonsData';
 import BeginnerCertificateModal from '@/components/BeginnerCertificateModal';
 import ExamSyllabusModal from '@/components/ExamSyllabusModal';
@@ -1127,6 +1127,40 @@ export default function CertificationClient({
                   <button
                     type="button"
                     onClick={() => {
+                      setActiveTrackTab('agentic');
+                      if (!AGENTIC_TIER_ORDER.includes(selectedTier)) {
+                        setSelectedTier('agentic_ai');
+                        if (effectiveEmail) handleCheckStatus(effectiveEmail, 'agentic_ai');
+                      }
+                    }}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                      activeTrackTab === 'agentic'
+                        ? 'bg-white text-emerald-700 shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    Agentic AI (3 Tracks)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveTrackTab('finance');
+                      if (!FINANCE_TIER_ORDER.includes(selectedTier)) {
+                        setSelectedTier('finance_ai');
+                        if (effectiveEmail) handleCheckStatus(effectiveEmail, 'finance_ai');
+                      }
+                    }}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                      activeTrackTab === 'finance'
+                        ? 'bg-white text-teal-700 shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    Finance AI (2 Tracks)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
                       setActiveTrackTab('role');
                       if (!ROLE_TIER_ORDER.includes(selectedTier)) {
                         setSelectedTier('sales');
@@ -1173,14 +1207,25 @@ export default function CertificationClient({
                         : 'text-slate-600 hover:text-slate-900'
                     }`}
                   >
-                    Integration (5 Tracks)
+                    Integration (6 Tracks)
                   </button>
                 </div>
               </div>
 
               {/* TIER CARDS GRID */}
-              <div className={`grid gap-4 ${activeTrackTab === 'core' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : activeTrackTab === 'python' ? 'grid-cols-1 sm:grid-cols-2' : activeTrackTab === 'integration' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
-                {(activeTrackTab === 'core' ? CORE_TIER_ORDER : activeTrackTab === 'python' ? PYTHON_TIER_ORDER : activeTrackTab === 'integration' ? INTEGRATION_TIER_ORDER : ROLE_TIER_ORDER).map((tierKey) => {
+              <div className={`grid gap-4 ${activeTrackTab === 'core' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : activeTrackTab === 'python' || activeTrackTab === 'finance' ? 'grid-cols-1 sm:grid-cols-2' : activeTrackTab === 'integration' || activeTrackTab === 'agentic' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
+                {(activeTrackTab === 'core'
+                  ? CORE_TIER_ORDER
+                  : activeTrackTab === 'agentic'
+                  ? AGENTIC_TIER_ORDER
+                  : activeTrackTab === 'finance'
+                  ? FINANCE_TIER_ORDER
+                  : activeTrackTab === 'python'
+                  ? PYTHON_TIER_ORDER
+                  : activeTrackTab === 'integration'
+                  ? INTEGRATION_TIER_ORDER
+                  : ROLE_TIER_ORDER
+                ).map((tierKey) => {
                   const tier = CERT_TIERS[tierKey];
                   const isSelected = selectedTier === tierKey;
                   const tierProgress = statusResponse?.allTiersProgress?.[tierKey];

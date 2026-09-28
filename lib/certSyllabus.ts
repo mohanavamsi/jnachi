@@ -1647,6 +1647,451 @@ export const CERT_SYLLABUS: Record<CertTier, CertSyllabusData> = {
     },
     preparationPath: COMMON_PREP_PATH,
   },
+
+  // 19. AGENTIC AI & MULTI-AGENT SYSTEMS ENGINEER
+  agentic_ai: {
+    tier: 'agentic_ai',
+    title: 'Jnachi Certified Agentic AI & Multi-Agent Systems Engineer',
+    overview: 'Validates architectural and implementation mastery in designing, orchestrating, and securing autonomous AI agent systems using LangGraph, CrewAI, AutoGen, and Model Context Protocol (MCP).',
+    targetRole: 'AI Engineers, Autonomous Agent Developers, AI Solutions Architects, and Technical Leads.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Agentic Paradigms, ReAct Loops & Cognitive Architectures',
+        weightPercent: 25,
+        overview: 'ReAct cognitive loops, Plan-and-Solve strategies, LLM reasoning patterns, autonomous goal decomposition, and deterministic stop conditions.',
+        topics: [
+          {
+            title: 'ReAct Cognitive Cycles & Plan-and-Solve',
+            description: 'Thought-Action-Observation loops, scratchpad memory management, dynamic tool invocation, error correction, and loop breakout mechanisms.',
+            skillsAssessed: ['ReAct Architecture', 'Plan-and-Solve', 'Loop Termination'],
+          },
+          {
+            title: 'Tool Use Schemas & Function Calling Standards',
+            description: 'JSON Schema definition for tools, deterministic argument extraction, handling malformed tool responses, and structured outputs.',
+            skillsAssessed: ['Tool Schemas', 'Function Calling', 'Structured Outputs'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Multi-Agent Orchestration, LangGraph State & Tool Routing',
+        weightPercent: 25,
+        overview: 'Building multi-agent systems with LangGraph state graphs, hierarchical supervisor-worker delegation, CrewAI processes, and dynamic routing.',
+        topics: [
+          {
+            title: 'LangGraph State Graphs & Checkpointing',
+            description: 'State definitions, node execution, conditional edges, cycle handling, time-travel debugging, and SQLite/Postgres checkpointers.',
+            skillsAssessed: ['LangGraph State', 'Conditional Routing', 'Checkpointing'],
+          },
+          {
+            title: 'Hierarchical Multi-Agent Teams & Delegation',
+            description: 'Supervisor routing patterns, consensus voting, specialized domain agents, sub-task handoffs, and inter-agent communication protocols.',
+            skillsAssessed: ['Supervisor Patterns', 'Agent Handoffs', 'Consensus Protocols'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Agent Guardrails, Security, MCP & Sandboxing',
+        weightPercent: 25,
+        overview: 'Model Context Protocol (MCP) server security, preventing prompt injection through tools, sandboxed code execution, and human-in-the-loop approvals.',
+        topics: [
+          {
+            title: 'Model Context Protocol (MCP) Architecture & Security',
+            description: 'MCP client/server communication, JSON-RPC transport, tool exposure scopes, authentication, and secure resource isolation.',
+            skillsAssessed: ['MCP Protocol', 'JSON-RPC', 'Resource Isolation'],
+          },
+          {
+            title: 'Agentic Guardrails & Sandboxed Execution',
+            description: 'Preventing indirect prompt injection, tool permissions, gVisor/Docker sandboxing for code agents, and human-in-the-loop intervention thresholds.',
+            skillsAssessed: ['Indirect Prompt Injection', 'Sandboxing', 'Human-in-the-Loop'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Agent Scalability, Memory Systems, Resiliency & Evaluation',
+        weightPercent: 25,
+        overview: 'Long-term agent memory architectures (short-term, episodic, semantic), distributed agent execution, token budget management, and agentic benchmarks.',
+        topics: [
+          {
+            title: 'Agent Memory Systems & Episodic Recall',
+            description: 'Short-term buffer windows, semantic vector memory, episodic memory storage, summary compression, and cross-session entity retrieval.',
+            skillsAssessed: ['Episodic Memory', 'Semantic Recall', 'Context Compression'],
+          },
+          {
+            title: 'Agent Benchmarking, Tracing & Resilience',
+            description: 'Evaluating multi-step success rates, tracing agent trajectories with Langfuse/Phoenix, rate-limit fallback retries, and token cost caps.',
+            skillsAssessed: ['Agent Evaluation', 'Telemetry & Tracing', 'Resiliency & Backoff'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 20. ENTERPRISE RAG ARCHITECT & VECTOR SPECIALIST
+  rag_architect: {
+    tier: 'rag_architect',
+    title: 'Jnachi Certified Enterprise RAG Architect & Vector Specialist',
+    overview: 'Validates deep expertise in architecting, optimizing, and evaluating production-grade Retrieval-Augmented Generation systems with hybrid search, semantic chunking, and knowledge graphs.',
+    targetRole: 'RAG Architects, Vector Database Engineers, Search Specialists, and Enterprise AI Leads.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Embedding Models, Vector Indexes & Chunking Strategies',
+        weightPercent: 25,
+        overview: 'Vector mathematics, embedding dimensionality, HNSW vs IVFFlat indexing, distance metrics, and advanced document chunking algorithms.',
+        topics: [
+          {
+            title: 'Vector Indexing & Distance Metrics',
+            description: 'HNSW graph navigation, IVFFlat inverted file lists, cosine similarity vs inner product vs Euclidean distance, and quantization techniques (PQ/SQ).',
+            skillsAssessed: ['HNSW Indexing', 'Distance Metrics', 'Product Quantization'],
+          },
+          {
+            title: 'Semantic & Hierarchical Chunking',
+            description: 'Semantic boundary chunking, parent-child document relationships, sliding context windows, and table-aware document parsing.',
+            skillsAssessed: ['Semantic Chunking', 'Parent-Child Indexing', 'Table Parsing'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Hybrid Search, Reciprocal Rank Fusion & Rerankers',
+        weightPercent: 25,
+        overview: 'Combining dense vector search with sparse keyword search (BM25), Reciprocal Rank Fusion (RRF), Cross-Encoder reranking, and query transformations.',
+        topics: [
+          {
+            title: 'Hybrid Search & Reciprocal Rank Fusion (RRF)',
+            description: 'Merging sparse BM25 inverted index results with dense vector embeddings using RRF scoring algorithms and weighted rank fusion.',
+            skillsAssessed: ['Sparse + Dense Search', 'BM25 Indexing', 'RRF Algorithm'],
+          },
+          {
+            title: 'Cross-Encoder Rerankers & Query Transformations',
+            description: 'Deploying Cross-Encoder models (Cohere/BGE), Query Rewriting, HyDE (Hypothetical Document Embeddings), and Multi-Query decomposition.',
+            skillsAssessed: ['Cross-Encoder Rerankers', 'HyDE', 'Query Expansion'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'RAG Security, Access Control, PII Redaction & Data Governance',
+        weightPercent: 25,
+        overview: 'Document-level role-based access control (RBAC), metadata pre-filtering, PII token redaction, vector index isolation, and tenant segregation.',
+        topics: [
+          {
+            title: 'Document-Level Access Control & Pre-Filtering',
+            description: 'Securing vector retrievals with metadata filtering (ACL tags, tenant IDs), preventing unauthorized document leakage in shared indices.',
+            skillsAssessed: ['Metadata Pre-Filtering', 'Document RBAC', 'Multi-Tenant Isolation'],
+          },
+          {
+            title: 'PII Redaction & Retrieval Data Governance',
+            description: 'Detecting and masking sensitive enterprise data prior to embedding generation and vector ingestion pipelines.',
+            skillsAssessed: ['PII Masking', 'Data Governance', 'Embedding Sanitization'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'RAG Evaluation, Scalability, Graph RAG & Cache Optimization',
+        weightPercent: 25,
+        overview: 'Automated evaluation frameworks (RAGAS / TruLens RAG Triad), Knowledge Graph RAG (GraphRAG), semantic vector caching, and index sharding.',
+        topics: [
+          {
+            title: 'RAG Triad & Automated Metric Evaluation',
+            description: 'Measuring Context Relevance, Groundedness (Faithfulness), and Answer Relevance using RAGAS and TruLens benchmark pipelines.',
+            skillsAssessed: ['RAGAS Metrics', 'Groundedness Evaluation', 'TruLens Triad'],
+          },
+          {
+            title: 'Knowledge Graph RAG & Semantic Caching',
+            description: 'Extracting entities and relationships for GraphRAG, hybrid graph-vector querying, and prompt semantic caching with Redis/GPTCache.',
+            skillsAssessed: ['GraphRAG', 'Knowledge Graphs', 'Semantic Caching'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 21. LLMOPS & MODEL GOVERNANCE SPECIALIST
+  llmops: {
+    tier: 'llmops',
+    title: 'Jnachi Certified LLMOps & Model Governance Specialist',
+    overview: 'Validates operational and infrastructural mastery in deploying, monitoring, fine-tuning, and governing enterprise large language models at scale.',
+    targetRole: 'LLMOps Engineers, MLOps Practitioners, Platform Engineers, and AI Governance Officers.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'High-Throughput LLM Serving, vLLM & KV Caching',
+        weightPercent: 25,
+        overview: 'Inference engines, PagedAttention memory management, KV Cache optimization, continuous batching, and speculative decoding.',
+        topics: [
+          {
+            title: 'High-Throughput Inference Engines (vLLM / TGI)',
+            description: 'PagedAttention algorithm, KV Cache memory fragmentation reduction, continuous batching, and tensor parallelism across multiple GPUs.',
+            skillsAssessed: ['vLLM Architecture', 'PagedAttention', 'Continuous Batching'],
+          },
+          {
+            title: 'Quantization & Speculative Decoding',
+            description: 'Deploying AWQ, GPTQ, and FP8 quantized weights for reduced VRAM footprint and draft-target speculative decoding acceleration.',
+            skillsAssessed: ['Model Quantization (AWQ/FP8)', 'Speculative Decoding', 'VRAM Profiling'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'CI/CD Prompt Pipelines, Fine-Tuning (LoRA) & Tracing',
+        weightPercent: 25,
+        overview: 'Prompt version control, automated regression evaluation, LoRA/QLoRA parameter-efficient fine-tuning pipelines, and distributed tracing with OpenTelemetry.',
+        topics: [
+          {
+            title: 'Prompt CI/CD & Automated Regression Testing',
+            description: 'Git-backed prompt versioning, automated Golden Dataset regression tests, prompt linting, and canary release traffic splitting.',
+            skillsAssessed: ['Prompt Versioning', 'Regression Testing', 'Canary Deployments'],
+          },
+          {
+            title: 'Parameter-Efficient Fine-Tuning (PEFT / LoRA)',
+            description: 'LoRA rank/alpha configuration, QLoRA 4-bit fine-tuning, dataset preparation, adapter merging, and validation loss tracking.',
+            skillsAssessed: ['LoRA / QLoRA', 'Adapter Merging', 'PEFT Pipelines'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Model Governance, EU AI Act, Red-Teaming & Safety Guardrails',
+        weightPercent: 25,
+        overview: 'AI regulatory compliance (EU AI Act, NIST AI RMF), red-teaming for jailbreak vulnerabilities, NeMo Guardrails, and enterprise toxicity filtering.',
+        topics: [
+          {
+            title: 'EU AI Act Compliance & Risk Classification',
+            description: 'High-risk vs general-purpose AI model obligations, technical documentation, human oversight logs, and audit trail transparency.',
+            skillsAssessed: ['EU AI Act', 'NIST AI RMF', 'Compliance Auditing'],
+          },
+          {
+            title: 'Red-Teaming, Jailbreak Defense & NeMo Guardrails',
+            description: 'Defending against token smuggling, character roleplay bypasses, Colang guardrail policies, and automated red-teaming pipelines.',
+            skillsAssessed: ['Jailbreak Defense', 'NeMo Guardrails', 'Red-Teaming'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'GPU Cluster Autoscaling, Cost Optimization & Drift Detection',
+        weightPercent: 25,
+        overview: 'Kubernetes GPU cluster autoscaling (KEDA/Ray), inference latency profiling, token drift detection, and OpenTelemetry observability.',
+        topics: [
+          {
+            title: 'Distributed Observability & OpenTelemetry Tracing',
+            description: 'Instrumenting LLM pipelines with Langfuse/Phoenix, tracking TTFT (Time to First Token), inter-token latency, and token volume.',
+            skillsAssessed: ['OpenTelemetry', 'Langfuse Observability', 'TTFT Profiling'],
+          },
+          {
+            title: 'GPU Cluster Autoscaling & Drift Monitoring',
+            description: 'Autoscaling vLLM replicas on Kubernetes with KEDA based on queue depth, monitoring data distribution drift and output degradation.',
+            skillsAssessed: ['KEDA GPU Autoscaling', 'Concept Drift', 'Ray Clusters'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 22. AI FOR FINANCIAL MODELING & VALUATION SPECIALIST
+  finance_ai: {
+    tier: 'finance_ai',
+    title: 'Jnachi Certified AI for Financial Modeling & Valuation Specialist',
+    overview: 'Validates practical and quantitative mastery in leveraging generative AI and deterministic code interpreters for institutional financial modeling, valuation, SEC filing analysis, and risk simulations.',
+    targetRole: 'Financial Analysts, Investment Bankers, PE/VC Associates, Corporate Finance Directors, and FinTech Specialists.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Financial Prompt Engineering & Quantitative Model Foundations',
+        weightPercent: 25,
+        overview: 'Precision prompt structuring for accounting rules, financial terminology calibration, hallucination prevention in numbers, and structured financial JSON schemas.',
+        topics: [
+          {
+            title: 'Financial Statement Calibration & Number Guardrails',
+            description: 'Strict prompting constraints for 3-statement linking, GAAP/IFRS accounting adjustments, and eliminating arithmetic hallucinations.',
+            skillsAssessed: ['Financial Prompting', 'GAAP/IFRS Rules', 'Arithmetic Guardrails'],
+          },
+          {
+            title: 'Structured Output Schemas for Financial Datasets',
+            description: 'Enforcing JSON schemas for balance sheets, cash flows, and income statement lines with explicit data types and reconciliation tags.',
+            skillsAssessed: ['Financial JSON Schemas', 'Reconciliation Tags', 'Data Validation'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Automated DCF, LBO, 3-Statement Modeling & Code Interpreters',
+        weightPercent: 25,
+        overview: 'Automating Discounted Cash Flow (DCF), Leveraged Buyout (LBO) schedules, sensitivity tables, and deterministic Python calculation engines.',
+        topics: [
+          {
+            title: 'Automated DCF & LBO Model Construction',
+            description: 'Generating unlevered free cash flow projections, WACC discounting, terminal value Gordon Growth / exit multiples, and debt paydown cascades.',
+            skillsAssessed: ['DCF Modeling', 'LBO Cascades', 'WACC Calculations'],
+          },
+          {
+            title: 'Deterministic Python Code Execution for Valuation',
+            description: 'Pairing LLMs with sandboxed Python code interpreters to run exact mathematical operations, financial libraries (numpy/scipy), and matrix calculations.',
+            skillsAssessed: ['Python Code Interpreter', 'Numpy Financials', 'Exact Math Execution'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Financial Data Compliance, MNPI Confidentiality & SEC Disclosures',
+        weightPercent: 25,
+        overview: 'Material Non-Public Information (MNPI) protection, confidential M&A data handling, SEC compliance, and zero data-retention enterprise boundaries.',
+        topics: [
+          {
+            title: 'MNPI & Deal Data Confidentiality Protocol',
+            description: 'Zero-retention model configurations, air-gapped financial LLMs, preventing cross-tenant data leakage in investment banking environments.',
+            skillsAssessed: ['MNPI Compliance', 'Zero Data Retention', 'Deal Privacy'],
+          },
+          {
+            title: 'SEC 10-K / 10-Q Extraction & XBRL Tagging',
+            description: 'Extracting multi-table financial filings from SEC EDGAR, parsing XBRL taxonomies, and reconciling footnote disclosures.',
+            skillsAssessed: ['SEC EDGAR Parsing', 'XBRL Taxonomies', 'Footnote Reconciliation'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Monte Carlo Simulations, Sensitivity Tables & Institutional Auditing',
+        weightPercent: 25,
+        overview: 'Running high-iteration Monte Carlo risk simulations, 2-way sensitivity tables, dynamic scenario analysis, and institutional model audit trails.',
+        topics: [
+          {
+            title: 'Monte Carlo Risk Simulations & Sensitivity Analysis',
+            description: 'Executing 10,000+ simulation iterations for revenue and margin distributions, generating Value-at-Risk (VaR) percentiles and tornado charts.',
+            skillsAssessed: ['Monte Carlo Simulations', 'Sensitivity Tables', 'VaR Analysis'],
+          },
+          {
+            title: 'Institutional Auditability & Model Verification',
+            description: 'Documenting automated formula lineage, cell-level citation tracking, stress-testing macroeconomic shocks, and compliance verification.',
+            skillsAssessed: ['Model Lineage', 'Citation Tracking', 'Stress Testing'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+
+  // 23. FINOPS & CLOUD AI COST OPTIMIZATION ARCHITECT
+  finops_architect: {
+    tier: 'finops_architect',
+    title: 'Jnachi Certified FinOps & Cloud AI Cost Optimization Architect',
+    overview: 'Validates strategic financial engineering and cloud optimization mastery for AI infrastructure, GPU clusters, model routing, prompt caching, and FinOps FOCUS framework allocation.',
+    targetRole: 'FinOps Practitioners, Cloud Architects, Engineering Directors, DevOps Leads, and AI Budget Owners.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Cloud AI Cost Fundamentals, GPU Pricing & Token Unit Economics',
+        weightPercent: 25,
+        overview: 'LLM token unit economic models, pricing differences across proprietary vs open-source models, GPU hourly cost structures, and TCO modeling.',
+        topics: [
+          {
+            title: 'Token Unit Economics & Cost per API Transaction',
+            description: 'Calculating input/output token cost formulas, prompt caching discounts, context window expansion overhead, and pricing tier trade-offs.',
+            skillsAssessed: ['Token Unit Economics', 'API Pricing Models', 'TCO Calculation'],
+          },
+          {
+            title: 'Cloud GPU Architecture & Cost Profiles (H100/A100/L40S)',
+            description: 'Analyzing compute-per-dollar efficiency across GPU classes, reserved vs on-demand vs spot pricing, and inter-node network interconnect costs.',
+            skillsAssessed: ['GPU TCO Profiles', 'Spot vs Reserved', 'Interconnect Costs'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Model Cascading, Semantic Caching & Dynamic Routing Pipelines',
+        weightPercent: 25,
+        overview: 'Automated cost reduction pipelines using semantic response caching, small language model (SLM) triage cascading, and dynamic latency/cost routers.',
+        topics: [
+          {
+            title: 'Semantic Prompt Caching & Redis Integration',
+            description: 'Deploying similarity threshold caching (GPTCache/Redis), reducing redundant LLM API calls by 40-70%, and cache invalidation policies.',
+            skillsAssessed: ['Semantic Caching', 'Similarity Thresholds', 'Cache Hit Optimization'],
+          },
+          {
+            title: 'Model Cascading & Intelligent LLM Routers',
+            description: 'Routing simple queries to lightweight SLMs (Llama 3 8B) and escalating complex reasoning to Frontier models (Claude 3.5 Sonnet / GPT-4o).',
+            skillsAssessed: ['Model Cascading', 'Query Classification', 'Cost-Based Routing'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Cost Governance, Multi-Tenant Allocation & Budget Guardrails',
+        weightPercent: 25,
+        overview: 'FinOps Foundation FOCUS framework, multi-tenant chargeback/showback tagging, hard spending rate limits, and anomaly detection.',
+        topics: [
+          {
+            title: 'Multi-Tenant AI Cost Allocation & FOCUS Standard',
+            description: 'Tagging inference workloads by department and product, standardizing cost reports using the FinOps Open Cost & Usage Spec (FOCUS).',
+            skillsAssessed: ['FOCUS 1.0 Specification', 'Multi-Tenant Chargeback', 'Tagging Governance'],
+          },
+          {
+            title: 'Budget Enforcers & Automated Rate-Limit Guardrails',
+            description: 'Implementing token-bucket rate limiters per API key, automated budget circuit breakers, and anomaly spend alerting.',
+            skillsAssessed: ['Budget Circuit Breakers', 'Token Rate Limiting', 'Spend Anomaly Detection'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'GPU Fleet Rightsizing, Spot Orchestration & FinOps FOCUS Scaling',
+        weightPercent: 25,
+        overview: 'Self-hosted model scaling on Kubernetes, spot instance fault tolerance, dynamic batching economics, and long-term cloud commitment strategies.',
+        topics: [
+          {
+            title: 'GPU Cluster Rightsizing & Spot Orchestration',
+            description: 'Deploying Ray / Kubernetes clusters with spot instance preemption handlers, mixed GPU architectures, and dynamic scale-to-zero workloads.',
+            skillsAssessed: ['Spot Preemption Handling', 'Scale-to-Zero', 'GPU Rightsizing'],
+          },
+          {
+            title: 'Build vs Buy Decision Modeling & Long-Term Commitments',
+            description: 'Quantitative modeling for transitioning from hosted APIs to self-hosted vLLM clusters based on monthly request volume thresholds.',
+            skillsAssessed: ['Build vs Buy Modeling', 'Volume Break-Even', 'Commitment Discounts'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
 };
 
 export const CERT_SYLLABI = CERT_SYLLABUS;

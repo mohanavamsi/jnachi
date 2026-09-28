@@ -22,28 +22,36 @@ import {
   CORE_TIER_ORDER,
   ROLE_TIER_ORDER,
   PYTHON_TIER_ORDER,
+  AGENTIC_TIER_ORDER,
+  FINANCE_TIER_ORDER,
   INTEGRATION_TIER_ORDER,
   CertTier,
   getSlugByTier,
 } from '@/lib/certTypes';
 
-type CategoryFilter = 'all' | 'core' | 'role' | 'python' | 'integration';
+type CategoryFilter = 'all' | 'core' | 'agentic' | 'finance' | 'role' | 'python' | 'integration';
 
 export function HomeCertificationCatalog() {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('core');
 
   const categories: { id: CategoryFilter; label: string; count: number; icon: typeof Sparkles }[] = [
     { id: 'core', label: 'Core AI Ladder (Featured)', count: CORE_TIER_ORDER.length, icon: Brain },
+    { id: 'agentic', label: 'Agentic AI & RAG', count: AGENTIC_TIER_ORDER.length, icon: Zap },
+    { id: 'finance', label: 'Finance & FinOps AI', count: FINANCE_TIER_ORDER.length, icon: Award },
     { id: 'role', label: 'Role-Based AI Tracks', count: ROLE_TIER_ORDER.length, icon: Users2 },
     { id: 'python', label: 'Applied Python', count: PYTHON_TIER_ORDER.length, icon: Code2 },
     { id: 'integration', label: 'Enterprise Integration', count: INTEGRATION_TIER_ORDER.length, icon: Cpu },
-    { id: 'all', label: 'All 18 Certifications', count: 18, icon: Layers },
+    { id: 'all', label: 'All 23 Certifications', count: 23, icon: Layers },
   ];
 
   const getTiersForCategory = (): CertTier[] => {
     switch (activeCategory) {
       case 'core':
         return CORE_TIER_ORDER;
+      case 'agentic':
+        return AGENTIC_TIER_ORDER;
+      case 'finance':
+        return FINANCE_TIER_ORDER;
       case 'role':
         return ROLE_TIER_ORDER;
       case 'python':
@@ -54,6 +62,8 @@ export function HomeCertificationCatalog() {
       default:
         return [
           ...CORE_TIER_ORDER,
+          ...AGENTIC_TIER_ORDER,
+          ...FINANCE_TIER_ORDER,
           ...ROLE_TIER_ORDER,
           ...PYTHON_TIER_ORDER,
           ...INTEGRATION_TIER_ORDER,
