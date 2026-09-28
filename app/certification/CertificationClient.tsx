@@ -62,6 +62,7 @@ import { LESSONS, CategoryKey } from '@/lib/lessonsData';
 import BeginnerCertificateModal from '@/components/BeginnerCertificateModal';
 import ExamSyllabusModal from '@/components/ExamSyllabusModal';
 import ProctoringPreCheckModal from '@/components/ProctoringPreCheckModal';
+import ProctoringLiveWidget from '@/components/ProctoringLiveWidget';
 import ActiveTierCurriculumExplorer from '@/components/ActiveTierCurriculumExplorer';
 import RazorpayModal from '@/components/RazorpayModal';
 import { useAuth } from '@/components/AuthProvider';
@@ -2191,6 +2192,13 @@ export default function CertificationClient({
             </div>
           </div>
         )}
+
+        {/* Phase 2: Live In-Exam Proctoring Overlay (Video + Audio Meter + Presence Detection) */}
+        <ProctoringLiveWidget
+          isActive={view === 'exam' && isProctoredMode}
+          strikes={examState.strikes || 0}
+          onViolation={(reason) => registerSecurityViolation(reason)}
+        />
       </div>
     );
   }

@@ -415,6 +415,33 @@ export default function VerifyCertificateClient({
               </div>
             </div>
 
+            {/* AI PROCTORING & INTEGRITY TRUST BADGE */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-300 shrink-0">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h4 className="text-sm font-bold text-white">AI-Proctored Examination & Biometric Security</h4>
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      Integrity 100%
+                    </span>
+                  </div>
+                  <p className="text-xs text-indigo-200/80 mt-0.5">
+                    Completed under verified camera presence, audio monitoring, clipboard lock, and tab-focus lockdown without security violations.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+                <span className="text-[11px] font-bold text-slate-400">Proctoring Level:</span>
+                <span className="text-xs font-mono font-bold text-amber-300 bg-black/40 px-2.5 py-1 rounded-lg border border-white/10">
+                  Level 2 Proctored
+                </span>
+              </div>
+            </div>
+
             {/* 4-TRACK COMPETENCY VERIFICATION */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="p-5 rounded-2xl bg-slate-900/80 border border-white/10 space-y-2.5">

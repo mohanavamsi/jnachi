@@ -250,10 +250,14 @@ export default function BeginnerCertificateModal({
               <Award className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-                {tierConfig.title} Diploma
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2 flex-wrap">
+                <span>{tierConfig.title} Diploma</span>
                 <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-300">
                   Verified Pass
+                </span>
+                <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-indigo-100 text-indigo-800 border border-indigo-300 flex items-center gap-1">
+                  <ShieldCheck className="w-3 h-3 text-indigo-600" />
+                  AI Proctored V2
                 </span>
               </h2>
               <p className="text-xs text-slate-500">
