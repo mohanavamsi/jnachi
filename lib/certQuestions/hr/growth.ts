@@ -2,363 +2,723 @@ import { CertQuestion } from '../types';
 
 export const HR_GROWTH_QUESTIONS: CertQuestion[] = [
   {
-    id: 'hr_grow_01',
-    section: 'growth',
-    prompt: 'How should a Chief People Officer lead Strategic Workforce Planning in an organization rapidly adopting generative AI?',
-    options: [
-      { id: 'a', label: 'Deconstruct traditional roles into core task bundles, identify tasks augmented or automated by AI, and invest in structured upskilling pathways shifting employees to higher-order strategic work.' },
-      { id: 'b', label: 'Lay off 100% of non-engineering staff immediately.' },
-      { id: 'c', label: 'Ban all employees from learning how to use AI tools.' },
-      { id: 'd', label: 'Assume job descriptions will remain unchanged for the next 50 years.' },
+    "id": "hr_grow_01",
+    "section": "growth",
+    "prompt": "How should a Chief People Officer lead Strategic Workforce Planning in an organization rapidly adopting generative AI?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Lay off 100% of non-engineering staff immediately."
+      },
+      {
+        "id": "b",
+        "label": "Deconstruct traditional roles into core task bundles, identify tasks augmented or automated by AI, and invest in structured upskilling pathways shifting employees to higher-order strategic work."
+      },
+      {
+        "id": "c",
+        "label": "Ban all employees from learning how to use AI tools."
+      },
+      {
+        "id": "d",
+        "label": "Assume job descriptions will remain unchanged for the next 50 years."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_grow_02',
-    section: 'growth',
-    prompt: 'How can People Operations cultivate an agile "Continuous Learning Organization"?',
-    options: [
-      { id: 'a', label: 'Provide individual annual learning & development stipends, dedicate monthly company-wide hackathon days, host internal peer-teaching labs, and reward proactive upskilling in promotion rubrics.' },
-      { id: 'b', label: 'Punish employees who take 30 minutes a week to read technical industry research.' },
-      { id: 'c', label: 'Cancel all employee training budgets to minimize quarterly expenses.' },
-      { id: 'd', label: 'Expect employees to learn everything in their personal time with zero company support.' },
+    "id": "hr_grow_02",
+    "section": "growth",
+    "prompt": "How can People Operations cultivate an agile \"Continuous Learning Organization\"?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Provide individual annual learning & development stipends, dedicate monthly company-wide hackathon days, host internal peer-teaching labs, and reward proactive upskilling in promotion rubrics."
+      },
+      {
+        "id": "b",
+        "label": "Punish employees who take 30 minutes a week to read technical industry research."
+      },
+      {
+        "id": "c",
+        "label": "Cancel all employee training budgets to minimize quarterly expenses."
+      },
+      {
+        "id": "d",
+        "label": "Expect employees to learn everything in their personal time with zero company support."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_grow_03',
-    section: 'growth',
-    prompt: 'How should executive leadership conduct objective Succession Planning for mission-critical roles?',
-    options: [
-      { id: 'a', label: 'Evaluate potential successors on calibrated Performance vs. Potential matrices (9-Box grid), design targeted executive rotational assignments, and establish ready-now vs ready-in-2-years benches.' },
-      { id: 'b', label: 'Pick successors based on personal friendships and golf buddies.' },
-      { id: 'c', label: 'Assume executive leaders will never leave the company or retire.' },
-      { id: 'd', label: 'Keep succession plans completely undocumented.' },
+    "id": "hr_grow_03",
+    "section": "growth",
+    "prompt": "How should executive leadership conduct objective Succession Planning for mission-critical roles?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Pick successors based on personal friendships and golf buddies."
+      },
+      {
+        "id": "b",
+        "label": "Assume executive leaders will never leave the company or retire."
+      },
+      {
+        "id": "c",
+        "label": "Keep succession plans completely undocumented."
+      },
+      {
+        "id": "d",
+        "label": "Evaluate potential successors on calibrated Performance vs. Potential matrices (9-Box grid), design targeted executive rotational assignments, and establish ready-now vs ready-in-2-years benches."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_grow_04',
-    section: 'growth',
-    prompt: 'Why are progressive companies shifting away from rigid annual performance ratings toward Continuous Coaching dialogs?',
-    options: [
-      { id: 'a', label: 'Annual reviews suffer from severe recency bias and lack real-time course correction; frequent 1-on-1 coaching conversations drive 3x higher employee agility, engagement, and development.' },
-      { id: 'b', label: 'Continuous coaching allows companies to eliminate all employee promotions.' },
-      { id: 'c', label: 'Annual reviews are prohibited by federal labor laws.' },
-      { id: 'd', label: 'Because managers prefer to have zero conversations with their teams.' },
+    "id": "hr_grow_04",
+    "section": "growth",
+    "prompt": "Why are progressive companies shifting away from rigid annual performance ratings toward Continuous Coaching dialogs?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Continuous coaching allows companies to eliminate all employee promotions."
+      },
+      {
+        "id": "b",
+        "label": "Annual reviews are prohibited by federal labor laws."
+      },
+      {
+        "id": "c",
+        "label": "Annual reviews suffer from severe recency bias and lack real-time course correction; frequent 1-on-1 coaching conversations drive 3x higher employee agility, engagement, and development."
+      },
+      {
+        "id": "d",
+        "label": "Because managers prefer to have zero conversations with their teams."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_grow_05',
-    section: 'growth',
-    prompt: 'How should an organization execute a high-impact Diversity, Equity, Inclusion & Belonging (DEIB) strategy?',
-    options: [
-      { id: 'a', label: 'Embed systemic equity into talent attraction (diverse sourcing pools, blind resume audits), promotion calibration parity, inclusive leadership training, and measurable executive accountability.' },
-      { id: 'b', label: 'Treat DEIB solely as a one-time marketing PR campaign during awareness months.' },
-      { id: 'c', label: 'Enforce rigid illegal demographic hiring quotas.' },
-      { id: 'd', label: 'Ignore diversity metrics completely.' },
+    "id": "hr_grow_05",
+    "section": "growth",
+    "prompt": "How should an organization execute a high-impact Diversity, Equity, Inclusion & Belonging (DEIB) strategy?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Treat DEIB solely as a one-time marketing PR campaign during awareness months."
+      },
+      {
+        "id": "b",
+        "label": "Embed systemic equity into talent attraction (diverse sourcing pools, blind resume audits), promotion calibration parity, inclusive leadership training, and measurable executive accountability."
+      },
+      {
+        "id": "c",
+        "label": "Enforce rigid illegal demographic hiring quotas."
+      },
+      {
+        "id": "d",
+        "label": "Ignore diversity metrics completely."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_grow_06',
-    section: 'growth',
-    prompt: 'How can People Leaders foster high psychological safety across distributed, remote-first teams?',
-    options: [
-      { id: 'a', label: 'Encourage leaders to model vulnerability and admit mistakes, institute blameless post-mortems, normalize asking questions without judgment, and celebrate constructive dissent.' },
-      { id: 'b', label: 'Reprimand employees in public Slack channels whenever a project deadline slips.' },
-      { id: 'c', label: 'Ban employees from asking questions during all-hands town halls.' },
-      { id: 'd', label: 'Enforce strict surveillance software on all remote computers.' },
+    "id": "hr_grow_06",
+    "section": "growth",
+    "prompt": "How can People Leaders foster high psychological safety across distributed, remote-first teams?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Encourage leaders to model vulnerability and admit mistakes, institute blameless post-mortems, normalize asking questions without judgment, and celebrate constructive dissent."
+      },
+      {
+        "id": "b",
+        "label": "Reprimand employees in public Slack channels whenever a project deadline slips."
+      },
+      {
+        "id": "c",
+        "label": "Ban employees from asking questions during all-hands town halls."
+      },
+      {
+        "id": "d",
+        "label": "Enforce strict surveillance software on all remote computers."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_grow_07',
-    section: 'growth',
-    prompt: 'What core curriculum makes Manager Enablement programs successful when developing new first-line managers?',
-    options: [
-      { id: 'a', label: 'Active empathetic listening, conducting difficult developmental feedback conversations, delegating with accountability, situational leadership coaching, and mitigating personal bias.' },
-      { id: 'b', label: 'Teaching managers how to micromanage every minute of their direct reports\' days.' },
-      { id: 'c', label: 'Instructing managers to avoid communicating with their team members.' },
-      { id: 'd', label: 'Manager enablement is unnecessary if employees were good engineers.' },
+    "id": "hr_grow_07",
+    "section": "growth",
+    "prompt": "What core curriculum makes Manager Enablement programs successful when developing new first-line managers?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Teaching managers how to micromanage every minute of their direct reports' days."
+      },
+      {
+        "id": "b",
+        "label": "Instructing managers to avoid communicating with their team members."
+      },
+      {
+        "id": "c",
+        "label": "Manager enablement is unnecessary if employees were good engineers."
+      },
+      {
+        "id": "d",
+        "label": "Active empathetic listening, conducting difficult developmental feedback conversations, delegating with accountability, situational leadership coaching, and mitigating personal bias."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_grow_08',
-    section: 'growth',
-    prompt: 'How should People Operations measure and act on Employee Net Promoter Score (eNPS)?',
-    options: [
-      { id: 'a', label: 'Calculate (% Promoters - % Detractors), analyze qualitative root-cause commentary, communicate transparent findings to all staff, and commit to 2 concrete cross-functional remediations per quarter.' },
-      { id: 'b', label: 'Threaten employees who give negative eNPS scores.' },
-      { id: 'c', label: 'Hide eNPS scores if they are lower than 50.' },
-      { id: 'd', label: 'eNPS only measures how fast employees answer emails.' },
+    "id": "hr_grow_08",
+    "section": "growth",
+    "prompt": "How should People Operations measure and act on Employee Net Promoter Score (eNPS)?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Threaten employees who give negative eNPS scores."
+      },
+      {
+        "id": "b",
+        "label": "Hide eNPS scores if they are lower than 50."
+      },
+      {
+        "id": "c",
+        "label": "Calculate (% Promoters - % Detractors), analyze qualitative root-cause commentary, communicate transparent findings to all staff, and commit to 2 concrete cross-functional remediations per quarter."
+      },
+      {
+        "id": "d",
+        "label": "eNPS only measures how fast employees answer emails."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_grow_09',
-    section: 'growth',
-    prompt: 'During unavoidable corporate rightsizing or organizational restructuring, what leadership approach preserves trust?',
-    options: [
-      { id: 'a', label: 'Transparent communication of business rationale, generous severance packages with healthcare continuation and outplacement coaching, executive pay cuts, and compassionate support for remaining staff.' },
-      { id: 'b', label: 'Terminating employees via a 1-minute unannounced Zoom webinar with chat disabled.' },
-      { id: 'c', label: 'Blaming departing employees for the company\'s financial challenges.' },
-      { id: 'd', label: 'Denying that layoffs occurred and pretending former colleagues never existed.' },
+    "id": "hr_grow_09",
+    "section": "growth",
+    "prompt": "During unavoidable corporate rightsizing or organizational restructuring, what leadership approach preserves trust?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Terminating employees via a 1-minute unannounced Zoom webinar with chat disabled."
+      },
+      {
+        "id": "b",
+        "label": "Transparent communication of business rationale, generous severance packages with healthcare continuation and outplacement coaching, executive pay cuts, and compassionate support for remaining staff."
+      },
+      {
+        "id": "c",
+        "label": "Blaming departing employees for the company's financial challenges."
+      },
+      {
+        "id": "d",
+        "label": "Denying that layoffs occurred and pretending former colleagues never existed."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_grow_10',
-    section: 'growth',
-    prompt: 'How should an executive team design a Total Rewards strategy that balances talent attraction with financial discipline?',
-    options: [
-      { id: 'a', label: 'Clear compensation philosophy (e.g. 75th percentile base + meaningful equity ownership + comprehensive wellness/family benefits), transparent leveling bands, and performance incentives.' },
-      { id: 'b', label: 'Pay below minimum wage and promise millions in unvested speculative stock.' },
-      { id: 'c', label: 'Double all employee salaries every 6 months regardless of company revenue.' },
-      { id: 'd', label: 'Make all compensation numbers completely secret.' },
+    "id": "hr_grow_10",
+    "section": "growth",
+    "prompt": "How should an executive team design a Total Rewards strategy that balances talent attraction with financial discipline?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Clear compensation philosophy (e.g. 75th percentile base + meaningful equity ownership + comprehensive wellness/family benefits), transparent leveling bands, and performance incentives."
+      },
+      {
+        "id": "b",
+        "label": "Pay below minimum wage and promise millions in unvested speculative stock."
+      },
+      {
+        "id": "c",
+        "label": "Double all employee salaries every 6 months regardless of company revenue."
+      },
+      {
+        "id": "d",
+        "label": "Make all compensation numbers completely secret."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_grow_11',
-    section: 'growth',
-    prompt: 'What makes an Employer Value Proposition (EVP) authentic and attractive to world-class talent?',
-    options: [
-      { id: 'a', label: 'Grounding the talent brand in real employee experiences, articulating meaningful mission impact, showcasing high-caliber colleagues, and demonstrating tangible career acceleration opportunities.' },
-      { id: 'b', label: 'Advertising free snacks and ping-pong tables while ignoring toxic management culture.' },
-      { id: 'c', label: 'Copying the EVP of Google word-for-word.' },
-      { id: 'd', label: 'Promising things to candidates that do not exist in the actual workplace.' },
+    "id": "hr_grow_11",
+    "section": "growth",
+    "prompt": "What makes an Employer Value Proposition (EVP) authentic and attractive to world-class talent?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Advertising free snacks and ping-pong tables while ignoring toxic management culture."
+      },
+      {
+        "id": "b",
+        "label": "Copying the EVP of Google word-for-word."
+      },
+      {
+        "id": "c",
+        "label": "Promising things to candidates that do not exist in the actual workplace."
+      },
+      {
+        "id": "d",
+        "label": "Grounding the talent brand in real employee experiences, articulating meaningful mission impact, showcasing high-caliber colleagues, and demonstrating tangible career acceleration opportunities."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_grow_12',
-    section: 'growth',
-    prompt: 'How can People Operations bridge cross-generational workplace collaboration across Gen Z, Millennials, Gen X, and Boomers?',
-    options: [
-      { id: 'a', label: 'Focus on shared organizational values, provide flexible communication options (asynchronous vs synchronous), establish mutual reverse-mentoring pairings, and dismantle ageist stereotypes.' },
-      { id: 'b', label: 'Segregate employees into separate departments based on their birth year.' },
-      { id: 'c', label: 'Force all employees to communicate exclusively via memes.' },
-      { id: 'd', label: 'Ban older employees from working with younger employees.' },
+    "id": "hr_grow_12",
+    "section": "growth",
+    "prompt": "How can People Operations bridge cross-generational workplace collaboration across Gen Z, Millennials, Gen X, and Boomers?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Segregate employees into separate departments based on their birth year."
+      },
+      {
+        "id": "b",
+        "label": "Force all employees to communicate exclusively via memes."
+      },
+      {
+        "id": "c",
+        "label": "Focus on shared organizational values, provide flexible communication options (asynchronous vs synchronous), establish mutual reverse-mentoring pairings, and dismantle ageist stereotypes."
+      },
+      {
+        "id": "d",
+        "label": "Ban older employees from working with younger employees."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_grow_13',
-    section: 'growth',
-    prompt: 'How should companies structure leadership development pipelines for emerging women and underrepresented leaders?',
-    options: [
-      { id: 'a', label: 'Combine formal executive sponsorship (advocating for high-visibility P&L assignments), tailored executive coaching, peer cohort masterminds, and transparent promotion calibration.' },
-      { id: 'b', label: 'Give underrepresented employees low-visibility administrative tasks only.' },
-      { id: 'c', label: 'Provide training with zero executive sponsorship or promotion pathways.' },
-      { id: 'd', label: 'Assume leadership pipelines develop automatically without intentional support.' },
+    "id": "hr_grow_13",
+    "section": "growth",
+    "prompt": "How should companies structure leadership development pipelines for emerging women and underrepresented leaders?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Give underrepresented employees low-visibility administrative tasks only."
+      },
+      {
+        "id": "b",
+        "label": "Combine formal executive sponsorship (advocating for high-visibility P&L assignments), tailored executive coaching, peer cohort masterminds, and transparent promotion calibration."
+      },
+      {
+        "id": "c",
+        "label": "Provide training with zero executive sponsorship or promotion pathways."
+      },
+      {
+        "id": "d",
+        "label": "Assume leadership pipelines develop automatically without intentional support."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_grow_14',
-    section: 'growth',
-    prompt: 'How should an HR leader apply John Kotter\'s 8-Step Change Model during an enterprise-wide AI transformation?',
-    options: [
-      { id: 'a', label: 'Establish urgency, build a guiding coalition, craft clear strategic vision, communicate broadly, empower action by removing blockers, celebrate short-term wins, and anchor in company culture.' },
-      { id: 'b', label: 'Order employees to change their work habits immediately without explaining why.' },
-      { id: 'c', label: 'Fire all employees who express questions about the change.' },
-      { id: 'd', label: 'Change management models have no relevance in modern business.' },
+    "id": "hr_grow_14",
+    "section": "growth",
+    "prompt": "How should an HR leader apply John Kotter's 8-Step Change Model during an enterprise-wide AI transformation?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Establish urgency, build a guiding coalition, craft clear strategic vision, communicate broadly, empower action by removing blockers, celebrate short-term wins, and anchor in company culture."
+      },
+      {
+        "id": "b",
+        "label": "Order employees to change their work habits immediately without explaining why."
+      },
+      {
+        "id": "c",
+        "label": "Fire all employees who express questions about the change."
+      },
+      {
+        "id": "d",
+        "label": "Change management models have no relevance in modern business."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_grow_15',
-    section: 'growth',
-    prompt: 'How can HR use data-driven retention risk models responsibly without violating trust?',
-    options: [
-      { id: 'a', label: 'Use aggregate risk indicators (e.g. high tenure without promotion, below-market compensation) to proactively equip managers with career development and compensation review budgets.' },
-      { id: 'b', label: 'Confront employees and accuse them of planning to quit.' },
-      { id: 'c', label: 'Withhold bonus payments from employees flagged as potential flight risks.' },
-      { id: 'd', label: 'Delete flight risk data and ignore employee departures.' },
+    "id": "hr_grow_15",
+    "section": "growth",
+    "prompt": "How can HR use data-driven retention risk models responsibly without violating trust?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Confront employees and accuse them of planning to quit."
+      },
+      {
+        "id": "b",
+        "label": "Withhold bonus payments from employees flagged as potential flight risks."
+      },
+      {
+        "id": "c",
+        "label": "Delete flight risk data and ignore employee departures."
+      },
+      {
+        "id": "d",
+        "label": "Use aggregate risk indicators (e.g. high tenure without promotion, below-market compensation) to proactively equip managers with career development and compensation review budgets."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_grow_16',
-    section: 'growth',
-    prompt: 'What is an "Internal Talent Marketplace" and how does it drive agile organizational growth?',
-    options: [
-      { id: 'a', label: 'An AI-powered platform where employees apply for cross-functional project gigs, hackathons, and part-time rotational assignments (10–20% time) to build skills and solve business needs.' },
-      { id: 'b', label: 'An auction where employees bid cash to get promotions.' },
-      { id: 'c', label: 'A forum where managers trade employees like sports cards.' },
-      { id: 'd', label: 'An internal job board that only executives can see.' },
+    "id": "hr_grow_16",
+    "section": "growth",
+    "prompt": "What is an \"Internal Talent Marketplace\" and how does it drive agile organizational growth?",
+    "options": [
+      {
+        "id": "a",
+        "label": "An auction where employees bid cash to get promotions."
+      },
+      {
+        "id": "b",
+        "label": "A forum where managers trade employees like sports cards."
+      },
+      {
+        "id": "c",
+        "label": "An AI-powered platform where employees apply for cross-functional project gigs, hackathons, and part-time rotational assignments (10–20% time) to build skills and solve business needs."
+      },
+      {
+        "id": "d",
+        "label": "An internal job board that only executives can see."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_grow_17',
-    section: 'growth',
-    prompt: 'How do progressive organizations support working parents and caregivers to maximize talent retention?',
-    options: [
-      { id: 'a', label: 'Gender-neutral paid parental leaves, subsidized emergency childcare benefits, flexible core working hours, phased return-to-work programs, and specialized caregiver support groups.' },
-      { id: 'b', label: 'Penalize working parents in annual performance ratings for needing to pick up children.' },
-      { id: 'c', label: 'Require all employees to work 16-hour in-office days with no flexibility.' },
-      { id: 'd', label: 'Offer childcare benefits only to senior executives.' },
+    "id": "hr_grow_17",
+    "section": "growth",
+    "prompt": "How do progressive organizations support working parents and caregivers to maximize talent retention?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Penalize working parents in annual performance ratings for needing to pick up children."
+      },
+      {
+        "id": "b",
+        "label": "Gender-neutral paid parental leaves, subsidized emergency childcare benefits, flexible core working hours, phased return-to-work programs, and specialized caregiver support groups."
+      },
+      {
+        "id": "c",
+        "label": "Require all employees to work 16-hour in-office days with no flexibility."
+      },
+      {
+        "id": "d",
+        "label": "Offer childcare benefits only to senior executives."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_grow_18',
-    section: 'growth',
-    prompt: 'How should People teams design holistic mental health and anti-burnout programs in high-growth companies?',
-    options: [
-      { id: 'a', label: 'Combine confidential 1-on-1 therapy access, mandatory meeting-free focus days, realistic workload capacity planning, and training managers to recognize early signs of chronic stress.' },
-      { id: 'b', label: 'Tell burned-out employees to take deep breaths while doubling their workload.' },
-      { id: 'c', label: 'Offer free pizza on Friday nights to compensate for 80-hour work weeks.' },
-      { id: 'd', label: 'Ignore mental health completely.' },
+    "id": "hr_grow_18",
+    "section": "growth",
+    "prompt": "How should People teams design holistic mental health and anti-burnout programs in high-growth companies?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Combine confidential 1-on-1 therapy access, mandatory meeting-free focus days, realistic workload capacity planning, and training managers to recognize early signs of chronic stress."
+      },
+      {
+        "id": "b",
+        "label": "Tell burned-out employees to take deep breaths while doubling their workload."
+      },
+      {
+        "id": "c",
+        "label": "Offer free pizza on Friday nights to compensate for 80-hour work weeks."
+      },
+      {
+        "id": "d",
+        "label": "Ignore mental health completely."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_grow_19',
-    section: 'growth',
-    prompt: 'What governance structure ensures Employee Resource Groups (ERGs) thrive and drive business impact?',
-    options: [
-      { id: 'a', label: 'Dedicated executive sponsors, allocated annual operating budgets, formal leadership stipends/recognition in performance reviews, and direct advisory input into corporate policy.' },
-      { id: 'b', label: 'Expecting ERG leads to run programs on their personal unpaid weekends with zero budget.' },
-      { id: 'c', label: 'Allowing ERGs to operate only in secret without management awareness.' },
-      { id: 'd', label: 'Disbanding ERGs because all employees are already identical.' },
+    "id": "hr_grow_19",
+    "section": "growth",
+    "prompt": "What governance structure ensures Employee Resource Groups (ERGs) thrive and drive business impact?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Expecting ERG leads to run programs on their personal unpaid weekends with zero budget."
+      },
+      {
+        "id": "b",
+        "label": "Allowing ERGs to operate only in secret without management awareness."
+      },
+      {
+        "id": "c",
+        "label": "Disbanding ERGs because all employees are already identical."
+      },
+      {
+        "id": "d",
+        "label": "Dedicated executive sponsors, allocated annual operating budgets, formal leadership stipends/recognition in performance reviews, and direct advisory input into corporate policy."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_grow_20',
-    section: 'growth',
-    prompt: 'During corporate mergers and acquisitions (M&A), what people strategy ensures successful cultural harmonization?',
-    options: [
-      { id: 'a', label: 'Proactive cultural mapping, transparent role mapping and retention bonus structures for key technical talent, transparent communication cadences, and co-created unified core values.' },
-      { id: 'b', label: 'Fire all managers from the acquired company on day 1.' },
-      { id: 'c', label: 'Refuse to tell acquired employees what their new compensation will be for 12 months.' },
-      { id: 'd', label: 'Force acquired employees to abandon all past technical expertise.' },
+    "id": "hr_grow_20",
+    "section": "growth",
+    "prompt": "During corporate mergers and acquisitions (M&A), what people strategy ensures successful cultural harmonization?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Fire all managers from the acquired company on day 1."
+      },
+      {
+        "id": "b",
+        "label": "Refuse to tell acquired employees what their new compensation will be for 12 months."
+      },
+      {
+        "id": "c",
+        "label": "Proactive cultural mapping, transparent role mapping and retention bonus structures for key technical talent, transparent communication cadences, and co-created unified core values."
+      },
+      {
+        "id": "d",
+        "label": "Force acquired employees to abandon all past technical expertise."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_grow_21',
-    section: 'growth',
-    prompt: 'What is a "Dual-Track Career Lattice" and why is it essential for retaining top technical talent?',
-    options: [
-      { id: 'a', label: 'It allows individual contributors (Engineers, Designers, Researchers) to reach equivalent compensation, prestige, and executive influence as People Managers without having to manage staff.' },
-      { id: 'b', label: 'It forces all top engineers to become administrative managers.' },
-      { id: 'c', label: 'It limits individual contributors to low salaries forever.' },
-      { id: 'd', label: 'It eliminates all individual contributor roles.' },
+    "id": "hr_grow_21",
+    "section": "growth",
+    "prompt": "What is a \"Dual-Track Career Lattice\" and why is it essential for retaining top technical talent?",
+    "options": [
+      {
+        "id": "a",
+        "label": "It forces all top engineers to become administrative managers."
+      },
+      {
+        "id": "b",
+        "label": "It allows individual contributors (Engineers, Designers, Researchers) to reach equivalent compensation, prestige, and executive influence as People Managers without having to manage staff."
+      },
+      {
+        "id": "c",
+        "label": "It limits individual contributors to low salaries forever."
+      },
+      {
+        "id": "d",
+        "label": "It eliminates all individual contributor roles."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_grow_22',
-    section: 'growth',
-    prompt: 'How should leadership maintain high team cohesion in asynchronous-first distributed workplaces?',
-    options: [
-      { id: 'a', label: 'Comprehensive written documentation culture, intentional in-person annual team retreats, structured virtual coffee chats, and celebrating asynchronous milestone achievements.' },
-      { id: 'b', label: 'Mandating 8 hours of continuous video meetings every day.' },
-      { id: 'c', label: 'Forbidding distributed team members from meeting in person.' },
-      { id: 'd', label: 'Eliminating all company documentation.' },
+    "id": "hr_grow_22",
+    "section": "growth",
+    "prompt": "How should leadership maintain high team cohesion in asynchronous-first distributed workplaces?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Comprehensive written documentation culture, intentional in-person annual team retreats, structured virtual coffee chats, and celebrating asynchronous milestone achievements."
+      },
+      {
+        "id": "b",
+        "label": "Mandating 8 hours of continuous video meetings every day."
+      },
+      {
+        "id": "c",
+        "label": "Forbidding distributed team members from meeting in person."
+      },
+      {
+        "id": "d",
+        "label": "Eliminating all company documentation."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_grow_23',
-    section: 'growth',
-    prompt: 'Why does an exceptional New Hire Onboarding experience directly compound long-term employee retention?',
-    options: [
-      { id: 'a', label: 'New hires who experience structured, high-support onboarding achieve productivity 2x faster, report 82% higher 3-year retention, and become vocal company advocates.' },
-      { id: 'b', label: 'Onboarding has zero impact on employee tenure.' },
-      { id: 'c', label: 'Onboarding is only required for high school interns.' },
-      { id: 'd', label: 'Long, confusing onboarding programs encourage employees to stay longer.' },
+    "id": "hr_grow_23",
+    "section": "growth",
+    "prompt": "Why does an exceptional New Hire Onboarding experience directly compound long-term employee retention?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Onboarding has zero impact on employee tenure."
+      },
+      {
+        "id": "b",
+        "label": "Onboarding is only required for high school interns."
+      },
+      {
+        "id": "c",
+        "label": "Long, confusing onboarding programs encourage employees to stay longer."
+      },
+      {
+        "id": "d",
+        "label": "New hires who experience structured, high-support onboarding achieve productivity 2x faster, report 82% higher 3-year retention, and become vocal company advocates."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_grow_24',
-    section: 'growth',
-    prompt: 'How should an organization communicate its Compensation Philosophy transparently to employees?',
-    options: [
-      { id: 'a', label: 'Publish leveling salary bands, explain market percentile benchmarks, educate on stock option mechanics and tax implications, and outline objective promotion criteria.' },
-      { id: 'b', label: 'Tell employees that talking about compensation is grounds for immediate termination.' },
-      { id: 'c', label: 'Hide all equity grant vesting terms in secret legal vaults.' },
-      { id: 'd', label: 'Refuse to explain how salaries are calculated.' },
+    "id": "hr_grow_24",
+    "section": "growth",
+    "prompt": "How should an organization communicate its Compensation Philosophy transparently to employees?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Tell employees that talking about compensation is grounds for immediate termination."
+      },
+      {
+        "id": "b",
+        "label": "Hide all equity grant vesting terms in secret legal vaults."
+      },
+      {
+        "id": "c",
+        "label": "Publish leveling salary bands, explain market percentile benchmarks, educate on stock option mechanics and tax implications, and outline objective promotion criteria."
+      },
+      {
+        "id": "d",
+        "label": "Refuse to explain how salaries are calculated."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_grow_25',
-    section: 'growth',
-    prompt: 'How can executive People leaders facilitate healthy constructive debate in senior leadership teams?',
-    options: [
-      { id: 'a', label: 'Encourage "Disagree and Commit" principles, separate intellectual debate from personal ego, establish clear decision rights (DACI framework), and align on shared company mission.' },
-      { id: 'b', label: 'Encourage passive-aggressive political maneuvering in back-channel chats.' },
-      { id: 'c', label: 'Forbid executives from challenging the CEO\'s ideas.' },
-      { id: 'd', label: 'Make all strategic decisions through unvetted majority voting.' },
+    "id": "hr_grow_25",
+    "section": "growth",
+    "prompt": "How can executive People leaders facilitate healthy constructive debate in senior leadership teams?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Encourage passive-aggressive political maneuvering in back-channel chats."
+      },
+      {
+        "id": "b",
+        "label": "Encourage \"Disagree and Commit\" principles, separate intellectual debate from personal ego, establish clear decision rights (DACI framework), and align on shared company mission."
+      },
+      {
+        "id": "c",
+        "label": "Forbid executives from challenging the CEO's ideas."
+      },
+      {
+        "id": "d",
+        "label": "Make all strategic decisions through unvetted majority voting."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_grow_26',
-    section: 'growth',
-    prompt: 'How should People Operations design an AI Literacy & Upskilling Curriculum for non-technical departments?',
-    options: [
-      { id: 'a', label: 'Demystify core AI concepts, provide hands-on prompt workshops tailored to specific department workflows (Legal, Marketing, Sales, Finance), and teach critical fact-checking and ethics.' },
-      { id: 'b', label: 'Force marketing and HR employees to memorize complex C++ memory allocation algorithms.' },
-      { id: 'c', label: 'Ban non-technical staff from using any AI tools.' },
-      { id: 'd', label: 'Tell employees that AI will replace all human thought within 6 months.' },
+    "id": "hr_grow_26",
+    "section": "growth",
+    "prompt": "How should People Operations design an AI Literacy & Upskilling Curriculum for non-technical departments?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Demystify core AI concepts, provide hands-on prompt workshops tailored to specific department workflows (Legal, Marketing, Sales, Finance), and teach critical fact-checking and ethics."
+      },
+      {
+        "id": "b",
+        "label": "Force marketing and HR employees to memorize complex C++ memory allocation algorithms."
+      },
+      {
+        "id": "c",
+        "label": "Ban non-technical staff from using any AI tools."
+      },
+      {
+        "id": "d",
+        "label": "Tell employees that AI will replace all human thought within 6 months."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_grow_27',
-    section: 'growth',
-    prompt: 'What metrics define "Quality of Hire" for modern talent acquisition teams?',
-    options: [
-      { id: 'a', label: 'New hire 12-month retention rates, ramp time to full productivity, first-year performance review ratings, and hiring manager satisfaction scores.' },
-      { id: 'b', label: 'How many resumes the recruiter downloaded per hour.' },
-      { id: 'c', label: 'The candidate\'s physical typing speed during the phone screen.' },
-      { id: 'd', label: 'Quality of hire cannot be evaluated.' },
+    "id": "hr_grow_27",
+    "section": "growth",
+    "prompt": "What metrics define \"Quality of Hire\" for modern talent acquisition teams?",
+    "options": [
+      {
+        "id": "a",
+        "label": "How many resumes the recruiter downloaded per hour."
+      },
+      {
+        "id": "b",
+        "label": "The candidate's physical typing speed during the phone screen."
+      },
+      {
+        "id": "c",
+        "label": "Quality of hire cannot be evaluated."
+      },
+      {
+        "id": "d",
+        "label": "New hire 12-month retention rates, ramp time to full productivity, first-year performance review ratings, and hiring manager satisfaction scores."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_grow_28',
-    section: 'growth',
-    prompt: 'How does a culture of "Radical Candor" (caring personally while challenging directly) elevate organizational performance?',
-    options: [
-      { id: 'a', label: 'It eliminates ruinous empathy (withholding feedback to be "nice") and obnoxious aggression, fostering high-trust feedback loops that accelerate personal and team mastery.' },
-      { id: 'b', label: 'It gives managers a license to insult and belittle employees.' },
-      { id: 'c', label: 'It eliminates the need for professional workplace courtesy.' },
-      { id: 'd', label: 'Radical candor means never giving positive feedback.' },
+    "id": "hr_grow_28",
+    "section": "growth",
+    "prompt": "How does a culture of \"Radical Candor\" (caring personally while challenging directly) elevate organizational performance?",
+    "options": [
+      {
+        "id": "a",
+        "label": "It gives managers a license to insult and belittle employees."
+      },
+      {
+        "id": "b",
+        "label": "It eliminates the need for professional workplace courtesy."
+      },
+      {
+        "id": "c",
+        "label": "It eliminates ruinous empathy (withholding feedback to be \"nice\") and obnoxious aggression, fostering high-trust feedback loops that accelerate personal and team mastery."
+      },
+      {
+        "id": "d",
+        "label": "Radical candor means never giving positive feedback."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_grow_29',
-    section: 'growth',
-    prompt: 'When automation reshapes operational job functions, how should an ethical HR leader guide workforce transitions?',
-    options: [
-      { id: 'a', label: 'Proactively forecast role transitions 12–18 months in advance, offer funded internal apprenticeships to reskill into emerging adjacent roles, and provide compassionate exit support if necessary.' },
-      { id: 'b', label: 'Secretly automate jobs and lay off workers on Friday afternoon without warning.' },
-      { id: 'c', label: 'Deny that automation will ever change any job.' },
-      { id: 'd', label: 'Cut employee pay as soon as a software tool is installed.' },
+    "id": "hr_grow_29",
+    "section": "growth",
+    "prompt": "When automation reshapes operational job functions, how should an ethical HR leader guide workforce transitions?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Secretly automate jobs and lay off workers on Friday afternoon without warning."
+      },
+      {
+        "id": "b",
+        "label": "Proactively forecast role transitions 12–18 months in advance, offer funded internal apprenticeships to reskill into emerging adjacent roles, and provide compassionate exit support if necessary."
+      },
+      {
+        "id": "c",
+        "label": "Deny that automation will ever change any job."
+      },
+      {
+        "id": "d",
+        "label": "Cut employee pay as soon as a software tool is installed."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_grow_30',
-    section: 'growth',
-    prompt: 'What defines the pinnacle standard of the Jnachi Certified AI Human Resources & People Leadership Professional?',
-    options: [
-      { id: 'a', label: 'A transformational people leader who combines deep organizational psychology, compassionate ethics, rigorous strategic workforce architecture, and exponential AI velocity to elevate human flourishing.' },
-      { id: 'b', label: 'An HR manager who uses AI bots to surveil employees and enforce punitive policies.' },
-      { id: 'c', label: 'A recruiter who automates 100% of candidate rejections without human review.' },
-      { id: 'd', label: 'An HR professional who rejects all modern technological advancements.' },
+    "id": "hr_grow_30",
+    "section": "growth",
+    "prompt": "What defines the pinnacle standard of the Jnachi Certified AI Human Resources & People Leadership Professional?",
+    "options": [
+      {
+        "id": "a",
+        "label": "A transformational people leader who combines deep organizational psychology, compassionate ethics, rigorous strategic workforce architecture, and exponential AI velocity to elevate human flourishing."
+      },
+      {
+        "id": "b",
+        "label": "An HR manager who uses AI bots to surveil employees and enforce punitive policies."
+      },
+      {
+        "id": "c",
+        "label": "A recruiter who automates 100% of candidate rejections without human review."
+      },
+      {
+        "id": "d",
+        "label": "An HR professional who rejects all modern technological advancements."
+      }
     ],
-    correctOptionId: 'a',
-  },
+    "correctOptionId": "a"
+  }
 ];

@@ -2,363 +2,723 @@ import { CertQuestion } from '../types';
 
 export const DEVELOPERS_PRIVACY_QUESTIONS: CertQuestion[] = [
   {
-    id: 'dev_priv_01',
-    section: 'privacy',
-    prompt: 'How should engineering teams prevent accidental commits of API keys, tokens, and private database credentials to Git repositories?',
-    options: [
-      { id: 'a', label: 'Use pre-commit secret scanners (e.g. Gitleaks, TruffleHog), enforce `.gitignore` rules for environment files, and integrate automated repo scanning with instant revocation hooks.' },
-      { id: 'b', label: 'Commit secrets directly to git as long as the repository is marked private.' },
-      { id: 'c', label: 'Rename `.env` files to `.txt` files before committing.' },
-      { id: 'd', label: 'Rely on developers promising never to make a typing mistake.' },
+    "id": "dev_priv_01",
+    "section": "privacy",
+    "prompt": "How should engineering teams prevent accidental commits of API keys, tokens, and private database credentials to Git repositories?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Commit secrets directly to git as long as the repository is marked private."
+      },
+      {
+        "id": "b",
+        "label": "Use pre-commit secret scanners (e.g. Gitleaks, TruffleHog), enforce `.gitignore` rules for environment files, and integrate automated repo scanning with instant revocation hooks."
+      },
+      {
+        "id": "c",
+        "label": "Rename `.env` files to `.txt` files before committing."
+      },
+      {
+        "id": "d",
+        "label": "Rely on developers promising never to make a typing mistake."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'dev_priv_02',
-    section: 'privacy',
-    prompt: 'What constitutes an "AI Package Hallucination / Slopsquatting Attack" in modern software supply chains?',
-    options: [
-      { id: 'a', label: 'An attacker registers a non-existent package name frequently hallucinated by LLMs on public registries (npm/PyPI), embedding malicious malware waiting for developers to install it.' },
-      { id: 'b', label: 'A developer forgetting their npm password.' },
-      { id: 'c', label: 'A Python compiler generating syntax warnings.' },
-      { id: 'd', label: 'A slow internet connection during package downloads.' },
+    "id": "dev_priv_02",
+    "section": "privacy",
+    "prompt": "What constitutes an \"AI Package Hallucination / Slopsquatting Attack\" in modern software supply chains?",
+    "options": [
+      {
+        "id": "a",
+        "label": "An attacker registers a non-existent package name frequently hallucinated by LLMs on public registries (npm/PyPI), embedding malicious malware waiting for developers to install it."
+      },
+      {
+        "id": "b",
+        "label": "A developer forgetting their npm password."
+      },
+      {
+        "id": "c",
+        "label": "A Python compiler generating syntax warnings."
+      },
+      {
+        "id": "d",
+        "label": "A slow internet connection during package downloads."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'dev_priv_03',
-    section: 'privacy',
-    prompt: 'What legal risk arises when incorporating unvetted AI-generated code into proprietary closed-source enterprise software?',
-    options: [
-      { id: 'a', label: 'Accidental reproduction of copyleft-licensed code (e.g. GPLv3) without attribution, creating viral licensing contamination obligations that could force open-sourcing the proprietary repository.' },
-      { id: 'b', label: 'Compilers will refuse to build the binary.' },
-      { id: 'c', label: 'Cloud hosting providers will cancel server contracts.' },
-      { id: 'd', label: 'No legal risk exists for any AI-generated code.' },
+    "id": "dev_priv_03",
+    "section": "privacy",
+    "prompt": "What legal risk arises when incorporating unvetted AI-generated code into proprietary closed-source enterprise software?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Compilers will refuse to build the binary."
+      },
+      {
+        "id": "b",
+        "label": "Cloud hosting providers will cancel server contracts."
+      },
+      {
+        "id": "c",
+        "label": "No legal risk exists for any AI-generated code."
+      },
+      {
+        "id": "d",
+        "label": "Accidental reproduction of copyleft-licensed code (e.g. GPLv3) without attribution, creating viral licensing contamination obligations that could force open-sourcing the proprietary repository."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'dev_priv_04',
-    section: 'privacy',
-    prompt: 'How should enterprise security teams configure Data Loss Prevention (DLP) for developer IDE AI extensions?',
-    options: [
-      { id: 'a', label: 'Enforce enterprise Zero-Data-Retention (ZDR) agreements, block indexing of sensitive file paths (`.env`, credentials, certs), and route code completions through self-hosted or private VPC endpoints.' },
-      { id: 'b', label: 'Allow developers to use personal consumer accounts with data-training enabled.' },
-      { id: 'c', label: 'Ban all software developers from using computers.' },
-      { id: 'd', label: 'Upload all internal source code to public AI benchmarking websites.' },
+    "id": "dev_priv_04",
+    "section": "privacy",
+    "prompt": "How should enterprise security teams configure Data Loss Prevention (DLP) for developer IDE AI extensions?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Allow developers to use personal consumer accounts with data-training enabled."
+      },
+      {
+        "id": "b",
+        "label": "Ban all software developers from using computers."
+      },
+      {
+        "id": "c",
+        "label": "Enforce enterprise Zero-Data-Retention (ZDR) agreements, block indexing of sensitive file paths (`.env`, credentials, certs), and route code completions through self-hosted or private VPC endpoints."
+      },
+      {
+        "id": "d",
+        "label": "Upload all internal source code to public AI benchmarking websites."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'dev_priv_05',
-    section: 'privacy',
-    prompt: 'In low-level systems programming (C/Rust/Go), how should sensitive cryptographic keys in memory be handled after use?',
-    options: [
-      { id: 'a', label: 'Explicitly zero / overwrite the allocated memory buffer (e.g. `explicit_bzero` / `Zeroize`) before deallocation to prevent memory scraping attacks and cold-boot extraction.' },
-      { id: 'b', label: 'Leave the plaintext keys in memory indefinitely.' },
-      { id: 'c', label: 'Print the keys to the system syslog for debugging.' },
-      { id: 'd', label: 'Store the keys in unencrypted temporary swap files.' },
+    "id": "dev_priv_05",
+    "section": "privacy",
+    "prompt": "In low-level systems programming (C/Rust/Go), how should sensitive cryptographic keys in memory be handled after use?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Leave the plaintext keys in memory indefinitely."
+      },
+      {
+        "id": "b",
+        "label": "Explicitly zero / overwrite the allocated memory buffer (e.g. `explicit_bzero` / `Zeroize`) before deallocation to prevent memory scraping attacks and cold-boot extraction."
+      },
+      {
+        "id": "c",
+        "label": "Print the keys to the system syslog for debugging."
+      },
+      {
+        "id": "d",
+        "label": "Store the keys in unencrypted temporary swap files."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'dev_priv_06',
-    section: 'privacy',
-    prompt: 'Why is deserializing untrusted user data using Python `pickle` or Java `ObjectInputStream` an extreme security risk?',
-    options: [
-      { id: 'a', label: 'It allows arbitrary object instantiation and method execution, leading directly to Remote Code Execution (RCE) on the server; safe formats like JSON or Protocol Buffers should be used.' },
-      { id: 'b', label: 'It consumes 100% of network bandwidth.' },
-      { id: 'c', label: 'It converts numbers into Roman numerals.' },
-      { id: 'd', label: 'It corrupts the server\'s power supply.' },
+    "id": "dev_priv_06",
+    "section": "privacy",
+    "prompt": "Why is deserializing untrusted user data using Python `pickle` or Java `ObjectInputStream` an extreme security risk?",
+    "options": [
+      {
+        "id": "a",
+        "label": "It allows arbitrary object instantiation and method execution, leading directly to Remote Code Execution (RCE) on the server; safe formats like JSON or Protocol Buffers should be used."
+      },
+      {
+        "id": "b",
+        "label": "It consumes 100% of network bandwidth."
+      },
+      {
+        "id": "c",
+        "label": "It converts numbers into Roman numerals."
+      },
+      {
+        "id": "d",
+        "label": "It corrupts the server's power supply."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'dev_priv_07',
-    section: 'privacy',
-    prompt: 'How should an application protect against Server-Side Request Forgery (SSRF) when fetching external user-provided URLs?',
-    options: [
-      { id: 'a', label: 'Resolve domain names to IP addresses, strictly block loopback (`127.0.0.1`), private RFC 1918 subnets (`10.0.0.0/8`, `192.168.0.0/16`), and cloud metadata endpoints (`169.254.169.254`).' },
-      { id: 'b', label: 'Fetch whatever URL the user enters without validation.' },
-      { id: 'c', label: 'Disable HTTPS encryption.' },
-      { id: 'd', label: 'Allow requests to internal AWS metadata services.' },
+    "id": "dev_priv_07",
+    "section": "privacy",
+    "prompt": "How should an application protect against Server-Side Request Forgery (SSRF) when fetching external user-provided URLs?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Fetch whatever URL the user enters without validation."
+      },
+      {
+        "id": "b",
+        "label": "Disable HTTPS encryption."
+      },
+      {
+        "id": "c",
+        "label": "Allow requests to internal AWS metadata services."
+      },
+      {
+        "id": "d",
+        "label": "Resolve domain names to IP addresses, strictly block loopback (`127.0.0.1`), private RFC 1918 subnets (`10.0.0.0/8`, `192.168.0.0/16`), and cloud metadata endpoints (`169.254.169.254`)."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'dev_priv_08',
-    section: 'privacy',
-    prompt: 'Why must user passwords NEVER be hashed with fast algorithms like MD5 or plain SHA-256?',
-    options: [
-      { id: 'a', label: 'Fast algorithms can be cracked at billions of hashes per second using modern GPUs; computationally slow, memory-hard algorithms with salt (e.g. Argon2id, bcrypt, scrypt) are required.' },
-      { id: 'b', label: 'MD5 creates hashes that are too long for database storage.' },
-      { id: 'c', label: 'SHA-256 is an obsolete algorithm banned by ISO standards.' },
-      { id: 'd', label: 'Fast algorithms always generate identical hashes for different passwords.' },
+    "id": "dev_priv_08",
+    "section": "privacy",
+    "prompt": "Why must user passwords NEVER be hashed with fast algorithms like MD5 or plain SHA-256?",
+    "options": [
+      {
+        "id": "a",
+        "label": "MD5 creates hashes that are too long for database storage."
+      },
+      {
+        "id": "b",
+        "label": "SHA-256 is an obsolete algorithm banned by ISO standards."
+      },
+      {
+        "id": "c",
+        "label": "Fast algorithms can be cracked at billions of hashes per second using modern GPUs; computationally slow, memory-hard algorithms with salt (e.g. Argon2id, bcrypt, scrypt) are required."
+      },
+      {
+        "id": "d",
+        "label": "Fast algorithms always generate identical hashes for different passwords."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'dev_priv_09',
-    section: 'privacy',
-    prompt: 'How does a Content Security Policy (CSP) HTTP header defend web applications against Cross-Site Scripting (XSS)?',
-    options: [
-      { id: 'a', label: 'It instructs the browser to restrict script execution, styles, and image sources to explicitly whitelisted domains and cryptographic nonces, blocking unauthorized injected scripts.' },
-      { id: 'b', label: 'It encrypts the user\'s computer hard drive.' },
-      { id: 'c', label: 'It disables all JavaScript across the entire internet.' },
-      { id: 'd', label: 'It automatically formats HTML code.' },
+    "id": "dev_priv_09",
+    "section": "privacy",
+    "prompt": "How does a Content Security Policy (CSP) HTTP header defend web applications against Cross-Site Scripting (XSS)?",
+    "options": [
+      {
+        "id": "a",
+        "label": "It encrypts the user's computer hard drive."
+      },
+      {
+        "id": "b",
+        "label": "It instructs the browser to restrict script execution, styles, and image sources to explicitly whitelisted domains and cryptographic nonces, blocking unauthorized injected scripts."
+      },
+      {
+        "id": "c",
+        "label": "It disables all JavaScript across the entire internet."
+      },
+      {
+        "id": "d",
+        "label": "It automatically formats HTML code."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'dev_priv_10',
-    section: 'privacy',
-    prompt: 'What is the root cause of SQL Injection (SQLi) vulnerabilities and how is it definitively prevented?',
-    options: [
-      { id: 'a', label: 'Root cause: treating untrusted user input as executable SQL code; Prevention: parameterized queries (prepared statements) that strictly separate query structure from data parameters.' },
-      { id: 'b', label: 'Root cause: using open-source databases; Prevention: switching to proprietary databases.' },
-      { id: 'c', label: 'Root cause: storing strings in databases; Prevention: storing only integer numbers.' },
-      { id: 'd', label: 'Root cause: database indexing; Prevention: dropping all indexes.' },
+    "id": "dev_priv_10",
+    "section": "privacy",
+    "prompt": "What is the root cause of SQL Injection (SQLi) vulnerabilities and how is it definitively prevented?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Root cause: treating untrusted user input as executable SQL code; Prevention: parameterized queries (prepared statements) that strictly separate query structure from data parameters."
+      },
+      {
+        "id": "b",
+        "label": "Root cause: using open-source databases; Prevention: switching to proprietary databases."
+      },
+      {
+        "id": "c",
+        "label": "Root cause: storing strings in databases; Prevention: storing only integer numbers."
+      },
+      {
+        "id": "d",
+        "label": "Root cause: database indexing; Prevention: dropping all indexes."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'dev_priv_11',
-    section: 'privacy',
-    prompt: 'How should software developers sanitize application logs before shipping them to centralized observability aggregators (e.g. Datadog, ELK)?',
-    options: [
-      { id: 'a', label: 'Implement automated regex-based redaction filters in logging formatters to mask authorization tokens, credit cards, passwords, SSNs, and customer PII.' },
-      { id: 'b', label: 'Print all incoming HTTP request bodies including authorization headers in full plaintext.' },
-      { id: 'c', label: 'Disable all logging completely in production.' },
-      { id: 'd', label: 'Store unredacted logs on public FTP servers.' },
+    "id": "dev_priv_11",
+    "section": "privacy",
+    "prompt": "How should software developers sanitize application logs before shipping them to centralized observability aggregators (e.g. Datadog, ELK)?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Print all incoming HTTP request bodies including authorization headers in full plaintext."
+      },
+      {
+        "id": "b",
+        "label": "Disable all logging completely in production."
+      },
+      {
+        "id": "c",
+        "label": "Store unredacted logs on public FTP servers."
+      },
+      {
+        "id": "d",
+        "label": "Implement automated regex-based redaction filters in logging formatters to mask authorization tokens, credit cards, passwords, SSNs, and customer PII."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'dev_priv_12',
-    section: 'privacy',
-    prompt: 'How do modern web frameworks defend against Cross-Site Request Forgery (CSRF)?',
-    options: [
-      { id: 'a', label: 'Enforcing `SameSite=Lax` or `SameSite=Strict` cookie attributes, verifying `Origin`/`Referer` headers, and requiring unique, unpredictable cryptographically signed anti-CSRF tokens on mutating requests.' },
-      { id: 'b', label: 'Using HTTP GET requests for all database delete operations.' },
-      { id: 'c', label: 'Allowing all third-party websites to make credentialed POST requests.' },
-      { id: 'd', label: 'Removing user authentication from web applications.' },
+    "id": "dev_priv_12",
+    "section": "privacy",
+    "prompt": "How do modern web frameworks defend against Cross-Site Request Forgery (CSRF)?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Using HTTP GET requests for all database delete operations."
+      },
+      {
+        "id": "b",
+        "label": "Allowing all third-party websites to make credentialed POST requests."
+      },
+      {
+        "id": "c",
+        "label": "Enforcing `SameSite=Lax` or `SameSite=Strict` cookie attributes, verifying `Origin`/`Referer` headers, and requiring unique, unpredictable cryptographically signed anti-CSRF tokens on mutating requests."
+      },
+      {
+        "id": "d",
+        "label": "Removing user authentication from web applications."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'dev_priv_13',
-    section: 'privacy',
-    prompt: 'What security flags must be set on session authentication cookies?',
-    options: [
-      { id: 'a', label: '`HttpOnly` (prevents JavaScript/XSS access), `Secure` (transmitted over HTTPS only), and `SameSite=Strict` or `Lax` (prevents CSRF transmission).' },
-      { id: 'b', label: '`HttpOnly=false`, `Secure=false`, and `SameSite=None` without TLS.' },
-      { id: 'c', label: 'Cookies should never be used; passwords should be stored in browser `localStorage`.' },
-      { id: 'd', label: 'Cookies should be public to all domains.' },
+    "id": "dev_priv_13",
+    "section": "privacy",
+    "prompt": "What security flags must be set on session authentication cookies?",
+    "options": [
+      {
+        "id": "a",
+        "label": "`HttpOnly=false`, `Secure=false`, and `SameSite=None` without TLS."
+      },
+      {
+        "id": "b",
+        "label": "`HttpOnly` (prevents JavaScript/XSS access), `Secure` (transmitted over HTTPS only), and `SameSite=Strict` or `Lax` (prevents CSRF transmission)."
+      },
+      {
+        "id": "c",
+        "label": "Cookies should never be used; passwords should be stored in browser `localStorage`."
+      },
+      {
+        "id": "d",
+        "label": "Cookies should be public to all domains."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'dev_priv_14',
-    section: 'privacy',
-    prompt: 'How should GraphQL endpoints be secured in public-facing production deployments?',
-    options: [
-      { id: 'a', label: 'Disable schema introspection in production, enforce query depth and complexity limits, implement rate limiting on cost analyzers, and require field-level authorization.' },
-      { id: 'b', label: 'Enable full introspection and allow unauthenticated mutations without rate limits.' },
-      { id: 'c', label: 'Execute raw SQL queries directly from client GraphQL strings.' },
-      { id: 'd', label: 'Remove all authentication checks from resolvers.' },
+    "id": "dev_priv_14",
+    "section": "privacy",
+    "prompt": "How should GraphQL endpoints be secured in public-facing production deployments?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Disable schema introspection in production, enforce query depth and complexity limits, implement rate limiting on cost analyzers, and require field-level authorization."
+      },
+      {
+        "id": "b",
+        "label": "Enable full introspection and allow unauthenticated mutations without rate limits."
+      },
+      {
+        "id": "c",
+        "label": "Execute raw SQL queries directly from client GraphQL strings."
+      },
+      {
+        "id": "d",
+        "label": "Remove all authentication checks from resolvers."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'dev_priv_15',
-    section: 'privacy',
-    prompt: 'What is a Software Bill of Materials (SBOM) and why is it critical for enterprise compliance?',
-    options: [
-      { id: 'a', label: 'A formal machine-readable inventory (SPDX/CycloneDX) detailing all third-party components, libraries, transitive dependencies, and licenses inside an application build artifact.' },
-      { id: 'b', label: 'An invoice sent to customers for software licenses.' },
-      { id: 'c', label: 'A list of employee hardware laptops.' },
-      { id: 'd', label: 'A printed manual on how to install software.' },
+    "id": "dev_priv_15",
+    "section": "privacy",
+    "prompt": "What is a Software Bill of Materials (SBOM) and why is it critical for enterprise compliance?",
+    "options": [
+      {
+        "id": "a",
+        "label": "An invoice sent to customers for software licenses."
+      },
+      {
+        "id": "b",
+        "label": "A list of employee hardware laptops."
+      },
+      {
+        "id": "c",
+        "label": "A printed manual on how to install software."
+      },
+      {
+        "id": "d",
+        "label": "A formal machine-readable inventory (SPDX/CycloneDX) detailing all third-party components, libraries, transitive dependencies, and licenses inside an application build artifact."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'dev_priv_16',
-    section: 'privacy',
-    prompt: 'How does an engineer prevent Insecure Direct Object References (IDOR) when building REST APIs (e.g. `/api/invoices/{id}`)?',
-    options: [
-      { id: 'a', label: 'Always verify that the authenticated user has explicit ownership or RBAC permission to access the requested resource ID at the database query layer, rather than relying on sequential IDs.' },
-      { id: 'b', label: 'Assume the user is authorized if they know the invoice ID number.' },
-      { id: 'c', label: 'Use sequential integers starting at 1 for all customer accounts.' },
-      { id: 'd', label: 'Disable user login requirements for API endpoints.' },
+    "id": "dev_priv_16",
+    "section": "privacy",
+    "prompt": "How does an engineer prevent Insecure Direct Object References (IDOR) when building REST APIs (e.g. `/api/invoices/{id}`)?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Assume the user is authorized if they know the invoice ID number."
+      },
+      {
+        "id": "b",
+        "label": "Use sequential integers starting at 1 for all customer accounts."
+      },
+      {
+        "id": "c",
+        "label": "Always verify that the authenticated user has explicit ownership or RBAC permission to access the requested resource ID at the database query layer, rather than relying on sequential IDs."
+      },
+      {
+        "id": "d",
+        "label": "Disable user login requirements for API endpoints."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'dev_priv_17',
-    section: 'privacy',
-    prompt: 'What is Regular Expression Denial of Service (ReDoS) and how is it mitigated?',
-    options: [
-      { id: 'a', label: 'Catastrophic backtracking in poorly structured regexes containing nested quantifiers causing exponential CPU consumption; mitigated by non-backtracking engines (e.g. RE2) and regex timeouts.' },
-      { id: 'b', label: 'A DDoS attack that overloads database storage.' },
-      { id: 'c', label: 'A hardware failure on server memory cards.' },
-      { id: 'd', label: 'An error caused by typing regexes in lowercase.' },
+    "id": "dev_priv_17",
+    "section": "privacy",
+    "prompt": "What is Regular Expression Denial of Service (ReDoS) and how is it mitigated?",
+    "options": [
+      {
+        "id": "a",
+        "label": "A DDoS attack that overloads database storage."
+      },
+      {
+        "id": "b",
+        "label": "Catastrophic backtracking in poorly structured regexes containing nested quantifiers causing exponential CPU consumption; mitigated by non-backtracking engines (e.g. RE2) and regex timeouts."
+      },
+      {
+        "id": "c",
+        "label": "A hardware failure on server memory cards."
+      },
+      {
+        "id": "d",
+        "label": "An error caused by typing regexes in lowercase."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'dev_priv_18',
-    section: 'privacy',
-    prompt: 'In a Zero-Trust microservices architecture, how should services authenticate inter-service RPC communications?',
-    options: [
-      { id: 'a', label: 'Mutual TLS (mTLS) with short-lived cryptographically attested X.509 certificates (e.g., SPIFFE/SPIRE), ensuring bidirectional identity verification and encryption in transit.' },
-      { id: 'b', label: 'Trusting all traffic that originates inside the private corporate network perimeter.' },
-      { id: 'c', label: 'Using unencrypted HTTP on standard internal ports.' },
-      { id: 'd', label: 'Hardcoding a single shared API key in all microservice config files.' },
+    "id": "dev_priv_18",
+    "section": "privacy",
+    "prompt": "In a Zero-Trust microservices architecture, how should services authenticate inter-service RPC communications?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Mutual TLS (mTLS) with short-lived cryptographically attested X.509 certificates (e.g., SPIFFE/SPIRE), ensuring bidirectional identity verification and encryption in transit."
+      },
+      {
+        "id": "b",
+        "label": "Trusting all traffic that originates inside the private corporate network perimeter."
+      },
+      {
+        "id": "c",
+        "label": "Using unencrypted HTTP on standard internal ports."
+      },
+      {
+        "id": "d",
+        "label": "Hardcoding a single shared API key in all microservice config files."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'dev_priv_19',
-    section: 'privacy',
-    prompt: 'What principle governs IAM permissions for serverless functions (e.g. AWS Lambda / Google Cloud Functions)?',
-    options: [
-      { id: 'a', label: 'Principle of Least Privilege: grant narrow, resource-specific permissions (e.g. `s3:GetObject` on a specific bucket ARN only) rather than broad wildcard `*` administrator roles.' },
-      { id: 'b', label: 'Assign `AdministratorAccess` to all functions to prevent permission errors.' },
-      { id: 'c', label: 'Allow functions to execute without any IAM role.' },
-      { id: 'd', label: 'Share a single IAM user access key across all cloud resources.' },
+    "id": "dev_priv_19",
+    "section": "privacy",
+    "prompt": "What principle governs IAM permissions for serverless functions (e.g. AWS Lambda / Google Cloud Functions)?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Assign `AdministratorAccess` to all functions to prevent permission errors."
+      },
+      {
+        "id": "b",
+        "label": "Allow functions to execute without any IAM role."
+      },
+      {
+        "id": "c",
+        "label": "Share a single IAM user access key across all cloud resources."
+      },
+      {
+        "id": "d",
+        "label": "Principle of Least Privilege: grant narrow, resource-specific permissions (e.g. `s3:GetObject` on a specific bucket ARN only) rather than broad wildcard `*` administrator roles."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'dev_priv_20',
-    section: 'privacy',
-    prompt: 'How should an incoming webhook endpoint (e.g. Stripe, GitHub) verify that incoming HTTP payloads were not forged by an attacker?',
-    options: [
-      { id: 'a', label: 'Compute the cryptographic HMAC signature of the raw request body using a shared secret and compare it against the request header signature using constant-time comparison.' },
-      { id: 'b', label: 'Check if the request came from an IP address that looks legitimate.' },
-      { id: 'c', label: 'Accept all webhook payloads as long as the HTTP status is 200.' },
-      { id: 'd', label: 'Rely on the sender domain in the email address.' },
+    "id": "dev_priv_20",
+    "section": "privacy",
+    "prompt": "How should an incoming webhook endpoint (e.g. Stripe, GitHub) verify that incoming HTTP payloads were not forged by an attacker?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Check if the request came from an IP address that looks legitimate."
+      },
+      {
+        "id": "b",
+        "label": "Accept all webhook payloads as long as the HTTP status is 200."
+      },
+      {
+        "id": "c",
+        "label": "Compute the cryptographic HMAC signature of the raw request body using a shared secret and compare it against the request header signature using constant-time comparison."
+      },
+      {
+        "id": "d",
+        "label": "Rely on the sender domain in the email address."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'dev_priv_21',
-    section: 'privacy',
-    prompt: 'Why are constant-time string comparison functions (e.g., `crypto.timingSafeEqual`) essential when validating tokens and cryptographic signatures?',
-    options: [
-      { id: 'a', label: 'Standard `===` comparisons return early on the first mismatched character, leaking timing side-channel data that allows attackers to guess secrets character-by-character.' },
-      { id: 'b', label: 'Standard equality operators consume 10x more CPU memory.' },
-      { id: 'c', label: 'Constant-time comparison converts strings to uppercase.' },
-      { id: 'd', label: 'Standard comparison cannot compare strings longer than 10 characters.' },
+    "id": "dev_priv_21",
+    "section": "privacy",
+    "prompt": "Why are constant-time string comparison functions (e.g., `crypto.timingSafeEqual`) essential when validating tokens and cryptographic signatures?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Standard equality operators consume 10x more CPU memory."
+      },
+      {
+        "id": "b",
+        "label": "Standard `===` comparisons return early on the first mismatched character, leaking timing side-channel data that allows attackers to guess secrets character-by-character."
+      },
+      {
+        "id": "c",
+        "label": "Constant-time comparison converts strings to uppercase."
+      },
+      {
+        "id": "d",
+        "label": "Standard comparison cannot compare strings longer than 10 characters."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'dev_priv_22',
-    section: 'privacy',
-    prompt: 'How should applications securely handle user-uploaded profile pictures and files?',
-    options: [
-      { id: 'a', label: 'Validate magic byte file headers (not just extensions), scan with antivirus, re-encode images to strip EXIF metadata/steganography, and serve from isolated CDN domains with `Content-Disposition: attachment`.' },
-      { id: 'b', label: 'Execute uploaded files directly on the web server.' },
-      { id: 'c', label: 'Store uploaded files in the web server root directory with executable permissions.' },
-      { id: 'd', label: 'Trust whatever file name the user submits.' },
+    "id": "dev_priv_22",
+    "section": "privacy",
+    "prompt": "How should applications securely handle user-uploaded profile pictures and files?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Validate magic byte file headers (not just extensions), scan with antivirus, re-encode images to strip EXIF metadata/steganography, and serve from isolated CDN domains with `Content-Disposition: attachment`."
+      },
+      {
+        "id": "b",
+        "label": "Execute uploaded files directly on the web server."
+      },
+      {
+        "id": "c",
+        "label": "Store uploaded files in the web server root directory with executable permissions."
+      },
+      {
+        "id": "d",
+        "label": "Trust whatever file name the user submits."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'dev_priv_23',
-    section: 'privacy',
-    prompt: 'What is Prototype Pollution in JavaScript and how is it prevented?',
-    options: [
-      { id: 'a', label: 'Injecting properties into `Object.prototype` via recursive merge/clone operations; prevented by freezing prototypes, using `Map` objects, or validating `__proto__` and `constructor` keys.' },
-      { id: 'b', label: 'Air pollution caused by data center cooling fans.' },
-      { id: 'c', label: 'A syntax error when declaring TypeScript interfaces.' },
-      { id: 'd', label: 'A compiler bug in Python virtual environments.' },
+    "id": "dev_priv_23",
+    "section": "privacy",
+    "prompt": "What is Prototype Pollution in JavaScript and how is it prevented?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Air pollution caused by data center cooling fans."
+      },
+      {
+        "id": "b",
+        "label": "A syntax error when declaring TypeScript interfaces."
+      },
+      {
+        "id": "c",
+        "label": "A compiler bug in Python virtual environments."
+      },
+      {
+        "id": "d",
+        "label": "Injecting properties into `Object.prototype` via recursive merge/clone operations; prevented by freezing prototypes, using `Map` objects, or validating `__proto__` and `constructor` keys."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'dev_priv_24',
-    section: 'privacy',
-    prompt: 'What security practices harden Docker containers running in production environments?',
-    options: [
-      { id: 'a', label: 'Run as a dedicated non-root UID/GID, mount the root filesystem as read-only (`--read-only`), drop all unnecessary Linux kernel capabilities (`--cap-drop=ALL`), and use distroless base images.' },
-      { id: 'b', label: 'Run containers as root with `--privileged` flags.' },
-      { id: 'c', label: 'Disable Linux namespaces.' },
-      { id: 'd', label: 'Embed private SSH keys inside container images.' },
+    "id": "dev_priv_24",
+    "section": "privacy",
+    "prompt": "What security practices harden Docker containers running in production environments?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Run containers as root with `--privileged` flags."
+      },
+      {
+        "id": "b",
+        "label": "Disable Linux namespaces."
+      },
+      {
+        "id": "c",
+        "label": "Run as a dedicated non-root UID/GID, mount the root filesystem as read-only (`--read-only`), drop all unnecessary Linux kernel capabilities (`--cap-drop=ALL`), and use distroless base images."
+      },
+      {
+        "id": "d",
+        "label": "Embed private SSH keys inside container images."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'dev_priv_25',
-    section: 'privacy',
-    prompt: 'How do developers prevent Mass Assignment vulnerabilities when binding request payloads to database models?',
-    options: [
-      { id: 'a', label: 'Explicitly define strict Data Transfer Objects (DTOs) and input whitelists, preventing clients from mutating administrative fields (e.g. `isAdmin`, `role`, `verified`).' },
-      { id: 'b', label: 'Pass raw `req.body` objects directly to database update methods.' },
-      { id: 'c', label: 'Allow users to submit any JSON key they choose.' },
-      { id: 'd', label: 'Disable database authorization checks.' },
+    "id": "dev_priv_25",
+    "section": "privacy",
+    "prompt": "How do developers prevent Mass Assignment vulnerabilities when binding request payloads to database models?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Pass raw `req.body` objects directly to database update methods."
+      },
+      {
+        "id": "b",
+        "label": "Explicitly define strict Data Transfer Objects (DTOs) and input whitelists, preventing clients from mutating administrative fields (e.g. `isAdmin`, `role`, `verified`)."
+      },
+      {
+        "id": "c",
+        "label": "Allow users to submit any JSON key they choose."
+      },
+      {
+        "id": "d",
+        "label": "Disable database authorization checks."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'dev_priv_26',
-    section: 'privacy',
-    prompt: 'How does cryptographic package signing (Sigstore / npm provenance) defend against supply chain tampering?',
-    options: [
-      { id: 'a', label: 'It cryptographically links published package binaries back to verifiable source code git commits and CI build environments (SLSA framework), proving the artifact was not maliciously modified.' },
-      { id: 'b', label: 'It makes all npm packages run 5x faster.' },
-      { id: 'c', label: 'It replaces the need for software testing.' },
-      { id: 'd', label: 'It encrypts source code so developers cannot read it.' },
+    "id": "dev_priv_26",
+    "section": "privacy",
+    "prompt": "How does cryptographic package signing (Sigstore / npm provenance) defend against supply chain tampering?",
+    "options": [
+      {
+        "id": "a",
+        "label": "It cryptographically links published package binaries back to verifiable source code git commits and CI build environments (SLSA framework), proving the artifact was not maliciously modified."
+      },
+      {
+        "id": "b",
+        "label": "It makes all npm packages run 5x faster."
+      },
+      {
+        "id": "c",
+        "label": "It replaces the need for software testing."
+      },
+      {
+        "id": "d",
+        "label": "It encrypts source code so developers cannot read it."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'dev_priv_27',
-    section: 'privacy',
-    prompt: 'How does Envelope Encryption protect sensitive enterprise data columns at rest in relational databases?',
-    options: [
-      { id: 'a', label: 'Data is encrypted with a unique Data Encryption Key (DEK); the DEK is encrypted with a master Key Encryption Key (KEK) stored in a secure Hardware Security Module (KMS).' },
-      { id: 'b', label: 'Data is stored in unencrypted plaintext on local hard drives.' },
-      { id: 'c', label: 'Data is encrypted using a hardcoded password in application code.' },
-      { id: 'd', label: 'Data is deleted after every read operation.' },
+    "id": "dev_priv_27",
+    "section": "privacy",
+    "prompt": "How does Envelope Encryption protect sensitive enterprise data columns at rest in relational databases?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Data is stored in unencrypted plaintext on local hard drives."
+      },
+      {
+        "id": "b",
+        "label": "Data is encrypted using a hardcoded password in application code."
+      },
+      {
+        "id": "c",
+        "label": "Data is deleted after every read operation."
+      },
+      {
+        "id": "d",
+        "label": "Data is encrypted with a unique Data Encryption Key (DEK); the DEK is encrypted with a master Key Encryption Key (KEK) stored in a secure Hardware Security Module (KMS)."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'dev_priv_28',
-    section: 'privacy',
-    prompt: 'How should developers manage local development environment secrets safely across multi-person teams?',
-    options: [
-      { id: 'a', label: 'Use automated secret management tooling (e.g., Doppler, Vault, 1Password CLI) that injects ephemeral secrets directly into process memory without storing plaintext `.env` files in git.' },
-      { id: 'b', label: 'Email `.env` files containing production passwords to all company Slack channels.' },
-      { id: 'c', label: 'Paste production database credentials into public GitHub issues.' },
-      { id: 'd', label: 'Hardcode credentials inside JavaScript bundle files.' },
+    "id": "dev_priv_28",
+    "section": "privacy",
+    "prompt": "How should developers manage local development environment secrets safely across multi-person teams?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Email `.env` files containing production passwords to all company Slack channels."
+      },
+      {
+        "id": "b",
+        "label": "Paste production database credentials into public GitHub issues."
+      },
+      {
+        "id": "c",
+        "label": "Use automated secret management tooling (e.g., Doppler, Vault, 1Password CLI) that injects ephemeral secrets directly into process memory without storing plaintext `.env` files in git."
+      },
+      {
+        "id": "d",
+        "label": "Hardcode credentials inside JavaScript bundle files."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'dev_priv_29',
-    section: 'privacy',
-    prompt: 'What vulnerability occurs when XML parsers process external entity declarations (XXE) and how is it prevented?',
-    options: [
-      { id: 'a', label: 'Attackers extract local server files and execute SSRF via `<!DOCTYPE>` external entities; prevented by disabling DTD (Document Type Definition) processing and external entity resolution in XML parsers.' },
-      { id: 'b', label: 'XML parsers run out of disk space.' },
-      { id: 'c', label: 'XML converts into HTML automatically.' },
-      { id: 'd', label: 'XML files cannot be transmitted over HTTP.' },
+    "id": "dev_priv_29",
+    "section": "privacy",
+    "prompt": "What vulnerability occurs when XML parsers process external entity declarations (XXE) and how is it prevented?",
+    "options": [
+      {
+        "id": "a",
+        "label": "XML parsers run out of disk space."
+      },
+      {
+        "id": "b",
+        "label": "Attackers extract local server files and execute SSRF via `<!DOCTYPE>` external entities; prevented by disabling DTD (Document Type Definition) processing and external entity resolution in XML parsers."
+      },
+      {
+        "id": "c",
+        "label": "XML converts into HTML automatically."
+      },
+      {
+        "id": "d",
+        "label": "XML files cannot be transmitted over HTTP."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'dev_priv_30',
-    section: 'privacy',
-    prompt: 'What represents the engineering ethics mandate for modern software developers building AI-powered systems?',
-    options: [
-      { id: 'a', label: 'Upholding relentless dedication to data privacy, zero-trust security architecture, transparent cryptographic provenance, and building trustworthy, resilient systems that protect users.' },
-      { id: 'b', label: 'Deploying vulnerable code to production as fast as possible to meet quarterly deadlines.' },
-      { id: 'c', label: 'Ignoring data compliance whenever it requires writing extra unit tests.' },
-      { id: 'd', label: 'Treating user privacy as an optional marketing gimmick.' },
+    "id": "dev_priv_30",
+    "section": "privacy",
+    "prompt": "What represents the engineering ethics mandate for modern software developers building AI-powered systems?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Upholding relentless dedication to data privacy, zero-trust security architecture, transparent cryptographic provenance, and building trustworthy, resilient systems that protect users."
+      },
+      {
+        "id": "b",
+        "label": "Deploying vulnerable code to production as fast as possible to meet quarterly deadlines."
+      },
+      {
+        "id": "c",
+        "label": "Ignoring data compliance whenever it requires writing extra unit tests."
+      },
+      {
+        "id": "d",
+        "label": "Treating user privacy as an optional marketing gimmick."
+      }
     ],
-    correctOptionId: 'a',
-  },
+    "correctOptionId": "a"
+  }
 ];

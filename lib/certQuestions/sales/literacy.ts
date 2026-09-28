@@ -8,11 +8,11 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "Feeding the prospect's recent public post, hiring news, or tech stack signal as an anchor context while constraining the email to 75 words."
+        "label": "Asking the AI to generate a 500-word comprehensive pitch listing all 25 company product features."
       },
       {
         "id": "b",
-        "label": "Asking the AI to generate a 500-word comprehensive pitch listing all 25 company product features."
+        "label": "Feeding the prospect's recent public post, hiring news, or tech stack signal as an anchor context while constraining the email to 75 words."
       },
       {
         "id": "c",
@@ -23,7 +23,7 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
         "label": "Using a generic template and asking the AI to only change the prospect's first name and company name."
       }
     ],
-    "correctOptionId": "a"
+    "correctOptionId": "b"
   },
   {
     "id": "sales_lit_02",
@@ -32,11 +32,11 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "Ask: \"Tell me everything about the software industry.\""
+        "label": "Provide the prospect's recent LinkedIn summary, company domain, and ask for 3 likely strategic initiatives, 2 potential legacy friction points, and 3 open-ended discovery questions."
       },
       {
         "id": "b",
-        "label": "Provide the prospect's recent LinkedIn summary, company domain, and ask for 3 likely strategic initiatives, 2 potential legacy friction points, and 3 open-ended discovery questions."
+        "label": "Ask: \"Tell me everything about the software industry.\""
       },
       {
         "id": "c",
@@ -47,7 +47,7 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
         "label": "Request a list of 50 generic icebreaker jokes."
       }
     ],
-    "correctOptionId": "b"
+    "correctOptionId": "a"
   },
   {
     "id": "sales_lit_03",
@@ -56,22 +56,22 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "\"In today's fast-paced digital landscape, unlocking synergistic potential is paramount...\""
-      },
-      {
-        "id": "b",
         "label": "\"Saw your team is hiring 4 backend engineers in Austin.\""
       },
       {
-        "id": "c",
+        "id": "b",
         "label": "\"Are you still managing warehouse transfers via manual spreadsheets?\""
       },
       {
-        "id": "d",
+        "id": "c",
         "label": "\"Would Tuesday at 2pm CT work for a 15-minute intro?\""
+      },
+      {
+        "id": "d",
+        "label": "\"In today's fast-paced digital landscape, unlocking synergistic potential is paramount...\""
       }
     ],
-    "correctOptionId": "a"
+    "correctOptionId": "d"
   },
   {
     "id": "sales_lit_04",
@@ -84,18 +84,18 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
       },
       {
         "id": "b",
-        "label": "Draft a short, non-defensive check-in focusing on typical ROI and packaging tiers, offering a 2-minute video walkthrough."
+        "label": "Immediately send a 50% discount offer without asking about their actual evaluation criteria."
       },
       {
         "id": "c",
-        "label": "Immediately send a 50% discount offer without asking about their actual evaluation criteria."
+        "label": "Draft a short, non-defensive check-in focusing on typical ROI and packaging tiers, offering a 2-minute video walkthrough."
       },
       {
         "id": "d",
         "label": "Spam the prospect with 5 identical follow-up emails over 24 hours."
       }
     ],
-    "correctOptionId": "b"
+    "correctOptionId": "c"
   },
   {
     "id": "sales_lit_05",
@@ -104,11 +104,11 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "Consumer LLMs do not have verified real-time personal identity graphs and frequently hallucinate plausible-looking fake phone numbers."
+        "label": "It is technically impossible for an AI to output 10 digits."
       },
       {
         "id": "b",
-        "label": "It is technically impossible for an AI to output 10 digits."
+        "label": "Consumer LLMs do not have verified real-time personal identity graphs and frequently hallucinate plausible-looking fake phone numbers."
       },
       {
         "id": "c",
@@ -119,7 +119,7 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
         "label": "Phone numbers are encrypted in mathematical tokens."
       }
     ],
-    "correctOptionId": "a"
+    "correctOptionId": "b"
   },
   {
     "id": "sales_lit_06",
@@ -156,18 +156,18 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
       },
       {
         "id": "b",
-        "label": "Calibrate the value proposition: prompt for cost containment, payback period, and EBITDA impact for the CFO, while focusing on integration latency, API security, and maintenance overhead for IT."
-      },
-      {
-        "id": "c",
         "label": "Only message the CFO and ignore technical stakeholders."
       },
       {
-        "id": "d",
+        "id": "c",
         "label": "Ask the AI to generate a humorous poem for the CFO and a technical manual for the IT lead."
+      },
+      {
+        "id": "d",
+        "label": "Calibrate the value proposition: prompt for cost containment, payback period, and EBITDA impact for the CFO, while focusing on integration latency, API security, and maintenance overhead for IT."
       }
     ],
-    "correctOptionId": "b"
+    "correctOptionId": "d"
   },
   {
     "id": "sales_lit_08",
@@ -180,18 +180,18 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
       },
       {
         "id": "b",
-        "label": "Providing the AI with the prospect's seniority level, daily KPIs, and pain language so the generated text speaks directly to their world."
+        "label": "Configuring billing tiers inside the CRM."
       },
       {
         "id": "c",
-        "label": "Configuring billing tiers inside the CRM."
+        "label": "Providing the AI with the prospect's seniority level, daily KPIs, and pain language so the generated text speaks directly to their world."
       },
       {
         "id": "d",
         "label": "Automatically modifying the sender's email address to impersonate someone else."
       }
     ],
-    "correctOptionId": "b"
+    "correctOptionId": "c"
   },
   {
     "id": "sales_lit_09",
@@ -224,11 +224,11 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "\"Summarize this document in 2 sentences.\""
+        "label": "\"Extract the CEO's stated top 3 strategic priorities, the Risk Factors section mentioning operational bottlenecks, and recent M&A acquisitions from this filing.\""
       },
       {
         "id": "b",
-        "label": "\"Extract the CEO's stated top 3 strategic priorities, the Risk Factors section mentioning operational bottlenecks, and recent M&A acquisitions from this filing.\""
+        "label": "\"Summarize this document in 2 sentences.\""
       },
       {
         "id": "c",
@@ -239,7 +239,7 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
         "label": "\"Re-write the financial tables in cursive.\""
       }
     ],
-    "correctOptionId": "b"
+    "correctOptionId": "a"
   },
   {
     "id": "sales_lit_11",
@@ -248,22 +248,22 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "AI drafts frequently include subtle inaccuracies, awkward context misinterpretations, or inappropriate assumptions that can permanently damage domain reputation."
-      },
-      {
-        "id": "b",
         "label": "Internet service providers shut down domains that send more than 5 emails a week."
       },
       {
-        "id": "c",
+        "id": "b",
         "label": "Sales reps are legally required to hand-type every single keystroke."
       },
       {
-        "id": "d",
+        "id": "c",
         "label": "Email servers reject text generated after 2024."
+      },
+      {
+        "id": "d",
+        "label": "AI drafts frequently include subtle inaccuracies, awkward context misinterpretations, or inappropriate assumptions that can permanently damage domain reputation."
       }
     ],
-    "correctOptionId": "a"
+    "correctOptionId": "d"
   },
   {
     "id": "sales_lit_12",
@@ -272,22 +272,22 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "Context: [Saw their talk on Kubernetes at KubeCon] + Role: [Fellow infrastructure enthusiast] + Ask: [Open connection to exchange notes on multi-cluster tooling] + Constraint: [Strictly under 250 chars, no pitch]."
-      },
-      {
-        "id": "b",
         "label": "Ask: [Pitch our SaaS platform in full detail] + Include pricing."
       },
       {
-        "id": "c",
+        "id": "b",
         "label": "Write 3 paragraphs explaining our entire company history."
+      },
+      {
+        "id": "c",
+        "label": "Context: [Saw their talk on Kubernetes at KubeCon] + Role: [Fellow infrastructure enthusiast] + Ask: [Open connection to exchange notes on multi-cluster tooling] + Constraint: [Strictly under 250 chars, no pitch]."
       },
       {
         "id": "d",
         "label": "Send an automated calendar link with no context."
       }
     ],
-    "correctOptionId": "a"
+    "correctOptionId": "c"
   },
   {
     "id": "sales_lit_13",
@@ -296,11 +296,11 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "\"Translate this feature (e.g. automated Redis caching) into the business benefit for a CIO: reduction in cloud compute spend, 99.99% checkout uptime during Black Friday, and developer sprint velocity.\""
+        "label": "\"Add more technical jargon so the CIO is impressed.\""
       },
       {
         "id": "b",
-        "label": "\"Add more technical jargon so the CIO is impressed.\""
+        "label": "\"Translate this feature (e.g. automated Redis caching) into the business benefit for a CIO: reduction in cloud compute spend, 99.99% checkout uptime during Black Friday, and developer sprint velocity.\""
       },
       {
         "id": "c",
@@ -311,7 +311,7 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
         "label": "\"Translate this into 10 foreign languages.\""
       }
     ],
-    "correctOptionId": "a"
+    "correctOptionId": "b"
   },
   {
     "id": "sales_lit_14",
@@ -320,11 +320,11 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "Keep it because it sounds polite."
+        "label": "Delete it immediately and replace it with a direct, relevant observation or value hook."
       },
       {
         "id": "b",
-        "label": "Delete it immediately and replace it with a direct, relevant observation or value hook."
+        "label": "Keep it because it sounds polite."
       },
       {
         "id": "c",
@@ -335,7 +335,7 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
         "label": "Send it to the entire Fortune 500 list."
       }
     ],
-    "correctOptionId": "b"
+    "correctOptionId": "a"
   },
   {
     "id": "sales_lit_15",
@@ -344,22 +344,22 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "Explicitly barring the AI from using overused tropes (e.g., \"Do NOT use words like revolutionary, game-changer, unlock, or delve\")."
-      },
-      {
-        "id": "b",
         "label": "Instructing the AI to insult the prospect's current vendors."
       },
       {
-        "id": "c",
+        "id": "b",
         "label": "Restricting sales reps from checking their quota."
       },
       {
-        "id": "d",
+        "id": "c",
         "label": "Preventing the CRM from syncing."
+      },
+      {
+        "id": "d",
+        "label": "Explicitly barring the AI from using overused tropes (e.g., \"Do NOT use words like revolutionary, game-changer, unlock, or delve\")."
       }
     ],
-    "correctOptionId": "a"
+    "correctOptionId": "d"
   },
   {
     "id": "sales_lit_16",
@@ -368,22 +368,22 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "\"Rewrite this case study highlighting logistics-specific metrics: reduction in dispatch latency and driver idle time, while mirroring the prospect's fleet scale.\""
-      },
-      {
-        "id": "b",
         "label": "\"Change the customer name to the prospect's company name and claim they already did it.\""
       },
       {
-        "id": "c",
+        "id": "b",
         "label": "\"Multiply all savings by 10 to sound more impressive.\""
+      },
+      {
+        "id": "c",
+        "label": "\"Rewrite this case study highlighting logistics-specific metrics: reduction in dispatch latency and driver idle time, while mirroring the prospect's fleet scale.\""
       },
       {
         "id": "d",
         "label": "\"Make the case study into an audio file.\""
       }
     ],
-    "correctOptionId": "a"
+    "correctOptionId": "c"
   },
   {
     "id": "sales_lit_17",
@@ -392,11 +392,11 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "Providing a single unified \"Core Value Thesis\" and having the AI adapt the delivery length and call-to-action per channel format."
+        "label": "Writing 3 completely unrelated pitches across the channels."
       },
       {
         "id": "b",
-        "label": "Writing 3 completely unrelated pitches across the channels."
+        "label": "Providing a single unified \"Core Value Thesis\" and having the AI adapt the delivery length and call-to-action per channel format."
       },
       {
         "id": "c",
@@ -407,7 +407,7 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
         "label": "Sending all 3 touchpoints within the same 60 seconds."
       }
     ],
-    "correctOptionId": "a"
+    "correctOptionId": "b"
   },
   {
     "id": "sales_lit_18",
@@ -440,22 +440,22 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "\"Write a 15-second permission-based opener that acknowledges the interruption, references a specific operational pain common to VP of Sales Ops, and asks for 20 seconds.\""
-      },
-      {
-        "id": "b",
         "label": "\"Write a 2-minute monologue pitching our product features before the prospect can speak.\""
       },
       {
-        "id": "c",
+        "id": "b",
         "label": "\"Ask the prospect about the weather and their weekend plans.\""
       },
       {
-        "id": "d",
+        "id": "c",
         "label": "\"Tell the prospect you are an automated AI robot testing phone lines.\""
+      },
+      {
+        "id": "d",
+        "label": "\"Write a 15-second permission-based opener that acknowledges the interruption, references a specific operational pain common to VP of Sales Ops, and asks for 20 seconds.\""
       }
     ],
-    "correctOptionId": "a"
+    "correctOptionId": "d"
   },
   {
     "id": "sales_lit_20",
@@ -464,22 +464,22 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "options": [
       {
         "id": "a",
-        "label": "High open rates (>60%) but extremely low reply rates (<1%), indicating good subject lines but robotic, irrelevant body copy."
-      },
-      {
-        "id": "b",
         "label": "High positive meeting booking rates (>8%)."
       },
       {
-        "id": "c",
+        "id": "b",
         "label": "Prospects forwarding your email to their CEO."
+      },
+      {
+        "id": "c",
+        "label": "High open rates (>60%) but extremely low reply rates (<1%), indicating good subject lines but robotic, irrelevant body copy."
       },
       {
         "id": "d",
         "label": "Low email bounce rates (<2%)."
       }
     ],
-    "correctOptionId": "a"
+    "correctOptionId": "c"
   },
   {
     "id": "sales_lit_21",
@@ -492,18 +492,18 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
       },
       {
         "id": "b",
-        "label": "Ask the AI to accuse the prospect of having an outdated financial budget."
+        "label": "Provide the prospect's annual cost of inaction, compute payback period, and prompt for an executive narrative comparing upfront licensing against multi-year operational savings and risk reduction."
       },
       {
         "id": "c",
-        "label": "Instruct the AI to generate a list of cheaper competitor products."
+        "label": "Ask the AI to accuse the prospect of having an outdated financial budget."
       },
       {
         "id": "d",
-        "label": "Provide the prospect's annual cost of inaction, compute payback period, and prompt for an executive narrative comparing upfront licensing against multi-year operational savings and risk reduction."
+        "label": "Instruct the AI to generate a list of cheaper competitor products."
       }
     ],
-    "correctOptionId": "d"
+    "correctOptionId": "b"
   },
   {
     "id": "sales_lit_22",
@@ -544,14 +544,14 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
       },
       {
         "id": "c",
-        "label": "Summary of validated business pains + Agreed target go-live date + Sequenced milestone table with assigned human owners on both buyer and vendor teams + Clear immediate next step."
+        "label": "A calendar invite with an empty email body."
       },
       {
         "id": "d",
-        "label": "A calendar invite with an empty email body."
+        "label": "Summary of validated business pains + Agreed target go-live date + Sequenced milestone table with assigned human owners on both buyer and vendor teams + Clear immediate next step."
       }
     ],
-    "correctOptionId": "c"
+    "correctOptionId": "d"
   },
   {
     "id": "sales_lit_24",
@@ -564,18 +564,18 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
       },
       {
         "id": "b",
-        "label": "Prompt for CFO: TCO reduction, cash flow predictability; CISO: SOC2 compliance, encryption, zero trust; VP Eng: developer velocity, API ergonomics, uptime SLAs."
+        "label": "Prompt the AI to only talk about company stock valuation with all three."
       },
       {
         "id": "c",
-        "label": "Prompt the AI to only talk about company stock valuation with all three."
+        "label": "Prompt for CFO: TCO reduction, cash flow predictability; CISO: SOC2 compliance, encryption, zero trust; VP Eng: developer velocity, API ergonomics, uptime SLAs."
       },
       {
         "id": "d",
         "label": "Ask the AI to generate memes to keep the buying committee engaged."
       }
     ],
-    "correctOptionId": "b"
+    "correctOptionId": "c"
   },
   {
     "id": "sales_lit_25",
@@ -588,18 +588,18 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
       },
       {
         "id": "b",
-        "label": "Ask the AI to calculate the compound annual growth rate of the target company's stock."
+        "label": "Instruct the AI to isolate strategic growth initiatives, regulatory headwinds, or digital transformation bets mentioned by leadership, and draft a 3-sentence email linking your solution directly to that stated priority."
       },
       {
         "id": "c",
-        "label": "Instruct the AI to write an email complaining about the target company's quarterly losses."
+        "label": "Ask the AI to calculate the compound annual growth rate of the target company's stock."
       },
       {
         "id": "d",
-        "label": "Instruct the AI to isolate strategic growth initiatives, regulatory headwinds, or digital transformation bets mentioned by leadership, and draft a 3-sentence email linking your solution directly to that stated priority."
+        "label": "Instruct the AI to write an email complaining about the target company's quarterly losses."
       }
     ],
-    "correctOptionId": "d"
+    "correctOptionId": "b"
   },
   {
     "id": "sales_lit_26",
@@ -640,14 +640,14 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
       },
       {
         "id": "c",
-        "label": "Ground the AI on audited SOC2 reports and product whitepapers via RAG, flag missing documentation for human SMEs, and review every technical response."
+        "label": "Answer 'Not Applicable' to all questions automatically."
       },
       {
         "id": "d",
-        "label": "Answer 'Not Applicable' to all questions automatically."
+        "label": "Ground the AI on audited SOC2 reports and product whitepapers via RAG, flag missing documentation for human SMEs, and review every technical response."
       }
     ],
-    "correctOptionId": "c"
+    "correctOptionId": "d"
   },
   {
     "id": "sales_lit_28",
@@ -660,18 +660,18 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
       },
       {
         "id": "b",
-        "label": "Fortune 100: rigorous governance, risk mitigation, and proven enterprise references; Early-stage: extreme brevity, speed-to-value, low implementation friction, and founder-to-founder directness."
+        "label": "Use emojis exclusively for enterprise executives and formal legal prose for startup founders."
       },
       {
         "id": "c",
-        "label": "Use emojis exclusively for enterprise executives and formal legal prose for startup founders."
+        "label": "Fortune 100: rigorous governance, risk mitigation, and proven enterprise references; Early-stage: extreme brevity, speed-to-value, low implementation friction, and founder-to-founder directness."
       },
       {
         "id": "d",
         "label": "Avoid customizing prompts by tier."
       }
     ],
-    "correctOptionId": "b"
+    "correctOptionId": "c"
   },
   {
     "id": "sales_lit_29",
@@ -684,18 +684,18 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
       },
       {
         "id": "b",
-        "label": "Ask the model to blame sales representatives for all lost revenue."
+        "label": "Categorize primary loss reasons (pricing, product gaps, competitor displacement, champion departure), cross-reference by deal size, and output the top 3 product roadmap blockers."
       },
       {
         "id": "c",
-        "label": "Instruct the AI to predict lottery numbers."
+        "label": "Ask the model to blame sales representatives for all lost revenue."
       },
       {
         "id": "d",
-        "label": "Categorize primary loss reasons (pricing, product gaps, competitor displacement, champion departure), cross-reference by deal size, and output the top 3 product roadmap blockers."
+        "label": "Instruct the AI to predict lottery numbers."
       }
     ],
-    "correctOptionId": "d"
+    "correctOptionId": "b"
   },
   {
     "id": "sales_lit_30",
@@ -722,4 +722,3 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
     "correctOptionId": "a"
   }
 ];
-

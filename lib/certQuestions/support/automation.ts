@@ -2,363 +2,723 @@ import { CertQuestion } from '../types';
 
 export const SUPPORT_AUTOMATION_QUESTIONS: CertQuestion[] = [
   {
-    id: 'sup_auto_01',
-    section: 'automation',
-    prompt: 'How should a SupportOps team architect an AI-powered automated ticket deflection engine without hurting customer satisfaction?',
-    options: [
-      { id: 'a', label: 'Ground the AI on verified knowledge base articles, present instant answers with direct article citations, and always provide an immediate 1-click option to connect with a human agent.' },
-      { id: 'b', label: 'Trap customers in an inescapable infinite loop of chatbot menus without human escape.' },
-      { id: 'c', label: 'Auto-close all incoming tickets immediately and mark them resolved.' },
-      { id: 'd', label: 'Disable the support contact form completely.' },
+    "id": "sup_auto_01",
+    "section": "automation",
+    "prompt": "How should a SupportOps team architect an AI-powered automated ticket deflection engine without hurting customer satisfaction?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Trap customers in an inescapable infinite loop of chatbot menus without human escape."
+      },
+      {
+        "id": "b",
+        "label": "Ground the AI on verified knowledge base articles, present instant answers with direct article citations, and always provide an immediate 1-click option to connect with a human agent."
+      },
+      {
+        "id": "c",
+        "label": "Auto-close all incoming tickets immediately and mark them resolved."
+      },
+      {
+        "id": "d",
+        "label": "Disable the support contact form completely."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'sup_auto_02',
-    section: 'automation',
-    prompt: 'How does automated AI ticket triage optimize incoming queue management in high-volume helpdesks?',
-    options: [
-      { id: 'a', label: 'Classifies intent category (e.g., Billing, Bug, Account Access), detects sentiment urgency, identifies language, and applies custom priority tags within seconds of receipt.' },
-      { id: 'b', label: 'Assigns all 10,000 incoming tickets to a single support agent randomly.' },
-      { id: 'c', label: 'Deletes tickets that contain spelling errors.' },
-      { id: 'd', label: 'Changes all ticket subject lines to "Urgent".' },
+    "id": "sup_auto_02",
+    "section": "automation",
+    "prompt": "How does automated AI ticket triage optimize incoming queue management in high-volume helpdesks?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Classifies intent category (e.g., Billing, Bug, Account Access), detects sentiment urgency, identifies language, and applies custom priority tags within seconds of receipt."
+      },
+      {
+        "id": "b",
+        "label": "Assigns all 10,000 incoming tickets to a single support agent randomly."
+      },
+      {
+        "id": "c",
+        "label": "Deletes tickets that contain spelling errors."
+      },
+      {
+        "id": "d",
+        "label": "Changes all ticket subject lines to \"Urgent\"."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'sup_auto_03',
-    section: 'automation',
-    prompt: 'How should an automated SLA management system prevent First Response Time (FRT) breaches?',
-    options: [
-      { id: 'a', label: 'Predictive time-to-breach timers that dynamically bump high-risk enterprise tickets to the top of active agent queues and alert team leads 15 minutes before an SLA target expires.' },
-      { id: 'b', label: 'Automatically modifying the ticket timestamp to hide SLA violations.' },
-      { id: 'c', label: 'Auto-closing tickets right before the SLA deadline expires.' },
-      { id: 'd', label: 'Removing SLAs from all customer contracts.' },
+    "id": "sup_auto_03",
+    "section": "automation",
+    "prompt": "How should an automated SLA management system prevent First Response Time (FRT) breaches?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Automatically modifying the ticket timestamp to hide SLA violations."
+      },
+      {
+        "id": "b",
+        "label": "Auto-closing tickets right before the SLA deadline expires."
+      },
+      {
+        "id": "c",
+        "label": "Removing SLAs from all customer contracts."
+      },
+      {
+        "id": "d",
+        "label": "Predictive time-to-breach timers that dynamically bump high-risk enterprise tickets to the top of active agent queues and alert team leads 15 minutes before an SLA target expires."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'sup_auto_04',
-    section: 'automation',
-    prompt: 'How can Support Operations automate the continuous creation of high-performing support macros?',
-    options: [
-      { id: 'a', label: 'Cluster resolved agent response text across thousands of tickets, identify recurring high-CSAT explanations, generate standardized macro templates, and submit for team lead approval.' },
-      { id: 'b', label: 'Force agents to type every single response by hand with zero saved templates.' },
-      { id: 'c', label: 'Copy macros from an unrelated airline customer service department.' },
-      { id: 'd', label: 'Generate macros with deliberate spelling mistakes.' },
+    "id": "sup_auto_04",
+    "section": "automation",
+    "prompt": "How can Support Operations automate the continuous creation of high-performing support macros?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Force agents to type every single response by hand with zero saved templates."
+      },
+      {
+        "id": "b",
+        "label": "Copy macros from an unrelated airline customer service department."
+      },
+      {
+        "id": "c",
+        "label": "Cluster resolved agent response text across thousands of tickets, identify recurring high-CSAT explanations, generate standardized macro templates, and submit for team lead approval."
+      },
+      {
+        "id": "d",
+        "label": "Generate macros with deliberate spelling mistakes."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'sup_auto_05',
-    section: 'automation',
-    prompt: 'What logic ensures optimal skills-based automated ticket routing across a global support team?',
-    options: [
-      { id: 'a', label: 'Match ticket domain (e.g. Kubernetes integration, SAML SSO, Spanish language) with agent technical certifications, active shift working hours, and real-time open ticket capacity.' },
-      { id: 'b', label: 'Route all complex technical tickets to the newest trainee.' },
-      { id: 'c', label: 'Route tickets based purely on alphabetical sorting of customer last names.' },
-      { id: 'd', label: 'Hold all tickets in an unassigned queue until agents choose to pick them up.' },
+    "id": "sup_auto_05",
+    "section": "automation",
+    "prompt": "What logic ensures optimal skills-based automated ticket routing across a global support team?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Route all complex technical tickets to the newest trainee."
+      },
+      {
+        "id": "b",
+        "label": "Match ticket domain (e.g. Kubernetes integration, SAML SSO, Spanish language) with agent technical certifications, active shift working hours, and real-time open ticket capacity."
+      },
+      {
+        "id": "c",
+        "label": "Route tickets based purely on alphabetical sorting of customer last names."
+      },
+      {
+        "id": "d",
+        "label": "Hold all tickets in an unassigned queue until agents choose to pick them up."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'sup_auto_06',
-    section: 'automation',
-    prompt: 'During a sudden cloud outage, how should automated ticket deduplication handle 500 simultaneous incoming tickets on the same issue?',
-    options: [
-      { id: 'a', label: 'Cluster tickets sharing the same error signatures, link them automatically as children to a master incident ticket, and broadcast unified bulk status updates and resolution notices.' },
-      { id: 'b', label: 'Require 50 agents to manually type 500 individual custom email replies.' },
-      { id: 'c', label: 'Delete 499 tickets and answer only 1.' },
-      { id: 'd', label: 'Block all incoming customer emails during outages.' },
+    "id": "sup_auto_06",
+    "section": "automation",
+    "prompt": "During a sudden cloud outage, how should automated ticket deduplication handle 500 simultaneous incoming tickets on the same issue?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Cluster tickets sharing the same error signatures, link them automatically as children to a master incident ticket, and broadcast unified bulk status updates and resolution notices."
+      },
+      {
+        "id": "b",
+        "label": "Require 50 agents to manually type 500 individual custom email replies."
+      },
+      {
+        "id": "c",
+        "label": "Delete 499 tickets and answer only 1."
+      },
+      {
+        "id": "d",
+        "label": "Block all incoming customer emails during outages."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'sup_auto_07',
-    section: 'automation',
-    prompt: 'How should an automated CSAT survey workflow handle negative (1–2 star) ratings?',
-    options: [
-      { id: 'a', label: 'Trigger an automated apology, reopen the ticket for review by a senior escalation manager, and schedule a proactive follow-up task within 4 business hours to address unresolved friction.' },
-      { id: 'b', label: 'Delete the negative survey rating from the database.' },
-      { id: 'c', label: 'Send an automated email arguing with the customer\'s rating.' },
-      { id: 'd', label: 'Block the customer from submitting future support tickets.' },
+    "id": "sup_auto_07",
+    "section": "automation",
+    "prompt": "How should an automated CSAT survey workflow handle negative (1–2 star) ratings?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Delete the negative survey rating from the database."
+      },
+      {
+        "id": "b",
+        "label": "Send an automated email arguing with the customer's rating."
+      },
+      {
+        "id": "c",
+        "label": "Block the customer from submitting future support tickets."
+      },
+      {
+        "id": "d",
+        "label": "Trigger an automated apology, reopen the ticket for review by a senior escalation manager, and schedule a proactive follow-up task within 4 business hours to address unresolved friction."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'sup_auto_08',
-    section: 'automation',
-    prompt: 'How does automated integration between helpdesk platforms (Zendesk/Intercom) and engineering issue trackers (Jira/GitHub) improve issue resolution?',
-    options: [
-      { id: 'a', label: 'Two-way synchronization: support agents link customer tickets to Jira bug epics, engineering status transitions (e.g., "Deployed to Production") automatically notify waiting customers.' },
-      { id: 'b', label: 'Support agents paste screenshots into random Slack channels without ticket tracking.' },
-      { id: 'c', label: 'Engineering teams delete bug reports without informing support.' },
-      { id: 'd', label: 'Customers are given direct root access to the production GitHub repository.' },
+    "id": "sup_auto_08",
+    "section": "automation",
+    "prompt": "How does automated integration between helpdesk platforms (Zendesk/Intercom) and engineering issue trackers (Jira/GitHub) improve issue resolution?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Support agents paste screenshots into random Slack channels without ticket tracking."
+      },
+      {
+        "id": "b",
+        "label": "Engineering teams delete bug reports without informing support."
+      },
+      {
+        "id": "c",
+        "label": "Two-way synchronization: support agents link customer tickets to Jira bug epics, engineering status transitions (e.g., \"Deployed to Production\") automatically notify waiting customers."
+      },
+      {
+        "id": "d",
+        "label": "Customers are given direct root access to the production GitHub repository."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'sup_auto_09',
-    section: 'automation',
-    prompt: 'When deploying Voice AI agents for inbound phone support, what fail-safe routing is essential?',
-    options: [
-      { id: 'a', label: 'Real-time intent parsing with instant zero-friction warm transfer to human phone queues if the caller expresses frustration, complex inquiries, or explicitly requests an agent.' },
-      { id: 'b', label: 'Refusing to connect callers to human agents under any circumstances.' },
-      { id: 'c', label: 'Hanging up on callers if they speak with an accent.' },
-      { id: 'd', label: 'Playing loud hold music for 4 hours without queue position updates.' },
+    "id": "sup_auto_09",
+    "section": "automation",
+    "prompt": "When deploying Voice AI agents for inbound phone support, what fail-safe routing is essential?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Refusing to connect callers to human agents under any circumstances."
+      },
+      {
+        "id": "b",
+        "label": "Real-time intent parsing with instant zero-friction warm transfer to human phone queues if the caller expresses frustration, complex inquiries, or explicitly requests an agent."
+      },
+      {
+        "id": "c",
+        "label": "Hanging up on callers if they speak with an accent."
+      },
+      {
+        "id": "d",
+        "label": "Playing loud hold music for 4 hours without queue position updates."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'sup_auto_10',
-    section: 'automation',
-    prompt: 'How should automated customer churn risk alerts be routed when support tickets indicate critical frustration?',
-    options: [
-      { id: 'a', label: 'Post real-time alert notifications into the dedicated Customer Success Slack/Teams account channel, showing ARR tier, contract renewal date, and summary of the active ticket roadblock.' },
-      { id: 'b', label: 'Hide the ticket from the Customer Success team.' },
-      { id: 'c', label: 'Send an automated email threatening to cancel the customer\'s contract early.' },
-      { id: 'd', label: 'Disable all support communication with at-risk accounts.' },
+    "id": "sup_auto_10",
+    "section": "automation",
+    "prompt": "How should automated customer churn risk alerts be routed when support tickets indicate critical frustration?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Post real-time alert notifications into the dedicated Customer Success Slack/Teams account channel, showing ARR tier, contract renewal date, and summary of the active ticket roadblock."
+      },
+      {
+        "id": "b",
+        "label": "Hide the ticket from the Customer Success team."
+      },
+      {
+        "id": "c",
+        "label": "Send an automated email threatening to cancel the customer's contract early."
+      },
+      {
+        "id": "d",
+        "label": "Disable all support communication with at-risk accounts."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'sup_auto_11',
-    section: 'automation',
-    prompt: 'How can Support Operations automate public status page updates during ongoing infrastructure incidents?',
-    options: [
-      { id: 'a', label: 'Incident commander triggers pre-approved status templates (Investigating, Identified, Monitoring, Resolved) that auto-publish to status.company.com and syndicate in-app banner alerts.' },
-      { id: 'b', label: 'Require the CEO to manually edit the website HTML code during the outage.' },
-      { id: 'c', label: 'Post status updates exclusively on personal social media accounts.' },
-      { id: 'd', label: 'Keep the status page marked "100% Operational" during a total outage.' },
+    "id": "sup_auto_11",
+    "section": "automation",
+    "prompt": "How can Support Operations automate public status page updates during ongoing infrastructure incidents?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Require the CEO to manually edit the website HTML code during the outage."
+      },
+      {
+        "id": "b",
+        "label": "Post status updates exclusively on personal social media accounts."
+      },
+      {
+        "id": "c",
+        "label": "Keep the status page marked \"100% Operational\" during a total outage."
+      },
+      {
+        "id": "d",
+        "label": "Incident commander triggers pre-approved status templates (Investigating, Identified, Monitoring, Resolved) that auto-publish to status.company.com and syndicate in-app banner alerts."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'sup_auto_12',
-    section: 'automation',
-    prompt: 'How should automated knowledge base maintenance systems keep customer documentation accurate over time?',
-    options: [
-      { id: 'a', label: 'Flag documentation articles unreviewed for >180 days, monitor article downvote spikes, and cross-reference newly released software features to prompt technical writers for updates.' },
-      { id: 'b', label: 'Delete the entire help center once a year.' },
-      { id: 'c', label: 'Never update help center articles after initial publication.' },
-      { id: 'd', label: 'Prevent customers from searching the knowledge base.' },
+    "id": "sup_auto_12",
+    "section": "automation",
+    "prompt": "How should automated knowledge base maintenance systems keep customer documentation accurate over time?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Delete the entire help center once a year."
+      },
+      {
+        "id": "b",
+        "label": "Never update help center articles after initial publication."
+      },
+      {
+        "id": "c",
+        "label": "Flag documentation articles unreviewed for >180 days, monitor article downvote spikes, and cross-reference newly released software features to prompt technical writers for updates."
+      },
+      {
+        "id": "d",
+        "label": "Prevent customers from searching the knowledge base."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'sup_auto_13',
-    section: 'automation',
-    prompt: 'How should automated self-service password reset and account unlock workflows be protected?',
-    options: [
-      { id: 'a', label: 'Time-limited cryptographic magic links, mandatory multi-factor authentication (MFA) verification, rate limiting on attempts, and immediate security alert notifications to the user\'s registered email.' },
-      { id: 'b', label: 'Send the user\'s plaintext password in an unencrypted SMS.' },
-      { id: 'c', label: 'Reset passwords for anyone who calls without identity verification.' },
-      { id: 'd', label: 'Display passwords publicly on the login screen.' },
+    "id": "sup_auto_13",
+    "section": "automation",
+    "prompt": "How should automated self-service password reset and account unlock workflows be protected?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Send the user's plaintext password in an unencrypted SMS."
+      },
+      {
+        "id": "b",
+        "label": "Time-limited cryptographic magic links, mandatory multi-factor authentication (MFA) verification, rate limiting on attempts, and immediate security alert notifications to the user's registered email."
+      },
+      {
+        "id": "c",
+        "label": "Reset passwords for anyone who calls without identity verification."
+      },
+      {
+        "id": "d",
+        "label": "Display passwords publicly on the login screen."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'sup_auto_14',
-    section: 'automation',
-    prompt: 'How does automated ticket summarization improve sales and customer success collaboration?',
-    options: [
-      { id: 'a', label: 'Generates a 3-bullet executive summary upon ticket resolution and syncs it directly into the CRM account activity timeline, providing sales reps with full context before renewal calls.' },
-      { id: 'b', label: 'Forces sales reps to read 500 pages of raw technical log files.' },
-      { id: 'c', label: 'Hides all customer support history from sales teams.' },
-      { id: 'd', label: 'Deletes ticket history immediately upon closure.' },
+    "id": "sup_auto_14",
+    "section": "automation",
+    "prompt": "How does automated ticket summarization improve sales and customer success collaboration?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Generates a 3-bullet executive summary upon ticket resolution and syncs it directly into the CRM account activity timeline, providing sales reps with full context before renewal calls."
+      },
+      {
+        "id": "b",
+        "label": "Forces sales reps to read 500 pages of raw technical log files."
+      },
+      {
+        "id": "c",
+        "label": "Hides all customer support history from sales teams."
+      },
+      {
+        "id": "d",
+        "label": "Deletes ticket history immediately upon closure."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'sup_auto_15',
-    section: 'automation',
-    prompt: 'What automated action should occur when real-time chat sentiment analysis detects extreme customer distress during an AI bot session?',
-    options: [
-      { id: 'a', label: 'Immediately suppress automated responses, elevate priority to P1, and seamlessly transfer the conversation with complete context to the front of the live senior agent queue.' },
-      { id: 'b', label: 'Tell the customer to calm down and disconnect the chat.' },
-      { id: 'c', label: 'Restart the chatbot conversation from step 1.' },
-      { id: 'd', label: 'Charge the customer a fee for expressing frustration.' },
+    "id": "sup_auto_15",
+    "section": "automation",
+    "prompt": "What automated action should occur when real-time chat sentiment analysis detects extreme customer distress during an AI bot session?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Tell the customer to calm down and disconnect the chat."
+      },
+      {
+        "id": "b",
+        "label": "Restart the chatbot conversation from step 1."
+      },
+      {
+        "id": "c",
+        "label": "Charge the customer a fee for expressing frustration."
+      },
+      {
+        "id": "d",
+        "label": "Immediately suppress automated responses, elevate priority to P1, and seamlessly transfer the conversation with complete context to the front of the live senior agent queue."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'sup_auto_16',
-    section: 'automation',
-    prompt: 'How should an automated refund qualification engine operate safely?',
-    options: [
-      { id: 'a', label: 'Verify purchase date against policy limits, check account billing status, confirm product return receipt, and automatically process refunds below risk thresholds while routing exceptions to billing managers.' },
-      { id: 'b', label: 'Approve all refund requests instantly regardless of transaction amount or policy.' },
-      { id: 'c', label: 'Reject 100% of refund requests automatically.' },
-      { id: 'd', label: 'Send refund payments to unverified third-party bank accounts.' },
+    "id": "sup_auto_16",
+    "section": "automation",
+    "prompt": "How should an automated refund qualification engine operate safely?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Approve all refund requests instantly regardless of transaction amount or policy."
+      },
+      {
+        "id": "b",
+        "label": "Reject 100% of refund requests automatically."
+      },
+      {
+        "id": "c",
+        "label": "Verify purchase date against policy limits, check account billing status, confirm product return receipt, and automatically process refunds below risk thresholds while routing exceptions to billing managers."
+      },
+      {
+        "id": "d",
+        "label": "Send refund payments to unverified third-party bank accounts."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'sup_auto_17',
-    section: 'automation',
-    prompt: 'How can automated customer onboarding telemetry identify stalled enterprise accounts?',
-    options: [
-      { id: 'a', label: 'Detect accounts that have not invited users, connected integrations, or uploaded data within 14 days of purchase, automatically triggering proactive CSM outreach playbooks.' },
-      { id: 'b', label: 'Assume all accounts that are silent are completely happy and successful.' },
-      { id: 'c', label: 'Cancel stalled customer accounts without contacting them.' },
-      { id: 'd', label: 'Send daily invoice charges to stalled accounts.' },
+    "id": "sup_auto_17",
+    "section": "automation",
+    "prompt": "How can automated customer onboarding telemetry identify stalled enterprise accounts?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Assume all accounts that are silent are completely happy and successful."
+      },
+      {
+        "id": "b",
+        "label": "Detect accounts that have not invited users, connected integrations, or uploaded data within 14 days of purchase, automatically triggering proactive CSM outreach playbooks."
+      },
+      {
+        "id": "c",
+        "label": "Cancel stalled customer accounts without contacting them."
+      },
+      {
+        "id": "d",
+        "label": "Send daily invoice charges to stalled accounts."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'sup_auto_18',
-    section: 'automation',
-    prompt: 'How should Support Operations implement automated AI Quality Assurance (QA) scoring on agent tickets?',
-    options: [
-      { id: 'a', label: 'Evaluate 100% of resolved tickets against objective rubrics (empathy, accuracy, policy compliance, resolution completeness), highlighting coaching opportunities for team leads.' },
-      { id: 'b', label: 'Automatically fire agents who receive a single low QA score.' },
-      { id: 'c', label: 'Score agents exclusively based on how fast they close tickets regardless of accuracy.' },
-      { id: 'd', label: 'Evaluate QA by counting the total number of characters typed.' },
+    "id": "sup_auto_18",
+    "section": "automation",
+    "prompt": "How should Support Operations implement automated AI Quality Assurance (QA) scoring on agent tickets?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Evaluate 100% of resolved tickets against objective rubrics (empathy, accuracy, policy compliance, resolution completeness), highlighting coaching opportunities for team leads."
+      },
+      {
+        "id": "b",
+        "label": "Automatically fire agents who receive a single low QA score."
+      },
+      {
+        "id": "c",
+        "label": "Score agents exclusively based on how fast they close tickets regardless of accuracy."
+      },
+      {
+        "id": "d",
+        "label": "Evaluate QA by counting the total number of characters typed."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'sup_auto_19',
-    section: 'automation',
-    prompt: 'In omnichannel support environments, how does automated thread unification prevent fragmented customer experiences?',
-    options: [
-      { id: 'a', label: 'Unifies customer inquiries across email, SMS, WhatsApp, and in-app chat into a single consolidated timeline, preventing duplicate agent assignments and contradictory replies.' },
-      { id: 'b', label: 'Creates 4 separate tickets with 4 different agents responding to the same customer.' },
-      { id: 'c', label: 'Blocks customers from using more than 1 communication channel.' },
-      { id: 'd', label: 'Deletes email messages if the customer sends an SMS.' },
+    "id": "sup_auto_19",
+    "section": "automation",
+    "prompt": "In omnichannel support environments, how does automated thread unification prevent fragmented customer experiences?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Creates 4 separate tickets with 4 different agents responding to the same customer."
+      },
+      {
+        "id": "b",
+        "label": "Blocks customers from using more than 1 communication channel."
+      },
+      {
+        "id": "c",
+        "label": "Deletes email messages if the customer sends an SMS."
+      },
+      {
+        "id": "d",
+        "label": "Unifies customer inquiries across email, SMS, WhatsApp, and in-app chat into a single consolidated timeline, preventing duplicate agent assignments and contradictory replies."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'sup_auto_20',
-    section: 'automation',
-    prompt: 'How does an automated real-time response copilot assist support agents without taking away human control?',
-    options: [
-      { id: 'a', label: 'Analyzes incoming customer messages and suggests relevant knowledge base snippets and drafted responses in the agent\'s sidebar, requiring agent review before sending.' },
-      { id: 'b', label: 'Auto-sends messages without the agent\'s knowledge or approval.' },
-      { id: 'c', label: 'Locks the agent\'s screen until they accept the AI recommendation.' },
-      { id: 'd', label: 'Deletes customer tickets if the AI knows the answer.' },
+    "id": "sup_auto_20",
+    "section": "automation",
+    "prompt": "How does an automated real-time response copilot assist support agents without taking away human control?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Auto-sends messages without the agent's knowledge or approval."
+      },
+      {
+        "id": "b",
+        "label": "Locks the agent's screen until they accept the AI recommendation."
+      },
+      {
+        "id": "c",
+        "label": "Analyzes incoming customer messages and suggests relevant knowledge base snippets and drafted responses in the agent's sidebar, requiring agent review before sending."
+      },
+      {
+        "id": "d",
+        "label": "Deletes customer tickets if the AI knows the answer."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'sup_auto_21',
-    section: 'automation',
-    prompt: 'Why are automated "Zero-Result Search Query" reports crucial for help center optimization?',
-    options: [
-      { id: 'a', label: 'They reveal exact terminology and friction areas customers are actively searching for where documentation is missing, guiding high-priority knowledge base authoring.' },
-      { id: 'b', label: 'They prove that customers do not know how to spell words.' },
-      { id: 'c', label: 'They allow marketing teams to block search keywords.' },
-      { id: 'd', label: 'Zero-result searches have no business value.' },
+    "id": "sup_auto_21",
+    "section": "automation",
+    "prompt": "Why are automated \"Zero-Result Search Query\" reports crucial for help center optimization?",
+    "options": [
+      {
+        "id": "a",
+        "label": "They prove that customers do not know how to spell words."
+      },
+      {
+        "id": "b",
+        "label": "They reveal exact terminology and friction areas customers are actively searching for where documentation is missing, guiding high-priority knowledge base authoring."
+      },
+      {
+        "id": "c",
+        "label": "They allow marketing teams to block search keywords."
+      },
+      {
+        "id": "d",
+        "label": "Zero-result searches have no business value."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'sup_auto_22',
-    section: 'automation',
-    prompt: 'How should automated queue management handle Tier-1 Strategic Enterprise accounts during high-volume spikes?',
-    options: [
-      { id: 'a', label: 'Fast-track enterprise tier tickets to dedicated Named Enterprise Pod queues with guaranteed <15 minute response SLAs, bypassing general consumer queues.' },
-      { id: 'b', label: 'Treat all accounts identically on a first-come, first-served basis regardless of contract tier.' },
-      { id: 'c', label: 'Hold enterprise tickets until all consumer tickets are cleared.' },
-      { id: 'd', label: 'Auto-respond telling enterprise buyers to wait until next week.' },
+    "id": "sup_auto_22",
+    "section": "automation",
+    "prompt": "How should automated queue management handle Tier-1 Strategic Enterprise accounts during high-volume spikes?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Fast-track enterprise tier tickets to dedicated Named Enterprise Pod queues with guaranteed <15 minute response SLAs, bypassing general consumer queues."
+      },
+      {
+        "id": "b",
+        "label": "Treat all accounts identically on a first-come, first-served basis regardless of contract tier."
+      },
+      {
+        "id": "c",
+        "label": "Hold enterprise tickets until all consumer tickets are cleared."
+      },
+      {
+        "id": "d",
+        "label": "Auto-respond telling enterprise buyers to wait until next week."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'sup_auto_23',
-    section: 'automation',
-    prompt: 'What automated sequence effectively handles stalled tickets awaiting customer response ("Waiting on Customer")?',
-    options: [
-      { id: 'a', label: 'Send gentle automated reminder at 48 hours, secondary notice at 96 hours with self-serve links, and graceful auto-solve at 7 days with clear instructions that replying will reopen the ticket.' },
-      { id: 'b', label: 'Close the ticket 5 minutes after sending the agent response.' },
-      { id: 'c', label: 'Spam the customer with 10 emails every hour until they reply.' },
-      { id: 'd', label: 'Keep tickets open forever, inflating open backlog metrics.' },
+    "id": "sup_auto_23",
+    "section": "automation",
+    "prompt": "What automated sequence effectively handles stalled tickets awaiting customer response (\"Waiting on Customer\")?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Close the ticket 5 minutes after sending the agent response."
+      },
+      {
+        "id": "b",
+        "label": "Spam the customer with 10 emails every hour until they reply."
+      },
+      {
+        "id": "c",
+        "label": "Keep tickets open forever, inflating open backlog metrics."
+      },
+      {
+        "id": "d",
+        "label": "Send gentle automated reminder at 48 hours, secondary notice at 96 hours with self-serve links, and graceful auto-solve at 7 days with clear instructions that replying will reopen the ticket."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'sup_auto_24',
-    section: 'automation',
-    prompt: 'How can automated diagnostic log parsing accelerate technical support troubleshooting?',
-    options: [
-      { id: 'a', label: 'Ingest customer-uploaded error logs, parse stack traces, extract known exception error codes, highlight environment mismatches, and suggest the exact resolution article to the agent.' },
-      { id: 'b', label: 'Delete log files to save cloud storage space.' },
-      { id: 'c', label: 'Ask the customer to read their 10,000-line log file aloud over the phone.' },
-      { id: 'd', label: 'Print all log files on paper.' },
+    "id": "sup_auto_24",
+    "section": "automation",
+    "prompt": "How can automated diagnostic log parsing accelerate technical support troubleshooting?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Delete log files to save cloud storage space."
+      },
+      {
+        "id": "b",
+        "label": "Ask the customer to read their 10,000-line log file aloud over the phone."
+      },
+      {
+        "id": "c",
+        "label": "Ingest customer-uploaded error logs, parse stack traces, extract known exception error codes, highlight environment mismatches, and suggest the exact resolution article to the agent."
+      },
+      {
+        "id": "d",
+        "label": "Print all log files on paper."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'sup_auto_25',
-    section: 'automation',
-    prompt: 'How should Support Operations automate Service Level Agreement (SLA) uptime credit calculations following a major outage?',
-    options: [
-      { id: 'a', label: 'Identify all affected contract accounts, calculate exact downtime percentage vs contractual tier threshold, auto-stage billing credit memos, and send transparent notifications.' },
-      { id: 'b', label: 'Require customers to hire an attorney and submit paper court filings to receive a $5 credit.' },
-      { id: 'c', label: 'Deny all SLA credit requests automatically.' },
-      { id: 'd', label: 'Charge customers an outage recovery fee.' },
+    "id": "sup_auto_25",
+    "section": "automation",
+    "prompt": "How should Support Operations automate Service Level Agreement (SLA) uptime credit calculations following a major outage?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Require customers to hire an attorney and submit paper court filings to receive a $5 credit."
+      },
+      {
+        "id": "b",
+        "label": "Identify all affected contract accounts, calculate exact downtime percentage vs contractual tier threshold, auto-stage billing credit memos, and send transparent notifications."
+      },
+      {
+        "id": "c",
+        "label": "Deny all SLA credit requests automatically."
+      },
+      {
+        "id": "d",
+        "label": "Charge customers an outage recovery fee."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'sup_auto_26',
-    section: 'automation',
-    prompt: 'How do "Follow-the-Sun" global support organizations automate shift handover briefings?',
-    options: [
-      { id: 'a', label: 'Auto-compile a handover digest of active P1/P2 incidents, pending enterprise escalations, and blocked tickets as shifts transition between US, EMEA, and APAC regions.' },
-      { id: 'b', label: 'Expect incoming agents to read through thousands of closed tickets from the previous 24 hours.' },
-      { id: 'c', label: 'Close all open tickets at the end of every shift.' },
-      { id: 'd', label: 'Prohibit regional teams from communicating across time zones.' },
+    "id": "sup_auto_26",
+    "section": "automation",
+    "prompt": "How do \"Follow-the-Sun\" global support organizations automate shift handover briefings?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Auto-compile a handover digest of active P1/P2 incidents, pending enterprise escalations, and blocked tickets as shifts transition between US, EMEA, and APAC regions."
+      },
+      {
+        "id": "b",
+        "label": "Expect incoming agents to read through thousands of closed tickets from the previous 24 hours."
+      },
+      {
+        "id": "c",
+        "label": "Close all open tickets at the end of every shift."
+      },
+      {
+        "id": "d",
+        "label": "Prohibit regional teams from communicating across time zones."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'sup_auto_27',
-    section: 'automation',
-    prompt: 'When automating real-time language translation in live customer chat, what performance latency threshold is critical?',
-    options: [
-      { id: 'a', label: 'Sub-500 millisecond bidirectional translation latency to ensure natural, seamless conversational flow without frustrating pauses.' },
-      { id: 'b', label: '30 to 45 seconds per message.' },
-      { id: 'c', label: 'Translating messages via batch processing at midnight.' },
-      { id: 'd', label: 'Latency does not matter in live chat.' },
+    "id": "sup_auto_27",
+    "section": "automation",
+    "prompt": "When automating real-time language translation in live customer chat, what performance latency threshold is critical?",
+    "options": [
+      {
+        "id": "a",
+        "label": "30 to 45 seconds per message."
+      },
+      {
+        "id": "b",
+        "label": "Translating messages via batch processing at midnight."
+      },
+      {
+        "id": "c",
+        "label": "Latency does not matter in live chat."
+      },
+      {
+        "id": "d",
+        "label": "Sub-500 millisecond bidirectional translation latency to ensure natural, seamless conversational flow without frustrating pauses."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'sup_auto_28',
-    section: 'automation',
-    prompt: 'How should engineering and support teams close the loop on recurring bug fixes?',
-    options: [
-      { id: 'a', label: 'When a bug fix deployment merges to production, the CI webhook automatically updates linked support tickets, transitions status to Solved, and sends personalized resolution notices.' },
-      { id: 'b', label: 'Never notify customers when bugs are fixed.' },
-      { id: 'c', label: 'Tell customers that bugs are permanent features.' },
-      { id: 'd', label: 'Reopen all closed tickets in the helpdesk.' },
+    "id": "sup_auto_28",
+    "section": "automation",
+    "prompt": "How should engineering and support teams close the loop on recurring bug fixes?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Never notify customers when bugs are fixed."
+      },
+      {
+        "id": "b",
+        "label": "Tell customers that bugs are permanent features."
+      },
+      {
+        "id": "c",
+        "label": "When a bug fix deployment merges to production, the CI webhook automatically updates linked support tickets, transitions status to Solved, and sends personalized resolution notices."
+      },
+      {
+        "id": "d",
+        "label": "Reopen all closed tickets in the helpdesk."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'sup_auto_29',
-    section: 'automation',
-    prompt: 'How can SupportOps use automated analytics to detect and prevent support agent burnout?',
-    options: [
-      { id: 'a', label: 'Monitor continuous high-stress queue exposure (e.g. handling abusive customer tickets for extended hours), overtime spikes, and trigger automated break scheduling and rotation to lighter queues.' },
-      { id: 'b', label: 'Assign twice as many tickets to agents who show signs of exhaustion.' },
-      { id: 'c', label: 'Eliminate all agent lunch breaks.' },
-      { id: 'd', label: 'Punish agents who take sick leave.' },
+    "id": "sup_auto_29",
+    "section": "automation",
+    "prompt": "How can SupportOps use automated analytics to detect and prevent support agent burnout?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Assign twice as many tickets to agents who show signs of exhaustion."
+      },
+      {
+        "id": "b",
+        "label": "Monitor continuous high-stress queue exposure (e.g. handling abusive customer tickets for extended hours), overtime spikes, and trigger automated break scheduling and rotation to lighter queues."
+      },
+      {
+        "id": "c",
+        "label": "Eliminate all agent lunch breaks."
+      },
+      {
+        "id": "d",
+        "label": "Punish agents who take sick leave."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'sup_auto_30',
-    section: 'automation',
-    prompt: 'What defines the ultimate benchmark of a mature, automated Customer Support ecosystem?',
-    options: [
-      { id: 'a', label: 'A seamless, intelligent platform where AI eliminates repetitive friction, routes complex problems instantaneously with rich context, empowers human agents with real-time insight, and delights customers.' },
-      { id: 'b', label: 'A system where 100% of human support agents are eliminated and customers cannot speak to a human.' },
-      { id: 'c', label: 'An organization that ignores customer feedback and auto-resolves all tickets.' },
-      { id: 'd', label: 'A manual helpdesk running on paper index cards.' },
+    "id": "sup_auto_30",
+    "section": "automation",
+    "prompt": "What defines the ultimate benchmark of a mature, automated Customer Support ecosystem?",
+    "options": [
+      {
+        "id": "a",
+        "label": "A seamless, intelligent platform where AI eliminates repetitive friction, routes complex problems instantaneously with rich context, empowers human agents with real-time insight, and delights customers."
+      },
+      {
+        "id": "b",
+        "label": "A system where 100% of human support agents are eliminated and customers cannot speak to a human."
+      },
+      {
+        "id": "c",
+        "label": "An organization that ignores customer feedback and auto-resolves all tickets."
+      },
+      {
+        "id": "d",
+        "label": "A manual helpdesk running on paper index cards."
+      }
     ],
-    correctOptionId: 'a',
-  },
+    "correctOptionId": "a"
+  }
 ];

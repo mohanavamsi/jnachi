@@ -2,363 +2,723 @@ import { CertQuestion } from '../types';
 
 export const HR_PRIVACY_QUESTIONS: CertQuestion[] = [
   {
-    id: 'hr_priv_01',
-    section: 'privacy',
-    prompt: 'Under New York City Local Law 144, what is required before an employer uses Automated Employment Decision Tools (AEDTs) to screen candidates?',
-    options: [
-      { id: 'a', label: 'An independent annual bias audit published publicly on the company website, alongside formal 10-day advance notice to candidates with an alternative accommodation request option.' },
-      { id: 'b', label: 'A verbal statement by the recruiter that the AI algorithm is fair.' },
-      { id: 'c', label: 'Using the AI tool secretly without candidate knowledge.' },
-      { id: 'd', label: 'Local Law 144 only applies to government agencies.' },
+    "id": "hr_priv_01",
+    "section": "privacy",
+    "prompt": "Under New York City Local Law 144, what is required before an employer uses Automated Employment Decision Tools (AEDTs) to screen candidates?",
+    "options": [
+      {
+        "id": "a",
+        "label": "A verbal statement by the recruiter that the AI algorithm is fair."
+      },
+      {
+        "id": "b",
+        "label": "An independent annual bias audit published publicly on the company website, alongside formal 10-day advance notice to candidates with an alternative accommodation request option."
+      },
+      {
+        "id": "c",
+        "label": "Using the AI tool secretly without candidate knowledge."
+      },
+      {
+        "id": "d",
+        "label": "Local Law 144 only applies to government agencies."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_priv_02',
-    section: 'privacy',
-    prompt: 'Under EEOC Title VII guidelines, how is "Disparate Impact" determined when evaluating automated candidate screening algorithms (The Four-Fifths Rule)?',
-    options: [
-      { id: 'a', label: 'If the selection rate for a protected demographic group is less than four-fifths (80%) of the selection rate for the highest-scoring group, creating an unlawful adverse impact presumption.' },
-      { id: 'b', label: 'If four out of five candidates pass the interview.' },
-      { id: 'c', label: 'If the interview panel consists of five people.' },
-      { id: 'd', label: 'The four-fifths rule was abolished in 1950.' },
+    "id": "hr_priv_02",
+    "section": "privacy",
+    "prompt": "Under EEOC Title VII guidelines, how is \"Disparate Impact\" determined when evaluating automated candidate screening algorithms (The Four-Fifths Rule)?",
+    "options": [
+      {
+        "id": "a",
+        "label": "If the selection rate for a protected demographic group is less than four-fifths (80%) of the selection rate for the highest-scoring group, creating an unlawful adverse impact presumption."
+      },
+      {
+        "id": "b",
+        "label": "If four out of five candidates pass the interview."
+      },
+      {
+        "id": "c",
+        "label": "If the interview panel consists of five people."
+      },
+      {
+        "id": "d",
+        "label": "The four-fifths rule was abolished in 1950."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_priv_03',
-    section: 'privacy',
-    prompt: 'Under the Americans with Disabilities Act (ADA), what risk arises when using automated AI video interview analysis or game-based cognitive testing?',
-    options: [
-      { id: 'a', label: 'Algorithms analyzing facial micro-expressions, speech cadence, or mouse dexterity may unlawfully screen out candidates with neurological, speech, or motor disabilities without providing reasonable accommodations.' },
-      { id: 'b', label: 'Video interviews consume too much internet bandwidth.' },
-      { id: 'c', label: 'Computer monitors cannot display video interviews accurately.' },
-      { id: 'd', label: 'The ADA only applies to physical wheelchair ramps in office buildings.' },
+    "id": "hr_priv_03",
+    "section": "privacy",
+    "prompt": "Under the Americans with Disabilities Act (ADA), what risk arises when using automated AI video interview analysis or game-based cognitive testing?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Video interviews consume too much internet bandwidth."
+      },
+      {
+        "id": "b",
+        "label": "Computer monitors cannot display video interviews accurately."
+      },
+      {
+        "id": "c",
+        "label": "The ADA only applies to physical wheelchair ramps in office buildings."
+      },
+      {
+        "id": "d",
+        "label": "Algorithms analyzing facial micro-expressions, speech cadence, or mouse dexterity may unlawfully screen out candidates with neurological, speech, or motor disabilities without providing reasonable accommodations."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_priv_04',
-    section: 'privacy',
-    prompt: 'How must employee medical records and disability accommodation requests be stored under ADA and HIPAA privacy regulations?',
-    options: [
-      { id: 'a', label: 'Stored in separate, confidential medical files completely isolated from standard personnel performance records, accessible only to designated Benefits/Accommodations officers.' },
-      { id: 'b', label: 'Posted on the company internal intranet bulletin board.' },
-      { id: 'c', label: 'Attached directly to the employee\'s public LinkedIn profile.' },
-      { id: 'd', label: 'Shared with the employee\'s colleagues during team meetings.' },
+    "id": "hr_priv_04",
+    "section": "privacy",
+    "prompt": "How must employee medical records and disability accommodation requests be stored under ADA and HIPAA privacy regulations?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Posted on the company internal intranet bulletin board."
+      },
+      {
+        "id": "b",
+        "label": "Attached directly to the employee's public LinkedIn profile."
+      },
+      {
+        "id": "c",
+        "label": "Stored in separate, confidential medical files completely isolated from standard personnel performance records, accessible only to designated Benefits/Accommodations officers."
+      },
+      {
+        "id": "d",
+        "label": "Shared with the employee's colleagues during team meetings."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_priv_05',
-    section: 'privacy',
-    prompt: 'What legal and ethical boundaries govern employee workplace monitoring software (e.g., keystroke logging, webcam tracking)?',
-    options: [
-      { id: 'a', label: 'Transparent written policy disclosure, strictly limiting monitoring to legitimate business security needs, prohibiting intrusive continuous biometric/audio capture, and respecting reasonable privacy expectations.' },
-      { id: 'b', label: 'Secretly recording employee home webcam video during non-working hours.' },
-      { id: 'c', label: 'Listening to private phone calls made from employee personal smartphones.' },
-      { id: 'd', label: 'Workplace monitoring requires zero disclosure to employees.' },
+    "id": "hr_priv_05",
+    "section": "privacy",
+    "prompt": "What legal and ethical boundaries govern employee workplace monitoring software (e.g., keystroke logging, webcam tracking)?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Secretly recording employee home webcam video during non-working hours."
+      },
+      {
+        "id": "b",
+        "label": "Transparent written policy disclosure, strictly limiting monitoring to legitimate business security needs, prohibiting intrusive continuous biometric/audio capture, and respecting reasonable privacy expectations."
+      },
+      {
+        "id": "c",
+        "label": "Listening to private phone calls made from employee personal smartphones."
+      },
+      {
+        "id": "d",
+        "label": "Workplace monitoring requires zero disclosure to employees."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_priv_06',
-    section: 'privacy',
-    prompt: 'Under European GDPR (Article 88), what requirement applies before implementing employee monitoring or AI evaluation software in European subsidiaries?',
-    options: [
-      { id: 'a', label: 'Mandatory consultation and formal co-determination approval with the local Works Council / Trade Union, alongside an exhaustive Data Protection Impact Assessment (DPIA).' },
-      { id: 'b', label: 'Deploying the software secretly without employee consultation.' },
-      { id: 'c', label: 'European labor laws do not apply to software tools.' },
-      { id: 'd', label: 'Paying a cash fine to employees to bypass data protection laws.' },
+    "id": "hr_priv_06",
+    "section": "privacy",
+    "prompt": "Under European GDPR (Article 88), what requirement applies before implementing employee monitoring or AI evaluation software in European subsidiaries?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Mandatory consultation and formal co-determination approval with the local Works Council / Trade Union, alongside an exhaustive Data Protection Impact Assessment (DPIA)."
+      },
+      {
+        "id": "b",
+        "label": "Deploying the software secretly without employee consultation."
+      },
+      {
+        "id": "c",
+        "label": "European labor laws do not apply to software tools."
+      },
+      {
+        "id": "d",
+        "label": "Paying a cash fine to employees to bypass data protection laws."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_priv_07',
-    section: 'privacy',
-    prompt: 'How must People Operations protect sensitive payroll information (Social Security Numbers, banking details) in HRIS databases?',
-    options: [
-      { id: 'a', label: 'Field-level AES-256 encryption at rest, strict Role-Based Access Control (RBAC), multi-factor authentication, and comprehensive audit logs of all viewing sessions.' },
-      { id: 'b', label: 'Storing employee Social Security Numbers in plaintext in shared spreadsheets.' },
-      { id: 'c', label: 'Emailing unencrypted payroll spreadsheets to the entire company.' },
-      { id: 'd', label: 'Printing employee bank routing numbers on office flyers.' },
+    "id": "hr_priv_07",
+    "section": "privacy",
+    "prompt": "How must People Operations protect sensitive payroll information (Social Security Numbers, banking details) in HRIS databases?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Storing employee Social Security Numbers in plaintext in shared spreadsheets."
+      },
+      {
+        "id": "b",
+        "label": "Emailing unencrypted payroll spreadsheets to the entire company."
+      },
+      {
+        "id": "c",
+        "label": "Printing employee bank routing numbers on office flyers."
+      },
+      {
+        "id": "d",
+        "label": "Field-level AES-256 encryption at rest, strict Role-Based Access Control (RBAC), multi-factor authentication, and comprehensive audit logs of all viewing sessions."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_priv_08',
-    section: 'privacy',
-    prompt: 'Under federal whistleblower protection laws and the Speak Out Act, what restriction applies to Non-Disclosure Agreements (NDAs)?',
-    options: [
-      { id: 'a', label: 'NDAs cannot prohibit employees from reporting sexual assault, workplace harassment, or illegal conduct to regulatory agencies (e.g. EEOC, SEC, OSHA).' },
-      { id: 'b', label: 'NDAs can legally prohibit employees from ever speaking to law enforcement.' },
-      { id: 'c', label: 'NDAs make all forms of workplace harassment legal.' },
-      { id: 'd', label: 'The Speak Out Act only applies to professional athletes.' },
+    "id": "hr_priv_08",
+    "section": "privacy",
+    "prompt": "Under federal whistleblower protection laws and the Speak Out Act, what restriction applies to Non-Disclosure Agreements (NDAs)?",
+    "options": [
+      {
+        "id": "a",
+        "label": "NDAs can legally prohibit employees from ever speaking to law enforcement."
+      },
+      {
+        "id": "b",
+        "label": "NDAs make all forms of workplace harassment legal."
+      },
+      {
+        "id": "c",
+        "label": "NDAs cannot prohibit employees from reporting sexual assault, workplace harassment, or illegal conduct to regulatory agencies (e.g. EEOC, SEC, OSHA)."
+      },
+      {
+        "id": "d",
+        "label": "The Speak Out Act only applies to professional athletes."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_priv_09',
-    section: 'privacy',
-    prompt: 'How must HR handle an employee\'s formal "Right to Inspect Personnel File" request under state labor codes?',
-    options: [
-      { id: 'a', label: 'Provide access to inspection within statutory deadlines (e.g., 30 days), allowing the employee to view performance evaluations, attendance logs, and compensation records.' },
-      { id: 'b', label: 'Shred the employee\'s personnel file immediately upon receiving the request.' },
-      { id: 'c', label: 'Demand that the employee pay $5,000 to view their file.' },
-      { id: 'd', label: 'Refuse all personnel file inspection requests.' },
+    "id": "hr_priv_09",
+    "section": "privacy",
+    "prompt": "How must HR handle an employee's formal \"Right to Inspect Personnel File\" request under state labor codes?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Shred the employee's personnel file immediately upon receiving the request."
+      },
+      {
+        "id": "b",
+        "label": "Provide access to inspection within statutory deadlines (e.g., 30 days), allowing the employee to view performance evaluations, attendance logs, and compensation records."
+      },
+      {
+        "id": "c",
+        "label": "Demand that the employee pay $5,000 to view their file."
+      },
+      {
+        "id": "d",
+        "label": "Refuse all personnel file inspection requests."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_priv_10',
-    section: 'privacy',
-    prompt: 'Why is it a severe compliance violation to enter confidential employee disciplinary notes or termination rationale into public consumer AI tools?',
-    options: [
-      { id: 'a', label: 'Public tools retain prompt data to train foundation models, risking public data leakage of sensitive personal personnel matters, violating employee privacy laws, and exposing the company to wrongful termination lawsuits.' },
-      { id: 'b', label: 'Consumer AI tools make computer screens freeze.' },
-      { id: 'c', label: 'Because consumer AI tools only understand Spanish.' },
-      { id: 'd', label: 'There is zero compliance risk in public AI tools.' },
+    "id": "hr_priv_10",
+    "section": "privacy",
+    "prompt": "Why is it a severe compliance violation to enter confidential employee disciplinary notes or termination rationale into public consumer AI tools?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Public tools retain prompt data to train foundation models, risking public data leakage of sensitive personal personnel matters, violating employee privacy laws, and exposing the company to wrongful termination lawsuits."
+      },
+      {
+        "id": "b",
+        "label": "Consumer AI tools make computer screens freeze."
+      },
+      {
+        "id": "c",
+        "label": "Because consumer AI tools only understand Spanish."
+      },
+      {
+        "id": "d",
+        "label": "There is zero compliance risk in public AI tools."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_priv_11',
-    section: 'privacy',
-    prompt: 'Under the Fair Credit Reporting Act (FCRA), what must an employer do if a candidate disputes inaccurate information in an automated background check report?',
-    options: [
-      { id: 'a', label: 'Hold the job position open for a reasonable dispute period (e.g. 5 business days), allowing the candidate to contest inaccuracies with the background screening agency.' },
-      { id: 'b', label: 'Reject the candidate immediately and ignore their dispute.' },
-      { id: 'c', label: 'Report the candidate to local police for having an error on their report.' },
-      { id: 'd', label: 'Charge the candidate for the cost of running the background check.' },
+    "id": "hr_priv_11",
+    "section": "privacy",
+    "prompt": "Under the Fair Credit Reporting Act (FCRA), what must an employer do if a candidate disputes inaccurate information in an automated background check report?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Reject the candidate immediately and ignore their dispute."
+      },
+      {
+        "id": "b",
+        "label": "Report the candidate to local police for having an error on their report."
+      },
+      {
+        "id": "c",
+        "label": "Charge the candidate for the cost of running the background check."
+      },
+      {
+        "id": "d",
+        "label": "Hold the job position open for a reasonable dispute period (e.g. 5 business days), allowing the candidate to contest inaccuracies with the background screening agency."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_priv_12',
-    section: 'privacy',
-    prompt: 'When integrating third-party employee wellness and mental health apps (e.g. Headspace, Lyra), what data boundary is essential?',
-    options: [
-      { id: 'a', label: 'Strict de-identification: the employer must only receive aggregated utilization metrics; individual employee session notes, diagnoses, and therapy appointments must remain completely private.' },
-      { id: 'b', label: 'The vendor must send detailed therapy session transcripts to the employee\'s manager.' },
-      { id: 'c', label: 'The employer should use mental health app usage to determine annual promotions.' },
-      { id: 'd', label: 'Wellness data should be posted on the company intranet.' },
+    "id": "hr_priv_12",
+    "section": "privacy",
+    "prompt": "When integrating third-party employee wellness and mental health apps (e.g. Headspace, Lyra), what data boundary is essential?",
+    "options": [
+      {
+        "id": "a",
+        "label": "The vendor must send detailed therapy session transcripts to the employee's manager."
+      },
+      {
+        "id": "b",
+        "label": "The employer should use mental health app usage to determine annual promotions."
+      },
+      {
+        "id": "c",
+        "label": "Strict de-identification: the employer must only receive aggregated utilization metrics; individual employee session notes, diagnoses, and therapy appointments must remain completely private."
+      },
+      {
+        "id": "d",
+        "label": "Wellness data should be posted on the company intranet."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_priv_13',
-    section: 'privacy',
-    prompt: 'During formal internal workplace harassment investigations, how must HR protect investigative interview notes?',
-    options: [
-      { id: 'a', label: 'Maintain strict confidentiality, store notes in secure restricted repositories, preserve attorney-client privilege where applicable, and protect all participating witnesses against retaliation.' },
-      { id: 'b', label: 'Broadcast interview recordings over office loudspeakers.' },
-      { id: 'c', label: 'Share the victim\'s interview notes with the accused harasser before the investigation completes.' },
-      { id: 'd', label: 'Delete all notes as soon as the interview ends.' },
+    "id": "hr_priv_13",
+    "section": "privacy",
+    "prompt": "During formal internal workplace harassment investigations, how must HR protect investigative interview notes?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Broadcast interview recordings over office loudspeakers."
+      },
+      {
+        "id": "b",
+        "label": "Maintain strict confidentiality, store notes in secure restricted repositories, preserve attorney-client privilege where applicable, and protect all participating witnesses against retaliation."
+      },
+      {
+        "id": "c",
+        "label": "Share the victim's interview notes with the accused harasser before the investigation completes."
+      },
+      {
+        "id": "d",
+        "label": "Delete all notes as soon as the interview ends."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_priv_14',
-    section: 'privacy',
-    prompt: 'What physical and digital document destruction protocol applies to expired employee records?',
-    options: [
-      { id: 'a', label: 'Cross-cut shredding of paper files and cryptographic wiping of digital storage following established statutory retention schedules (e.g. retaining payroll tax records for 7 years).' },
-      { id: 'b', label: 'Throwing unredacted personnel files into an open public dumpster.' },
-      { id: 'c', label: 'Keeping all personnel files on unmonitored hard drives forever.' },
-      { id: 'd', label: 'Selling old employee hard drives on eBay without wiping.' },
+    "id": "hr_priv_14",
+    "section": "privacy",
+    "prompt": "What physical and digital document destruction protocol applies to expired employee records?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Cross-cut shredding of paper files and cryptographic wiping of digital storage following established statutory retention schedules (e.g. retaining payroll tax records for 7 years)."
+      },
+      {
+        "id": "b",
+        "label": "Throwing unredacted personnel files into an open public dumpster."
+      },
+      {
+        "id": "c",
+        "label": "Keeping all personnel files on unmonitored hard drives forever."
+      },
+      {
+        "id": "d",
+        "label": "Selling old employee hard drives on eBay without wiping."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_priv_15',
-    section: 'privacy',
-    prompt: 'Under Pay Transparency laws enacted in California, New York, and Colorado, what mandatory information must appear on all external job postings?',
-    options: [
-      { id: 'a', label: 'A good-faith, transparent salary range (minimum and maximum base pay) and general description of benefits and bonuses offered for the role.' },
-      { id: 'b', label: 'The exact salary of the current highest-paid employee at the company.' },
-      { id: 'c', label: 'A statement saying "Salary negotiable based on prior salary history."' },
-      { id: 'd', label: 'Pay transparency laws only apply to unpaid internships.' },
+    "id": "hr_priv_15",
+    "section": "privacy",
+    "prompt": "Under Pay Transparency laws enacted in California, New York, and Colorado, what mandatory information must appear on all external job postings?",
+    "options": [
+      {
+        "id": "a",
+        "label": "The exact salary of the current highest-paid employee at the company."
+      },
+      {
+        "id": "b",
+        "label": "A statement saying \"Salary negotiable based on prior salary history.\""
+      },
+      {
+        "id": "c",
+        "label": "Pay transparency laws only apply to unpaid internships."
+      },
+      {
+        "id": "d",
+        "label": "A good-faith, transparent salary range (minimum and maximum base pay) and general description of benefits and bonuses offered for the role."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_priv_16',
-    section: 'privacy',
-    prompt: 'Why do state and municipal Salary History Bans prohibit recruiters from asking candidates about their previous compensation?',
-    options: [
-      { id: 'a', label: 'To eliminate the compounding perpetuation of historical gender and racial wage gaps; compensation must be anchored to job role market value rather than past pay.' },
-      { id: 'b', label: 'Because candidates are not allowed to know their own previous salary.' },
-      { id: 'c', label: 'To force all employees to accept minimum wage.' },
-      { id: 'd', label: 'Salary history bans only apply to government workers.' },
+    "id": "hr_priv_16",
+    "section": "privacy",
+    "prompt": "Why do state and municipal Salary History Bans prohibit recruiters from asking candidates about their previous compensation?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Because candidates are not allowed to know their own previous salary."
+      },
+      {
+        "id": "b",
+        "label": "To force all employees to accept minimum wage."
+      },
+      {
+        "id": "c",
+        "label": "To eliminate the compounding perpetuation of historical gender and racial wage gaps; compensation must be anchored to job role market value rather than past pay."
+      },
+      {
+        "id": "d",
+        "label": "Salary history bans only apply to government workers."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_priv_17',
-    section: 'privacy',
-    prompt: 'How should IT and HR prevent intellectual property theft when an employee in a sensitive research role submits their resignation?',
-    options: [
-      { id: 'a', label: 'Audit recent data transfer logs, monitor USB mass-storage exports, enforce immediate role transition protocols, and conduct an exit interview reaffirming continuing trade secret obligations.' },
-      { id: 'b', label: 'Physically detain the employee in a conference room.' },
-      { id: 'c', label: 'Allow the employee to copy all proprietary corporate repositories to their personal Dropbox.' },
-      { id: 'd', label: 'Ignore data security until 6 months after the employee leaves.' },
+    "id": "hr_priv_17",
+    "section": "privacy",
+    "prompt": "How should IT and HR prevent intellectual property theft when an employee in a sensitive research role submits their resignation?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Physically detain the employee in a conference room."
+      },
+      {
+        "id": "b",
+        "label": "Audit recent data transfer logs, monitor USB mass-storage exports, enforce immediate role transition protocols, and conduct an exit interview reaffirming continuing trade secret obligations."
+      },
+      {
+        "id": "c",
+        "label": "Allow the employee to copy all proprietary corporate repositories to their personal Dropbox."
+      },
+      {
+        "id": "d",
+        "label": "Ignore data security until 6 months after the employee leaves."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_priv_18',
-    section: 'privacy',
-    prompt: 'How do corporate career portals protect candidate resumes against automated scraper harvesting and identity theft?',
-    options: [
-      { id: 'a', label: 'Implement CAPTCHA bot verification, rate-limiting on application endpoints, encrypted storage, and restricting access strictly to verified recruitment team logins.' },
-      { id: 'b', label: 'Publish all submitted candidate resumes on public web pages.' },
-      { id: 'c', label: 'Sell candidate contact directories to third-party telemarketers.' },
-      { id: 'd', label: 'Career portals cannot be protected against web scrapers.' },
+    "id": "hr_priv_18",
+    "section": "privacy",
+    "prompt": "How do corporate career portals protect candidate resumes against automated scraper harvesting and identity theft?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Implement CAPTCHA bot verification, rate-limiting on application endpoints, encrypted storage, and restricting access strictly to verified recruitment team logins."
+      },
+      {
+        "id": "b",
+        "label": "Publish all submitted candidate resumes on public web pages."
+      },
+      {
+        "id": "c",
+        "label": "Sell candidate contact directories to third-party telemarketers."
+      },
+      {
+        "id": "d",
+        "label": "Career portals cannot be protected against web scrapers."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_priv_19',
-    section: 'privacy',
-    prompt: 'What security access safeguard is mandatory for HRIS and payroll administrator accounts?',
-    options: [
-      { id: 'a', label: 'Mandatory Hardware Security Key / TOTP Multi-Factor Authentication (MFA), IP address whitelisting, and automated session timeout after 15 minutes of inactivity.' },
-      { id: 'b', label: 'Single-factor password authentication using simple words.' },
-      { id: 'c', label: 'Sharing HRIS login credentials with external temporary agencies.' },
-      { id: 'd', label: 'Disabling password protection on payroll systems.' },
+    "id": "hr_priv_19",
+    "section": "privacy",
+    "prompt": "What security access safeguard is mandatory for HRIS and payroll administrator accounts?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Single-factor password authentication using simple words."
+      },
+      {
+        "id": "b",
+        "label": "Sharing HRIS login credentials with external temporary agencies."
+      },
+      {
+        "id": "c",
+        "label": "Disabling password protection on payroll systems."
+      },
+      {
+        "id": "d",
+        "label": "Mandatory Hardware Security Key / TOTP Multi-Factor Authentication (MFA), IP address whitelisting, and automated session timeout after 15 minutes of inactivity."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_priv_20',
-    section: 'privacy',
-    prompt: 'What ethical risk arises when using predictive AI algorithms to calculate an employee\'s "Flight Risk / Resignation Probability"?',
-    options: [
-      { id: 'a', label: 'Self-fulfilling bias: managers may withhold promotions, project assignments, or mentorship from employees flagged as flight risks, artificially accelerating their departure.' },
-      { id: 'b', label: 'Flight risk algorithms make computers run out of memory.' },
-      { id: 'c', label: 'Algorithms will force the employee to resign immediately.' },
-      { id: 'd', label: 'There is zero ethical risk in flight risk modeling.' },
+    "id": "hr_priv_20",
+    "section": "privacy",
+    "prompt": "What ethical risk arises when using predictive AI algorithms to calculate an employee's \"Flight Risk / Resignation Probability\"?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Flight risk algorithms make computers run out of memory."
+      },
+      {
+        "id": "b",
+        "label": "Algorithms will force the employee to resign immediately."
+      },
+      {
+        "id": "c",
+        "label": "Self-fulfilling bias: managers may withhold promotions, project assignments, or mentorship from employees flagged as flight risks, artificially accelerating their departure."
+      },
+      {
+        "id": "d",
+        "label": "There is zero ethical risk in flight risk modeling."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_priv_21',
-    section: 'privacy',
-    prompt: 'Under the federal WARN Act, what notice requirement applies to covered employers executing a mass layoff of 50+ workers?',
-    options: [
-      { id: 'a', label: 'Mandatory 60 days advance written notice to affected employees, their union representatives, and local government workforce dislocated worker units.' },
-      { id: 'b', label: 'Sending an email 5 minutes before locking office doors.' },
-      { id: 'c', label: 'Notifying employees via an automated text message at midnight.' },
-      { id: 'd', label: 'The WARN Act only applies to agriculture businesses.' },
+    "id": "hr_priv_21",
+    "section": "privacy",
+    "prompt": "Under the federal WARN Act, what notice requirement applies to covered employers executing a mass layoff of 50+ workers?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Sending an email 5 minutes before locking office doors."
+      },
+      {
+        "id": "b",
+        "label": "Mandatory 60 days advance written notice to affected employees, their union representatives, and local government workforce dislocated worker units."
+      },
+      {
+        "id": "c",
+        "label": "Notifying employees via an automated text message at midnight."
+      },
+      {
+        "id": "d",
+        "label": "The WARN Act only applies to agriculture businesses."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_priv_22',
-    section: 'privacy',
-    prompt: 'When deploying a centralized global HRIS across multinational subsidiaries, how must cross-border employee data transfers be governed?',
-    options: [
-      { id: 'a', label: 'Comply with international data transfer frameworks (e.g. EU Standard Contractual Clauses, UK International Data Transfer Agreements), ensuring equivalent privacy protections.' },
-      { id: 'b', label: 'Store all global employee data on an unencrypted public cloud server.' },
-      { id: 'c', label: 'Refuse to hire employees in other countries.' },
-      { id: 'd', label: 'International employee data transfers are exempt from privacy laws.' },
+    "id": "hr_priv_22",
+    "section": "privacy",
+    "prompt": "When deploying a centralized global HRIS across multinational subsidiaries, how must cross-border employee data transfers be governed?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Comply with international data transfer frameworks (e.g. EU Standard Contractual Clauses, UK International Data Transfer Agreements), ensuring equivalent privacy protections."
+      },
+      {
+        "id": "b",
+        "label": "Store all global employee data on an unencrypted public cloud server."
+      },
+      {
+        "id": "c",
+        "label": "Refuse to hire employees in other countries."
+      },
+      {
+        "id": "d",
+        "label": "International employee data transfers are exempt from privacy laws."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_priv_23',
-    section: 'privacy',
-    prompt: 'Under Section 7 of the National Labor Relations Act (NLRA), what employee right must corporate social media policies respect?',
-    options: [
-      { id: 'a', label: 'The protected right of non-supervisory employees to discuss wages, working hours, safety conditions, and terms of employment collectively without employer retaliation.' },
-      { id: 'b', label: 'The right to disclose proprietary trade secrets on public forums.' },
-      { id: 'c', label: 'The right to hack corporate servers.' },
-      { id: 'd', label: 'The NLRA only applies to government workers.' },
+    "id": "hr_priv_23",
+    "section": "privacy",
+    "prompt": "Under Section 7 of the National Labor Relations Act (NLRA), what employee right must corporate social media policies respect?",
+    "options": [
+      {
+        "id": "a",
+        "label": "The right to disclose proprietary trade secrets on public forums."
+      },
+      {
+        "id": "b",
+        "label": "The right to hack corporate servers."
+      },
+      {
+        "id": "c",
+        "label": "The NLRA only applies to government workers."
+      },
+      {
+        "id": "d",
+        "label": "The protected right of non-supervisory employees to discuss wages, working hours, safety conditions, and terms of employment collectively without employer retaliation."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_priv_24',
-    section: 'privacy',
-    prompt: 'How must voluntary candidate Demographic Self-Identification survey data (EEOC / DEI data) be segregated during the hiring process?',
-    options: [
-      { id: 'a', label: 'Stored in a blinded data repository accessible only for aggregate compliance reporting; strictly hidden from hiring managers and interview panel members.' },
-      { id: 'b', label: 'Displayed prominently on the candidate\'s interview cover sheet.' },
-      { id: 'c', label: 'Used by interviewers to decide who gets hired.' },
-      { id: 'd', label: 'Published on social media.' },
+    "id": "hr_priv_24",
+    "section": "privacy",
+    "prompt": "How must voluntary candidate Demographic Self-Identification survey data (EEOC / DEI data) be segregated during the hiring process?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Displayed prominently on the candidate's interview cover sheet."
+      },
+      {
+        "id": "b",
+        "label": "Used by interviewers to decide who gets hired."
+      },
+      {
+        "id": "c",
+        "label": "Stored in a blinded data repository accessible only for aggregate compliance reporting; strictly hidden from hiring managers and interview panel members."
+      },
+      {
+        "id": "d",
+        "label": "Published on social media."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_priv_25',
-    section: 'privacy',
-    prompt: 'How must workplace drug testing results be handled under federal and state privacy standards?',
-    options: [
-      { id: 'a', label: 'Strictly confidential medical records processed through a certified Medical Review Officer (MRO), maintaining chain-of-custody, and disclosed only to authorized HR personnel on a need-to-know basis.' },
-      { id: 'b', label: 'Posted on the office breakroom bulletin board.' },
-      { id: 'c', label: 'Shared with the employee\'s family members.' },
-      { id: 'd', label: 'Broadcast in company-wide email announcements.' },
+    "id": "hr_priv_25",
+    "section": "privacy",
+    "prompt": "How must workplace drug testing results be handled under federal and state privacy standards?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Posted on the office breakroom bulletin board."
+      },
+      {
+        "id": "b",
+        "label": "Strictly confidential medical records processed through a certified Medical Review Officer (MRO), maintaining chain-of-custody, and disclosed only to authorized HR personnel on a need-to-know basis."
+      },
+      {
+        "id": "c",
+        "label": "Shared with the employee's family members."
+      },
+      {
+        "id": "d",
+        "label": "Broadcast in company-wide email announcements."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_priv_26',
-    section: 'privacy',
-    prompt: 'How should People Analytics teams conduct an annual Pay Equity Audit?',
-    options: [
-      { id: 'a', label: 'Conduct multivariate regression analysis controlling for legitimate business factors (experience, role, level, location, performance) to identify and remediate unexplained gender/racial wage gaps.' },
-      { id: 'b', label: 'Assume all employees are paid fairly with zero mathematical analysis.' },
-      { id: 'c', label: 'Reduce the salaries of top performers to make numbers look equal.' },
-      { id: 'd', label: 'Hide pay disparities from the board of directors.' },
+    "id": "hr_priv_26",
+    "section": "privacy",
+    "prompt": "How should People Analytics teams conduct an annual Pay Equity Audit?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Conduct multivariate regression analysis controlling for legitimate business factors (experience, role, level, location, performance) to identify and remediate unexplained gender/racial wage gaps."
+      },
+      {
+        "id": "b",
+        "label": "Assume all employees are paid fairly with zero mathematical analysis."
+      },
+      {
+        "id": "c",
+        "label": "Reduce the salaries of top performers to make numbers look equal."
+      },
+      {
+        "id": "d",
+        "label": "Hide pay disparities from the board of directors."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "a"
   },
   {
-    id: 'hr_priv_27',
-    section: 'privacy',
-    prompt: 'How must HR protect sensitive employee beneficiary and minor dependent data collected during annual benefits enrollment?',
-    options: [
-      { id: 'a', label: 'Encrypt data in transit and at rest, restrict access strictly to designated benefits administrators, and transmit securely via encrypted EDI feeds directly to insurance carriers.' },
-      { id: 'b', label: 'Store minor children\'s Social Security Numbers in public spreadsheets.' },
-      { id: 'c', label: 'Email beneficiary forms over unencrypted consumer email accounts.' },
-      { id: 'd', label: 'Display dependent names on public company directories.' },
+    "id": "hr_priv_27",
+    "section": "privacy",
+    "prompt": "How must HR protect sensitive employee beneficiary and minor dependent data collected during annual benefits enrollment?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Store minor children's Social Security Numbers in public spreadsheets."
+      },
+      {
+        "id": "b",
+        "label": "Email beneficiary forms over unencrypted consumer email accounts."
+      },
+      {
+        "id": "c",
+        "label": "Display dependent names on public company directories."
+      },
+      {
+        "id": "d",
+        "label": "Encrypt data in transit and at rest, restrict access strictly to designated benefits administrators, and transmit securely via encrypted EDI feeds directly to insurance carriers."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "d"
   },
   {
-    id: 'hr_priv_28',
-    section: 'privacy',
-    prompt: 'What security access protocol governs external immigration law firms and global relocation vendors?',
-    options: [
-      { id: 'a', label: 'Signed Data Processing Agreements (DPAs) with strict confidentiality clauses, secure dedicated portal access, and immediate revocation of access upon case closure.' },
-      { id: 'b', label: 'Granting external attorneys permanent unrestricted access to all internal company databases.' },
-      { id: 'c', label: 'Sharing employee passport copies over public WhatsApp chats.' },
-      { id: 'd', label: 'Immigration vendors have no data privacy obligations.' },
+    "id": "hr_priv_28",
+    "section": "privacy",
+    "prompt": "What security access protocol governs external immigration law firms and global relocation vendors?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Granting external attorneys permanent unrestricted access to all internal company databases."
+      },
+      {
+        "id": "b",
+        "label": "Sharing employee passport copies over public WhatsApp chats."
+      },
+      {
+        "id": "c",
+        "label": "Signed Data Processing Agreements (DPAs) with strict confidentiality clauses, secure dedicated portal access, and immediate revocation of access upon case closure."
+      },
+      {
+        "id": "d",
+        "label": "Immigration vendors have no data privacy obligations."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "c"
   },
   {
-    id: 'hr_priv_29',
-    section: 'privacy',
-    prompt: 'What enterprise protection does a Zero-Data Retention (ZDR) agreement provide when using AI software for video interview transcription?',
-    options: [
-      { id: 'a', label: 'Guarantees the AI vendor processes audio in memory only, never stores candidate voice recordings or transcripts, and never uses applicant data to train commercial AI models.' },
-      { id: 'b', label: 'Guarantees that all candidates will receive job offers.' },
-      { id: 'c', label: 'Guarantees that the vendor will pay all hiring costs.' },
-      { id: 'd', label: 'ZDR agreements are legally unenforceable.' },
+    "id": "hr_priv_29",
+    "section": "privacy",
+    "prompt": "What enterprise protection does a Zero-Data Retention (ZDR) agreement provide when using AI software for video interview transcription?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Guarantees that all candidates will receive job offers."
+      },
+      {
+        "id": "b",
+        "label": "Guarantees the AI vendor processes audio in memory only, never stores candidate voice recordings or transcripts, and never uses applicant data to train commercial AI models."
+      },
+      {
+        "id": "c",
+        "label": "Guarantees that the vendor will pay all hiring costs."
+      },
+      {
+        "id": "d",
+        "label": "ZDR agreements are legally unenforceable."
+      }
     ],
-    correctOptionId: 'a',
+    "correctOptionId": "b"
   },
   {
-    id: 'hr_priv_30',
-    section: 'privacy',
-    prompt: 'What represents the foundational ethical charter of the Jnachi Certified AI People Operations Leader?',
-    options: [
-      { id: 'a', label: 'An unwavering commitment to human dignity, algorithmic fairness, uncompromising data confidentiality, equal employment opportunity, and building trustworthy, flourishing workplace cultures.' },
-      { id: 'b', label: 'Using automated algorithms to cut employee wages and eliminate benefits.' },
-      { id: 'c', label: 'Surveilling employees in their private homes without consent.' },
-      { id: 'd', label: 'Treating workplace compliance laws as optional bureaucratic hurdles.' },
+    "id": "hr_priv_30",
+    "section": "privacy",
+    "prompt": "What represents the foundational ethical charter of the Jnachi Certified AI People Operations Leader?",
+    "options": [
+      {
+        "id": "a",
+        "label": "An unwavering commitment to human dignity, algorithmic fairness, uncompromising data confidentiality, equal employment opportunity, and building trustworthy, flourishing workplace cultures."
+      },
+      {
+        "id": "b",
+        "label": "Using automated algorithms to cut employee wages and eliminate benefits."
+      },
+      {
+        "id": "c",
+        "label": "Surveilling employees in their private homes without consent."
+      },
+      {
+        "id": "d",
+        "label": "Treating workplace compliance laws as optional bureaucratic hurdles."
+      }
     ],
-    correctOptionId: 'a',
-  },
+    "correctOptionId": "a"
+  }
 ];
