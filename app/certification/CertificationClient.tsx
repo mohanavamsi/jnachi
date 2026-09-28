@@ -61,6 +61,7 @@ import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, PYT
 import { LESSONS, CategoryKey } from '@/lib/lessonsData';
 import BeginnerCertificateModal from '@/components/BeginnerCertificateModal';
 import ExamSyllabusModal from '@/components/ExamSyllabusModal';
+import ProctoringPreCheckModal from '@/components/ProctoringPreCheckModal';
 import ActiveTierCurriculumExplorer from '@/components/ActiveTierCurriculumExplorer';
 import RazorpayModal from '@/components/RazorpayModal';
 import { useAuth } from '@/components/AuthProvider';
@@ -189,8 +190,10 @@ export default function CertificationClient({
   const [submissionResult, setSubmissionResult] = useState<ExamSubmissionResult | null>(null);
   const [isCertModalOpen, setIsCertModalOpen] = useState(false);
   const [isSyllabusModalOpen, setIsSyllabusModalOpen] = useState(false);
+  const [isPreCheckModalOpen, setIsPreCheckModalOpen] = useState(false);
   const [isRazorpayModalOpen, setIsRazorpayModalOpen] = useState(false);
   const [copiedCertId, setCopiedCertId] = useState(false);
+  const [isProctoredMode, setIsProctoredMode] = useState(true);
 
   // Active tier metadata
   const activeTierConfig = CERT_TIERS[selectedTier] || CERT_TIERS.beginner;
@@ -1680,7 +1683,14 @@ export default function CertificationClient({
                 ) : (
                   <button
                     type="button"
-                    onClick={() => handleStartExam(selectedTier)}
+                    onClick={() => {
+                      if (isMissingRequiredProfile) {
+                        setGateError('Please fill in your Full Name, Location, and Company before starting.');
+                        return;
+                      }
+                      setGateError(null);
+                      setIsPreCheckModalOpen(true);
+                    }}
                     disabled={
                       Boolean(
                         isStartingExam ||
@@ -1688,7 +1698,7 @@ export default function CertificationClient({
                         (statusResponse && (!statusResponse.eligible || statusResponse.cooldownActive || statusResponse.isLocked))
                       )
                     }
-                    className="px-10 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-base rounded-2xl shadow-lg shadow-indigo-600/25 transition-all flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-10 py-4 bg-gradient-to-r from-indigo-600 via-indigo-700 to-slate-900 hover:from-indigo-500 hover:to-slate-800 text-white font-extrabold text-base rounded-2xl shadow-lg shadow-indigo-600/25 transition-all flex items-center justify-center gap-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isStartingExam ? (
                       <>
@@ -1697,6 +1707,7 @@ export default function CertificationClient({
                       </>
                     ) : (
                       <>
+                        <ShieldCheck className="w-5 h-5 text-emerald-400" />
                         <span>Begin {activeTierConfig.title} Exam</span>
                         <ArrowRight className="w-5 h-5" />
                       </>
@@ -1727,6 +1738,19 @@ export default function CertificationClient({
           onClose={() => setIsSyllabusModalOpen(false)}
           initialTier={selectedTier}
           onSelectTier={setSelectedTier}
+        />
+
+        {/* Pre-Exam AI Proctoring & System Check Modal */}
+        <ProctoringPreCheckModal
+          isOpen={isPreCheckModalOpen}
+          onClose={() => setIsPreCheckModalOpen(false)}
+          tier={selectedTier}
+          candidateName={effectiveCandidateName}
+          onConfirmLaunch={({ proctoredMode }) => {
+            setIsPreCheckModalOpen(false);
+            setIsProctoredMode(proctoredMode);
+            handleStartExam(selectedTier);
+          }}
         />
 
         {/* Razorpay Checkout & Voucher Modal */}
