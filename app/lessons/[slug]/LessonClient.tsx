@@ -20,7 +20,9 @@ import {
   Copy,
   Cpu,
   Code2,
-  Users2
+  Users2,
+  Bot,
+  Award
 } from 'lucide-react';
 import { CATEGORY_DETAILS, CategoryKey, Lesson, LESSONS } from '@/lib/lessonsData';
 import { getLearningProgress, saveLessonProgress, toggleLessonActivated } from '@/lib/learningProgress';
@@ -102,6 +104,8 @@ export default function LessonClient({ lesson, prevLesson, nextLesson }: LessonC
     integration: Cpu,
     python: Code2,
     role: Users2,
+    agentic: Bot,
+    finance: Award,
   };
 
   const Icon = categoryIcons[lesson.categoryKey];

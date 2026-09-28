@@ -16,7 +16,9 @@ import {
   Check, 
   Cpu, 
   Code2, 
-  Users2 
+  Users2,
+  Bot,
+  Award
 } from 'lucide-react';
 import { LESSONS, CATEGORY_DETAILS, CategoryKey } from '@/lib/lessonsData';
 import { getLearningProgress, LearningProgressMap } from '@/lib/learningProgress';
@@ -57,6 +59,8 @@ export default function LessonsClient() {
     integration: Cpu,
     python: Code2,
     role: Users2,
+    agentic: Bot,
+    finance: Award,
   };
 
   return (

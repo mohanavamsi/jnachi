@@ -1,6 +1,8 @@
 import { ENTERPRISE_INTEGRATION_LESSONS } from './lessons/enterpriseIntegration';
 import { PYTHON_DEVELOPMENT_LESSONS } from './lessons/pythonDevelopment';
 import { ROLE_SPECIFIC_LESSONS } from './lessons/roleSpecific';
+import { AGENTIC_AI_LESSONS } from './lessons/agenticAiLessons';
+import { FINANCE_AI_LESSONS } from './lessons/financeAiLessons';
 
 export type LessonCategory = 
   | 'AI Literacy & Prompting'
@@ -9,9 +11,11 @@ export type LessonCategory =
   | 'Growth & Problem Solving'
   | 'Enterprise Integration'
   | 'Python Development'
-  | 'Role-Specific AI';
+  | 'Role-Specific AI'
+  | 'Agentic AI & RAG'
+  | 'Finance & FinOps AI';
 
-export type CategoryKey = 'literacy' | 'automation' | 'privacy' | 'growth' | 'integration' | 'python' | 'role';
+export type CategoryKey = 'literacy' | 'automation' | 'privacy' | 'growth' | 'integration' | 'python' | 'role' | 'agentic' | 'finance';
 
 export type LessonDifficulty = 'Beginner' | 'Intermediate' | 'Advanced';
 
@@ -88,6 +92,18 @@ export const CATEGORY_DETAILS: Record<CategoryKey, { title: LessonCategory; desc
     description: 'Targeted AI productivity skills for Sales, Marketing, HR, Support, Managers, and Developers.',
     color: 'text-pink-600',
     bg: 'bg-pink-50 border-pink-200',
+  },
+  agentic: {
+    title: 'Agentic AI & RAG',
+    description: 'Autonomous ReAct loops, LangGraph state, Model Context Protocol (MCP), hybrid search, GraphRAG, and vLLM serving.',
+    color: 'text-emerald-700',
+    bg: 'bg-emerald-50 border-emerald-200',
+  },
+  finance: {
+    title: 'Finance & FinOps AI',
+    description: 'Automated 3-statement models, DCF/LBO valuations, SEC 10-K XBRL parsing, Monte Carlo simulations, and cloud AI cost optimization.',
+    color: 'text-teal-700',
+    bg: 'bg-teal-50 border-teal-200',
   },
 };
 
@@ -1448,6 +1464,14 @@ Focus your energy on **depth of prompting and workflow integration** within one 
   // Role-Specific AI (Lessons 43–54)
   // -------------------------------------------------------------
   ...ROLE_SPECIFIC_LESSONS,
+  // -------------------------------------------------------------
+  // Agentic AI & RAG (Lessons 55–63)
+  // -------------------------------------------------------------
+  ...AGENTIC_AI_LESSONS,
+  // -------------------------------------------------------------
+  // Finance & FinOps AI (Lessons 64–70)
+  // -------------------------------------------------------------
+  ...FINANCE_AI_LESSONS,
 ];
 
 export function getAllLessons(): Lesson[] {
