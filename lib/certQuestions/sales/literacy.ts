@@ -480,5 +480,246 @@ export const SALES_LITERACY_QUESTIONS: CertQuestion[] = [
       }
     ],
     "correctOptionId": "a"
+  },
+  {
+    "id": "sales_lit_21",
+    "section": "literacy",
+    "prompt": "When a prospect objects with 'Your solution is twice the price of our existing budget,' how should you prompt an AI to construct a value-anchored rebuttal?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Prompt the AI to offer an immediate 50% discount to win the deal today."
+      },
+      {
+        "id": "b",
+        "label": "Ask the AI to accuse the prospect of having an outdated financial budget."
+      },
+      {
+        "id": "c",
+        "label": "Instruct the AI to generate a list of cheaper competitor products."
+      },
+      {
+        "id": "d",
+        "label": "Provide the prospect's annual cost of inaction, compute payback period, and prompt for an executive narrative comparing upfront licensing against multi-year operational savings and risk reduction."
+      }
+    ],
+    "correctOptionId": "d"
+  },
+  {
+    "id": "sales_lit_22",
+    "section": "literacy",
+    "prompt": "How can an Account Executive prompt an LLM to evaluate a deal transcript against the MEDDPICC qualification framework?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Provide the full transcript and prompt the model to extract evidence, confidence scores, and identified gaps across Metrics, Economic Buyer, Decision Criteria, Decision Process, Paper Process, Implicated Pain, and Champion."
+      },
+      {
+        "id": "b",
+        "label": "Ask the model whether the prospect sounded friendly on a scale of 1 to 10."
+      },
+      {
+        "id": "c",
+        "label": "Instruct the model to predict the exact date the contract will close without analyzing conversation details."
+      },
+      {
+        "id": "d",
+        "label": "Request the AI to write a congratulatory email assuming the deal is already won."
+      }
+    ],
+    "correctOptionId": "a"
+  },
+  {
+    "id": "sales_lit_23",
+    "section": "literacy",
+    "prompt": "What prompt structure yields the most effective Mutual Action Plan (MAP) recap email following an executive discovery meeting?",
+    "options": [
+      {
+        "id": "a",
+        "label": "A generic bullet list of company feature brochures."
+      },
+      {
+        "id": "b",
+        "label": "A 1,500-word essay recounting every remark made during the hour-long session."
+      },
+      {
+        "id": "c",
+        "label": "Summary of validated business pains + Agreed target go-live date + Sequenced milestone table with assigned human owners on both buyer and vendor teams + Clear immediate next step."
+      },
+      {
+        "id": "d",
+        "label": "A calendar invite with an empty email body."
+      }
+    ],
+    "correctOptionId": "c"
+  },
+  {
+    "id": "sales_lit_24",
+    "section": "literacy",
+    "prompt": "When tailoring a single core product capability to three different buying committee members (CFO, CISO, VP Engineering), how should prompts differ?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Send identical feature bullet points to all three stakeholders."
+      },
+      {
+        "id": "b",
+        "label": "Prompt for CFO: TCO reduction, cash flow predictability; CISO: SOC2 compliance, encryption, zero trust; VP Eng: developer velocity, API ergonomics, uptime SLAs."
+      },
+      {
+        "id": "c",
+        "label": "Prompt the AI to only talk about company stock valuation with all three."
+      },
+      {
+        "id": "d",
+        "label": "Ask the AI to generate memes to keep the buying committee engaged."
+      }
+    ],
+    "correctOptionId": "b"
+  },
+  {
+    "id": "sales_lit_25",
+    "section": "literacy",
+    "prompt": "How can a Business Development Rep prompt an AI to turn raw corporate earnings call transcripts into timely outbound hooks?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Prompt the model to copy-paste the entire executive summary as an email attachment."
+      },
+      {
+        "id": "b",
+        "label": "Ask the AI to calculate the compound annual growth rate of the target company's stock."
+      },
+      {
+        "id": "c",
+        "label": "Instruct the AI to write an email complaining about the target company's quarterly losses."
+      },
+      {
+        "id": "d",
+        "label": "Instruct the AI to isolate strategic growth initiatives, regulatory headwinds, or digital transformation bets mentioned by leadership, and draft a 3-sentence email linking your solution directly to that stated priority."
+      }
+    ],
+    "correctOptionId": "d"
+  },
+  {
+    "id": "sales_lit_26",
+    "section": "literacy",
+    "prompt": "How should a sales team construct an interactive objection-handling simulator prompt for new SDR onboarding?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Instruct the AI to adopt the persona of a skeptical VP of Operations with high gatekeeper friction, challenge the SDR with realistic multi-turn pushbacks, and provide coaching feedback after 5 exchanges."
+      },
+      {
+        "id": "b",
+        "label": "Ask the AI to agree with everything the SDR says on the first turn."
+      },
+      {
+        "id": "c",
+        "label": "Instruct the AI to terminate the conversation if the SDR stutters."
+      },
+      {
+        "id": "d",
+        "label": "Have the AI generate random dictionary words."
+      }
+    ],
+    "correctOptionId": "a"
+  },
+  {
+    "id": "sales_lit_27",
+    "section": "literacy",
+    "prompt": "When using AI to assist in completing a 50-question security questionnaire for enterprise RFP response, what is the best practice?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Allow the AI to hallucinate security certifications your company does not hold."
+      },
+      {
+        "id": "b",
+        "label": "Submit the AI-generated responses directly to the enterprise customer without engineering review."
+      },
+      {
+        "id": "c",
+        "label": "Ground the AI on audited SOC2 reports and product whitepapers via RAG, flag missing documentation for human SMEs, and review every technical response."
+      },
+      {
+        "id": "d",
+        "label": "Answer 'Not Applicable' to all questions automatically."
+      }
+    ],
+    "correctOptionId": "c"
+  },
+  {
+    "id": "sales_lit_28",
+    "section": "literacy",
+    "prompt": "How should an SDR adjust prompting constraints when transitioning outreach between Enterprise Fortune 100 leaders and Seed-stage startup founders?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Use identical long formal phrasing for both segments."
+      },
+      {
+        "id": "b",
+        "label": "Fortune 100: rigorous governance, risk mitigation, and proven enterprise references; Early-stage: extreme brevity, speed-to-value, low implementation friction, and founder-to-founder directness."
+      },
+      {
+        "id": "c",
+        "label": "Use emojis exclusively for enterprise executives and formal legal prose for startup founders."
+      },
+      {
+        "id": "d",
+        "label": "Avoid customizing prompts by tier."
+      }
+    ],
+    "correctOptionId": "b"
+  },
+  {
+    "id": "sales_lit_29",
+    "section": "literacy",
+    "prompt": "How can Sales Leadership prompt an LLM to analyze 100 closed-lost opportunity notes to uncover systemic trends?",
+    "options": [
+      {
+        "id": "a",
+        "label": "Prompt the model to delete all closed-lost records from the CRM."
+      },
+      {
+        "id": "b",
+        "label": "Ask the model to blame sales representatives for all lost revenue."
+      },
+      {
+        "id": "c",
+        "label": "Instruct the AI to predict lottery numbers."
+      },
+      {
+        "id": "d",
+        "label": "Categorize primary loss reasons (pricing, product gaps, competitor displacement, champion departure), cross-reference by deal size, and output the top 3 product roadmap blockers."
+      }
+    ],
+    "correctOptionId": "d"
+  },
+  {
+    "id": "sales_lit_30",
+    "section": "literacy",
+    "prompt": "What prompt instruction produces a credible, defensible ROI calculation summary for an enterprise executive deck?",
+    "options": [
+      {
+        "id": "a",
+        "label": "State explicit baseline assumptions (team size, hourly loaded wage, current error rates), calculate step-by-step annual labor recovery, apply a 20% conservative discount buffer, and summarize net ROI."
+      },
+      {
+        "id": "b",
+        "label": "Guarantee 1000% returns in 30 days without providing underlying mathematics."
+      },
+      {
+        "id": "c",
+        "label": "Claim that all competitor software produces zero business value."
+      },
+      {
+        "id": "d",
+        "label": "Output a single total dollar figure without showing mathematical formulas or operational inputs."
+      }
+    ],
+    "correctOptionId": "a"
   }
 ];
+
