@@ -52,9 +52,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       `${tier.title} Syllabus`,
       `${tier.title} Questions`,
       'Jnachi Certification',
+      'Jnachi AI Exam',
+      'AI certification for students',
+      'AI certification for working professionals',
       'Proctored AI Exam',
       'Verifiable Credential',
       'LinkedIn Digital Badge',
+      'AI Resume Credential',
       ...tier.keyTopics,
     ],
     openGraph: {

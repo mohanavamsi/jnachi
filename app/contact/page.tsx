@@ -1,15 +1,58 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { Mail, Clock, MapPin, MessageSquare, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Jnachi',
-  description: 'Get in touch with the Jnachi team for certification support, enterprise licensing, and general inquiries at jnachiteam@gmail.com.',
+  title: 'Contact Support & Enterprise Inquiries | Jnachi',
+  description:
+    'Get in touch with the Jnachi Certification Council for candidate support, university and student partnership programs, enterprise team licensing, and certificate verification assistance.',
+  keywords: [
+    'Contact Jnachi',
+    'Jnachi support',
+    'Jnachi email',
+    'Jnachi team',
+    'AI certification inquiries',
+    'student discount inquiry Jnachi',
+  ],
+  alternates: {
+    canonical: 'https://jnachi.com/contact',
+  },
+  openGraph: {
+    title: 'Contact Support & Enterprise Inquiries | Jnachi',
+    description:
+      'Contact the Jnachi team for exam support, university partnerships, and enterprise licensing.',
+    url: 'https://jnachi.com/contact',
+    siteName: 'Jnachi',
+    type: 'website',
+  },
 };
 
 export default function ContactPage() {
+  const contactJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact Jnachi',
+    url: 'https://jnachi.com/contact',
+    description: 'Contact Jnachi for examination support and enterprise team licensing.',
+    mainEntity: {
+      '@type': 'EducationalOrganization',
+      name: 'Jnachi',
+      url: 'https://jnachi.com',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        email: 'jnachiteam@gmail.com',
+        contactType: 'customer support',
+        availableLanguage: ['English'],
+      },
+    },
+  };
+
   return (
     <div className="w-full bg-slate-50 py-16 px-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}
+      />
       <div className="max-w-4xl mx-auto space-y-12">
         {/* Header */}
         <div className="text-center space-y-4">

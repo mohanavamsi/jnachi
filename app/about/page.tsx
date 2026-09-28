@@ -1,9 +1,61 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
+export const metadata: Metadata = {
+  title: 'About Jnachi | The Applied AI Knowledge & Certification Council',
+  description:
+    'Learn the story of Jnachi (Jñāna + Chi = Activated Wisdom). We empower students and working professionals to measure and prove their applied AI capabilities with kinetic knowledge benchmarks and official certifications.',
+  keywords: [
+    'About Jnachi',
+    'Jnachi meaning',
+    'Jnana and Chi',
+    'AI skills benchmarking',
+    'Applied AI knowledge platform',
+    'Jnachi certification council',
+  ],
+  alternates: {
+    canonical: 'https://jnachi.com/about',
+  },
+  openGraph: {
+    title: 'About Jnachi | The Applied AI Knowledge & Certification Council',
+    description:
+      'Learn the story of Jnachi (Jñāna + Chi = Activated Wisdom). We empower students and working professionals with kinetic AI knowledge benchmarks and official certifications.',
+    url: 'https://jnachi.com/about',
+    siteName: 'Jnachi',
+    type: 'website',
+  },
+};
+
 export default function AboutPage() {
+  const aboutJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'About Jnachi',
+    url: 'https://jnachi.com/about',
+    description:
+      'Jnachi bridges the gap between theoretical knowledge and real-world AI execution through kinetic benchmarks and verifiable credentials.',
+    mainEntity: {
+      '@type': 'Organization',
+      name: 'Jnachi',
+      url: 'https://jnachi.com',
+      slogan: 'Know it. Use it. Prove it.',
+      knowsAbout: [
+        'Artificial Intelligence',
+        'Prompt Engineering',
+        'Workflow Automation',
+        'Enterprise Integration',
+        'Python Development',
+      ],
+    },
+  };
+
   return (
     <div className="flex flex-col items-center w-full">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
+      />
       <section className="w-full bg-slate-50 py-24 flex flex-col items-center justify-center text-center px-4 relative overflow-hidden">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 max-w-4xl mb-6">
           Where knowing becomes doing.

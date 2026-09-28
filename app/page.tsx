@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   ArrowRight,
@@ -20,9 +21,94 @@ import { HomeHeroInteractiveWidget } from '@/components/HomeHeroInteractiveWidge
 import { HomeRoleBenchmarkPicker } from '@/components/HomeRoleBenchmarkPicker';
 import { HomeScorecardPreview } from '@/components/HomeScorecardPreview';
 
+export const metadata: Metadata = {
+  title: 'Jnachi | Applied AI Skills Assessment & Official Certifications',
+  description:
+    'Benchmark your AI momentum in 3 minutes and earn 18 official industry certifications across Core AI, Role-Based Tracks (Sales, Devs, Marketers, Support, HR, Managers), Applied Python, and Enterprise Integration. Free 30-day launch access for students and professionals.',
+  keywords: [
+    'Jnachi',
+    'Jnachi AI',
+    'Jnachi AI Skills Assessment',
+    'AI certification for students',
+    'AI certification for professionals',
+    'free AI certification',
+    'AI prompt engineering certification',
+    'AI competency scorecard',
+    'LinkedIn AI certification badge',
+    'enterprise integration certification',
+    'Applied Python certification',
+  ],
+  alternates: {
+    canonical: 'https://jnachi.com',
+  },
+  openGraph: {
+    title: 'Jnachi | Applied AI Skills Assessment & Official Certifications',
+    description:
+      'Benchmark your AI momentum in 3 minutes and earn 18 official industry certifications. Free 30-day launch access for students and professionals.',
+    url: 'https://jnachi.com',
+    siteName: 'Jnachi',
+    type: 'website',
+    images: [
+      {
+        url: '/og-default.png',
+        width: 1200,
+        height: 630,
+        alt: 'Jnachi — Know it. Use it. Prove it.',
+      },
+    ],
+  },
+};
+
 export default function HomePage() {
+  const homeJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Jnachi — Applied AI Skills Assessment & Official Certifications',
+    url: 'https://jnachi.com',
+    description:
+      'Jnachi is an applied AI learning and proctored certification platform designed for students, developers, managers, and enterprise integration professionals.',
+    isPartOf: {
+      '@type': 'WebSite',
+      name: 'Jnachi',
+      url: 'https://jnachi.com',
+    },
+    mainEntity: {
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'What is the Jnachi AI Skills Assessment?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'The Jnachi AI Skills Assessment is a free 3-minute interactive diagnostic evaluating your practical capabilities across AI Literacy & Prompting, Workflow Automation, Data Privacy & Ethics, and Problem Solving.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Are Jnachi Certifications suitable for students and professionals?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Yes. Jnachi certifications range from foundational AI literacy for college students and entry-level professionals to specialized role tracks (Sales, Developers, Marketers, Support, HR, Managers), Python engineering, and advanced Enterprise Integration architectures (MuleSoft, Salesforce, IBM MQ, ACE, Boomi).',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How do I add my Jnachi certification to LinkedIn?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Upon achieving 80% or higher on any proctored examination, candidates receive an instant 1-click LinkedIn Add-to-Profile button and a verifiable cryptographic credential link at jnachi.com/verify.',
+          },
+        },
+      ],
+    },
+  };
+
   return (
     <div className="flex flex-col items-center w-full bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }}
+      />
       {/* 30-Day Free Launch Promo Modal */}
       <LaunchPromoModal />
 
