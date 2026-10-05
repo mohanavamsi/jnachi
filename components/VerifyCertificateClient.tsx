@@ -176,70 +176,43 @@ export default function VerifyCertificateClient({
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white pb-20">
-      {/* AMBIENT BACKGROUND GLOW */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-indigo-600/15 via-indigo-900/5 to-transparent blur-3xl pointer-events-none -z-10" />
-
-      {/* TOP VERIFICATION REGISTRY NAVBAR */}
-      <header className="border-b border-white/10 bg-slate-950/80 backdrop-blur-md sticky top-0 z-30 px-4 sm:px-8 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-2 text-white hover:text-indigo-300 transition-colors">
-            <div className="w-8 h-8 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-sm shadow-md">
-              J
-            </div>
-            <div className="font-extrabold text-base tracking-tight">
-              Jnachi <span className="text-xs font-semibold text-indigo-400 ml-1">Registry</span>
-            </div>
-          </Link>
-
-          <div className="flex items-center gap-3">
-            <Link
-              href="/certification"
-              className="text-xs font-bold text-slate-300 hover:text-white px-3 py-1.5 rounded-lg border border-white/10 hover:border-white/20 transition-all flex items-center gap-1.5"
-            >
-              <Award className="w-3.5 h-3.5 text-indigo-400" />
-              <span>Certifications Ladder</span>
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-8 pt-8 space-y-8">
+    <div className="min-h-screen bg-[#F9FAFB] text-[#0F0F14] pb-20">
+      <main className="max-w-[1120px] mx-auto px-4 pt-12 space-y-8">
         {/* SEARCH / VERIFY LOOKUP BAR */}
-        <div className="max-w-2xl mx-auto text-center space-y-3">
-          <span className="text-[11px] font-black uppercase tracking-widest text-indigo-400 bg-indigo-950/70 border border-indigo-500/30 px-3 py-1 rounded-full">
+        <div className="max-w-xl mx-auto text-center space-y-3">
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#5B21B6] bg-[#EDE9FE] px-2.5 py-1 rounded inline-block">
             Official Credential Verification Registry
           </span>
-          <h1 className="text-2xl sm:text-3xl font-black text-white">
+          <h1 className="font-serif-heading text-2xl sm:text-3xl text-[#0F0F14]">
             Verify Jnachi Certification
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400">
-            Confirm authentic applied AI competency credentials, tamper-resistant diplomas, and issuing timestamps.
+          <p className="text-xs sm:text-sm text-[#4B5563]">
+            Confirm verified applied AI competency credentials, high-resolution diplomas, and official issuing timestamps.
           </p>
 
-          <form onSubmit={handleManualSearch} className="pt-2 flex gap-2 max-w-lg mx-auto">
+          <form onSubmit={handleManualSearch} className="pt-2 flex gap-2 max-w-md mx-auto">
             <div className="relative flex-1">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-[#9CA3AF] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="e.g. JNACHI-BEG-2026-XXXX-XXXX"
-                className="w-full pl-10 pr-4 py-2.5 bg-slate-900/90 border border-white/15 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
+                className="w-full pl-10 pr-4 py-2 bg-white border border-[#D1D5DB] rounded-md text-xs sm:text-sm text-[#0F0F14] focus:outline-none focus:ring-2 focus:ring-[#5B21B6] font-mono"
               />
             </div>
             <button
               type="submit"
               disabled={isSearching || !searchInput.trim()}
-              className="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5 disabled:opacity-50 shrink-0"
+              className="btn-primary text-xs px-4 py-2 disabled:opacity-50 shrink-0"
             >
               {isSearching ? 'Verifying...' : 'Verify'}
             </button>
           </form>
 
           {searchError && (
-            <div className="p-3 bg-rose-950/60 border border-rose-500/40 rounded-xl text-xs font-semibold text-rose-300 flex items-center justify-center gap-2 animate-in fade-in">
-              <AlertTriangle className="w-4 h-4 text-rose-400 shrink-0" />
+            <div className="p-3 bg-rose-50 border border-rose-200 rounded-md text-xs font-semibold text-rose-800 flex items-center justify-center gap-2 animate-in fade-in">
+              <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0" />
               <span>{searchError}</span>
             </div>
           )}

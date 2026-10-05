@@ -3,16 +3,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import {
-  Award,
   ShieldCheck,
   CheckCircle2,
-  ExternalLink,
   Share2,
   Download,
-  Sparkles,
-  QrCode,
   ArrowRight,
   Check,
+  ExternalLink,
 } from 'lucide-react';
 
 export function HomeCertificateShowcase() {
@@ -20,12 +17,12 @@ export function HomeCertificateShowcase() {
 
   const sampleCert = {
     id: 'JNA-89241-AI',
-    candidateName: 'Alex Morgan',
+    candidateName: 'Jane Doe',
     trackName: 'Jnachi Certified AI Practitioner (Level 2)',
     badgeLabel: 'JNACHI CERTIFIED AI PRACTITIONER',
     score: 92,
     passingScore: 80,
-    issuedDate: 'September 2026',
+    issuedDate: 'October 2026',
   };
 
   const handleCopySample = () => {
@@ -37,159 +34,148 @@ export function HomeCertificateShowcase() {
   };
 
   return (
-    <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-      {/* Left Column: Clear Deliverable Value Prop */}
+    <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      {/* Left Column: Verification Value Prop */}
       <div className="lg:col-span-6 space-y-6">
-        <div className="inline-flex items-center gap-2 text-xs font-bold text-amber-400 bg-amber-400/10 border border-amber-400/20 px-3 py-1 rounded-full">
-          <Award className="w-3.5 h-3.5" />
-          <span>Verifiable Proof of Capability</span>
-        </div>
+        <span className="text-xs font-semibold uppercase tracking-wider text-[#5B21B6] bg-[#EDE9FE] px-2.5 py-1 rounded">
+          Credential Standard
+        </span>
 
-        <h3 className="text-3xl sm:text-4xl font-black text-white leading-tight">
-          What you earn when you pass a Jnachi proctored exam.
-        </h3>
+        <h2 className="font-serif-heading text-3xl sm:text-4xl text-[#0F0F14] leading-tight">
+          Verifiable credentials with permanent registry records
+        </h2>
 
-        <p className="text-base text-slate-300 leading-relaxed">
-          Jnachi doesn&apos;t just grant a generic course completion paper. You earn an official, anti-cheating verified credential that proves practical mastery to employers, clients, and peers.
+        <p className="text-base text-[#4B5563] leading-relaxed">
+          Candidates who pass the proctored examination receive an official credential backed by an immutable record in our public registry. Third parties and employers can confirm authenticity in seconds.
         </p>
 
         <div className="space-y-4 pt-2">
-          {/* Deliverable 1 */}
-          <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-900/90 border border-slate-800">
-            <div className="w-10 h-10 rounded-xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center shrink-0 mt-0.5">
-              <ShieldCheck className="w-5 h-5" />
+          <div className="flex items-start gap-3.5 p-4 rounded-lg bg-white border border-[#E5E7EB]">
+            <div className="w-9 h-9 rounded-md bg-[#EDE9FE] text-[#5B21B6] flex items-center justify-center shrink-0 mt-0.5 font-semibold text-sm">
+              01
             </div>
             <div>
-              <h4 className="text-sm font-bold text-white">Cryptographic Verification Registry</h4>
-              <p className="text-xs text-slate-400 mt-1">
-                Every certificate has a unique, tamper-proof ID hosted permanently on <code className="text-[11px] text-indigo-300 font-mono">jnachi.com/verify</code> for 1-click recruiter checks.
+              <h3 className="text-sm font-semibold text-[#0F0F14]">Public Registry Verification</h3>
+              <p className="text-xs text-[#4B5563] mt-1">
+                Each certificate includes a unique ID that can be validated at <code className="text-xs text-[#5B21B6] font-mono bg-[#F5F3FF] px-1 py-0.5 rounded">jnachi.com/verify</code>.
               </p>
             </div>
           </div>
 
-          {/* Deliverable 2 */}
-          <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-900/90 border border-slate-800">
-            <div className="w-10 h-10 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
-              <Share2 className="w-5 h-5" />
+          <div className="flex items-start gap-3.5 p-4 rounded-lg bg-white border border-[#E5E7EB]">
+            <div className="w-9 h-9 rounded-md bg-[#EDE9FE] text-[#5B21B6] flex items-center justify-center shrink-0 mt-0.5 font-semibold text-sm">
+              02
             </div>
             <div>
-              <h4 className="text-sm font-bold text-white">1-Click &ldquo;Add to LinkedIn&rdquo; Integration</h4>
-              <p className="text-xs text-slate-400 mt-1">
-                Directly attaches the official license name, issuing authority (Jnachi), certificate ID, and verification link to your LinkedIn profile.
+              <h3 className="text-sm font-semibold text-[#0F0F14]">LinkedIn License Integration</h3>
+              <p className="text-xs text-[#4B5563] mt-1">
+                Attach the credential, issuing organization, and verification link directly to your professional profile with one click.
               </p>
             </div>
           </div>
 
-          {/* Deliverable 3 */}
-          <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-slate-900/90 border border-slate-800">
-            <div className="w-10 h-10 rounded-xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
-              <Download className="w-5 h-5" />
+          <div className="flex items-start gap-3.5 p-4 rounded-lg bg-white border border-[#E5E7EB]">
+            <div className="w-9 h-9 rounded-md bg-[#EDE9FE] text-[#5B21B6] flex items-center justify-center shrink-0 mt-0.5 font-semibold text-sm">
+              03
             </div>
             <div>
-              <h4 className="text-sm font-bold text-white">High-Resolution Diploma & Scorecard</h4>
-              <p className="text-xs text-slate-400 mt-1">
-                Instant PNG/PDF downloads with high-resolution seals, official timestamps, and four-domain competency score breakdowns.
+              <h3 className="text-sm font-semibold text-[#0F0F14]">High-Resolution Diplomas & Scorecards</h3>
+              <p className="text-xs text-[#4B5563] mt-1">
+                Download publication-ready PDF and PNG credentials with section-by-section competency ratings.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="pt-2 flex flex-wrap items-center gap-4">
-          <Link
-            href="/certification"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm transition-all shadow-md shadow-indigo-600/30"
-          >
-            <span>Explore Certifications</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+        <div className="pt-2 flex items-center gap-4">
           <Link
             href="/verify"
-            className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+            className="btn-primary text-xs"
           >
-            <span>Try Verification Lookup →</span>
+            <span>Search Credential Registry</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+          <Link
+            href="/certification"
+            className="btn-text text-xs"
+          >
+            <span>View All Tracks →</span>
           </Link>
         </div>
       </div>
 
-      {/* Right Column: Realistic Certificate Mockup with Live Controls */}
-      <div className="lg:col-span-6 relative">
-        {/* Glowing backdrop */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 via-purple-500/15 to-amber-500/10 rounded-3xl blur-2xl pointer-events-none"
-        />
-
-        {/* Certificate Card Mockup */}
-        <div className="relative bg-slate-900 border-2 border-indigo-500/40 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 text-slate-100 overflow-hidden">
-          {/* Decorative Corner Seals */}
-          <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+      {/* Right Column: Realistic Sample Certificate Card */}
+      <div className="lg:col-span-6">
+        <div className="relative bg-white border border-[#D1D5DB] rounded-lg p-6 sm:p-8 shadow-sm space-y-6 text-[#0F0F14]">
+          {/* Sample Banner Label */}
+          <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-4">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-sm">
-                J
-              </div>
-              <div>
-                <span className="text-xs font-black uppercase tracking-wider text-slate-200 block">
-                  Jnachi Certification Council
-                </span>
-                <span className="text-[10px] text-slate-400">Official Credential Registry</span>
-              </div>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#5B21B6]">
+                Jnachi Certification Council
+              </span>
             </div>
-
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/80 border border-emerald-800 text-[11px] font-bold text-emerald-400">
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              <span>Verified Authentic</span>
-            </div>
+            <span className="text-[11px] font-semibold bg-[#F5F3FF] text-[#5B21B6] border border-[#EDE9FE] px-2 py-0.5 rounded">
+              Sample Credential
+            </span>
           </div>
 
           {/* Certificate Body */}
           <div className="text-center space-y-3 py-2">
-            <span className="text-[10px] uppercase font-bold tracking-widest text-indigo-400 block">
+            <span className="text-[11px] uppercase font-semibold tracking-wider text-[#6B7280] block">
               Official Credential Awarded To
             </span>
-            <h4 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <div className="font-serif-heading text-2xl sm:text-3xl text-[#0F0F14]">
               {sampleCert.candidateName}
-            </h4>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-sm mx-auto">
-              having demonstrated applied mastery in prompt engineering, automated workflows, and data security by passing the proctored examination.
+            </div>
+            <p className="text-xs text-[#4B5563] max-w-sm mx-auto leading-relaxed">
+              for demonstrating applied competency in prompt engineering, automated workflows, and context hygiene in proctored examination.
             </p>
 
             <div className="pt-2">
-              <span className="inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
+              <span className="inline-block px-3 py-1 text-xs font-semibold text-[#2E1065] bg-[#EDE9FE] border border-[#DDD6FE] rounded">
                 {sampleCert.trackName}
               </span>
             </div>
           </div>
 
-          {/* Score & Credential Specs Banner */}
-          <div className="grid grid-cols-3 gap-2 p-3 rounded-2xl bg-slate-950 border border-slate-800 text-center">
+          {/* Credential Specs */}
+          <div className="grid grid-cols-3 gap-2 p-3 rounded-md bg-[#F9FAFB] border border-[#E5E7EB] text-center">
             <div>
-              <span className="text-[10px] text-slate-400 uppercase font-bold block">Exam Score</span>
-              <span className="text-sm font-black text-emerald-400">{sampleCert.score}% (Pass)</span>
+              <span className="text-[10px] text-[#6B7280] uppercase font-semibold block">Score</span>
+              <span className="text-xs font-bold text-[#0F766E]">{sampleCert.score}% (Pass)</span>
             </div>
-            <div className="border-x border-slate-800">
-              <span className="text-[10px] text-slate-400 uppercase font-bold block">Issued</span>
-              <span className="text-xs font-bold text-slate-200">{sampleCert.issuedDate}</span>
+            <div className="border-x border-[#E5E7EB]">
+              <span className="text-[10px] text-[#6B7280] uppercase font-semibold block">Issue Date</span>
+              <span className="text-xs font-medium text-[#0F0F14]">{sampleCert.issuedDate}</span>
             </div>
             <div>
-              <span className="text-[10px] text-slate-400 uppercase font-bold block">Certificate ID</span>
-              <span className="text-xs font-mono font-bold text-amber-300">{sampleCert.id}</span>
+              <span className="text-[10px] text-[#6B7280] uppercase font-semibold block">Credential ID</span>
+              <span className="text-xs font-mono font-semibold text-[#5B21B6]">{sampleCert.id}</span>
             </div>
           </div>
 
-          {/* Interactive Share / Verify Simulation */}
-          <div className="pt-2 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+          {/* Verification Bar */}
+          <div className="pt-2 border-t border-[#E5E7EB] flex items-center justify-between gap-3 text-xs">
             <button
               onClick={handleCopySample}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold border border-slate-700 transition-all"
+              className="btn-secondary text-xs py-1.5 px-3"
             >
-              {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <QrCode className="w-3.5 h-3.5 text-indigo-400" />}
-              <span>{copiedLink ? 'Link Copied!' : 'Copy Verification URL'}</span>
+              {copiedLink ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-[#0F766E]" />
+                  <span>URL Copied</span>
+                </>
+              ) : (
+                <>
+                  <span>Copy Verification URL</span>
+                </>
+              )}
             </button>
 
-            <div className="inline-flex items-center gap-2 text-indigo-400 text-xs font-semibold">
-              <Award className="w-4 h-4 text-amber-400" />
-              <span>1-Click LinkedIn Digital Badge</span>
-            </div>
+            <span className="inline-flex items-center gap-1.5 text-xs text-[#0F766E] font-medium">
+              <CheckCircle2 className="w-4 h-4" />
+              <span>Verified Record</span>
+            </span>
           </div>
         </div>
       </div>

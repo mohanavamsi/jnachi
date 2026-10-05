@@ -1,40 +1,28 @@
-import type {Metadata} from 'next';
-import './globals.css'; // Global styles
+import type { Metadata } from 'next';
+import './globals.css';
 import { Navigation, Footer } from '@/components/SharedLayout';
 import { AuthProvider } from '@/components/AuthProvider';
+import { TOTAL_CERTIFICATIONS_COUNT, TOTAL_LESSONS_COUNT } from '@/lib/certTypes';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://jnachi.com'),
   title: {
-    default: 'Jnachi | AI Skills Assessment & Professional Certifications',
+    default: 'Jnachi | Professional AI & Enterprise Integration Certifications',
     template: '%s | Jnachi',
   },
   description:
-    'Jnachi is the premier applied AI competency and certification platform for students and working professionals. Benchmark your AI momentum with 3-minute diagnostics and earn 18 verifiable industry certifications across Core AI, Role-Based Tracks, Applied Python, and Enterprise Integration (MuleSoft, Salesforce, IBM MQ, ACE, Boomi).',
+    `Jnachi provides proctored competency examinations and interactive study curriculum across ${TOTAL_CERTIFICATIONS_COUNT} certifications spanning Core AI, Role-Based Tracks, Applied Python, and Enterprise Integration (MuleSoft, Salesforce, IBM MQ, ACE, Boomi, webMethods).`,
   applicationName: 'Jnachi',
   authors: [{ name: 'Jnachi Certification Council', url: 'https://jnachi.com' }],
   creator: 'Jnachi',
   publisher: 'Jnachi',
   keywords: [
-    // Brand & Primary
     'Jnachi',
     'Jnachi AI',
     'Jnachi Certification',
     'Jnachi Assessment',
-    'Jnachi Score',
-    'Jnachi AI Exam',
-    // Students & Early Career
+    'AI Exam',
     'AI certification for students',
-    'AI courses for college students',
-    'AI prompt engineering for beginners',
-    'student AI skills assessment',
-    'free AI certification for students',
-    'entry level AI certifications',
-    'AI resume credentials',
-    'AI internship skills test',
-    'learn applied AI online',
-    // Professionals & Role Tracks
-    'AI for working professionals',
     'AI certification for developers',
     'AI for sales professionals',
     'AI for marketers',
@@ -42,21 +30,18 @@ export const metadata: Metadata = {
     'AI for HR and talent',
     'AI for managers and executives',
     'Applied Python AI certification',
-    // Enterprise Integration Tracks
     'MuleSoft AI Integration certification',
     'Salesforce AI Integration certification',
     'IBM MQ certification',
     'IBM App Connect Enterprise certification',
     'Boomi Integration certification',
     'Software AG webMethods certification',
-    // Credentialing & Verification
     'verifiable AI diploma',
     'LinkedIn AI certification badge',
     'proctored AI skills assessment',
-    'applied AI benchmark score',
   ],
   category: 'education',
-  classification: 'AI Education & Professional Certification',
+  classification: 'Professional AI & Integration Certification Authority',
   alternates: {
     canonical: 'https://jnachi.com',
     languages: {
@@ -75,9 +60,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Jnachi | AI Skills Assessment & Professional Certifications',
+    title: 'Jnachi | Professional AI & Enterprise Integration Certifications',
     description:
-      'Benchmark your AI momentum and earn official industry certifications. Tailored for students and working professionals across Core AI, Role Tracks, Python, and Enterprise Integration.',
+      `Proctored examinations and structured micro-curriculum across ${TOTAL_CERTIFICATIONS_COUNT} specialized tracks. Verifiable digital credentials for students and professionals.`,
     url: 'https://jnachi.com',
     siteName: 'Jnachi',
     locale: 'en_US',
@@ -87,16 +72,16 @@ export const metadata: Metadata = {
         url: '/og-default.png',
         width: 1200,
         height: 630,
-        alt: 'Jnachi — Know it. Use it. Prove it.',
+        alt: 'Jnachi — Professional AI & Integration Certifications',
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jnachi | AI Skills Assessment & Professional Certifications',
+    title: 'Jnachi | Professional AI & Enterprise Integration Certifications',
     description:
-      'Measure your AI momentum and earn 18 official industry certifications. Free 30-day launch access for students and professionals.',
+      `Benchmark skills and earn verifiable credentials across ${TOTAL_CERTIFICATIONS_COUNT} certifications. Free 30-day launch access for students and professionals.`,
     images: ['/og-default.png'],
     creator: '@jnachi',
   },
@@ -110,7 +95,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'EducationalOrganization',
@@ -121,7 +106,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     logo: 'https://jnachi.com/icon.svg',
     image: 'https://jnachi.com/og-default.png',
     description:
-      'Jnachi provides AI momentum skills assessment diagnostics, interactive study lessons, and 18 proctored professional certifications for students, developers, marketers, managers, and enterprise integration architects.',
+      `Jnachi provides skills assessment diagnostics, interactive study lessons, and ${TOTAL_CERTIFICATIONS_COUNT} proctored professional certifications for developers, marketers, managers, and enterprise integration architects.`,
     foundingDate: '2026',
     sameAs: [
       'https://www.linkedin.com/company/jnachi',
@@ -141,7 +126,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     '@id': 'https://jnachi.com/#website',
     url: 'https://jnachi.com',
     name: 'Jnachi',
-    description: 'Applied AI Skills Assessment, Curriculum & Official Industry Certifications',
+    description: 'Applied AI & Integration Skills Assessment, Curriculum & Professional Certifications',
     publisher: {
       '@id': 'https://jnachi.com/#organization',
     },
@@ -167,7 +152,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
         />
       </head>
-      <body suppressHydrationWarning className="min-h-screen flex flex-col font-sans text-slate-900 bg-white">
+      <body suppressHydrationWarning className="min-h-screen flex flex-col font-sans text-[#0F0F14] bg-white antialiased">
         <AuthProvider>
           <Navigation />
           <main className="flex-1 flex flex-col">

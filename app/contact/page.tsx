@@ -1,29 +1,19 @@
 import type { Metadata } from 'next';
-import { Mail, Clock, MapPin, MessageSquare, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Mail, Clock, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Contact Support & Enterprise Inquiries | Jnachi',
   description:
-    'Get in touch with the Jnachi Certification Council for candidate support, university and student partnership programs, enterprise team licensing, and certificate verification assistance.',
+    'Get in touch with the Jnachi Certification Council for candidate support, enterprise licensing, and certificate verification assistance.',
   keywords: [
     'Contact Jnachi',
     'Jnachi support',
     'Jnachi email',
-    'Jnachi team',
     'AI certification inquiries',
-    'student discount inquiry Jnachi',
   ],
   alternates: {
     canonical: 'https://jnachi.com/contact',
-  },
-  openGraph: {
-    title: 'Contact Support & Enterprise Inquiries | Jnachi',
-    description:
-      'Contact the Jnachi team for exam support, university partnerships, and enterprise licensing.',
-    url: 'https://jnachi.com/contact',
-    siteName: 'Jnachi',
-    type: 'website',
   },
 };
 
@@ -48,94 +38,98 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="w-full bg-slate-50 py-16 px-4">
+    <div className="w-full bg-[#F9FAFB] py-16 px-4">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactJsonLd) }}
       />
-      <div className="max-w-4xl mx-auto space-y-12">
+      <div className="max-w-[1120px] mx-auto space-y-12">
         {/* Header */}
-        <div className="text-center space-y-4">
-          <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 border border-indigo-200 px-3.5 py-1.5 rounded-full inline-block">
+        <div className="text-center space-y-3 max-w-xl mx-auto">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#5B21B6] bg-[#EDE9FE] px-2.5 py-1 rounded">
             Support & Inquiries
           </span>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Contact the Jnachi Team
+          <h1 className="font-serif-heading text-3xl sm:text-4xl text-[#0F0F14]">
+            Contact the Jnachi support desk
           </h1>
-          <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto leading-relaxed">
-            Have questions about certifications, payment verification, proctored examinations, or enterprise team licensing? We are here to help.
+          <p className="text-base text-[#4B5563] leading-relaxed">
+            Reach out for examination support, voucher queries, university cohort partnerships, or certificate registry checks.
           </p>
         </div>
 
         {/* Contact Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Email Support */}
-          <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col items-center text-center space-y-3">
-            <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center">
-              <Mail className="w-6 h-6" />
+          <div className="bg-white p-6 rounded-lg border border-[#E5E7EB] shadow-xs flex flex-col space-y-3">
+            <div className="w-10 h-10 bg-[#EDE9FE] text-[#5B21B6] rounded-md flex items-center justify-center font-bold">
+              <Mail className="w-5 h-5" />
             </div>
-            <h2 className="text-lg font-bold text-slate-900">Email Support</h2>
-            <p className="text-xs text-slate-500">For general inquiries, exam support & feedback</p>
-            <a
-              href="mailto:jnachiteam@gmail.com"
-              className="text-sm font-bold text-indigo-600 hover:text-indigo-800 underline decoration-indigo-300"
-            >
-              jnachiteam@gmail.com
-            </a>
+            <h2 className="font-serif-heading text-lg text-[#0F0F14]">Email Support</h2>
+            <p className="text-xs text-[#4B5563]">General inquiries, exam support & candidate assistance</p>
+            <div className="pt-2">
+              <a
+                href="mailto:jnachiteam@gmail.com"
+                className="text-xs font-semibold text-[#5B21B6] hover:underline"
+              >
+                jnachiteam@gmail.com
+              </a>
+            </div>
           </div>
 
           {/* Operating Hours */}
-          <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col items-center text-center space-y-3">
-            <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center">
-              <Clock className="w-6 h-6" />
+          <div className="bg-white p-6 rounded-lg border border-[#E5E7EB] shadow-xs flex flex-col space-y-3">
+            <div className="w-10 h-10 bg-[#F0FDFA] text-[#0F766E] border border-[#99F6E4] rounded-md flex items-center justify-center font-bold">
+              <Clock className="w-5 h-5" />
             </div>
-            <h2 className="text-lg font-bold text-slate-900">Response Time</h2>
-            <p className="text-xs text-slate-500">Monday – Saturday</p>
-            <span className="text-sm font-bold text-slate-800">
-              Within 24 Business Hours
-            </span>
+            <h2 className="font-serif-heading text-lg text-[#0F0F14]">Response SLA</h2>
+            <p className="text-xs text-[#4B5563]">Monday through Saturday</p>
+            <div className="pt-2 text-xs font-semibold text-[#0F0F14]">
+              Within 24 business hours
+            </div>
           </div>
 
           {/* Verification & Legal */}
-          <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col items-center text-center space-y-3">
-            <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center">
-              <ShieldCheck className="w-6 h-6" />
+          <div className="bg-white p-6 rounded-lg border border-[#E5E7EB] shadow-xs flex flex-col space-y-3">
+            <div className="w-10 h-10 bg-[#EDE9FE] text-[#5B21B6] rounded-md flex items-center justify-center font-bold">
+              <ShieldCheck className="w-5 h-5" />
             </div>
-            <h2 className="text-lg font-bold text-slate-900">Credential Registry</h2>
-            <p className="text-xs text-slate-500">Official certificate verification</p>
-            <Link
-              href="/verify"
-              className="text-sm font-bold text-indigo-600 hover:text-indigo-800 underline decoration-indigo-300"
-            >
-              jnachi.com/verify
-            </Link>
+            <h2 className="font-serif-heading text-lg text-[#0F0F14]">Credential Registry</h2>
+            <p className="text-xs text-[#4B5563]">Independent certificate and recipient lookup</p>
+            <div className="pt-2">
+              <Link
+                href="/verify"
+                className="text-xs font-semibold text-[#5B21B6] hover:underline"
+              >
+                jnachi.com/verify →
+              </Link>
+            </div>
           </div>
         </div>
 
         {/* Business & Operations Information */}
-        <div className="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-sm space-y-6">
-          <h2 className="text-xl font-bold text-slate-900">Business & Grievance Information</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-slate-600">
+        <div className="bg-white p-6 sm:p-8 rounded-lg border border-[#E5E7EB] shadow-xs space-y-6">
+          <h2 className="font-serif-heading text-xl text-[#0F0F14]">Operations & Compliance Details</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-[#4B5563]">
             <div>
-              <h3 className="font-bold text-slate-800 mb-1">Platform Operator</h3>
-              <p>Jnachi — Applied AI Skill Assessment & Certification Platform</p>
+              <h3 className="font-semibold text-[#0F0F14] mb-1">Platform Operator</h3>
+              <p>Jnachi — Applied AI & Integration Credentialing Platform</p>
             </div>
             <div>
-              <h3 className="font-bold text-slate-800 mb-1">Primary Email Contact</h3>
+              <h3 className="font-semibold text-[#0F0F14] mb-1">Primary Email Contact</h3>
               <p>
-                <a href="mailto:jnachiteam@gmail.com" className="text-indigo-600 hover:underline">
+                <a href="mailto:jnachiteam@gmail.com" className="text-[#5B21B6] hover:underline">
                   jnachiteam@gmail.com
                 </a>
               </p>
             </div>
             <div>
-              <h3 className="font-bold text-slate-800 mb-1">Grievance & Compliance Officer</h3>
-              <p>Jnachi Compliance Desk</p>
+              <h3 className="font-semibold text-[#0F0F14] mb-1">Grievance & Verification Desk</h3>
+              <p>Jnachi Compliance & Registry Administration</p>
               <p>Email: jnachiteam@gmail.com</p>
             </div>
             <div>
-              <h3 className="font-bold text-slate-800 mb-1">Service Nature</h3>
-              <p>Online Digital Educational Assessments & Professional Credentials (SaaS / EdTech)</p>
+              <h3 className="font-semibold text-[#0F0F14] mb-1">Service Classification</h3>
+              <p>Digital Skill Evaluations & Professional Educational Credentials</p>
             </div>
           </div>
         </div>

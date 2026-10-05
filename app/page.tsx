@@ -2,68 +2,43 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
   ArrowRight,
-  Sparkles,
-  Zap,
-  ShieldCheck,
-  Award,
-  Layers,
-  CheckCircle2,
-  Brain,
-  TrendingUp,
-  Compass,
-  Users,
   Check,
   X,
-  Lock,
-  FileCheck2,
-  Share2,
-  GraduationCap,
-  Briefcase,
+  CheckCircle2,
   ExternalLink,
 } from 'lucide-react';
 import { LaunchPromoModal } from '@/components/LaunchPromoModal';
 import { HomeCertificationCatalog } from '@/components/HomeCertificationCatalog';
-import { HomeAudienceSwitcher } from '@/components/HomeAudienceSwitcher';
 import { HomeCertificateShowcase } from '@/components/HomeCertificateShowcase';
+import {
+  TOTAL_CERTIFICATIONS_COUNT,
+  TOTAL_LESSONS_COUNT,
+  TOTAL_TRACKS_COUNT,
+} from '@/lib/certTypes';
 
 export const metadata: Metadata = {
-  title: 'Jnachi | Get Certified. Prove What You Know.',
+  title: 'Jnachi | Professional AI & Enterprise Integration Certifications',
   description:
-    'Earn official, proctored AI & Enterprise Integration certifications that test your actual knowledge and practical execution — not just course completion. 100% Free 30-Day Launch Access for students and professionals. Verifiable LinkedIn credentials.',
+    'Proctored AI and enterprise integration certification examinations for students and professionals. Benchmark knowledge, pass rigorous evaluations, and earn verifiable credentials.',
   keywords: [
     'Jnachi',
-    'Jnachi AI Certification',
-    'Jnachi Certifications',
-    'Get Certified AI',
-    'Prove AI Skills',
+    'AI Certification',
+    'Enterprise Integration Certification',
     'Proctored AI Exam',
-    'AI Certification for Students',
-    'AI Certification for Professionals',
-    'LinkedIn AI Badge',
-    'Verifiable AI Certificate',
     'MuleSoft Certification',
-    'Salesforce Integration Certification',
-    'IBM MQ Certification',
     'Python AI Certification',
+    'Verifiable Credential',
   ],
   alternates: {
     canonical: 'https://jnachi.com',
   },
   openGraph: {
-    title: 'Jnachi | Get Certified. Prove What You Know.',
+    title: 'Jnachi | Professional AI & Enterprise Integration Certifications',
     description:
-      'Take structured, proctored certification exams that test your actual knowledge and practical understanding. Free 30-day launch access for students and professionals.',
+      'Proctored certification examinations evaluating practical AI competency, prompt hygiene, and enterprise integration systems.',
     url: 'https://jnachi.com',
     siteName: 'Jnachi',
     type: 'website',
-    images: [
-      {
-        url: '/og-default.png',
-        width: 1200,
-        height: 630,
-        alt: 'Jnachi — Get Certified. Prove What You Know.',
-      },
-    ],
   },
 };
 
@@ -71,10 +46,10 @@ export default function HomePage() {
   const homeJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'Jnachi — Get Certified. Prove What You Know.',
+    name: 'Jnachi — Professional AI & Enterprise Integration Certifications',
     url: 'https://jnachi.com',
     description:
-      'Jnachi offers proctored industry certifications across Core AI, Role-Based Tracks, Applied Python, and Enterprise Integration with verifiable credentials and 1-click LinkedIn badges.',
+      'Jnachi offers proctored industry certifications across Core AI, Role-Based Tracks, Applied Python, and Enterprise Integration with verifiable credentials and LinkedIn integrations.',
     isPartOf: {
       '@type': 'WebSite',
       name: 'Jnachi',
@@ -88,23 +63,15 @@ export default function HomePage() {
           name: 'What is a Jnachi Certification?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'A Jnachi Certification is an official, proctored industry credential that evaluates your practical understanding and applied capabilities across artificial intelligence, specialized role tracks, Python engineering, and enterprise integration systems.',
+            text: 'A Jnachi Certification is a proctored credential validating practical understanding across artificial intelligence, specialized business role tracks, Python engineering, and enterprise integration platforms.',
           },
         },
         {
           '@type': 'Question',
-          name: 'How is Jnachi different from a standard online course?',
+          name: 'How is a certification examination structured?',
           acceptedAnswer: {
             '@type': 'Answer',
-            text: 'Traditional courses only verify that you watched video modules. Jnachi provides a structured, proctored examination with anti-cheating security measures that proves your actual practical ability, providing a verifiable credential ID and 1-click LinkedIn badge.',
-          },
-        },
-        {
-          '@type': 'Question',
-          name: 'Is there a free launch access period?',
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: 'Yes. All 18 Jnachi certification tracks and exams are currently 100% free to attempt during the 30-day launch window.',
+            text: 'Each examination consists of 40 proctored scenario-based questions administered within a 45-minute window, requiring an 80% passing standard to earn the verifiable credential.',
           },
         },
       ],
@@ -112,106 +79,100 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex flex-col items-center w-full bg-slate-950 text-slate-100 selection:bg-indigo-500 selection:text-white">
+    <div className="flex flex-col w-full bg-white text-[#0F0F14]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }}
       />
-      {/* 30-Day Free Launch Promo Modal */}
       <LaunchPromoModal />
 
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION: Certification-First Primary Proposition                  */}
+      {/* 1. HERO SECTION: Left Headline + Right Sample Credential Card              */}
       {/* ========================================================================= */}
-      <section className="w-full relative overflow-hidden pt-12 pb-20 md:py-24 px-4 border-b border-slate-800/80 bg-radial-gradient">
-        {/* Ambient Glows */}
-        <div
-          aria-hidden="true"
-          className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-32 w-[600px] sm:w-[900px] h-[400px] bg-gradient-to-tr from-indigo-600/30 via-purple-600/20 to-cyan-500/15 rounded-full blur-3xl pointer-events-none"
-        />
+      <section className="w-full bg-[#F5F3FF] border-b border-[#E5E7EB] py-16 md:py-24 px-4">
+        <div className="container mx-auto max-w-[1120px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Content */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-[#EDE9FE] text-[#5B21B6] text-xs font-semibold uppercase tracking-wider">
+                Professional Credentialing Authority
+              </div>
 
-        <div className="container mx-auto max-w-5xl relative z-10 text-center space-y-8">
-          {/* Tagline Urgency Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-400/15 border border-amber-400/40 text-amber-300 text-xs sm:text-sm font-bold shadow-sm">
-            <span className="flex h-2 w-2 rounded-full bg-amber-400 animate-ping" />
-            <span className="uppercase tracking-wider text-[11px] text-amber-200">Limited Launch Window:</span>
-            <span className="text-white">100% Free Official Certifications & LinkedIn Badges</span>
-          </div>
+              <h1 className="font-serif-heading text-4xl sm:text-5xl md:text-6xl text-[#0F0F14] leading-[1.15]">
+                Professional certifications for applied AI and enterprise integration.
+              </h1>
 
-          {/* Primary Main Headline */}
-          <div className="space-y-4 max-w-4xl mx-auto">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white leading-[1.08]">
-              Get Certified.{' '}
-              <span className="bg-gradient-to-r from-indigo-400 via-cyan-300 to-amber-300 bg-clip-text text-transparent">
-                Prove What You Know.
-              </span>
-            </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-slate-300 font-medium max-w-3xl mx-auto leading-relaxed">
-              Take structured, proctored certification exams that test your <strong>actual knowledge and practical understanding</strong> — not just whether you watched a course.
-            </p>
-          </div>
+              <p className="text-base sm:text-lg text-[#4B5563] leading-relaxed max-w-xl">
+                Evaluate practical execution across generative AI workflows, role-specific tools, and integration architecture through proctored examinations.
+              </p>
 
-          {/* Value Mantra Pill */}
-          <div className="flex items-center justify-center gap-2 sm:gap-4 text-xs sm:text-sm font-extrabold uppercase tracking-widest text-indigo-400">
-            <span>Learn it</span>
-            <span className="text-slate-600">•</span>
-            <span>Test it</span>
-            <span className="text-slate-600">•</span>
-            <span>Prove it</span>
-            <span className="text-slate-600">•</span>
-            <span className="text-amber-300">Get certified</span>
-          </div>
+              <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <Link
+                  href="/certification"
+                  className="btn-primary text-sm px-6 py-3 w-full sm:w-auto text-center"
+                >
+                  <span>Explore All {TOTAL_CERTIFICATIONS_COUNT} Certifications</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
 
-          {/* Dual Action CTAs */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
-            <Link
-              href="#certifications"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-base transition-all shadow-xl shadow-indigo-600/40 hover:scale-[1.02] active:scale-98 group"
-            >
-              <span>Explore Certifications</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-
-            <Link
-              href="/assessment"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-sm sm:text-base border border-slate-700 transition-all shadow-md"
-            >
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span>Take Free 3-Min Diagnostic</span>
-            </Link>
-          </div>
-
-          {/* Trust Highlights Row */}
-          <div className="pt-8 border-t border-slate-800/80 grid grid-cols-2 md:grid-cols-4 gap-4 text-left">
-            <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-900/60 border border-slate-800/60">
-              <ShieldCheck className="w-5 h-5 text-indigo-400 shrink-0" />
-              <div>
-                <span className="text-xs font-bold text-white block">Proctored Security</span>
-                <span className="text-[11px] text-slate-400">Anti-cheating integrity</span>
+                <Link
+                  href="/assessment"
+                  className="btn-text text-sm"
+                >
+                  <span>Take 3-minute skills diagnostic →</span>
+                </Link>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-900/60 border border-slate-800/60">
-              <Award className="w-5 h-5 text-amber-400 shrink-0" />
-              <div>
-                <span className="text-xs font-bold text-white block">18 Industry Tracks</span>
-                <span className="text-[11px] text-slate-400">AI, Roles, Python, iPaaS</span>
-              </div>
-            </div>
+            {/* Right Credential Preview Card */}
+            <div className="lg:col-span-5">
+              <div className="bg-white border border-[#D1D5DB] rounded-lg p-6 shadow-sm space-y-5">
+                <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-3">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#5B21B6]">
+                    Jnachi Credential Registry
+                  </span>
+                  <span className="text-[11px] font-semibold bg-[#F5F3FF] text-[#5B21B6] border border-[#EDE9FE] px-2 py-0.5 rounded">
+                    Sample credential
+                  </span>
+                </div>
 
-            <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-900/60 border border-slate-800/60">
-              <Share2 className="w-5 h-5 text-cyan-400 shrink-0" />
-              <div>
-                <span className="text-xs font-bold text-white block">1-Click LinkedIn</span>
-                <span className="text-[11px] text-slate-400">Verifiable digital badge</span>
-              </div>
-            </div>
+                <div className="space-y-2">
+                  <span className="text-[10px] text-[#6B7280] uppercase tracking-wider font-semibold block">
+                    Awarded To
+                  </span>
+                  <div className="font-serif-heading text-xl text-[#0F0F14]">
+                    Candidate Name
+                  </div>
+                  <div className="text-xs text-[#5B21B6] font-semibold">
+                    Jnachi Certified AI Foundations (Level 1)
+                  </div>
+                  <p className="text-xs text-[#4B5563] leading-relaxed pt-1">
+                    Demonstrated applied competency across prompt anatomy, data confidentiality guardrails, and automated workflows.
+                  </p>
+                </div>
 
-            <div className="flex items-center gap-3 p-3 rounded-2xl bg-slate-900/60 border border-slate-800/60">
-              <FileCheck2 className="w-5 h-5 text-emerald-400 shrink-0" />
-              <div>
-                <span className="text-xs font-bold text-white block">Tamper-Proof ID</span>
-                <span className="text-[11px] text-slate-400">Public registry lookup</span>
+                <div className="grid grid-cols-3 gap-2 p-2.5 rounded bg-[#F9FAFB] border border-[#E5E7EB] text-center text-xs">
+                  <div>
+                    <span className="text-[10px] text-[#6B7280] block">Score</span>
+                    <span className="font-bold text-[#0F766E]">90% Pass</span>
+                  </div>
+                  <div className="border-x border-[#E5E7EB]">
+                    <span className="text-[10px] text-[#6B7280] block">Format</span>
+                    <span className="font-medium text-[#0F0F14]">Proctored</span>
+                  </div>
+                  <div>
+                    <span className="text-[10px] text-[#6B7280] block">Registry ID</span>
+                    <span className="font-mono text-[#5B21B6] text-[11px]">JNA-10492-AI</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-xs text-[#6B7280] pt-1">
+                  <span className="inline-flex items-center gap-1 text-[#0F766E]">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Verified credential
+                  </span>
+                  <span>Free launch access active</span>
+                </div>
               </div>
             </div>
           </div>
@@ -219,216 +180,253 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 2. CERTIFICATION DISCOVERY: Interactive Catalog (The Visual Focus)       */}
+      {/* 2. TRUST STRIP: Single row of plain stats from code constants             */}
       {/* ========================================================================= */}
-      <section id="certifications" className="w-full py-20 px-4 scroll-mt-20 border-b border-slate-800/80">
-        <div className="container mx-auto max-w-6xl space-y-12">
-          {/* Section Header */}
-          <div className="text-center space-y-3 max-w-3xl mx-auto">
-            <span className="text-xs font-black uppercase tracking-widest text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3.5 py-1.5 rounded-full inline-block">
-              Official Industry Credentials
+      <section className="w-full border-b border-[#E5E7EB] bg-white py-8 px-4">
+        <div className="container mx-auto max-w-[1120px]">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-left">
+            <div className="space-y-1">
+              <span className="text-2xl font-bold text-[#0F0F14] font-mono block">
+                {TOTAL_CERTIFICATIONS_COUNT}
+              </span>
+              <span className="text-xs font-semibold text-[#0F0F14] block">
+                Specialized Certifications
+              </span>
+              <span className="text-xs text-[#6B7280]">
+                Core AI, Roles, Python & iPaaS
+              </span>
+            </div>
+
+            <div className="space-y-1">
+              <span className="text-2xl font-bold text-[#0F0F14] font-mono block">
+                40
+              </span>
+              <span className="text-xs font-semibold text-[#0F0F14] block">
+                Scenario Questions per Exam
+              </span>
+              <span className="text-xs text-[#6B7280]">
+                45-minute timed evaluation
+              </span>
+            </div>
+
+            <div className="space-y-1">
+              <span className="text-2xl font-bold text-[#0F766E] font-mono block">
+                80%
+              </span>
+              <span className="text-xs font-semibold text-[#0F0F14] block">
+                Passing Standard
+              </span>
+              <span className="text-xs text-[#6B7280]">
+                Uniform competency benchmark
+              </span>
+            </div>
+
+            <div className="space-y-1">
+              <span className="text-2xl font-bold text-[#5B21B6] font-mono block">
+                100%
+              </span>
+              <span className="text-xs font-semibold text-[#0F0F14] block">
+                Public Verification
+              </span>
+              <span className="text-xs text-[#6B7280]">
+                Permanent registry records
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 3. CERTIFICATION TRACKS: High-density tabbed list layout                   */}
+      {/* ========================================================================= */}
+      <section className="w-full py-20 px-4 border-b border-[#E5E7EB] bg-[#F9FAFB]">
+        <div className="container mx-auto max-w-[1120px] space-y-8">
+          <div className="space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#5B21B6] bg-[#EDE9FE] px-2.5 py-1 rounded">
+              Certification Directory
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
-              Choose Your Certification Track
+            <h2 className="font-serif-heading text-3xl sm:text-4xl text-[#0F0F14]">
+              Explore certification tracks
             </h2>
-            <p className="text-base sm:text-lg text-slate-300">
-              Select a specialized credential below. Review exam objectives, practice with micro-study modules, and pass the proctored test to earn your official diploma.
+            <p className="text-sm sm:text-base text-[#4B5563] max-w-2xl">
+              Choose from {TOTAL_CERTIFICATIONS_COUNT} certifications across four major tracks. Review examination objectives, study with micro-lessons, and complete the proctored test.
             </p>
           </div>
 
-          {/* Interactive Catalog Component */}
           <HomeCertificationCatalog />
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. WHY GET CERTIFIED WITH JNACHI? (Vs. Passive Courses)                  */}
+      {/* 4. COMPARISON: Course vs. Certification Comparison Table                  */}
       {/* ========================================================================= */}
-      <section className="w-full py-20 px-4 bg-slate-900/40 border-b border-slate-800/80">
-        <div className="container mx-auto max-w-6xl space-y-14">
-          <div className="text-center space-y-3 max-w-3xl mx-auto">
-            <span className="text-xs font-black uppercase tracking-widest text-amber-400 bg-amber-400/10 border border-amber-400/20 px-3.5 py-1.5 rounded-full inline-block">
-              The Credential Advantage
+      <section className="w-full py-20 px-4 border-b border-[#E5E7EB] bg-white">
+        <div className="container mx-auto max-w-[1120px] space-y-10">
+          <div className="space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#5B21B6] bg-[#EDE9FE] px-2.5 py-1 rounded">
+              Validation Standard
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
-              Why Jnachi Certification Instead of Just a Course?
+            <h2 className="font-serif-heading text-3xl sm:text-4xl text-[#0F0F14]">
+              Course completion vs. proctored certification
             </h2>
-            <p className="text-base sm:text-lg text-slate-300">
-              Jnachi doesn&apos;t just teach you a skill — it gives you an authentic way to prove you actually know it.
+            <p className="text-sm sm:text-base text-[#4B5563] max-w-2xl">
+              Jnachi validates actual candidate competency against defined scenario benchmarks rather than tracking passive video playback.
             </p>
           </div>
 
-          {/* Comparison Cards: Courses vs Jnachi Proctored Certifications */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Traditional Course Box */}
-            <div className="p-8 rounded-3xl bg-slate-900/60 border border-slate-800 space-y-5 opacity-80">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Traditional Online Courses</span>
-                <span className="text-xs font-semibold text-rose-400 bg-rose-950/60 px-2.5 py-0.5 rounded-full border border-rose-800/60">Passive</span>
-              </div>
-              <h3 className="text-xl font-bold text-slate-300">
-                &ldquo;Certificate of Completion&rdquo;
-              </h3>
-              <ul className="space-y-3 text-sm text-slate-400">
-                <li className="flex items-start gap-2.5">
-                  <X className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                  <span>Only proves you clicked through video playback.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <X className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                  <span>Zero proctoring or anti-cheating verification.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <X className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-                  <span>Ignored by recruiters as unvalidated resume filler.</span>
-                </li>
-              </ul>
-            </div>
+          <div className="border border-[#E5E7EB] rounded-lg overflow-hidden">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-[#F9FAFB] border-b border-[#E5E7EB] text-xs font-semibold text-[#0F0F14]">
+                  <th className="py-4 px-6 w-1/3">Evaluation Metric</th>
+                  <th className="py-4 px-6 w-1/3 text-[#6B7280]">Standard Online Course</th>
+                  <th className="py-4 px-6 w-1/3 bg-[#F5F3FF] text-[#5B21B6]">Jnachi Proctored Certification</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#E5E7EB] text-xs text-[#4B5563]">
+                <tr>
+                  <td className="py-3.5 px-6 font-medium text-[#0F0F14]">Assessment Format</td>
+                  <td className="py-3.5 px-6">Ungraded video consumption</td>
+                  <td className="py-3.5 px-6 bg-[#F5F3FF]/40 font-medium text-[#0F0F14]">40-question scenario exam under timed conditions</td>
+                </tr>
+                <tr>
+                  <td className="py-3.5 px-6 font-medium text-[#0F0F14]">Integrity Controls</td>
+                  <td className="py-3.5 px-6">None</td>
+                  <td className="py-3.5 px-6 bg-[#F5F3FF]/40 font-medium text-[#0F0F14]">Tab-focus tracking and session violation limits</td>
+                </tr>
+                <tr>
+                  <td className="py-3.5 px-6 font-medium text-[#0F0F14]">Passing Standard</td>
+                  <td className="py-3.5 px-6">100% completion click-through</td>
+                  <td className="py-3.5 px-6 bg-[#F5F3FF]/40 font-medium text-[#0F0F14]">80% score threshold across four competency domains</td>
+                </tr>
+                <tr>
+                  <td className="py-3.5 px-6 font-medium text-[#0F0F14]">Verification Registry</td>
+                  <td className="py-3.5 px-6">Static PDF without central lookup</td>
+                  <td className="py-3.5 px-6 bg-[#F5F3FF]/40 font-medium text-[#0F0F14]">Public registry lookup with 1-click LinkedIn badge</td>
+                </tr>
+                <tr>
+                  <td className="py-3.5 px-6 font-medium text-[#0F0F14]">Retake Policy</td>
+                  <td className="py-3.5 px-6">Instant unrestricted retries</td>
+                  <td className="py-3.5 px-6 bg-[#F5F3FF]/40 font-medium text-[#0F0F14]">24-hour mandatory study cooldown between attempts</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
 
-            {/* Jnachi Proctored Certification Box */}
-            <div className="p-8 rounded-3xl bg-gradient-to-b from-indigo-950/70 to-slate-900 border-2 border-indigo-500/60 shadow-xl shadow-indigo-600/10 space-y-5">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-indigo-300">Jnachi Proctored Certification</span>
-                <span className="text-xs font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-800">Verified</span>
-              </div>
-              <h3 className="text-xl font-extrabold text-white">
-                Proof of Actual Applied Knowledge
-              </h3>
-              <ul className="space-y-3 text-sm text-slate-200">
-                <li className="flex items-start gap-2.5">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Rigorous 40-question scenario exam (80% passing standard).</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Anti-cheating proctoring and integrity cooldown protections.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Tamper-proof verification registry at <code className="text-indigo-300 font-mono text-xs">/verify/[id]</code> with 1-click LinkedIn badge.</span>
-                </li>
-              </ul>
-            </div>
+      {/* ========================================================================= */}
+      {/* 5. HOW IT WORKS: Horizontal 4-Step Timeline                               */}
+      {/* ========================================================================= */}
+      <section className="w-full py-20 px-4 border-b border-[#E5E7EB] bg-[#F9FAFB]">
+        <div className="container mx-auto max-w-[1120px] space-y-10">
+          <div className="space-y-2">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#5B21B6] bg-[#EDE9FE] px-2.5 py-1 rounded">
+              Examination Process
+            </span>
+            <h2 className="font-serif-heading text-3xl sm:text-4xl text-[#0F0F14]">
+              How the certification process works
+            </h2>
+            <p className="text-sm sm:text-base text-[#4B5563] max-w-xl">
+              A structured pathway from initial diagnostic to verified credential.
+            </p>
           </div>
 
-          {/* 4-Step User Certification Journey */}
-          <div className="pt-8 space-y-8">
-            <h3 className="text-center text-xl sm:text-2xl font-black text-white">
-              How the Certification Journey Works
-            </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="p-6 rounded-lg bg-white border border-[#E5E7EB] space-y-3">
+              <span className="text-xs font-bold text-[#5B21B6] bg-[#EDE9FE] px-2 py-0.5 rounded">
+                Step 01
+              </span>
+              <h3 className="text-sm font-semibold text-[#0F0F14]">Select Track & Diagnose</h3>
+              <p className="text-xs text-[#4B5563] leading-relaxed">
+                Choose from {TOTAL_CERTIFICATIONS_COUNT} specialized tracks or take the 3-minute diagnostic to benchmark your starting level.
+              </p>
+            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Step 1 */}
-              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 relative space-y-3">
-                <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black text-sm">
-                  1
-                </div>
-                <h4 className="text-base font-bold text-white">1. Select Track & Assess</h4>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  Choose from 18 specialized tracks or take the 3-minute diagnostic to find your exact baseline.
-                </p>
-              </div>
+            <div className="p-6 rounded-lg bg-white border border-[#E5E7EB] space-y-3">
+              <span className="text-xs font-bold text-[#5B21B6] bg-[#EDE9FE] px-2 py-0.5 rounded">
+                Step 02
+              </span>
+              <h3 className="text-sm font-semibold text-[#0F0F14]">Review Objectives</h3>
+              <p className="text-xs text-[#4B5563] leading-relaxed">
+                Study the domain syllabus and practice with interactive micro-lessons covering literacy, automation, and privacy.
+              </p>
+            </div>
 
-              {/* Step 2 */}
-              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 relative space-y-3">
-                <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black text-sm">
-                  2
-                </div>
-                <h4 className="text-base font-bold text-white">2. Prepare with Lessons</h4>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  Review exam objectives, copyable prompt templates, and 5-minute practical micro-study modules.
-                </p>
-              </div>
+            <div className="p-6 rounded-lg bg-white border border-[#E5E7EB] space-y-3">
+              <span className="text-xs font-bold text-[#5B21B6] bg-[#EDE9FE] px-2 py-0.5 rounded">
+                Step 03
+              </span>
+              <h3 className="text-sm font-semibold text-[#0F0F14]">Complete Exam</h3>
+              <p className="text-xs text-[#4B5563] leading-relaxed">
+                Take the 40-question proctored exam within 45 minutes and score 80% or higher to achieve passing standard.
+              </p>
+            </div>
 
-              {/* Step 3 */}
-              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 relative space-y-3">
-                <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black text-sm">
-                  3
-                </div>
-                <h4 className="text-base font-bold text-white">3. Pass Proctored Exam</h4>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  Complete the 40-question proctored test within the time limit and achieve the 80% passing standard.
-                </p>
-              </div>
-
-              {/* Step 4 */}
-              <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 relative space-y-3">
-                <div className="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black text-sm">
-                  4
-                </div>
-                <h4 className="text-base font-bold text-white">4. Showcase Credential</h4>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  Download high-res diploma, share your tamper-proof verification link, and attach to LinkedIn with 1 click.
-                </p>
-              </div>
+            <div className="p-6 rounded-lg bg-white border border-[#E5E7EB] space-y-3">
+              <span className="text-xs font-bold text-[#0F766E] bg-[#F0FDFA] border border-[#99F6E4] px-2 py-0.5 rounded">
+                Step 04
+              </span>
+              <h3 className="text-sm font-semibold text-[#0F0F14]">Earn Credential</h3>
+              <p className="text-xs text-[#4B5563] leading-relaxed">
+                Receive your official credential ID, download high-resolution diploma assets, and attach to LinkedIn.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 4. DUAL AUDIENCE PATHWAYS (Students vs Working Professionals)             */}
+      {/* 6. CREDENTIAL AND VERIFICATION: Split Showcase Section                    */}
       {/* ========================================================================= */}
-      <section className="w-full py-20 px-4 border-b border-slate-800/80">
-        <div className="container mx-auto max-w-6xl">
-          <HomeAudienceSwitcher />
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 5. WHAT YOU EARN: Realistic Credential & Verification Showcase           */}
-      {/* ========================================================================= */}
-      <section className="w-full py-20 px-4 bg-slate-900/30 border-b border-slate-800/80">
-        <div className="container mx-auto max-w-6xl">
+      <section className="w-full py-20 px-4 border-b border-[#E5E7EB] bg-white">
+        <div className="container mx-auto max-w-[1120px]">
           <HomeCertificateShowcase />
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* 6. TRUST & ASSESSMENT INTEGRITY                                          */}
+      {/* 7. EXAM INTEGRITY: Restrained 3-column text block without icons            */}
       {/* ========================================================================= */}
-      <section className="w-full py-20 px-4 border-b border-slate-800/80">
-        <div className="container mx-auto max-w-5xl space-y-10">
-          <div className="text-center space-y-3 max-w-2xl mx-auto">
-            <span className="text-xs font-black uppercase tracking-widest text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-3.5 py-1.5 rounded-full inline-block">
-              Exam Security & Integrity
+      <section className="w-full py-20 px-4 border-b border-[#E5E7EB] bg-[#F9FAFB]">
+        <div className="container mx-auto max-w-[1120px] space-y-10">
+          <div className="space-y-2 max-w-2xl">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#5B21B6] bg-[#EDE9FE] px-2.5 py-1 rounded">
+              Exam Standards
             </span>
-            <h2 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-              Why Employers & Candidates Trust Jnachi
+            <h2 className="font-serif-heading text-3xl sm:text-4xl text-[#0F0F14]">
+              Assessment integrity standards
             </h2>
-            <p className="text-sm sm:text-base text-slate-300">
-              Credentials only carry value when the examination process cannot be gamed. Jnachi implements active security measures to protect certification prestige.
+            <p className="text-sm sm:text-base text-[#4B5563]">
+              Jnachi credentials maintain value because exam conditions are structured to measure individual understanding reliably.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center">
-                <Lock className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-white">Active Proctor Strikes</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Tab-switching, window blur, and unauthorized external aids trigger automated security strikes. 3 strikes results in immediate attempt cancellation.
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="space-y-2 border-t border-[#D1D5DB] pt-4">
+              <h3 className="text-sm font-semibold text-[#0F0F14]">
+                Active Session Monitoring
+              </h3>
+              <p className="text-xs text-[#4B5563] leading-relaxed">
+                Examinations track window focus and tab-switch events. Reaching the threshold of three recorded violations invalidates the attempt automatically.
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
-                <TrendingUp className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-white">24-Hour Integrity Cooldown</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Failed attempts require a mandatory 24-hour preparation cooldown before a retake is permitted, preventing brute-force guessing of questions.
+            <div className="space-y-2 border-t border-[#D1D5DB] pt-4">
+              <h3 className="text-sm font-semibold text-[#0F0F14]">
+                24-Hour Preparation Cooldown
+              </h3>
+              <p className="text-xs text-[#4B5563] leading-relaxed">
+                Unsuccessful attempts enter a mandatory 24-hour waiting interval prior to re-examination to encourage syllabus review over repetitive guessing.
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800 space-y-3">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-white">Permanent Cryptographic ID</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
-                Earned certificates are recorded in our public registry. Anyone can verify recipient name, issue date, track, and score at <code className="text-indigo-300 font-mono text-[11px]">jnachi.com/verify</code>.
+            <div className="space-y-2 border-t border-[#D1D5DB] pt-4">
+              <h3 className="text-sm font-semibold text-[#0F0F14]">
+                Public Registry Verification
+              </h3>
+              <p className="text-xs text-[#4B5563] leading-relaxed">
+                Earned credentials are permanently cataloged with recipient name, track name, examination date, and percentage score for independent third-party confirmation.
               </p>
             </div>
           </div>
@@ -436,53 +434,29 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 7. FINAL CONVERSION SECTION: Direct High-Impact CTA                      */}
+      {/* 8. FINAL CONVERSION BANNER: Solid brand-900 band with one CTA             */}
       {/* ========================================================================= */}
-      <section className="w-full py-24 px-4 relative overflow-hidden bg-gradient-to-b from-slate-950 via-indigo-950/60 to-slate-950">
-        {/* Glow */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-radial-gradient opacity-60 pointer-events-none"
-        />
-
-        <div className="container mx-auto max-w-4xl text-center relative z-10 space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-950/80 border border-emerald-700/80 text-emerald-300 text-xs font-bold">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <span>Launch Offer: 100% Free Access Active</span>
+      <section className="w-full py-20 px-4 bg-[#2E1065] text-white">
+        <div className="container mx-auto max-w-[1120px] text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-white/10 text-[#EDE9FE] text-xs font-semibold">
+            <span>Free 30-Day Launch Access Window Active</span>
           </div>
 
-          <div className="space-y-4 max-w-2xl mx-auto">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-tight">
-              Ready to Prove What You Know?
-            </h2>
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
-              Explore Jnachi certifications, test your practical capabilities, and earn verifiable industry credentials today.
-            </p>
-          </div>
+          <h2 className="font-serif-heading text-3xl sm:text-4xl md:text-5xl text-white max-w-2xl mx-auto leading-tight">
+            Begin your certification assessment
+          </h2>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+          <p className="text-sm sm:text-base text-[#EDE9FE]/80 max-w-lg mx-auto leading-relaxed">
+            Select a specialized track, review the examination objectives, and earn an official verified credential.
+          </p>
+
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/certification"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-black text-base transition-all shadow-xl shadow-indigo-600/40 hover:scale-[1.02] active:scale-98 group"
+              className="bg-white text-[#2E1065] hover:bg-[#F5F3FF] font-semibold text-sm px-6 py-3 rounded-md transition-colors w-full sm:w-auto text-center"
             >
-              <span>Explore All 18 Certifications</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              Explore All {TOTAL_CERTIFICATIONS_COUNT} Certifications
             </Link>
-
-            <Link
-              href="/assessment"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-bold text-sm sm:text-base border border-slate-700 transition-all shadow-md"
-            >
-              <span>Take Free Diagnostic</span>
-            </Link>
-          </div>
-
-          <div className="pt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
-            <span>✓ No credit card required</span>
-            <span>•</span>
-            <span>✓ 100% Free Launch Window</span>
-            <span>•</span>
-            <span>✓ Official Verifiable LinkedIn Badges</span>
           </div>
         </div>
       </section>

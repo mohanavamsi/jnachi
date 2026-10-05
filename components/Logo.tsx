@@ -1,14 +1,14 @@
 import React from 'react';
 
-export function Logo({ className = '' }: { className?: string }) {
+export function Logo({ className = '', light = false }: { className?: string; light?: boolean }) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <div className="relative flex items-center justify-center w-8 h-8">
+    <div className={`flex items-center gap-2.5 ${className}`}>
+      <div className="relative flex items-center justify-center w-7 h-7">
         <svg
           viewBox="0 0 32 32"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full text-indigo-600"
+          className={`w-full h-full ${light ? 'text-white' : 'text-[#5B21B6]'}`}
         >
           {/* Swept ring / trailing point (comet orbit) */}
           <path
@@ -16,13 +16,15 @@ export function Logo({ className = '' }: { className?: string }) {
             stroke="currentColor"
             strokeWidth="3"
             strokeLinecap="round"
-            className="opacity-70"
+            className="opacity-75"
           />
           {/* Solid dot (seed of knowledge) */}
-          <circle cx="22" cy="10" r="5" fill="currentColor" />
+          <circle cx="22" cy="10" r="4.5" fill="currentColor" />
         </svg>
       </div>
-      <span className="text-xl font-semibold tracking-tight lowercase text-slate-900">jnachi</span>
+      <span className={`text-xl font-bold tracking-tight lowercase ${light ? 'text-white' : 'text-[#0F0F14]'}`}>
+        jnachi
+      </span>
     </div>
   );
 }

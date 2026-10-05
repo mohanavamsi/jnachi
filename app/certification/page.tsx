@@ -1,11 +1,11 @@
 import { Metadata } from 'next';
 import CertificationClient from './CertificationClient';
-import { CERT_TIERS, TIER_ORDER, TIER_SLUGS } from '@/lib/certTypes';
+import { CERT_TIERS, TIER_ORDER, TIER_SLUGS, TOTAL_CERTIFICATIONS_COUNT } from '@/lib/certTypes';
 
 export const metadata: Metadata = {
   title: 'Official AI, Python & Enterprise Integration Certifications | Jnachi',
   description:
-    'Earn official, proctored industry certifications across 18 specialized tracks: Core AI Ladder, Role Specializations (Sales, Devs, Marketers, Support, HR, Managers), Applied Python, and Enterprise Integration (MuleSoft, Salesforce, IBM MQ, IBM ACE, Boomi, IBM webMethods / Software AG). Verifiable LinkedIn digital badges.',
+    `Earn official, proctored industry certifications across ${TOTAL_CERTIFICATIONS_COUNT} specialized tracks: Core AI Ladder, Role Specializations (Sales, Devs, Marketers, Support, HR, Managers), Applied Python, and Enterprise Integration (MuleSoft, Salesforce, IBM MQ, IBM ACE, Boomi, IBM webMethods / Software AG). Verifiable LinkedIn digital badges.`,
   keywords: [
     'AI Certification',
     'Python AI Certification',
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     'Jnachi Industry Certification',
   ],
   openGraph: {
-    title: 'Jnachi Professional Certifications | 18 Official Industry Credentials',
+    title: `Jnachi Professional Certifications | ${TOTAL_CERTIFICATIONS_COUNT} Official Industry Credentials`,
     description:
-      'Proctored examinations evaluating applied capability across Core AI Ladders, Role Tracks, Python Specializations, and Enterprise Integration systems. Verifiable credentials with 1-click LinkedIn badges.',
+      `Proctored examinations evaluating applied capability across Core AI Ladders, Role Tracks, Python Specializations, and Enterprise Integration systems. Verifiable credentials with 1-click LinkedIn badges.`,
     url: 'https://jnachi.com/certification',
     siteName: 'Jnachi',
     type: 'website',
@@ -46,9 +46,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jnachi Professional Certifications | 18 Official Industry Credentials',
+    title: `Jnachi Professional Certifications | ${TOTAL_CERTIFICATIONS_COUNT} Official Industry Credentials`,
     description:
-      'Proctored examinations evaluating applied capability across Core AI Ladders, Role Tracks, Python Specializations, and Enterprise Integration systems. Free launch access.',
+      `Proctored examinations evaluating applied capability across Core AI Ladders, Role Tracks, Python Specializations, and Enterprise Integration systems. Free launch access.`,
     images: ['/og-default.png'],
   },
   alternates: {
@@ -57,13 +57,12 @@ export const metadata: Metadata = {
 };
 
 export default function CertificationPage() {
-  // Structured JSON-LD Schema for Google Search Rich Snippets
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Jnachi Professional Certification Suite',
     description:
-      'A comprehensive suite of 18 proctored industry examinations spanning core AI career levels, specialized role tracks, Python engineering, and enterprise integration platforms.',
+      `A comprehensive suite of ${TOTAL_CERTIFICATIONS_COUNT} proctored industry examinations spanning core AI career levels, specialized role tracks, Python engineering, and enterprise integration platforms.`,
     itemListElement: TIER_ORDER.map((tierKey, index) => {
       const tier = CERT_TIERS[tierKey];
       const tierSlug = TIER_SLUGS[tierKey] || tierKey;

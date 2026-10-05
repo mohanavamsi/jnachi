@@ -1,29 +1,21 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Award, ShieldCheck, BookOpen } from 'lucide-react';
+import { TOTAL_CERTIFICATIONS_COUNT, TOTAL_LESSONS_COUNT } from '@/lib/certTypes';
 
 export const metadata: Metadata = {
-  title: 'About Jnachi | The Applied AI Knowledge & Certification Council',
+  title: 'About Jnachi | Professional AI & Integration Credentialing Authority',
   description:
-    'Learn the story of Jnachi (Jñāna + Chi = Activated Wisdom). We empower students and working professionals to measure and prove their applied AI capabilities with kinetic knowledge benchmarks and official certifications.',
+    'Learn about Jnachi (Jñāna + Chi = Activated Wisdom). We provide structured, proctored examinations and practical study curricula that evaluate applied capabilities across artificial intelligence and enterprise systems.',
   keywords: [
     'About Jnachi',
-    'Jnachi meaning',
+    'Jnachi credentialing',
     'Jnana and Chi',
     'AI skills benchmarking',
-    'Applied AI knowledge platform',
-    'Jnachi certification council',
+    'Applied AI certification council',
   ],
   alternates: {
     canonical: 'https://jnachi.com/about',
-  },
-  openGraph: {
-    title: 'About Jnachi | The Applied AI Knowledge & Certification Council',
-    description:
-      'Learn the story of Jnachi (Jñāna + Chi = Activated Wisdom). We empower students and working professionals with kinetic AI knowledge benchmarks and official certifications.',
-    url: 'https://jnachi.com/about',
-    siteName: 'Jnachi',
-    type: 'website',
   },
 };
 
@@ -34,12 +26,11 @@ export default function AboutPage() {
     name: 'About Jnachi',
     url: 'https://jnachi.com/about',
     description:
-      'Jnachi bridges the gap between theoretical knowledge and real-world AI execution through kinetic benchmarks and verifiable credentials.',
+      'Jnachi evaluates practical execution across AI workflows and enterprise integrations through proctored examinations and verifiable credentials.',
     mainEntity: {
       '@type': 'Organization',
       name: 'Jnachi',
       url: 'https://jnachi.com',
-      slogan: 'Know it. Use it. Prove it.',
       knowsAbout: [
         'Artificial Intelligence',
         'Prompt Engineering',
@@ -51,55 +42,92 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="flex flex-col items-center w-full">
+    <div className="flex flex-col w-full bg-white text-[#0F0F14]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }}
       />
-      <section className="w-full bg-slate-50 py-24 flex flex-col items-center justify-center text-center px-4 relative overflow-hidden">
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 max-w-4xl mb-6">
-          Where knowing becomes doing.
-        </h1>
+      
+      {/* Hero Header */}
+      <section className="w-full bg-[#F5F3FF] border-b border-[#E5E7EB] py-16 md:py-20 px-4">
+        <div className="container mx-auto max-w-[1120px] text-center space-y-4">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[#5B21B6] bg-[#EDE9FE] px-2.5 py-1 rounded">
+            Our Mission & Origin
+          </span>
+          <h1 className="font-serif-heading text-3xl sm:text-5xl text-[#0F0F14] max-w-3xl mx-auto leading-tight">
+            Where understanding becomes measurable execution.
+          </h1>
+          <p className="text-base text-[#4B5563] max-w-xl mx-auto leading-relaxed">
+            Bridging theoretical AI understanding and real-world execution through standardized proctored evaluations and verifiable credentials.
+          </p>
+        </div>
       </section>
 
-      <section className="w-full py-20 px-4">
-        <div className="container mx-auto max-w-3xl prose prose-lg prose-indigo">
-          <p className="text-2xl text-slate-700 leading-relaxed font-medium mb-12 text-center">
-            Jnachi comes from two roots. <em>Jna</em>, from the Sanskrit <em>jñāna</em> — knowledge, wisdom, true understanding. And <em>chi</em> — the idea, found in both Chinese and Japanese thought, of living energy, of wisdom made active.
-          </p>
+      {/* Main Narrative */}
+      <section className="w-full py-16 px-4">
+        <div className="container mx-auto max-w-3xl space-y-10">
+          <div className="space-y-4 text-base text-[#4B5563] leading-relaxed">
+            <p className="text-lg text-[#0F0F14] font-medium leading-relaxed">
+              Jnachi originates from two foundational roots: <em>Jna</em>, from the Sanskrit <em>jñāna</em> (knowledge, wisdom, deep understanding), and <em>chi</em> (active, kinetic energy).
+            </p>
+            <p>
+              Together, Jnachi represents <strong>activated knowledge</strong> — the transition from merely reading about artificial intelligence to actively operating, verifying, and integrating it into production workflows.
+            </p>
+          </div>
 
-          <p className="text-xl text-slate-600 mb-8">
-            Put together, Jnachi means something simple: <strong>knowledge that&apos;s alive.</strong>
-          </p>
+          <div className="border-t border-[#E5E7EB] pt-8 space-y-4">
+            <h2 className="font-serif-heading text-2xl text-[#0F0F14]">
+              The Credentialing Standard
+            </h2>
+            <p className="text-sm text-[#4B5563] leading-relaxed">
+              In an evolving technology landscape, self-reported skills and passive video completion certificates fail to provide clear proof of competence. Jnachi administers standardized 40-question scenario evaluations across {TOTAL_CERTIFICATIONS_COUNT} specialized certifications, measuring four distinct competency domains:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div className="p-4 rounded-lg bg-[#F9FAFB] border border-[#E5E7EB] space-y-1">
+                <span className="text-xs font-semibold text-[#5B21B6] uppercase tracking-wider">Domain 1</span>
+                <h3 className="text-sm font-semibold text-[#0F0F14]">AI Literacy & Prompt Anatomy</h3>
+                <p className="text-xs text-[#4B5563]">Context hygiene, multi-turn reasoning, and hallucination guardrails.</p>
+              </div>
+              <div className="p-4 rounded-lg bg-[#F9FAFB] border border-[#E5E7EB] space-y-1">
+                <span className="text-xs font-semibold text-[#5B21B6] uppercase tracking-wider">Domain 2</span>
+                <h3 className="text-sm font-semibold text-[#0F0F14]">Workflow Automation</h3>
+                <p className="text-xs text-[#4B5563]">Tool augmentation, pipeline architecture, and structured outputs.</p>
+              </div>
+              <div className="p-4 rounded-lg bg-[#F9FAFB] border border-[#E5E7EB] space-y-1">
+                <span className="text-xs font-semibold text-[#5B21B6] uppercase tracking-wider">Domain 3</span>
+                <h3 className="text-sm font-semibold text-[#0F0F14]">Data Privacy & Confidentiality</h3>
+                <p className="text-xs text-[#4B5563]">Enterprise PII boundaries, zero-data retention, and regulatory compliance.</p>
+              </div>
+              <div className="p-4 rounded-lg bg-[#F9FAFB] border border-[#E5E7EB] space-y-1">
+                <span className="text-xs font-semibold text-[#5B21B6] uppercase tracking-wider">Domain 4</span>
+                <h3 className="text-sm font-semibold text-[#0F0F14]">Practical Problem Solving</h3>
+                <p className="text-xs text-[#4B5563]">Real-world role scenarios and enterprise integration patterns.</p>
+              </div>
+            </div>
+          </div>
 
-          <div className="w-16 h-1 bg-indigo-600 my-12 rounded-full"></div>
-
-          <h2 className="text-3xl font-bold text-slate-900 mb-6">More Than Just a Score</h2>
-          <p className="text-lg text-slate-600 mb-6">
-            Your Jnachi Score isn&apos;t a grade on how smart you are. It&apos;s a reading of how activated your AI knowledge is right now — and, like energy, it&apos;s built to move.
-          </p>
-          <p className="text-lg text-slate-600 mb-12">
-            In a fast-moving field like artificial intelligence, accumulating facts isn&apos;t enough. We believe in kinetic knowledge. The Jnachi platform is designed to give you a clear, judgment-free reading of where you stand today, illuminating the path toward full activation.
-          </p>
-
-          <div className="bg-slate-100 rounded-2xl p-6 border border-slate-200 text-xs text-slate-600 leading-relaxed mb-8">
+          {/* Trademark & Independence Notice */}
+          <div className="bg-[#F9FAFB] rounded-lg p-5 border border-[#E5E7EB] text-xs text-[#6B7280] leading-relaxed">
             <p>
               <strong>Trademark & Independence Notice:</strong> Jnachi certifications are independently developed and administered by Jnachi. They are not issued, endorsed, or affiliated with IBM, Salesforce, MuleSoft, or Boomi. All enterprise product names and marks referenced are trademarks of their respective owners.
             </p>
           </div>
 
-          <div className="bg-indigo-50 rounded-2xl p-8 border border-indigo-100 flex flex-col items-center text-center">
-            <h3 className="text-2xl font-bold text-indigo-900 mb-4">Discover Your Current Reading</h3>
-            <p className="text-indigo-800 mb-8">
-              Take our interactive assessment to see where your skills are emerging, and where they are fully energized.
+          {/* CTA Box */}
+          <div className="bg-[#2E1065] text-white rounded-lg p-8 space-y-4 text-center">
+            <h3 className="font-serif-heading text-xl text-white">Evaluate your current competency level</h3>
+            <p className="text-xs text-[#EDE9FE]/80 max-w-md mx-auto">
+              Take our 3-minute diagnostic assessment to receive an initial breakdown across literacy, automation, and privacy domains.
             </p>
-            <Link 
-              href="/assessment" 
-              className="group inline-flex items-center gap-3 bg-indigo-600 text-white px-6 py-3 rounded-full font-medium hover:bg-indigo-700 transition-all shadow"
-            >
-              Start Assessment
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <div className="pt-2">
+              <Link
+                href="/assessment"
+                className="btn-primary bg-white text-[#2E1065] hover:bg-[#F5F3FF] text-xs px-5 py-2.5"
+              >
+                <span>Start Skills Diagnostic</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

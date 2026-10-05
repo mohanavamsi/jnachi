@@ -936,5 +936,9 @@ export function getAllTierSlugs(): { slug: string; tier: CertTier; config: TierC
   }));
 }
 
+export const TOTAL_CERTIFICATIONS_COUNT = 23;
+export const TOTAL_TRACKS_COUNT = 4;
+export const TOTAL_LESSONS_COUNT = 70;
+
 
 

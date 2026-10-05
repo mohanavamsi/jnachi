@@ -1,15 +1,16 @@
 import { MetadataRoute } from 'next';
+import { TOTAL_CERTIFICATIONS_COUNT } from '@/lib/certTypes';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Jnachi — AI Skills Assessment & Professional Certifications',
+    name: 'Jnachi — Professional AI & Integration Certifications',
     short_name: 'Jnachi',
     description:
-      'Benchmark your AI momentum and earn 18 official industry certifications for students and working professionals.',
+      `Proctored examinations and verified credentials across ${TOTAL_CERTIFICATIONS_COUNT} certifications for students and working professionals.`,
     start_url: '/',
     display: 'standalone',
-    background_color: '#020617',
-    theme_color: '#4f46e5',
+    background_color: '#FFFFFF',
+    theme_color: '#5B21B6',
     icons: [
       {
         src: '/icon.svg',
