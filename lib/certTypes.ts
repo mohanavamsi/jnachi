@@ -1,4 +1,4 @@
-export type CertCategory = 'core' | 'role' | 'python' | 'agentic' | 'finance' | 'integration';
+export type CertCategory = 'core' | 'role' | 'python' | 'agentic' | 'finance' | 'integration' | 'systems';
 
 export type CertTier =
   | 'beginner'
@@ -18,6 +18,11 @@ export type CertTier =
   | 'llmops'
   | 'finance_ai'
   | 'finops_architect'
+  | 'computer_basics'
+  | 'web_servers'
+  | 'linux_shell'
+  | 'sql_database'
+  | 'core_java'
   | 'mulesoft'
   | 'salesforce_integration'
   | 'ibm_mq'
@@ -861,6 +866,177 @@ export const CERT_TIERS: Record<CertTier, TierConfig> = {
       'FinOps Foundation FOCUS Framework, Showback & Chargeback',
     ],
   },
+  // SYSTEMS & SOFTWARE ENGINEERING FOUNDATIONS
+  computer_basics: {
+    id: 'computer_basics',
+    category: 'systems',
+    levelNumber: 1,
+    title: 'Jnachi Certified Computing Architecture & Digital Systems Essentials',
+    badgeLabel: 'JNACHI CERTIFIED COMPUTING ARCHITECTURE',
+    roleName: 'Computing & IT Systems Architecture',
+    shortDescription: 'Master hardware architecture, CPU execution cycles, memory management, operating system kernels, and networking fundamentals.',
+    fullDescription: 'Validates foundational knowledge of computer hardware, software execution, operating system kernels, and networking. Assesses CPU architecture (ALU, registers, pipelining, L1/L2/L3 cache), RAM vs storage hierarchy, binary/hex data representations, process scheduling, and fundamental networking primitives (OSI model, TCP/IP, DNS, IPv4/IPv6).',
+    targetAudience: 'Software engineering students, IT support analysts, tech career switchers, and professionals building strong foundational computing literacy.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#0284c7', // Sky Blue
+      secondary: '#0369a1',
+      border: '#bae6fd',
+      bgBadge: '#f0f9ff',
+      textBadge: '#075985',
+      gradientFrom: '#082f49',
+      gradientTo: '#0369a1',
+      diplomaParchment: '#f0f9ff',
+      diplomaPrimary: '#075985',
+      diplomaAccent: '#0284c7',
+      sealColor: '#e0f2fe',
+      sealText: '#0369a1',
+    },
+    keyTopics: [
+      'CPU Architecture, Instruction Execution Cycle & Cache Hierarchy',
+      'Memory Management (RAM, Virtual Memory, Paging, Storage)',
+      'Binary, Hexadecimal, ASCII/UTF-8 & Data Encoding Fundamentals',
+      'Operating System Kernels, Process Lifecycle & OSI/TCP-IP Basics',
+    ],
+  },
+  web_servers: {
+    id: 'web_servers',
+    category: 'systems',
+    levelNumber: 2,
+    title: 'Jnachi Certified Web Architecture, HTTP & Cloud Server Infrastructure',
+    badgeLabel: 'JNACHI CERTIFIED WEB & SERVER INFRASTRUCTURE',
+    roleName: 'Web Systems & Server Infrastructure',
+    shortDescription: 'Master client-server architecture, HTTP/1.1 vs HTTP/2/3 protocols, TLS/SSL termination, web servers (Nginx/Apache), REST API design, and cloud VM deployments.',
+    fullDescription: 'Validates practical competence in modern web architecture, protocol mechanics, and server administration. Assesses client-server request/response lifecycles, HTTP methods/headers/status codes, TLS/SSL handshake encryption, reverse proxy configuration (Nginx/Apache), DNS records (A, CNAME, MX), RESTful API contracts, and cloud virtual machine hosting.',
+    targetAudience: 'Web Developers, Backend Engineers, Cloud Administrators, and Systems Engineers.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#0d9488', // Teal
+      secondary: '#0f766e',
+      border: '#99f6e4',
+      bgBadge: '#f0fdfa',
+      textBadge: '#115e59',
+      gradientFrom: '#042f2e',
+      gradientTo: '#0f766e',
+      diplomaParchment: '#f0fdfa',
+      diplomaPrimary: '#115e59',
+      diplomaAccent: '#0d9488',
+      sealColor: '#ccfbf1',
+      sealText: '#0f766e',
+    },
+    keyTopics: [
+      'Client-Server Architecture & HTTP/1.1, HTTP/2 & HTTP/3 Protocol Mechanics',
+      'DNS Hierarchy, Domain Resolution & TLS/SSL Certificate Handshakes',
+      'Web Server Administration (Nginx Reverse Proxy, Apache & Static Assets)',
+      'RESTful API Principles, JSON Payloads, WebSockets & Server Security',
+    ],
+  },
+  linux_shell: {
+    id: 'linux_shell',
+    category: 'systems',
+    levelNumber: 2,
+    title: 'Jnachi Certified Linux Systems Administration & Shell Scripting Specialist',
+    badgeLabel: 'JNACHI CERTIFIED LINUX & SHELL SCRIPTING',
+    roleName: 'Linux Administration & Shell Automation',
+    shortDescription: 'Master Linux POSIX command-line environments, Filesystem Hierarchy Standard, user permissions, Bash scripting automation, pipes/redirection, systemd, and cron.',
+    fullDescription: 'Validates hands-on capability in Linux operating system administration and automated Bash shell scripting. Assesses Linux directory structures (/etc, /var, /proc), permission models (chmod, chown, SUID), process management (ps, top, kill, systemctl), I/O streams and pipelines (stdin/stdout/stderr, grep, sed, awk), and robust Bash automation scripts with error handling and scheduled Cron jobs.',
+    targetAudience: 'DevOps Engineers, Systems Administrators, Cloud Practitioners, and Backend Software Developers.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#16a34a', // Emerald Green
+      secondary: '#15803d',
+      border: '#bbf7d0',
+      bgBadge: '#f0fdf4',
+      textBadge: '#166534',
+      gradientFrom: '#052e16',
+      gradientTo: '#15803d',
+      diplomaParchment: '#f0fdf4',
+      diplomaPrimary: '#166534',
+      diplomaAccent: '#16a34a',
+      sealColor: '#dcfce7',
+      sealText: '#15803d',
+    },
+    keyTopics: [
+      'Linux Filesystem Hierarchy Standard (FHS) & File Management Commands',
+      'User Authentication, File Permissions (chmod/chown) & SUID/SGID',
+      'Bash Shell Scripting (Variables, Conditionals, Loops & Functions)',
+      'Standard I/O Streams, Pipes, Text Processing (grep/sed/awk) & Systemd/Cron',
+    ],
+  },
+  sql_database: {
+    id: 'sql_database',
+    category: 'systems',
+    levelNumber: 2,
+    title: 'Jnachi Certified Relational Database Engineering & Advanced SQL Specialist',
+    badgeLabel: 'JNACHI CERTIFIED DATABASE & SQL SPECIALIST',
+    roleName: 'Relational Databases & SQL Engineering',
+    shortDescription: 'Master relational schema modeling, normalization (1NF–BCNF), ACID transactions, complex multi-table joins, subqueries, CTEs, indexing, and query plan optimization.',
+    fullDescription: 'Validates comprehensive knowledge of relational database management systems (RDBMS) and production SQL engineering. Assesses schema design and normalization principles, transaction isolation levels (ACID), multi-table JOINs (INNER, LEFT, FULL, CROSS), Common Table Expressions (WITH clauses), Window functions (ROW_NUMBER, RANK, PARTITION BY), B-Tree indexing strategies, EXPLAIN query plan analysis, and database security.',
+    targetAudience: 'Database Developers, Data Analysts, Backend Engineers, Data Engineers, and Application Architects.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#2563eb', // Royal Blue
+      secondary: '#1d4ed8',
+      border: '#bfdbfe',
+      bgBadge: '#eff6ff',
+      textBadge: '#1e40af',
+      gradientFrom: '#172554',
+      gradientTo: '#1d4ed8',
+      diplomaParchment: '#eff6ff',
+      diplomaPrimary: '#1e40af',
+      diplomaAccent: '#2563eb',
+      sealColor: '#dbeafe',
+      sealText: '#1d4ed8',
+    },
+    keyTopics: [
+      'Relational Schema Design, Primary/Foreign Keys & Normalization (1NF–3NF)',
+      'Advanced SQL Queries: Complex JOINs, Subqueries, CTEs & Aggregations',
+      'SQL Window Functions (ROW_NUMBER, RANK, DENSE_RANK, LAG/LEAD, OVER)',
+      'ACID Transactions, Locking, B-Tree Indexing & Query Plan Optimization',
+    ],
+  },
+  core_java: {
+    id: 'core_java',
+    category: 'systems',
+    levelNumber: 2,
+    title: 'Jnachi Certified Enterprise Core Java Development Specialist',
+    badgeLabel: 'JNACHI CERTIFIED CORE JAVA SPECIALIST',
+    roleName: 'Enterprise Core Java Engineering',
+    shortDescription: 'Master object-oriented programming (OOP), Java Memory Model (Heap/Stack/GC), Collections Framework, Multithreading & Concurrency, Streams API, and JVM architecture.',
+    fullDescription: 'Validates rigorous understanding of modern Core Java programming (Java 17/21 LTS). Assesses Object-Oriented design principles (Encapsulation, Inheritance, Polymorphism, Abstraction), JVM memory architecture (Stack vs Heap, Garbage Collection algorithms), Collections Framework (List, Set, Map, Queue performance characteristics), Exception handling, Multithreading & Java Concurrency (ExecutorService, synchronized, ReentrantLock), and Functional Programming with Lambdas & Streams API.',
+    targetAudience: 'Java Developers, Backend Software Engineers, Enterprise Application Developers, and Computer Science Students.',
+    passingScorePercent: 80,
+    questionCount: 40,
+    durationMinutes: 45,
+    colorScheme: {
+      primary: '#dc2626', // Crimson Red
+      secondary: '#b91c1c',
+      border: '#fecaca',
+      bgBadge: '#fef2f2',
+      textBadge: '#991b1b',
+      gradientFrom: '#450a0a',
+      gradientTo: '#b91c1c',
+      diplomaParchment: '#fef2f2',
+      diplomaPrimary: '#991b1b',
+      diplomaAccent: '#dc2626',
+      sealColor: '#fee2e2',
+      sealText: '#b91c1c',
+    },
+    keyTopics: [
+      'Core OOP Principles, Abstract Classes, Interfaces & Java 17/21 Features',
+      'JVM Memory Architecture (Stack, Heap, Metaspace) & Garbage Collection',
+      'Java Collections Framework (ArrayList, HashMap, ConcurrentHashMap, TreeSet)',
+      'Multithreading, Java Concurrency Utilities, Lambdas & Functional Streams API',
+    ],
+  },
 };
 
 export const CORE_TIER_ORDER: CertTier[] = ['beginner', 'practitioner', 'builder', 'master'];
@@ -868,6 +1044,7 @@ export const ROLE_TIER_ORDER: CertTier[] = ['sales', 'developers', 'marketers', 
 export const PYTHON_TIER_ORDER: CertTier[] = ['python_ai', 'python_dev'];
 export const AGENTIC_TIER_ORDER: CertTier[] = ['agentic_ai', 'rag_architect', 'llmops'];
 export const FINANCE_TIER_ORDER: CertTier[] = ['finance_ai', 'finops_architect'];
+export const SYSTEMS_TIER_ORDER: CertTier[] = ['computer_basics', 'web_servers', 'linux_shell', 'sql_database', 'core_java'];
 export const INTEGRATION_TIER_ORDER: CertTier[] = ['mulesoft', 'salesforce_integration', 'ibm_mq', 'ibm_ace', 'boomi', 'webmethods'];
 export const TIER_ORDER: CertTier[] = [
   ...CORE_TIER_ORDER,
@@ -875,6 +1052,7 @@ export const TIER_ORDER: CertTier[] = [
   ...PYTHON_TIER_ORDER,
   ...AGENTIC_TIER_ORDER,
   ...FINANCE_TIER_ORDER,
+  ...SYSTEMS_TIER_ORDER,
   ...INTEGRATION_TIER_ORDER,
 ];
 
@@ -900,6 +1078,11 @@ export const TIER_SLUGS: Record<CertTier, string> = {
   llmops: 'llmops-specialist',
   finance_ai: 'ai-financial-modeling',
   finops_architect: 'finops-architect',
+  computer_basics: 'computer-systems-fundamentals',
+  web_servers: 'web-architecture-cloud-servers',
+  linux_shell: 'linux-systems-shell-scripting',
+  sql_database: 'sql-relational-database-engineering',
+  core_java: 'enterprise-core-java-developer',
   mulesoft: 'mulesoft-integration',
   salesforce_integration: 'salesforce-integration',
   ibm_mq: 'ibm-mq',
@@ -936,9 +1119,10 @@ export function getAllTierSlugs(): { slug: string; tier: CertTier; config: TierC
   }));
 }
 
-export const TOTAL_CERTIFICATIONS_COUNT = 23;
-export const TOTAL_TRACKS_COUNT = 4;
+export const TOTAL_CERTIFICATIONS_COUNT = 28;
+export const TOTAL_TRACKS_COUNT = 5;
 export const TOTAL_LESSONS_COUNT = 70;
+
 
 
 

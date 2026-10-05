@@ -98,6 +98,26 @@ import {
   FINOPS_ARCHITECT_QUESTIONS_BY_SECTION,
   ALL_FINOPS_ARCHITECT_QUESTIONS,
 } from './certQuestions/finops_architect';
+import {
+  COMPUTER_BASICS_QUESTIONS_BY_SECTION,
+  ALL_COMPUTER_BASICS_QUESTIONS,
+} from './certQuestions/computer_basics';
+import {
+  WEB_SERVERS_QUESTIONS_BY_SECTION,
+  ALL_WEB_SERVERS_QUESTIONS,
+} from './certQuestions/web_servers';
+import {
+  LINUX_SHELL_QUESTIONS_BY_SECTION,
+  ALL_LINUX_SHELL_QUESTIONS,
+} from './certQuestions/linux_shell';
+import {
+  SQL_DATABASE_QUESTIONS_BY_SECTION,
+  ALL_SQL_DATABASE_QUESTIONS,
+} from './certQuestions/sql_database';
+import {
+  CORE_JAVA_QUESTIONS_BY_SECTION,
+  ALL_CORE_JAVA_QUESTIONS,
+} from './certQuestions/core_java';
 
 export type { CertSection, CertOption, CertQuestion, ClientCertQuestion };
 
@@ -144,6 +164,16 @@ export {
   ALL_FINANCE_AI_QUESTIONS,
   FINOPS_ARCHITECT_QUESTIONS_BY_SECTION,
   ALL_FINOPS_ARCHITECT_QUESTIONS,
+  COMPUTER_BASICS_QUESTIONS_BY_SECTION,
+  ALL_COMPUTER_BASICS_QUESTIONS,
+  WEB_SERVERS_QUESTIONS_BY_SECTION,
+  ALL_WEB_SERVERS_QUESTIONS,
+  LINUX_SHELL_QUESTIONS_BY_SECTION,
+  ALL_LINUX_SHELL_QUESTIONS,
+  SQL_DATABASE_QUESTIONS_BY_SECTION,
+  ALL_SQL_DATABASE_QUESTIONS,
+  CORE_JAVA_QUESTIONS_BY_SECTION,
+  ALL_CORE_JAVA_QUESTIONS,
 };
 
 export const CERT_SECTIONS: { id: CertSection; title: string; description: string }[] = [
@@ -177,7 +207,7 @@ export const CERT_SECTION_LABELS: Record<CertSection, string> = {
 };
 
 // =========================================================================
-// ASSEMBLED COMPLETE QUESTION BANKS PER TIER (CORE + ROLES + PYTHON + INTEGRATION + ADVANCED)
+// ASSEMBLED COMPLETE QUESTION BANKS PER TIER (CORE + ROLES + PYTHON + SYSTEMS + INTEGRATION + ADVANCED)
 // =========================================================================
 
 export const TIER_QUESTION_BANK: Record<CertTier, Record<CertSection, CertQuestion[]>> = {
@@ -196,6 +226,12 @@ export const TIER_QUESTION_BANK: Record<CertTier, Record<CertSection, CertQuesti
   // Python Specializations
   python_ai: PYTHON_AI_QUESTIONS_BY_SECTION,
   python_dev: PYTHON_DEV_QUESTIONS_BY_SECTION,
+  // Systems & Software Engineering Foundations
+  computer_basics: COMPUTER_BASICS_QUESTIONS_BY_SECTION,
+  web_servers: WEB_SERVERS_QUESTIONS_BY_SECTION,
+  linux_shell: LINUX_SHELL_QUESTIONS_BY_SECTION,
+  sql_database: SQL_DATABASE_QUESTIONS_BY_SECTION,
+  core_java: CORE_JAVA_QUESTIONS_BY_SECTION,
   // Enterprise Integration Tracks
   mulesoft: MULESOFT_QUESTIONS_BY_SECTION,
   salesforce_integration: SALESFORCE_INTEGRATION_QUESTIONS_BY_SECTION,

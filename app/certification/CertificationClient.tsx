@@ -57,7 +57,7 @@ import {
   EXAM_DURATION_MS,
   PASSING_THRESHOLD,
 } from '@/lib/certService';
-import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, PYTHON_TIER_ORDER, AGENTIC_TIER_ORDER, FINANCE_TIER_ORDER, INTEGRATION_TIER_ORDER, CertCategory, TIER_SLUGS, getSlugByTier } from '@/lib/certTypes';
+import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, PYTHON_TIER_ORDER, AGENTIC_TIER_ORDER, FINANCE_TIER_ORDER, SYSTEMS_TIER_ORDER, INTEGRATION_TIER_ORDER, CertCategory, TIER_SLUGS, getSlugByTier } from '@/lib/certTypes';
 import { LESSONS, CategoryKey } from '@/lib/lessonsData';
 import BeginnerCertificateModal from '@/components/BeginnerCertificateModal';
 import ExamSyllabusModal from '@/components/ExamSyllabusModal';
@@ -1211,6 +1211,23 @@ export default function CertificationClient({
                   <button
                     type="button"
                     onClick={() => {
+                      setActiveTrackTab('systems');
+                      if (!SYSTEMS_TIER_ORDER.includes(selectedTier)) {
+                        setSelectedTier('computer_basics');
+                        if (effectiveEmail) handleCheckStatus(effectiveEmail, 'computer_basics');
+                      }
+                    }}
+                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                      activeTrackTab === 'systems'
+                        ? 'bg-white text-sky-700 shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    Systems & Software (5 Tracks)
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
                       setActiveTrackTab('integration');
                       if (!INTEGRATION_TIER_ORDER.includes(selectedTier)) {
                         setSelectedTier('mulesoft');
@@ -1229,7 +1246,7 @@ export default function CertificationClient({
               </div>
 
               {/* TIER CARDS GRID */}
-              <div className={`grid gap-4 ${activeTrackTab === 'core' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : activeTrackTab === 'python' || activeTrackTab === 'finance' ? 'grid-cols-1 sm:grid-cols-2' : activeTrackTab === 'integration' || activeTrackTab === 'agentic' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
+              <div className={`grid gap-4 ${activeTrackTab === 'core' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : activeTrackTab === 'python' || activeTrackTab === 'finance' ? 'grid-cols-1 sm:grid-cols-2' : activeTrackTab === 'integration' || activeTrackTab === 'agentic' || activeTrackTab === 'systems' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
                 {(activeTrackTab === 'core'
                   ? CORE_TIER_ORDER
                   : activeTrackTab === 'agentic'
@@ -1238,6 +1255,8 @@ export default function CertificationClient({
                   ? FINANCE_TIER_ORDER
                   : activeTrackTab === 'python'
                   ? PYTHON_TIER_ORDER
+                  : activeTrackTab === 'systems'
+                  ? SYSTEMS_TIER_ORDER
                   : activeTrackTab === 'integration'
                   ? INTEGRATION_TIER_ORDER
                   : ROLE_TIER_ORDER

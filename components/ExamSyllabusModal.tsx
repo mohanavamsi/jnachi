@@ -22,12 +22,14 @@ import {
 } from 'lucide-react';
 import {
   CertTier,
+  CertCategory,
   CERT_TIERS,
   CORE_TIER_ORDER,
   ROLE_TIER_ORDER,
   PYTHON_TIER_ORDER,
   AGENTIC_TIER_ORDER,
   FINANCE_TIER_ORDER,
+  SYSTEMS_TIER_ORDER,
   INTEGRATION_TIER_ORDER,
 } from '@/lib/certTypes';
 import { CERT_SYLLABUS, SyllabusSection } from '@/lib/certSyllabus';
@@ -62,7 +64,7 @@ export default function ExamSyllabusModal({
 }: ExamSyllabusModalProps) {
   const [activeTier, setActiveTier] = useState<CertTier>(initialTier);
   const [activeSection, setActiveSection] = useState<CertSection | 'all'>('all');
-  const [categoryTab, setCategoryTab] = useState<'core' | 'agentic' | 'finance' | 'role' | 'python' | 'integration'>(
+  const [categoryTab, setCategoryTab] = useState<CertCategory>(
     CERT_TIERS[initialTier]?.category || 'core'
   );
 
@@ -185,6 +187,17 @@ export default function ExamSyllabusModal({
               </button>
               <button
                 type="button"
+                onClick={() => setCategoryTab('systems')}
+                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
+                  categoryTab === 'systems'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                Systems & Software
+              </button>
+              <button
+                type="button"
                 onClick={() => setCategoryTab('integration')}
                 className={`px-3 py-1 text-xs font-bold rounded-lg transition-all ${
                   categoryTab === 'integration'
@@ -221,6 +234,8 @@ export default function ExamSyllabusModal({
             ? ROLE_TIER_ORDER
             : categoryTab === 'python'
             ? PYTHON_TIER_ORDER
+            : categoryTab === 'systems'
+            ? SYSTEMS_TIER_ORDER
             : INTEGRATION_TIER_ORDER
           ).map((tierKey) => {
             const cfg = CERT_TIERS[tierKey];

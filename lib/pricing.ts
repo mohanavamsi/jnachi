@@ -217,6 +217,52 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
     promoPriceInr: 0,
     promoPriceUsd: 0,
   },
+  // Systems Infrastructure & Software Engineering Foundations: 100% Free for Launch Period (Standard: ₹1,499 / $29)
+  computer_basics: {
+    tier: 'computer_basics',
+    amountInr: 1499,
+    amountUsd: 29,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  web_servers: {
+    tier: 'web_servers',
+    amountInr: 1499,
+    amountUsd: 29,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  linux_shell: {
+    tier: 'linux_shell',
+    amountInr: 1499,
+    amountUsd: 29,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  sql_database: {
+    tier: 'sql_database',
+    amountInr: 1499,
+    amountUsd: 29,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
+  core_java: {
+    tier: 'core_java',
+    amountInr: 1499,
+    amountUsd: 29,
+    isFree: false,
+    isLaunchFree: true,
+    promoPriceInr: 0,
+    promoPriceUsd: 0,
+  },
 };
 
 // Valid promo discount codes

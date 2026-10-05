@@ -8,6 +8,7 @@ import {
   CORE_TIER_ORDER,
   ROLE_TIER_ORDER,
   PYTHON_TIER_ORDER,
+  SYSTEMS_TIER_ORDER,
   INTEGRATION_TIER_ORDER,
   AGENTIC_TIER_ORDER,
   FINANCE_TIER_ORDER,
@@ -16,7 +17,7 @@ import {
   TOTAL_CERTIFICATIONS_COUNT,
 } from '@/lib/certTypes';
 
-type CategoryFilter = 'all' | 'core' | 'role' | 'python' | 'integration';
+type CategoryFilter = 'all' | 'core' | 'role' | 'python' | 'systems' | 'integration';
 
 export function HomeCertificationCatalog() {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('all');
@@ -26,6 +27,7 @@ export function HomeCertificationCatalog() {
     { id: 'core', label: 'Core AI Ladder', count: CORE_TIER_ORDER.length },
     { id: 'role', label: 'Role Specializations', count: ROLE_TIER_ORDER.length + FINANCE_TIER_ORDER.length },
     { id: 'python', label: 'Applied Python & AI Engineering', count: PYTHON_TIER_ORDER.length + AGENTIC_TIER_ORDER.length },
+    { id: 'systems', label: 'Software & Systems Infrastructure', count: SYSTEMS_TIER_ORDER.length },
     { id: 'integration', label: 'Enterprise Integration', count: INTEGRATION_TIER_ORDER.length },
   ];
 
@@ -37,6 +39,8 @@ export function HomeCertificationCatalog() {
         return [...ROLE_TIER_ORDER, ...FINANCE_TIER_ORDER];
       case 'python':
         return [...PYTHON_TIER_ORDER, ...AGENTIC_TIER_ORDER];
+      case 'systems':
+        return SYSTEMS_TIER_ORDER;
       case 'integration':
         return INTEGRATION_TIER_ORDER;
       case 'all':
@@ -47,6 +51,7 @@ export function HomeCertificationCatalog() {
           ...FINANCE_TIER_ORDER,
           ...PYTHON_TIER_ORDER,
           ...AGENTIC_TIER_ORDER,
+          ...SYSTEMS_TIER_ORDER,
           ...INTEGRATION_TIER_ORDER,
         ];
     }
@@ -64,6 +69,8 @@ export function HomeCertificationCatalog() {
       case 'python':
       case 'agentic':
         return { label: 'Python & AI', color: 'bg-[#EFF6FF] text-[#1D4ED8]' };
+      case 'systems':
+        return { label: 'Systems & Software', color: 'bg-[#F0F9FF] text-[#0369A1]' };
       case 'integration':
         return { label: 'Integration', color: 'bg-[#FFF7ED] text-[#C2410C]' };
       default:

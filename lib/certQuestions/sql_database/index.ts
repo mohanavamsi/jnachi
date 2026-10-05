@@ -1,0 +1,19 @@
+import { CertQuestion, CertSection } from '../types';
+import { SQL_DATABASE_LITERACY_QUESTIONS } from './literacy';
+import { SQL_DATABASE_AUTOMATION_QUESTIONS } from './automation';
+import { SQL_DATABASE_PRIVACY_QUESTIONS } from './privacy';
+import { SQL_DATABASE_GROWTH_QUESTIONS } from './growth';
+
+export const SQL_DATABASE_QUESTIONS_BY_SECTION: Record<CertSection, CertQuestion[]> = {
+  literacy: SQL_DATABASE_LITERACY_QUESTIONS,
+  automation: SQL_DATABASE_AUTOMATION_QUESTIONS,
+  privacy: SQL_DATABASE_PRIVACY_QUESTIONS,
+  growth: SQL_DATABASE_GROWTH_QUESTIONS,
+};
+
+export const ALL_SQL_DATABASE_QUESTIONS: CertQuestion[] = [
+  ...SQL_DATABASE_LITERACY_QUESTIONS,
+  ...SQL_DATABASE_AUTOMATION_QUESTIONS,
+  ...SQL_DATABASE_PRIVACY_QUESTIONS,
+  ...SQL_DATABASE_GROWTH_QUESTIONS,
+];

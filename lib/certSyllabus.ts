@@ -2092,6 +2092,446 @@ export const CERT_SYLLABUS: Record<CertTier, CertSyllabusData> = {
     },
     preparationPath: COMMON_PREP_PATH,
   },
+  // 24. COMPUTER BASICS & ARCHITECTURE
+  computer_basics: {
+    tier: 'computer_basics',
+    title: 'Jnachi Certified Computing Architecture & Digital Systems Essentials',
+    overview: 'Validates foundational knowledge of computer hardware, software execution, operating system kernels, memory hierarchies, and networking fundamentals.',
+    targetRole: 'Software engineering students, IT support analysts, tech career switchers, and professionals building strong foundational computing literacy.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'CPU Architecture, Memory & Digital Logic',
+        weightPercent: 25,
+        overview: 'Von Neumann execution cycle, ALU/CU components, cache hierarchy (L1/L2/L3), binary/hex number systems, and data representation.',
+        topics: [
+          {
+            title: 'CPU Instruction Execution & Microarchitecture',
+            description: 'Understanding fetch-decode-execute cycles, program counters, registers, and pipelining.',
+            skillsAssessed: ['Instruction Cycles', 'Register Operations', 'Cache Latencies'],
+          },
+          {
+            title: 'Binary, Hexadecimal & Data Encoding',
+            description: 'Byte representations, two\'s complement, ASCII, UTF-8 character encoding, and bitwise operations.',
+            skillsAssessed: ['Number Base Conversion', 'Encoding Standards', 'Data Representation'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Operating Systems, Memory Management & Networking',
+        weightPercent: 25,
+        overview: 'Virtual memory, paging, process vs thread scheduling, TCP/IP stack, DHCP, and diagnostic CLI tools.',
+        topics: [
+          {
+            title: 'OS Kernel & Memory Management',
+            description: 'Process address spaces, context switching, RAM vs swap storage, and page fault resolution.',
+            skillsAssessed: ['Virtual Memory', 'Process Scheduling', 'File Systems'],
+          },
+          {
+            title: 'Networking Primitives & Diagnostics',
+            description: 'OSI 7-layer model, IPv4 subnetting, DNS resolution, and troubleshooting via ping/traceroute/ipconfig.',
+            skillsAssessed: ['TCP/IP Diagnostics', 'Subnet Masking', 'DNS Routing'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Security Primitives, Encryption & Access Control',
+        weightPercent: 25,
+        overview: 'Symmetric vs asymmetric cryptography, SHA-256 hashing, firewall rules, least privilege, and threat models.',
+        topics: [
+          {
+            title: 'Cryptographic Foundations & Hashing',
+            description: 'Public-private key pairs, TLS certificates, password hashing with salt, and integrity verification.',
+            skillsAssessed: ['Cryptographic Principles', 'Hashing Algorithms', 'Key Management'],
+          },
+          {
+            title: 'Access Control & Threat Mitigation',
+            description: 'Multi-factor authentication (MFA), firewall packet filtering, least privilege, and ransomware defenses.',
+            skillsAssessed: ['Access Policies', 'Firewall Rules', 'Incident Mitigation'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Virtualization, Cloud Systems & High Availability',
+        weightPercent: 25,
+        overview: 'Hypervisors, containers vs VMs, RAID configurations, horizontal scaling, load balancing, and disaster recovery.',
+        topics: [
+          {
+            title: 'Virtualization & Container Runtimes',
+            description: 'Hypervisors (ESXi/KVM), OS-level container isolation, and cloud virtual machine hosting.',
+            skillsAssessed: ['Hypervisors', 'Container Architecture', 'Resource Provisioning'],
+          },
+          {
+            title: 'High Availability & Storage Redundancy',
+            description: 'RAID levels (0, 1, 5, 10), load balancers (L4/L7), CDNs, and disaster recovery metrics (RTO/RPO).',
+            skillsAssessed: ['Storage RAID', 'High Availability', 'Disaster Recovery'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+  // 25. WEB ARCHITECTURE & CLOUD SERVERS
+  web_servers: {
+    tier: 'web_servers',
+    title: 'Jnachi Certified Web Architecture, HTTP & Cloud Server Infrastructure',
+    overview: 'Validates practical competence in modern web architecture, HTTP/1.1 vs HTTP/2/3 protocols, TLS/SSL termination, web servers (Nginx/Apache), REST API design, and cloud VM deployments.',
+    targetRole: 'Web Developers, Backend Engineers, Cloud Administrators, and Systems Engineers.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'HTTP Protocols, Methods & Status Codes',
+        weightPercent: 25,
+        overview: 'Client-server request/response lifecycles, HTTP methods, status code families (2xx, 3xx, 4xx, 5xx), and HTTP/2 multiplexing.',
+        topics: [
+          {
+            title: 'HTTP/1.1, HTTP/2 & HTTP/3 Protocol Mechanics',
+            description: 'Understanding headers, persistent connections, binary framing, and stream multiplexing.',
+            skillsAssessed: ['Protocol Specifications', 'HTTP Methods', 'Status Code Triage'],
+          },
+          {
+            title: 'DNS Resolution & Reverse Proxy Concepts',
+            description: 'A/CNAME records, DNS hierarchy, forward vs reverse proxies, and Nginx event-driven architecture.',
+            skillsAssessed: ['DNS Hierarchy', 'Proxy Architectures', 'Event Loops'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Server Configuration & Certificate Automation',
+        weightPercent: 25,
+        overview: 'Nginx `proxy_pass`, static asset caching headers, Brotli/Gzip compression, SPA `try_files`, and Certbot ACME automation.',
+        topics: [
+          {
+            title: 'Nginx Web Server & Reverse Proxy Setup',
+            description: 'Configuring upstream backends, SSL parameters, rate limits, and custom log formats.',
+            skillsAssessed: ['Nginx Configuration', 'Reverse Proxying', 'Asset Caching'],
+          },
+          {
+            title: 'Automated TLS Certificates & Process Supervision',
+            description: 'Let\'s Encrypt automated issuance via Certbot, and systemd / PM2 application daemon supervision.',
+            skillsAssessed: ['Certbot Automation', 'Process Supervision', 'Service Reloads'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Web Application Security & Header Hardening',
+        weightPercent: 25,
+        overview: 'CORS policies, Content Security Policy (CSP), HSTS, HttpOnly/SameSite cookies, clickjacking defense, and SSRF prevention.',
+        topics: [
+          {
+            title: 'Security Headers & Cross-Origin Policies',
+            description: 'Configuring CSP, CORS `Access-Control-Allow-Origin`, HSTS preloading, and `X-Frame-Options`.',
+            skillsAssessed: ['CORS Configuration', 'Content Security Policy', 'HSTS Enforcing'],
+          },
+          {
+            title: 'Authentication Cookies & Session Hardening',
+            description: 'Enforcing `Secure`, `HttpOnly`, `SameSite=Strict` cookie flags and protecting against XSS/CSRF.',
+            skillsAssessed: ['Cookie Security', 'CSRF Mitigation', 'Token Protection'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Edge Caching, Microservices & Zero-Downtime Releases',
+        weightPercent: 25,
+        overview: 'Redis caching layers, Layer 7 load balancing, API gateways, Blue-Green deployments, and edge worker middleware.',
+        topics: [
+          {
+            title: 'Caching Strategies & Layer 7 Load Balancing',
+            description: 'In-memory caching with Redis, CDN edge points of presence, and path-based routing.',
+            skillsAssessed: ['Redis Caching', 'Layer 7 Routing', 'CDN Acceleration'],
+          },
+          {
+            title: 'Zero-Downtime Deployments & Observability',
+            description: 'Blue-Green / Canary deployment mechanics, API gateways, circuit breakers, and SRE golden signals.',
+            skillsAssessed: ['Zero-Downtime Deployment', 'API Gateways', 'Golden Signals'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+  // 26. LINUX SYSTEMS & SHELL SCRIPTING
+  linux_shell: {
+    tier: 'linux_shell',
+    title: 'Jnachi Certified Linux Systems Administration & Shell Scripting Specialist',
+    overview: 'Validates hands-on capability in Linux operating system administration, POSIX command-line mastery, and robust Bash automation scripting.',
+    targetRole: 'DevOps Engineers, Systems Administrators, Cloud Practitioners, and Backend Software Developers.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Filesystem Hierarchy, Inodes & Process Model',
+        weightPercent: 25,
+        overview: 'FHS directories (/etc, /var, /proc), hard vs soft links, file permission octals, process states, and standard I/O file descriptors.',
+        topics: [
+          {
+            title: 'Linux Filesystem Hierarchy & Inode Architecture',
+            description: 'Understanding directory structures, inode allocation, link mechanics, and mount points.',
+            skillsAssessed: ['FHS Standards', 'Inode Management', 'File Permissions'],
+          },
+          {
+            title: 'Process Management & Signals',
+            description: 'Process lifecycle, init systemd (PID 1), signals (SIGTERM vs SIGKILL), and standard streams (stdin/stdout/stderr).',
+            skillsAssessed: ['Signal Handling', 'Process Trees', 'Standard I/O Streams'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Bash Automation, Text Processing & Cron Scheduling',
+        weightPercent: 25,
+        overview: 'Bash strict mode (`set -euo pipefail`), stream redirection, text filters (`grep`, `sed`, `awk`, `cut`), `find`, `xargs`, and Cron jobs.',
+        topics: [
+          {
+            title: 'Bash Scripting & Strict Error Handling',
+            description: 'Writing reusable shell functions, parameter expansion, exit code validation (`$?`), and pipeline error traps.',
+            skillsAssessed: ['Bash Strict Mode', 'Control Flow', 'Function Design'],
+          },
+          {
+            title: 'Text Processing Pipelines & Job Automation',
+            description: 'Automating multi-stage text processing with awk/sed, batch processing with find/xargs, and crontab scheduling.',
+            skillsAssessed: ['Text Processing (awk/sed)', 'Crontab Automation', 'Batch Operations'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'User Security, SSH Hardening & Kernel Isolation',
+        weightPercent: 25,
+        overview: '`/etc/shadow` password security, SUID/SGID risk mitigation, sudoers delegation, SSH key-only hardening, and SELinux policies.',
+        topics: [
+          {
+            title: 'Authentication & Sudo Privilege Delegation',
+            description: 'User and group management, shadow hashing, umask configuration, and secure visudo rule-sets.',
+            skillsAssessed: ['Sudoers Delegation', 'Umask Settings', 'Password Security'],
+          },
+          {
+            title: 'SSH Hardening & Access Isolation',
+            description: 'Disabling root password logins in sshd_config, key-based authentication, and SELinux/AppArmor containment.',
+            skillsAssessed: ['SSH Hardening', 'SELinux Policies', 'Network Firewall (UFW)'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Performance Tuning, Cgroups, LVM & Kernel Diagnostics',
+        weightPercent: 25,
+        overview: 'Load average analysis, cgroups v2 resource limits, block I/O profiling (iostat), sysctl kernel tuning, LVM volume management, and strace.',
+        topics: [
+          {
+            title: 'System Diagnostics & Performance Profiling',
+            description: 'Interpreting load averages, troubleshooting OOM killer triggers, disk I/O analysis, and system call tracing via strace.',
+            skillsAssessed: ['Load Average Analysis', 'OOM Management', 'Strace Diagnostics'],
+          },
+          {
+            title: 'Storage Management & Kernel Optimization',
+            description: 'Dynamic partition resizing with LVM, kernel sysctl parameters, log rotation, and automated Infrastructure as Code.',
+            skillsAssessed: ['LVM Storage', 'Sysctl Tuning', 'Logrotate Automation'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+  // 27. RELATIONAL DATABASES & ADVANCED SQL
+  sql_database: {
+    tier: 'sql_database',
+    title: 'Jnachi Certified Relational Database Engineering & Advanced SQL Specialist',
+    overview: 'Validates comprehensive knowledge of relational schema modeling, normalization, ACID transactions, complex joins, window functions, and query plan optimization.',
+    targetRole: 'Database Developers, Data Analysts, Backend Engineers, Data Engineers, and Application Architects.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'Relational Modeling, Normalization & ACID Properties',
+        weightPercent: 25,
+        overview: '1NF–BCNF normalization, primary/foreign key constraints, ACID transaction properties, and fundamental JOIN mechanics.',
+        topics: [
+          {
+            title: 'Schema Normalization & Constraints',
+            description: 'Designing normalized schemas, primary/unique keys, foreign keys with cascading actions, and data integrity rules.',
+            skillsAssessed: ['Normalization (1NF–3NF)', 'Referential Integrity', 'Constraint Design'],
+          },
+          {
+            title: 'ACID Transactions & Core SQL Clauses',
+            description: 'Transaction boundaries (COMMIT/ROLLBACK), WHERE vs HAVING filtering, and UNION vs UNION ALL behavior.',
+            skillsAssessed: ['ACID Principles', 'Aggregation Filtering', 'Set Operations'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Advanced SQL, Window Functions & CTEs',
+        weightPercent: 25,
+        overview: 'Window functions (`ROW_NUMBER`, `RANK`, `DENSE_RANK`, `LAG`/`LEAD`), Common Table Expressions (`WITH`), Stored Procedures, Triggers, and Upsert.',
+        topics: [
+          {
+            title: 'SQL Window Functions & Analytical Queries',
+            description: 'Writing complex partitioning, ranking, running totals, and offset analytical queries with OVER() clauses.',
+            skillsAssessed: ['Window Functions', 'Analytical Ranking', 'Cumulative Sums'],
+          },
+          {
+            title: 'CTEs, Upserts & Stored Procedures',
+            description: 'Recursive CTEs, `ON CONFLICT DO UPDATE` upserts, stored procedures, triggers, and schema migrations.',
+            skillsAssessed: ['Common Table Expressions', 'Upsert Operations', 'Stored Procedures'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'SQL Injection Defense, Isolation Levels & RBAC',
+        weightPercent: 25,
+        overview: 'Parameterized queries, Dirty/Non-repeatable/Phantom read anomalies, Serializable isolation, Row-Level Security (RLS), and TDE encryption.',
+        topics: [
+          {
+            title: 'SQLi Defense & Parameterized Queries',
+            description: 'Neutralizing SQL injection via prepared statements, ORM parameterization, and input sanitization.',
+            skillsAssessed: ['Prepared Statements', 'SQLi Prevention', 'Role-Based Access (GRANT)'],
+          },
+          {
+            title: 'Transaction Isolation & Row-Level Security',
+            description: 'Managing isolation levels (Read Committed to Serializable), deadlock resolution, Row-Level Security, and PITR recovery.',
+            skillsAssessed: ['Isolation Levels', 'Deadlock Triage', 'Row-Level Security (RLS)'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Indexing Strategies, Query Optimization & Sharding',
+        weightPercent: 25,
+        overview: 'B-Tree indexes, composite leftmost prefixing, covering indexes, EXPLAIN ANALYZE plan optimization, connection pooling, and sharding.',
+        topics: [
+          {
+            title: 'B-Tree Indexes & Query Execution Plans',
+            description: 'Analyzing query plans with EXPLAIN, eliminating sequential table scans, and designing covering indexes.',
+            skillsAssessed: ['EXPLAIN Plan Analysis', 'Composite Indexes', 'Index-Only Scans'],
+          },
+          {
+            title: 'Scalability: Partitioning, Replication & Pooling',
+            description: 'Table range/hash partitioning, read replica replication, database connection pooling (HikariCP/PgBouncer), and sharding.',
+            skillsAssessed: ['Table Partitioning', 'Read Replication', 'Connection Pooling'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
+  // 28. ENTERPRISE CORE JAVA
+  core_java: {
+    tier: 'core_java',
+    title: 'Jnachi Certified Enterprise Core Java Development Specialist',
+    overview: 'Validates rigorous understanding of modern Core Java programming (Java 17/21 LTS), OOP principles, JVM memory architecture, Collections, Concurrency, and Streams API.',
+    targetRole: 'Java Developers, Backend Software Engineers, Enterprise Application Developers, and Computer Science Students.',
+    examSpecs: {
+      totalQuestions: 40,
+      durationMinutes: 45,
+      passingScorePercent: 80,
+      proctoringRules: COMMON_PROCTORING_RULES,
+    },
+    sections: {
+      literacy: {
+        id: 'literacy',
+        title: 'OOP Foundations, JVM Memory & Classloading',
+        weightPercent: 25,
+        overview: 'Encapsulation, interfaces vs abstract classes, Stack vs Heap memory, String immutability/pool, equals/hashCode contracts, and modern records.',
+        topics: [
+          {
+            title: 'Core OOP, Interfaces & Java 17/21 Records',
+            description: 'Mastering polymorphism, default interface methods, record classes, and compile-time overloading vs runtime overriding.',
+            skillsAssessed: ['OOP Principles', 'Interface Design', 'Record Classes'],
+          },
+          {
+            title: 'JVM Memory Architecture & Exception Handling',
+            description: 'Stack vs Heap allocation, String pool mechanics, equals/hashCode rules, and Checked vs Unchecked exceptions.',
+            skillsAssessed: ['Stack vs Heap', 'String Pool', 'Exception Handling'],
+          },
+        ],
+      },
+      automation: {
+        id: 'automation',
+        title: 'Collections Framework, Streams API & Modern Features',
+        weightPercent: 25,
+        overview: 'Java Collections (List, Set, Map), Functional Streams API pipelines, Try-with-Resources, Optional, Generics, and ExecutorService thread pools.',
+        topics: [
+          {
+            title: 'Functional Streams API & Collections',
+            description: 'Intermediate vs terminal operations, lambda expressions, custom collectors, and Collection performance characteristics.',
+            skillsAssessed: ['Streams API', 'Collections Selection', 'Lambda Expressions'],
+          },
+          {
+            title: 'Resource Management, Generics & Thread Pools',
+            description: 'AutoCloseable resource management, Generics type safety, Optional pattern, and asynchronous CompletableFuture pipelines.',
+            skillsAssessed: ['Try-with-Resources', 'CompletableFuture', 'ExecutorService'],
+          },
+        ],
+      },
+      privacy: {
+        id: 'privacy',
+        title: 'Java Concurrency, Memory Model & Security Best Practices',
+        weightPercent: 25,
+        overview: 'Volatile variable visibility, explicit ReentrantLock, ConcurrentHashMap thread-safety, SecureRandom, password char[] arrays, and memory leak triage.',
+        topics: [
+          {
+            title: 'Java Memory Model (JMM) & Synchronization',
+            description: 'Volatile visibility guarantees, intrinsic vs explicit locks, race condition mitigation, and atomic CAS operations.',
+            skillsAssessed: ['Volatile Visibility', 'Lock Synchronization', 'ConcurrentHashMap'],
+          },
+          {
+            title: 'Cryptographic Security & Memory Leak Prevention',
+            description: 'SecureRandom key generation, defensive copying for immutability, zeroing sensitive char[] arrays, and leak triage.',
+            skillsAssessed: ['SecureRandom', 'Defensive Copying', 'Memory Leak Triage'],
+          },
+        ],
+      },
+      growth: {
+        id: 'growth',
+        title: 'Garbage Collection Tuning, Virtual Threads & JIT Compilation',
+        weightPercent: 25,
+        overview: 'Generational GC (G1GC/ZGC), Java 21 Virtual Threads (Project Loom), JIT C1/C2 compilation, escape analysis, heap sizing, and GraalVM Native Image.',
+        topics: [
+          {
+            title: 'Garbage Collection (G1GC/ZGC) & JVM Tuning',
+            description: 'Generational GC mechanics, ultra-low-latency ZGC pause times, heap sizing flags (-Xms/-Xmx), and JFR telemetry.',
+            skillsAssessed: ['Garbage Collection (ZGC)', 'Heap Tuning', 'JFR Profiling'],
+          },
+          {
+            title: 'Virtual Threads, JIT Compilation & GraalVM',
+            description: 'Java 21 Virtual Threads concurrency, JIT escape analysis (stack allocation), false sharing avoidance, and Native Image AOT.',
+            skillsAssessed: ['Virtual Threads (Loom)', 'JIT Optimization', 'GraalVM Native Image'],
+          },
+        ],
+      },
+    },
+    preparationPath: COMMON_PREP_PATH,
+  },
 };
 
 export const CERT_SYLLABI = CERT_SYLLABUS;
