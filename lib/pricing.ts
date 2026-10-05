@@ -41,11 +41,11 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
     isFree: false,
     isLaunchFree: false,
   },
-  // All 6 Role-Based Tracks: 100% Free for the 30-Day Launch Period
+  // All 6 Role-Based Tracks: 100% Free for the 30-Day Launch Period (Standard Tier 02: ₹1,499 / $29)
   sales: {
     tier: 'sales',
-    amountInr: 2499,
-    amountUsd: 49,
+    amountInr: 1499,
+    amountUsd: 29,
     isFree: false,
     isLaunchFree: true,
     promoPriceInr: 0,
@@ -53,8 +53,8 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
   },
   developers: {
     tier: 'developers',
-    amountInr: 2499,
-    amountUsd: 49,
+    amountInr: 1499,
+    amountUsd: 29,
     isFree: false,
     isLaunchFree: true,
     promoPriceInr: 0,
@@ -62,8 +62,8 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
   },
   marketers: {
     tier: 'marketers',
-    amountInr: 2499,
-    amountUsd: 49,
+    amountInr: 1499,
+    amountUsd: 29,
     isFree: false,
     isLaunchFree: true,
     promoPriceInr: 0,
@@ -71,8 +71,8 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
   },
   support: {
     tier: 'support',
-    amountInr: 2499,
-    amountUsd: 49,
+    amountInr: 1499,
+    amountUsd: 29,
     isFree: false,
     isLaunchFree: true,
     promoPriceInr: 0,
@@ -80,8 +80,8 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
   },
   hr: {
     tier: 'hr',
-    amountInr: 2499,
-    amountUsd: 49,
+    amountInr: 1499,
+    amountUsd: 29,
     isFree: false,
     isLaunchFree: true,
     promoPriceInr: 0,
@@ -89,18 +89,18 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
   },
   managers: {
     tier: 'managers',
-    amountInr: 2499,
-    amountUsd: 49,
+    amountInr: 1499,
+    amountUsd: 29,
     isFree: false,
     isLaunchFree: true,
     promoPriceInr: 0,
     promoPriceUsd: 0,
   },
-  // Python Specialization Tracks: 100% Free for Launch Period
+  // Python Specialization Tracks: 100% Free for Launch Period (Standard Tier 02: ₹1,499 / $29)
   python_ai: {
     tier: 'python_ai',
-    amountInr: 2499,
-    amountUsd: 49,
+    amountInr: 1499,
+    amountUsd: 29,
     isFree: false,
     isLaunchFree: true,
     promoPriceInr: 0,
@@ -108,8 +108,8 @@ export const TIER_PRICING: Record<CertTier, TierPricing> = {
   },
   python_dev: {
     tier: 'python_dev',
-    amountInr: 2499,
-    amountUsd: 49,
+    amountInr: 1499,
+    amountUsd: 29,
     isFree: false,
     isLaunchFree: true,
     promoPriceInr: 0,
