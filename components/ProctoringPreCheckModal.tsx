@@ -11,16 +11,14 @@ import {
   RefreshCw, 
   Lock, 
   X, 
-  Sparkles, 
-  Eye, 
-  Volume2, 
-  Activity, 
-  Laptop,
-  Check,
-  Zap,
-  ArrowRight
+  ArrowRight,
+  FileCheck2,
+  Clock,
+  User,
+  AlertTriangle
 } from 'lucide-react';
 import { CertTier, CERT_TIERS } from '@/lib/certTypes';
+import { CouncilSeal } from '@/components/CouncilSeal';
 
 interface ProctoringPreCheckModalProps {
   isOpen: boolean;
@@ -45,7 +43,7 @@ export default function ProctoringPreCheckModal({
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [audioLevel, setAudioLevel] = useState<number>(0);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [hasFaceDetected, setHasFaceDetected] = useState<boolean>(false);
+  const [acknowledged, setAcknowledged] = useState<boolean>(false);
   const [isRequestingPermissions, setIsRequestingPermissions] = useState<boolean>(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -54,6 +52,11 @@ export default function ProctoringPreCheckModal({
   const animFrameRef = useRef<number | null>(null);
 
   const tierConfig = CERT_TIERS[tier] || CERT_TIERS.beginner;
+  const examDate = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
 
   // Initialize permission check when modal opens
   useEffect(() => {
@@ -68,7 +71,6 @@ export default function ProctoringPreCheckModal({
     };
   }, [isOpen]);
 
-  // Check if browser is currently in fullscreen
   const checkFullscreenState = () => {
     if (typeof document !== 'undefined') {
       const isFs = Boolean(document.fullscreenElement);
@@ -76,7 +78,6 @@ export default function ProctoringPreCheckModal({
     }
   };
 
-  // Start Camera & Microphone verification
   const startMediaCheck = async () => {
     setErrorMessage(null);
     setIsRequestingPermissions(true);
@@ -100,15 +101,12 @@ export default function ProctoringPreCheckModal({
       setStream(userStream);
       setCameraStatus('passed');
       setMicStatus('passed');
-      setHasFaceDetected(true);
 
-      // Attach stream to video element
       if (videoRef.current) {
         videoRef.current.srcObject = userStream;
         videoRef.current.play().catch(() => {});
       }
 
-      // Initialize Web Audio API Analyser for live mic meter
       try {
         const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
         const audioCtx = new AudioContextClass();
@@ -133,7 +131,6 @@ export default function ProctoringPreCheckModal({
             sum += dataArray[i];
           }
           const avg = sum / bufferLength;
-          // Scale level 0 - 100
           setAudioLevel(Math.min(100, Math.round((avg / 128) * 100)));
 
           animFrameRef.current = requestAnimationFrame(updateAudioMeter);
@@ -141,7 +138,7 @@ export default function ProctoringPreCheckModal({
 
         updateAudioMeter();
       } catch {
-        // Audio analyser optional fallback
+        // Fallback
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Permission denied for camera and microphone.';
@@ -153,98 +150,95 @@ export default function ProctoringPreCheckModal({
     }
   };
 
-  // Stop media streams on close
   const stopMediaStream = () => {
-    if (animFrameRef.current) {
-      cancelAnimationFrame(animFrameRef.current);
-      animFrameRef.current = null;
-    }
+    if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
     if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
       audioContextRef.current.close().catch(() => {});
-      audioContextRef.current = null;
     }
     if (stream) {
       stream.getTracks().forEach((track) => track.stop());
       setStream(null);
     }
-    if (videoRef.current) {
-      videoRef.current.srcObject = null;
-    }
   };
 
-  // Request Fullscreen helper
-  const handleRequestFullscreen = async () => {
+  const requestFullscreen = async () => {
     try {
-      if (typeof document !== 'undefined' && !document.fullscreenElement) {
-        await document.documentElement.requestFullscreen?.();
+      if (document.documentElement.requestFullscreen) {
+        await document.documentElement.requestFullscreen();
         setFullscreenStatus('passed');
       }
     } catch {
-      // Fullscreen policy fallback
-      setFullscreenStatus('passed');
+      setFullscreenStatus('passed'); // Soft bypass if browser blocks
     }
   };
 
-  const handleLaunch = (proctoredMode: boolean) => {
-    stopMediaStream();
-    onConfirmLaunch({ proctoredMode });
+  const allPassed = cameraStatus === 'passed' && micStatus === 'passed' && acknowledged;
+
+  const handleLaunch = () => {
+    if (!allPassed) return;
+    onConfirmLaunch({ proctoredMode: true });
   };
 
   if (!isOpen) return null;
 
-  const isAllReady = cameraStatus === 'passed' && micStatus === 'passed';
-
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="precheck-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-slate-950/85 backdrop-blur-md animate-in fade-in duration-200"
-    >
-      <div className="relative w-full max-w-4xl bg-slate-900 border border-slate-700/80 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh] text-white">
-        
-        {/* HEADER BAR */}
-        <div className="px-6 py-4 bg-slate-950/90 border-b border-slate-800 flex items-center justify-between shrink-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#0F0F14]/70 backdrop-blur-xs overflow-y-auto">
+      <div 
+        className="relative w-full max-w-2xl bg-white rounded-lg shadow-xl border border-[#D1D5DB] overflow-hidden my-4"
+        role="dialog"
+        aria-modal="true"
+      >
+        {/* Ticket Header */}
+        <div className="bg-[#2E1065] text-white p-5 border-b border-[#4C1D95] flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
+            <CouncilSeal size={42} variant="dark" />
             <div>
-              <div className="flex items-center gap-2">
-                <h2 id="precheck-title" className="text-base sm:text-lg font-black tracking-tight text-white">
-                  Pre-Examination System & Integrity Check
-                </h2>
-                <span className="hidden sm:inline-flex text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                  AI Proctoring V2
-                </span>
-              </div>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Target Certification: <strong className="text-slate-200">{tierConfig.title}</strong>
-              </p>
+              <span className="text-[10px] uppercase font-bold tracking-widest text-[#EDE9FE] block">
+                Jnachi Certification Council
+              </span>
+              <h2 className="font-serif-heading text-lg sm:text-xl text-white">
+                Candidate Authorization & Admit Ticket
+              </h2>
             </div>
           </div>
-
           <button
-            onClick={() => {
-              stopMediaStream();
-              onClose();
-            }}
-            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white transition-colors"
+            onClick={onClose}
+            className="p-1.5 rounded-md text-[#EDE9FE]/70 hover:text-white hover:bg-white/10 transition-colors"
             aria-label="Close"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
-        {/* MODAL BODY */}
-        <div className="p-6 overflow-y-auto space-y-6 scrollbar-none">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            
-            {/* LEFT COLUMN: LIVE WEBCAM & AUDIO FEED */}
-            <div className="lg:col-span-6 space-y-4">
-              <div className="relative aspect-4/3 w-full bg-slate-950 rounded-2xl border-2 border-slate-700/80 overflow-hidden shadow-inner flex items-center justify-center group">
-                
-                {/* Live Video Element */}
+        {/* Admit Card Metadata Matrix */}
+        <div className="p-6 space-y-6">
+          <div className="bg-[#F9FAFB] border border-[#E5E7EB] rounded-md p-4 grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+            <div>
+              <span className="text-[10px] text-[#6B7280] uppercase font-semibold block">Candidate</span>
+              <span className="font-semibold text-[#0F0F14]">{candidateName || 'Authorized Candidate'}</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-[#6B7280] uppercase font-semibold block">Exam Track</span>
+              <span className="font-semibold text-[#5B21B6]">{tierConfig.title}</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-[#6B7280] uppercase font-semibold block">Time Allocated</span>
+              <span className="font-semibold text-[#0F0F14] font-mono">{tierConfig.durationMinutes} Minutes (40 Qs)</span>
+            </div>
+            <div>
+              <span className="text-[10px] text-[#6B7280] uppercase font-semibold block">Passing Threshold</span>
+              <span className="font-semibold text-[#0F766E] font-mono">{tierConfig.passingScorePercent}% Standard</span>
+            </div>
+          </div>
+
+          {/* Verification Steps Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+            {/* Left: Live Video Feed Slot */}
+            <div className="md:col-span-5 space-y-2">
+              <span className="text-[11px] font-semibold text-[#4B5563] uppercase tracking-wider block">
+                Identity & Proctoring Sensor
+              </span>
+              <div className="relative aspect-4/3 bg-[#0F0F14] rounded-md overflow-hidden border border-[#D1D5DB] flex items-center justify-center">
                 <video
                   ref={videoRef}
                   autoPlay
@@ -254,211 +248,113 @@ export default function ProctoringPreCheckModal({
                     cameraStatus === 'passed' ? 'block' : 'hidden'
                   }`}
                 />
-
-                {/* Face Targeting Alignment Box Overlay */}
-                {cameraStatus === 'passed' && (
-                  <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center">
-                    <div className="w-48 h-60 border-2 border-dashed border-emerald-400/70 rounded-3xl relative animate-pulse flex items-center justify-center">
-                      <span className="text-[10px] font-bold text-emerald-300 bg-slate-950/80 px-2 py-0.5 rounded-full border border-emerald-500/40">
-                        Align Face Here
-                      </span>
-                    </div>
-                  </div>
-                )}
-
-                {/* Fallback Placeholder when camera is idle or failed */}
                 {cameraStatus !== 'passed' && (
-                  <div className="text-center p-6 space-y-3">
-                    <div className="w-16 h-16 rounded-full bg-slate-800/80 border border-slate-700 flex items-center justify-center mx-auto text-slate-400">
-                      {cameraStatus === 'checking' ? (
-                        <RefreshCw className="w-8 h-8 animate-spin text-indigo-400" />
-                      ) : (
-                        <Camera className="w-8 h-8" />
-                      )}
-                    </div>
-                    <div>
-                      <p className="text-sm font-bold text-slate-200">
-                        {cameraStatus === 'checking'
-                          ? 'Requesting Camera & Mic Access...'
-                          : 'Camera Access Required'}
-                      </p>
-                      <p className="text-xs text-slate-500 max-w-xs mx-auto mt-1">
-                        Please grant browser permission to activate AI face presence and audio monitoring.
-                      </p>
-                    </div>
-                    {cameraStatus === 'failed' && (
-                      <button
-                        onClick={startMediaCheck}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-all shadow-md"
-                      >
-                        <RefreshCw className="w-3.5 h-3.5" /> Retry Permission Check
-                      </button>
-                    )}
+                  <div className="text-center p-3 text-xs text-[#9CA3AF] flex flex-col items-center gap-1">
+                    <Camera className="w-5 h-5 text-[#6B7280]" />
+                    <span>{cameraStatus === 'checking' ? 'Connecting sensor...' : 'Camera verification required'}</span>
                   </div>
                 )}
-
-                {/* Live Camera Badge */}
-                <div className="absolute top-3 left-3 flex items-center gap-2">
-                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-extrabold backdrop-blur-md border ${
-                    cameraStatus === 'passed'
-                      ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40'
-                      : 'bg-slate-900/80 text-slate-400 border-slate-700'
-                  }`}>
-                    <span className={`w-2 h-2 rounded-full ${cameraStatus === 'passed' ? 'bg-emerald-400 animate-ping' : 'bg-slate-500'}`} />
-                    {cameraStatus === 'passed' ? 'Camera Live' : 'Camera Inactive'}
+                {cameraStatus === 'passed' && (
+                  <span className="absolute bottom-2 left-2 bg-[#0F0F14]/70 text-[#99F6E4] text-[10px] font-mono px-1.5 py-0.5 rounded border border-[#0F766E]/40 flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3 text-[#0F766E]" /> Sensor Active
                   </span>
-                </div>
+                )}
               </div>
 
-              {/* LIVE AUDIO LEVEL METER */}
-              <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 space-y-2">
-                <div className="flex items-center justify-between text-xs font-semibold">
-                  <span className="flex items-center gap-1.5 text-slate-300">
-                    <Mic className="w-4 h-4 text-indigo-400" /> Microphone Volume
-                  </span>
-                  <span className={`text-[11px] font-bold ${audioLevel > 15 ? 'text-emerald-400' : 'text-slate-500'}`}>
-                    {micStatus === 'passed' ? (audioLevel > 15 ? 'Voice Detected' : 'Listening...') : 'Inactive'}
-                  </span>
+              {/* Mic Meter */}
+              <div className="p-2 rounded bg-[#F9FAFB] border border-[#E5E7EB] space-y-1">
+                <div className="flex items-center justify-between text-[10px] text-[#6B7280] font-semibold">
+                  <span className="flex items-center gap-1"><Mic className="w-3 h-3 text-[#5B21B6]" /> Audio Level</span>
+                  <span>{audioLevel > 10 ? 'Audio detected' : 'Ambient quiet'}</span>
                 </div>
-                
-                {/* Audio Bar */}
-                <div className="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden p-0.5 flex items-center">
+                <div className="w-full h-1 bg-[#E5E7EB] rounded-full overflow-hidden">
                   <div
-                    className="h-full rounded-full transition-all duration-75 bg-gradient-to-r from-emerald-500 via-teal-400 to-indigo-500"
-                    style={{ width: `${Math.max(5, audioLevel)}%` }}
+                    className="h-full bg-[#0F766E] transition-all duration-75"
+                    style={{ width: `${Math.max(4, audioLevel)}%` }}
                   />
                 </div>
               </div>
             </div>
 
-            {/* RIGHT COLUMN: 4 INTEGRITY CHECKPOINTS & RULES */}
-            <div className="lg:col-span-6 space-y-4">
-              <div className="space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                  System Diagnostics & Environment
-                </h3>
+            {/* Right: Security Checklist & Fullscreen */}
+            <div className="md:col-span-7 space-y-4">
+              <span className="text-[11px] font-semibold text-[#4B5563] uppercase tracking-wider block">
+                Testing Integrity Requirements
+              </span>
 
-                {/* Checkpoint 1: Camera */}
-                <div className={`p-3.5 rounded-2xl border flex items-center justify-between transition-all ${
-                  cameraStatus === 'passed'
-                    ? 'bg-emerald-950/30 border-emerald-500/30 text-emerald-200'
-                    : cameraStatus === 'failed'
-                    ? 'bg-rose-950/30 border-rose-500/30 text-rose-200'
-                    : 'bg-slate-800/40 border-slate-700/60 text-slate-300'
-                }`}>
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
-                      cameraStatus === 'passed' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 text-slate-400'
-                    }`}>
-                      <Camera className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold">1. Front-Facing Camera</div>
-                      <div className="text-[11px] text-slate-400">Continuous single-candidate presence tracking</div>
-                    </div>
+              <div className="space-y-2.5 text-xs text-[#4B5563]">
+                <div className="p-2.5 rounded bg-[#F9FAFB] border border-[#E5E7EB] flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#0F766E] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-[#0F0F14] block">Focus Lock & Tab Monitoring</strong>
+                    <span>Leaving the test tab or switching windows logs a security violation. 3 violations invalidate the session.</span>
                   </div>
-                  {cameraStatus === 'passed' && <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />}
-                  {cameraStatus === 'failed' && <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />}
-                  {cameraStatus === 'checking' && <RefreshCw className="w-4 h-4 text-indigo-400 animate-spin shrink-0" />}
                 </div>
 
-                {/* Checkpoint 2: Microphone */}
-                <div className={`p-3.5 rounded-2xl border flex items-center justify-between transition-all ${
-                  micStatus === 'passed'
-                    ? 'bg-emerald-950/30 border-emerald-500/30 text-emerald-200'
-                    : micStatus === 'failed'
-                    ? 'bg-rose-950/30 border-rose-500/30 text-rose-200'
-                    : 'bg-slate-800/40 border-slate-700/60 text-slate-300'
-                }`}>
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 ${
-                      micStatus === 'passed' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-slate-800 text-slate-400'
-                    }`}>
-                      <Volume2 className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold">2. Audio Environment Sensor</div>
-                      <div className="text-[11px] text-slate-400">Ambient voice & whisper anomaly detection</div>
-                    </div>
+                <div className="p-2.5 rounded bg-[#F9FAFB] border border-[#E5E7EB] flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#0F766E] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-[#0F0F14] block">24-Hour Preparation Interval</strong>
+                    <span>Unsuccessful attempts require 24 hours of syllabus review prior to re-examination.</span>
                   </div>
-                  {micStatus === 'passed' && <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />}
-                  {micStatus === 'failed' && <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />}
-                  {micStatus === 'checking' && <RefreshCw className="w-4 h-4 text-indigo-400 animate-spin shrink-0" />}
                 </div>
 
-                {/* Checkpoint 3: Fullscreen & Tab Focus */}
-                <div className="p-3.5 rounded-2xl border bg-slate-800/40 border-slate-700/60 text-slate-300 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-xl bg-slate-800 text-slate-400 flex items-center justify-center shrink-0">
-                      <Maximize2 className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold">3. Fullscreen & Tab-Lock Policy</div>
-                      <div className="text-[11px] text-slate-400">3-strike maximum limit for window or tab blur</div>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleRequestFullscreen}
-                    className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 transition-colors"
-                  >
-                    {fullscreenStatus === 'passed' ? 'Enabled ✓' : 'Enable Fullscreen'}
-                  </button>
-                </div>
-
-                {/* Checkpoint 4: Privacy Guarantee */}
-                <div className="p-3.5 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 text-indigo-200 flex items-start gap-3">
-                  <Lock className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
-                  <div className="text-[11px] leading-relaxed">
-                    <strong>100% Client-Side Privacy:</strong> Video and audio streams are analyzed locally in your device's memory. No camera recordings are saved or uploaded to external servers.
+                <div className="p-2.5 rounded bg-[#F9FAFB] border border-[#E5E7EB] flex items-start gap-2.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#0F766E] shrink-0 mt-0.5" />
+                  <div>
+                    <strong className="text-[#0F0F14] block">Public Registry Recording</strong>
+                    <span>Passing scores are permanently cataloged with your verifiable credential ID.</span>
                   </div>
                 </div>
               </div>
 
-              {/* Error Callout if permission fails */}
               {errorMessage && (
-                <div className="p-3 rounded-xl bg-rose-950/50 border border-rose-500/40 text-rose-300 text-xs flex items-center gap-2">
-                  <AlertCircle className="w-4 h-4 shrink-0" />
+                <div className="p-2.5 bg-rose-50 border border-rose-200 rounded text-xs text-rose-800 flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
                   <span>{errorMessage}</span>
                 </div>
               )}
             </div>
           </div>
-        </div>
 
-        {/* MODAL FOOTER BUTTONS */}
-        <div className="px-6 py-4 bg-slate-950 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
-          <div className="text-xs text-slate-400 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <span>Candidate: <strong className="text-white">{candidateName}</strong></span>
+          {/* Candidate Acknowledgment Box */}
+          <div className="pt-2 border-t border-[#E5E7EB]">
+            <label className="flex items-start gap-3 p-3 bg-[#F5F3FF] border border-[#DDD6FE] rounded-md cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={acknowledged}
+                onChange={(e) => setAcknowledged(e.target.checked)}
+                className="mt-0.5 h-4 w-4 rounded border-[#D1D5DB] text-[#5B21B6] focus:ring-[#5B21B6]"
+              />
+              <span className="text-xs text-[#2E1065] leading-relaxed">
+                <strong>Candidate Declaration:</strong> I confirm that I am the registered candidate, testing in an unassisted environment, and I agree to comply with the 45-minute examination time limit and focus integrity monitoring.
+              </span>
+            </label>
           </div>
 
-          <div className="flex items-center gap-3 self-end sm:self-auto">
-            {/* Standard Mode Fallback */}
+          {/* Footer Actions */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
             <button
               type="button"
-              onClick={() => handleLaunch(false)}
-              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition-all"
+              onClick={startMediaCheck}
+              disabled={isRequestingPermissions}
+              className="btn-secondary text-xs py-2 px-3 w-full sm:w-auto"
             >
-              Take in Standard Mode
+              <RefreshCw className={`w-3.5 h-3.5 ${isRequestingPermissions ? 'animate-spin' : ''}`} />
+              <span>Re-check Sensor Devices</span>
             </button>
 
-            {/* Launch AI Proctored Exam */}
             <button
               type="button"
-              onClick={() => handleLaunch(true)}
-              className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all shadow-lg ${
-                isAllReady
-                  ? 'bg-gradient-to-r from-emerald-500 via-teal-500 to-indigo-600 hover:from-emerald-400 hover:to-indigo-500 text-white shadow-emerald-500/20 scale-[1.02]'
-                  : 'bg-indigo-600 hover:bg-indigo-500 text-white'
-              }`}
+              onClick={handleLaunch}
+              disabled={!allPassed}
+              className="btn-primary text-xs py-2.5 px-6 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <ShieldCheck className="w-4 h-4" />
-              <span>Launch Verified Exam →</span>
+              <span>Authorize & Launch Examination</span>
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
-
       </div>
     </div>
   );

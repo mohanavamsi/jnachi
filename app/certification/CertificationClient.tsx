@@ -65,6 +65,7 @@ import ProctoringPreCheckModal from '@/components/ProctoringPreCheckModal';
 import ProctoringLiveWidget from '@/components/ProctoringLiveWidget';
 import ActiveTierCurriculumExplorer from '@/components/ActiveTierCurriculumExplorer';
 import RazorpayModal from '@/components/RazorpayModal';
+import { CouncilSeal } from '@/components/CouncilSeal';
 import { useAuth } from '@/components/AuthProvider';
 import {
   loginWithGoogle,
@@ -290,7 +291,7 @@ export default function CertificationClient({
   }, [view, examState, triggerSecurityNotice]);
 
   // Phase 2: Tab-Switch & Focus Loss Proctoring State & Handlers
-  const [strikeModal, setStrikeModal] = useState<{ strikeCount: number; reason: string } | null>(null);
+  const [strikeModal, setStrikeModal] = useState<{ strikeCount: number; reason: string; timestamp: string; eventType: string } | null>(null);
   const lastViolationTimeRef = useRef<number>(0);
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
 
@@ -314,7 +315,7 @@ export default function CertificationClient({
   }, []);
 
   const registerSecurityViolation = useCallback(
-    (reason: string = 'Left active examination window') => {
+    (reason: string = 'Left active examination window', eventType: string = 'WINDOW_BLUR') => {
       if (view !== 'exam' || !examState || isSubmittingExam) return;
 
       // Debounce to prevent duplicate triggers (e.g. blur + visibilitychange within 1.5s)
@@ -325,10 +326,19 @@ export default function CertificationClient({
       const currentStrikes = (examState.strikes || 0) + 1;
       setExamState((prev) => (prev ? { ...prev, strikes: currentStrikes } : null));
 
+      const timeString = new Date().toLocaleTimeString('en-US', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      });
+
       if (currentStrikes >= 3) {
         setStrikeModal({
           strikeCount: 3,
-          reason: 'Maximum security violations (3/3) exceeded. Your examination has been automatically submitted for grading.',
+          eventType: 'MAX_VIOLATIONS_REACHED',
+          reason: 'Maximum focus violations (3/3) exceeded. The active session has terminated and answers have been auto-submitted for grading.',
+          timestamp: timeString,
         });
         setTimeout(() => {
           handleSubmitExam(true);
@@ -336,7 +346,9 @@ export default function CertificationClient({
       } else {
         setStrikeModal({
           strikeCount: currentStrikes,
+          eventType,
           reason,
+          timestamp: timeString,
         });
       }
     },
@@ -1795,65 +1807,75 @@ export default function CertificationClient({
         }}
         onDragStart={(e) => e.preventDefault()}
       >
-        {/* Top Floating Exam Navbar */}
-        <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 sm:px-8 py-3.5 shadow-xs">
+        {/* Top Active Exam Security HUD */}
+        <header className="sticky top-0 z-40 bg-white border-b border-[#E5E7EB] px-4 sm:px-6 py-2.5 shadow-xs">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-            {/* Left Brand & Tier Badge */}
+            {/* Left: Live Session & Security Indicators */}
             <div className="flex items-center gap-3">
-              <span
-                className="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-full shrink-0"
-                style={{
-                  backgroundColor: tierConfig.colorScheme.bgBadge,
-                  color: tierConfig.colorScheme.textBadge,
-                }}
-              >
-                {tierConfig.title}
-              </span>
-              <div className="hidden sm:block text-xs font-bold text-slate-700">
-                Attempt #{examState.attemptNumber} • Candidate: {examState.recipientName}
+              {/* Live Session Status */}
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#F0FDFA] border border-[#99F6E4] text-[#0F766E] text-xs font-semibold">
+                <span className="w-2 h-2 rounded-full bg-[#0F766E] animate-pulse" />
+                <span>LIVE SESSION</span>
               </div>
-              <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] font-bold">
-                <Lock className="w-3 h-3 text-emerald-600" />
-                <span>Protected</span>
+
+              {/* Integrity Monitor */}
+              <div className="hidden lg:flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#F9FAFB] border border-[#E5E7EB] text-[#4B5563] text-[11px] font-medium">
+                <Lock className="w-3 h-3 text-[#5B21B6]" />
+                <span>Integrity Monitor: Active (Focus Locked)</span>
               </div>
+
+              {/* Network Latency */}
+              <div className="hidden xl:flex items-center gap-1 px-2 py-0.5 rounded bg-[#F9FAFB] border border-[#E5E7EB] text-[#6B7280] text-[11px] font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0F766E]" />
+                <span>Latency: 24ms (Optimal)</span>
+              </div>
+
+              {/* Candidate Info */}
+              <div className="hidden sm:block text-xs text-[#4B5563]">
+                <span className="font-semibold text-[#0F0F14]">{examState.recipientName}</span>
+                <span className="text-[#9CA3AF] mx-1">•</span>
+                <span className="text-[#5B21B6] font-medium">{tierConfig.title}</span>
+              </div>
+            </div>
+
+            {/* Center: 45-Minute Tabular Countdown Clock */}
+            <div
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-md font-mono text-xs sm:text-sm font-bold border transition-colors ${
+                examTimer.isUrgent
+                  ? 'bg-rose-50 border-rose-300 text-rose-800 animate-pulse'
+                  : examTimer.isLow
+                  ? 'bg-amber-50 border-amber-300 text-amber-900'
+                  : 'bg-[#2E1065] border-[#4C1D95] text-white'
+              }`}
+            >
+              <Clock className="w-3.5 h-3.5 shrink-0" />
+              <span className="tabular-nums tracking-wide">{examTimer.text}</span>
+            </div>
+
+            {/* Right: Strikes & Progress & Actions */}
+            <div className="flex items-center gap-3">
               {/* Live Proctoring Strike Badge */}
               <div
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold border transition-colors ${
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold border transition-colors ${
                   (examState.strikes || 0) === 0
-                    ? 'bg-slate-50 border-slate-200 text-slate-600'
+                    ? 'bg-[#F9FAFB] border-[#E5E7EB] text-[#4B5563]'
                     : (examState.strikes || 0) === 1
                     ? 'bg-amber-50 border-amber-300 text-amber-900'
-                    : 'bg-rose-100 border-rose-300 text-rose-900 animate-pulse'
+                    : 'bg-rose-50 border-rose-300 text-rose-900 animate-pulse'
                 }`}
               >
                 <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
                 <span>{examState.strikes || 0} / 3 Strikes</span>
               </div>
-            </div>
 
-            {/* Center 45-Minute Countdown Clock */}
-            <div
-              className={`flex items-center gap-2 px-4 py-1.5 rounded-full font-mono font-bold text-sm border shadow-xs transition-colors ${
-                examTimer.isUrgent
-                  ? 'bg-rose-100 border-rose-300 text-rose-800 animate-pulse'
-                  : examTimer.isLow
-                  ? 'bg-amber-50 border-amber-300 text-amber-900'
-                  : 'bg-slate-900 border-slate-800 text-white'
-              }`}
-            >
-              <Clock className="w-4 h-4 shrink-0" />
-              <span>{examTimer.text}</span>
-            </div>
-
-            {/* Right Progress & Submit Action */}
-            <div className="flex items-center gap-3">
-              <div className="hidden md:flex items-center gap-2 text-xs font-semibold text-slate-600">
-                <span>
-                  {answeredCount} / {totalExamQuestions} Answered
+              {/* Answered Progress */}
+              <div className="hidden md:flex items-center gap-2 text-xs text-[#6B7280]">
+                <span className="font-mono tabular-nums text-[#0F0F14] font-medium">
+                  {answeredCount} / {totalExamQuestions}
                 </span>
-                <div className="w-20 h-2 bg-slate-200 rounded-full overflow-hidden">
+                <div className="w-16 h-1.5 bg-[#E5E7EB] rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-indigo-600 rounded-full transition-all duration-300"
+                    className="h-full bg-[#5B21B6] rounded-full transition-all duration-200"
                     style={{ width: `${(answeredCount / totalExamQuestions) * 100}%` }}
                   />
                 </div>
@@ -1863,19 +1885,19 @@ export default function CertificationClient({
               <button
                 type="button"
                 onClick={toggleFullscreen}
-                className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors shrink-0"
+                className="hidden sm:inline-flex items-center gap-1 p-1.5 rounded-md border border-[#E5E7EB] bg-[#F9FAFB] hover:bg-white text-[#4B5563] hover:text-[#0F0F14] text-xs transition-colors"
                 title={isFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
               >
                 {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-                <span className="text-[11px]">{isFullscreen ? 'Exit Full' : 'Fullscreen'}</span>
               </button>
 
+              {/* Direct Submit Exam Button */}
               <button
                 type="button"
                 onClick={() => setShowSubmitConfirm(true)}
-                className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs rounded-xl shadow-xs transition-colors shrink-0"
+                className="btn-primary text-xs py-1.5 px-3"
               >
-                Submit Exam
+                <span>Finish & Grade</span>
               </button>
             </div>
           </div>
@@ -2116,79 +2138,89 @@ export default function CertificationClient({
           </div>
         )}
 
-        {/* Phase 2: Security Strike Warning & Disqualification Modal */}
+        {/* Phase 2: Formal Integrity Monitoring Advisory Modal */}
         {strikeModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-in fade-in duration-200">
-            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-200 space-y-6 text-center">
-              <div
-                className={`w-16 h-16 rounded-3xl mx-auto flex items-center justify-center ${
-                  strikeModal.strikeCount >= 3
-                    ? 'bg-rose-100 text-rose-600 animate-bounce'
-                    : strikeModal.strikeCount === 2
-                    ? 'bg-amber-100 text-amber-600 animate-pulse'
-                    : 'bg-amber-50 text-amber-600'
-                }`}
-              >
-                {strikeModal.strikeCount >= 3 ? (
-                  <AlertOctagon className="w-8 h-8" />
-                ) : (
-                  <ShieldAlert className="w-8 h-8" />
-                )}
-              </div>
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F0F14]/75 backdrop-blur-xs animate-in fade-in duration-150">
+            <div className="bg-white rounded-lg p-6 sm:p-7 max-w-lg w-full shadow-xl border border-[#D1D5DB] space-y-5 text-left">
+              {/* Header with Council Seal */}
+              <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-3.5">
+                <div className="flex items-center gap-3">
+                  <CouncilSeal size={36} variant="brand" />
+                  <div>
+                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#5B21B6] block">
+                      Jnachi Proctoring Desk
+                    </span>
+                    <h3 className="font-serif-heading text-lg text-[#0F0F14]">
+                      Integrity Monitoring Advisory
+                    </h3>
+                  </div>
+                </div>
 
-              <div className="space-y-2">
-                <div
-                  className={`inline-block text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full ${
+                <span
+                  className={`text-xs font-mono font-bold px-2.5 py-0.5 rounded border ${
                     strikeModal.strikeCount >= 3
-                      ? 'bg-rose-100 text-rose-700'
+                      ? 'bg-rose-50 border-rose-300 text-rose-800'
                       : strikeModal.strikeCount === 2
-                      ? 'bg-rose-100 text-rose-700'
-                      : 'bg-amber-100 text-amber-800'
+                      ? 'bg-amber-50 border-amber-300 text-amber-900'
+                      : 'bg-[#EDE9FE] border-[#DDD6FE] text-[#2E1065]'
                   }`}
                 >
-                  {strikeModal.strikeCount >= 3
-                    ? 'Examination Terminated'
-                    : strikeModal.strikeCount === 2
-                    ? 'Final Warning: Strike 2 of 3'
-                    : 'Security Warning: Strike 1 of 3'}
-                </div>
+                  Strike {strikeModal.strikeCount} of 3
+                </span>
+              </div>
 
-                <h3 className="text-xl font-extrabold text-slate-900">
-                  {strikeModal.strikeCount >= 3
-                    ? 'Disqualified & Auto-Submitted'
-                    : strikeModal.strikeCount === 2
-                    ? 'Final Violation Notice'
-                    : 'Proctoring Notice'}
-                </h3>
-
-                <p className="text-xs text-slate-600 leading-relaxed max-w-xs mx-auto">
-                  {strikeModal.strikeCount >= 3
-                    ? 'Maximum security violations (3/3) reached. Your examination session has ended and answers have been submitted.'
-                    : strikeModal.strikeCount === 2
-                    ? 'You have navigated away from the exam window twice. One more focus violation will immediately disqualify and submit your exam.'
-                    : 'Navigating away from the examination window, switching tabs, or opening external applications is recorded by proctoring.'}
+              {/* Advisory Body */}
+              <div className="space-y-3">
+                <p className="text-xs sm:text-sm text-[#4B5563] leading-relaxed">
+                  {strikeModal.strikeCount >= 3 ? (
+                    <strong className="text-rose-700">
+                      The maximum allowance of focus violations (3/3) has been reached. Examination session is terminated and answers have been recorded for grading.
+                    </strong>
+                  ) : strikeModal.strikeCount === 2 ? (
+                    <strong className="text-amber-900">
+                      Final Warning: A second window blur or focus switch was detected. A third violation will immediately terminate the session and submit your test.
+                    </strong>
+                  ) : (
+                    <span>
+                      An unauthorized window blur or tab switch event was recorded. Active session integrity requires maintaining continuous window focus throughout the 45-minute evaluation.
+                    </span>
+                  )}
                 </p>
-              </div>
 
-              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100 text-left text-xs space-y-1">
-                <div className="font-bold text-slate-700">Triggered Event:</div>
-                <div className="text-slate-500 font-mono text-[11px]">{strikeModal.reason}</div>
-              </div>
-
-              {strikeModal.strikeCount < 3 ? (
-                <button
-                  type="button"
-                  onClick={() => setStrikeModal(null)}
-                  className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-indigo-600/20 transition-all cursor-pointer"
-                >
-                  I Understand & Resume Exam
-                </button>
-              ) : (
-                <div className="flex items-center justify-center gap-2 text-xs font-bold text-rose-600">
-                  <RefreshCw className="w-4 h-4 animate-spin" />
-                  <span>Submitting Examination Answers...</span>
+                {/* Audit Details Card */}
+                <div className="p-3.5 rounded-md bg-[#F9FAFB] border border-[#E5E7EB] space-y-2 text-xs">
+                  <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-1.5 text-[#6B7280]">
+                    <span className="font-semibold uppercase text-[10px]">Incident Timestamp</span>
+                    <span className="font-mono font-medium text-[#0F0F14]">{strikeModal.timestamp}</span>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-1.5 text-[#6B7280]">
+                    <span className="font-semibold uppercase text-[10px]">Violation Classification</span>
+                    <span className="font-mono font-medium text-[#5B21B6]">{strikeModal.eventType || 'WINDOW_BLUR'}</span>
+                  </div>
+                  <div className="space-y-0.5 text-[#4B5563]">
+                    <span className="font-semibold text-[10px] text-[#6B7280] uppercase block">Recorded Event Details</span>
+                    <p className="text-[11px] font-mono text-[#0F0F14]">{strikeModal.reason}</p>
+                  </div>
                 </div>
-              )}
+              </div>
+
+              {/* Actions */}
+              <div className="pt-1">
+                {strikeModal.strikeCount < 3 ? (
+                  <button
+                    type="button"
+                    onClick={() => setStrikeModal(null)}
+                    className="btn-primary w-full text-xs py-2.5"
+                  >
+                    <span>Acknowledge Advisory & Resume Examination</span>
+                  </button>
+                ) : (
+                  <div className="flex items-center justify-center gap-2 text-xs font-semibold text-rose-700 py-2">
+                    <RefreshCw className="w-4 h-4 animate-spin" />
+                    <span>Submitting Answers to Council Registry...</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
