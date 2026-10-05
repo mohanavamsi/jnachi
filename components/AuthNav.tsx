@@ -3,13 +3,21 @@
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from './AuthProvider';
-import { loginWithGoogle, logout } from '@/lib/firebase';
+import { logout } from '@/lib/firebase';
 import { LogOut, User as UserIcon, ChevronDown, Sparkles } from 'lucide-react';
+import AuthModal, { AuthModalMode } from './AuthModal';
 
 export function AuthNav() {
   const { user, userProfile, loading } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<AuthModalMode>('signin');
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const openAuth = (mode: AuthModalMode) => {
+    setAuthModalMode(mode);
+    setAuthModalOpen(true);
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -63,7 +71,7 @@ export function AuthNav() {
               referrerPolicy="no-referrer"
             />
           ) : (
-            <div className="w-7 h-7 rounded-full bg-indigo-600 text-white text-xs font-semibold flex items-center justify-center">
+            <div className="w-7 h-7 rounded-full bg-[#5B21B6] text-white text-xs font-semibold flex items-center justify-center">
               {initials || 'U'}
             </div>
           )}
@@ -91,7 +99,7 @@ export function AuthNav() {
               <Link
                 href="/profile"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2.5 px-3.5 py-2 text-sm text-slate-700 hover:bg-indigo-50/70 hover:text-indigo-600 transition-colors"
+                className="flex items-center gap-2.5 px-3.5 py-2 text-sm text-slate-700 hover:bg-[#F5F3FF] hover:text-[#5B21B6] transition-colors"
               >
                 <UserIcon className="w-4 h-4 text-slate-400" />
                 <span>My Profile</span>
@@ -99,7 +107,7 @@ export function AuthNav() {
               <Link
                 href="/about"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2.5 px-3.5 py-2 text-sm text-slate-700 hover:bg-indigo-50/70 hover:text-indigo-600 transition-colors"
+                className="flex items-center gap-2.5 px-3.5 py-2 text-sm text-slate-700 hover:bg-[#F5F3FF] hover:text-[#5B21B6] transition-colors"
               >
                 <Sparkles className="w-4 h-4 text-slate-400" />
                 <span>Our Story</span>
@@ -125,11 +133,29 @@ export function AuthNav() {
   }
 
   return (
-    <button
-      onClick={loginWithGoogle}
-      className="text-sm font-medium text-slate-600 hover:text-indigo-600 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors"
-    >
-      Log In
-    </button>
+    <>
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => openAuth('signin')}
+          className="text-xs sm:text-sm font-medium text-[#4B5563] hover:text-[#5B21B6] px-2.5 py-1.5 rounded-lg hover:bg-slate-50 transition-colors"
+        >
+          Log In
+        </button>
+        <button
+          type="button"
+          onClick={() => openAuth('signup')}
+          className="text-xs sm:text-sm font-semibold text-[#5B21B6] hover:text-[#2E1065] bg-[#EDE9FE] hover:bg-[#DDD6FE] px-3 py-1.5 rounded-lg transition-colors shadow-2xs"
+        >
+          Sign Up
+        </button>
+      </div>
+
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        initialMode={authModalMode}
+      />
+    </>
   );
 }

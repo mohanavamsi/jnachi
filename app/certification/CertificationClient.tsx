@@ -268,6 +268,7 @@ export default function CertificationClient({
   const [authLocation, setAuthLocation] = useState('');
   const [authCompany, setAuthCompany] = useState('');
   const [authPhone, setAuthPhone] = useState('');
+  const [authAgreedToTerms, setAuthAgreedToTerms] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
   const [isSubmittingAuth, setIsSubmittingAuth] = useState(false);
   const [candidateSessionEmail, setCandidateSessionEmail] = useState<string>('');
@@ -768,6 +769,10 @@ export default function CertificationClient({
     }
     if (!cleanCompany) {
       setAuthError('Current Company / Organization is required.');
+      return;
+    }
+    if (!authAgreedToTerms) {
+      setAuthError('You must read and agree to the Terms of Service and Privacy Policy to register.');
       return;
     }
 
@@ -1689,11 +1694,43 @@ export default function CertificationClient({
                     </div>
                   </div>
 
+                  {/* MANDATORY TERMS & AUTHORIZATION CHECKBOX */}
+                  <div className="pt-2 pb-1">
+                    <label className="flex items-start gap-2.5 cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={authAgreedToTerms}
+                        onChange={(e) => setAuthAgreedToTerms(e.target.checked)}
+                        required
+                        className="mt-0.5 w-4 h-4 rounded text-[#5B21B6] border-slate-300 focus:ring-[#7C3AED] cursor-pointer"
+                      />
+                      <span className="text-xs text-slate-600 leading-relaxed">
+                        I have read and agree to the{' '}
+                        <Link
+                          href="/terms"
+                          target="_blank"
+                          className="font-semibold text-[#5B21B6] hover:underline"
+                        >
+                          Terms of Service
+                        </Link>{' '}
+                        and{' '}
+                        <Link
+                          href="/privacy"
+                          target="_blank"
+                          className="font-semibold text-[#5B21B6] hover:underline"
+                        >
+                          Privacy Policy
+                        </Link>
+                        , and authorize the Jnachi Certification Council to issue, record, and verify my credentials.
+                      </span>
+                    </label>
+                  </div>
+
                   <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
                     <button
                       type="submit"
-                      disabled={isSubmittingAuth}
-                      className="w-full sm:w-auto px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                      disabled={isSubmittingAuth || !authAgreedToTerms}
+                      className="w-full sm:w-auto px-8 py-3 bg-[#5B21B6] hover:bg-[#2E1065] text-white font-semibold text-sm rounded-lg shadow-xs transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isSubmittingAuth ? (
                         <>
