@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import {
   X,
@@ -39,8 +40,13 @@ export default function AuthModal({
   initialMode = 'signin',
   onSuccess,
 }: AuthModalProps) {
+  const [mounted, setMounted] = useState(false);
   const [mode, setMode] = useState<AuthModalMode>(initialMode);
   const { updateUserProfile } = useAuth();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Form states
   const [email, setEmail] = useState('');
@@ -85,7 +91,7 @@ export default function AuthModal({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
+  if (!isOpen || !mounted) return null;
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -205,9 +211,9 @@ export default function AuthModal({
     }
   };
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex min-h-full items-start sm:items-center justify-center p-3 sm:p-4 md:p-6 animate-in fade-in duration-200"
+      className="fixed inset-0 z-[100] overflow-y-auto bg-black/60 backdrop-blur-xs flex min-h-full items-start sm:items-center justify-center p-3 sm:p-4 md:p-6 animate-in fade-in duration-200"
       role="dialog"
       aria-modal="true"
       aria-labelledby="auth-modal-title"
@@ -597,6 +603,7 @@ export default function AuthModal({
           <span>Jnachi Registry v2.6</span>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
