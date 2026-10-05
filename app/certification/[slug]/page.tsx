@@ -217,20 +217,28 @@ export default async function DedicatedCertificationPage({ params }: PageProps) 
         {/* SEO Deep-Dive Content: Track Syllabus & Related Tracks */}
         <div className="max-w-5xl mx-auto px-4 sm:px-6 pb-16 space-y-12">
           {/* Track Exam Specifications Breakdown */}
-          <section className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 space-y-6">
-            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-indigo-600" />
-              <span>Exam Objectives & Tested Competencies</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <section className="bg-white border border-slate-200/80 rounded-2xl p-6 sm:p-8 shadow-xs space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+              <h2 className="text-lg sm:text-xl font-bold text-slate-900 flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-[#EDE9FE] text-[#5B21B6] flex items-center justify-center">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
+                <span>Exam Objectives & Tested Competencies</span>
+              </h2>
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-[#EDE9FE] text-[#5B21B6]">
+                Proctored Standard
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
               {tier.keyTopics.map((topic, i) => (
-                <div key={i} className="flex items-start gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                  <div className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
+                <div key={i} className="flex items-start gap-3.5 p-4 rounded-xl bg-slate-50/70 border border-slate-100 hover:border-[#EDE9FE] transition-colors">
+                  <div className="w-6 h-6 rounded-lg bg-[#5B21B6] text-white flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">
                     {i + 1}
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-slate-900">{topic}</h3>
-                    <p className="text-xs text-slate-500 mt-0.5">Evaluated in scenario-based proctored questions.</p>
+                    <h3 className="text-xs sm:text-sm font-bold text-slate-900 leading-snug">{topic}</h3>
+                    <p className="text-[11px] text-slate-500 mt-0.5">Evaluated in scenario-based proctored questions.</p>
                   </div>
                 </div>
               ))}
@@ -239,15 +247,15 @@ export default async function DedicatedCertificationPage({ params }: PageProps) 
             <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-600">
               <div className="flex items-center gap-2">
                 <Clock className="w-4 h-4 text-slate-400" />
-                <span>Exam Duration: <strong>{tier.durationMinutes} Minutes</strong></span>
+                <span>Exam Duration: <strong className="text-slate-800">{tier.durationMinutes} Minutes</strong></span>
               </div>
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                <span>Passing Criteria: <strong>{tier.passingScorePercent}% Score</strong></span>
+                <span>Passing Criteria: <strong className="text-slate-800">{tier.passingScorePercent}% Score</strong></span>
               </div>
               <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-amber-500" />
-                <span>Digital Credential: <strong>LinkedIn Verified Badge</strong></span>
+                <Award className="w-4 h-4 text-[#5B21B6]" />
+                <span>Digital Credential: <strong className="text-slate-800">LinkedIn Verified Badge</strong></span>
               </div>
             </div>
           </section>
@@ -257,17 +265,17 @@ export default async function DedicatedCertificationPage({ params }: PageProps) 
             <section className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-                    <Layers className="w-4 h-4 text-indigo-600" />
+                  <h2 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <Layers className="w-4 h-4 text-[#5B21B6]" />
                     <span>Explore Complementary Tracks</span>
                   </h2>
                   <p className="text-xs text-slate-500">Accelerate your career with adjacent specialized industry certifications.</p>
                 </div>
                 <Link
                   href="/certification"
-                  className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1 hover:underline"
+                  className="text-xs font-bold text-[#5B21B6] hover:text-[#2E1065] flex items-center gap-1 hover:underline"
                 >
-                  <span>All 17 Tracks</span>
+                  <span>All 28 Tracks</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -280,7 +288,7 @@ export default async function DedicatedCertificationPage({ params }: PageProps) 
                     <Link
                       key={relTierKey}
                       href={`/certification/${relSlug}`}
-                      className="group p-5 rounded-2xl bg-white border border-slate-200 hover:border-indigo-400 hover:shadow-md transition-all flex flex-col justify-between space-y-3"
+                      className="group p-5 rounded-2xl bg-white border border-slate-200/80 hover:border-[#5B21B6]/40 hover:shadow-md transition-all flex flex-col justify-between space-y-3"
                     >
                       <div className="space-y-2">
                         <span
@@ -292,7 +300,7 @@ export default async function DedicatedCertificationPage({ params }: PageProps) 
                         >
                           {relTier.badgeLabel}
                         </span>
-                        <h3 className="font-bold text-slate-900 text-sm group-hover:text-indigo-600 transition-colors">
+                        <h3 className="font-bold text-slate-900 text-sm group-hover:text-[#5B21B6] transition-colors line-clamp-2">
                           {relTier.title}
                         </h3>
                         <p className="text-xs text-slate-500 line-clamp-2">
@@ -300,7 +308,7 @@ export default async function DedicatedCertificationPage({ params }: PageProps) 
                         </p>
                       </div>
 
-                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold text-indigo-600">
+                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-semibold text-[#5B21B6]">
                         <span>View Exam Details</span>
                         <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                       </div>
