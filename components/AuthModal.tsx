@@ -207,18 +207,19 @@ export default function AuthModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex min-h-full items-start sm:items-center justify-center p-3 sm:p-4 md:p-6 animate-in fade-in duration-200"
       role="dialog"
       aria-modal="true"
       aria-labelledby="auth-modal-title"
+      onClick={onClose}
     >
       <div
         ref={modalRef}
-        className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden relative animate-in zoom-in-95 duration-200"
+        className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden relative my-auto flex flex-col max-h-[calc(100vh-1.5rem)] sm:max-h-[calc(100vh-2.5rem)] animate-in zoom-in-95 duration-200"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Header Bar */}
-        <div className="px-6 pt-6 pb-4 border-b border-slate-100 flex items-center justify-between">
+        {/* Top Header Bar (Fixed at top) */}
+        <div className="px-5 sm:px-6 pt-5 pb-3.5 border-b border-slate-100 flex items-center justify-between shrink-0 bg-white">
           <div>
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#5B21B6]" />
@@ -226,8 +227,8 @@ export default function AuthModal({
                 Jnachi Candidate Portal
               </span>
             </div>
-            <h2 id="auth-modal-title" className="text-xl font-semibold text-slate-900 mt-0.5">
-              {mode === 'signin' ? 'Sign in to your account' : 'Create your candidate account'}
+            <h2 id="auth-modal-title" className="text-lg sm:text-xl font-semibold text-slate-900 mt-0.5">
+              {mode === 'signin' ? 'Sign in to your account' : 'Create candidate account'}
             </h2>
           </div>
 
@@ -241,8 +242,8 @@ export default function AuthModal({
           </button>
         </div>
 
-        {/* Tab Switcher */}
-        <div className="px-6 pt-4">
+        {/* Tab Switcher (Fixed below header) */}
+        <div className="px-5 sm:px-6 pt-3 pb-1 shrink-0 bg-white">
           <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-lg text-xs font-semibold">
             <button
               type="button"
@@ -250,7 +251,7 @@ export default function AuthModal({
                 setMode('signin');
                 setError(null);
               }}
-              className={`py-2 rounded-md transition-all ${
+              className={`py-1.5 rounded-md transition-all ${
                 mode === 'signin'
                   ? 'bg-white text-[#2E1065] shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
@@ -264,7 +265,7 @@ export default function AuthModal({
                 setMode('signup');
                 setError(null);
               }}
-              className={`py-2 rounded-md transition-all ${
+              className={`py-1.5 rounded-md transition-all ${
                 mode === 'signup'
                   ? 'bg-white text-[#2E1065] shadow-xs font-bold'
                   : 'text-slate-600 hover:text-slate-900'
@@ -275,11 +276,11 @@ export default function AuthModal({
           </div>
         </div>
 
-        {/* Modal Body */}
-        <div className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
+        {/* Modal Scrollable Form Body */}
+        <div className="p-5 sm:p-6 space-y-3.5 overflow-y-auto flex-1">
           {/* Error Advisory */}
           {error && (
-            <div className="p-3.5 rounded-lg bg-rose-50 border border-rose-200 text-xs font-medium text-rose-800 flex items-start gap-2.5 animate-in fade-in">
+            <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-xs font-medium text-rose-800 flex items-start gap-2 animate-in fade-in">
               <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600 mt-0.5" />
               <span>{error}</span>
             </div>
@@ -287,7 +288,7 @@ export default function AuthModal({
 
           {/* Success Notification */}
           {successMessage && (
-            <div className="p-3.5 rounded-lg bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 flex items-center gap-2 animate-in fade-in">
+            <div className="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 flex items-center gap-2 animate-in fade-in">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>{successMessage}</span>
             </div>
@@ -295,7 +296,7 @@ export default function AuthModal({
 
           {/* Form */}
           {mode === 'signin' ? (
-            <form onSubmit={handleSignIn} className="space-y-3.5">
+            <form onSubmit={handleSignIn} className="space-y-3">
               <div className="space-y-1">
                 <label className="block text-xs font-semibold text-slate-700">
                   Email Address
@@ -343,7 +344,7 @@ export default function AuthModal({
               <button
                 type="submit"
                 disabled={isLoading || isGoogleLoading}
-                className="w-full py-2.5 bg-[#5B21B6] hover:bg-[#2E1065] text-white font-semibold text-sm rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-2.5 bg-[#5B21B6] hover:bg-[#2E1065] text-white font-semibold text-sm rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2 disabled:opacity-50 mt-1"
               >
                 {isLoading ? (
                   <>
@@ -456,16 +457,16 @@ export default function AuthModal({
               </div>
 
               {/* MANDATORY LEGAL & AUTHORIZATION AGREEMENT CHECKBOX */}
-              <div className="pt-2 pb-1">
+              <div className="pt-1.5 pb-0.5">
                 <label className="flex items-start gap-2.5 cursor-pointer select-none group">
                   <input
                     type="checkbox"
                     checked={agreedToTerms}
                     onChange={(e) => setAgreedToTerms(e.target.checked)}
                     required
-                    className="mt-0.5 w-4 h-4 rounded text-[#5B21B6] border-slate-300 focus:ring-[#7C3AED] cursor-pointer"
+                    className="mt-0.5 w-4 h-4 rounded text-[#5B21B6] border-slate-300 focus:ring-[#7C3AED] cursor-pointer shrink-0"
                   />
-                  <span className="text-xs text-slate-600 leading-relaxed">
+                  <span className="text-[11px] sm:text-xs text-slate-600 leading-relaxed">
                     I have read and agree to the{' '}
                     <Link
                       href="/terms"
@@ -484,7 +485,7 @@ export default function AuthModal({
                     >
                       Privacy Policy
                     </Link>
-                    , and authorize the Jnachi Certification Council to issue, record, and verify my professional credentials.
+                    , and authorize the Jnachi Certification Council to issue, record, and verify my credentials.
                   </span>
                 </label>
               </div>
@@ -492,7 +493,7 @@ export default function AuthModal({
               <button
                 type="submit"
                 disabled={isLoading || isGoogleLoading || !agreedToTerms}
-                className="w-full py-2.5 bg-[#5B21B6] hover:bg-[#2E1065] text-white font-semibold text-sm rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-2.5 bg-[#5B21B6] hover:bg-[#2E1065] text-white font-semibold text-sm rounded-lg shadow-xs transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-1"
               >
                 {isLoading ? (
                   <>
@@ -510,12 +511,12 @@ export default function AuthModal({
           )}
 
           {/* Social OAuth Divider */}
-          <div className="relative my-4">
+          <div className="relative my-3">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-slate-200" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-white px-2 text-slate-500 uppercase tracking-wider font-medium">
+              <span className="bg-white px-2 text-slate-500 uppercase tracking-wider font-medium text-[10px]">
                 Or continue with
               </span>
             </div>
@@ -526,7 +527,7 @@ export default function AuthModal({
             type="button"
             onClick={handleGoogleSignIn}
             disabled={isLoading || isGoogleLoading}
-            className="w-full py-2.5 px-4 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold text-sm rounded-lg transition-colors flex items-center justify-center gap-2.5 shadow-2xs disabled:opacity-50"
+            className="w-full py-2 px-4 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold text-xs sm:text-sm rounded-lg transition-colors flex items-center justify-center gap-2.5 shadow-2xs disabled:opacity-50"
           >
             {isGoogleLoading ? (
               <RefreshCw className="w-4 h-4 animate-spin text-[#5B21B6]" />
@@ -554,7 +555,7 @@ export default function AuthModal({
           </button>
 
           {/* Footer switch prompt */}
-          <div className="pt-2 text-center text-xs text-slate-500">
+          <div className="pt-1.5 text-center text-xs text-slate-500">
             {mode === 'signin' ? (
               <p>
                 Don&apos;t have an account yet?{' '}
@@ -587,8 +588,8 @@ export default function AuthModal({
           </div>
         </div>
 
-        {/* Bottom Institutional Trust Banner */}
-        <div className="px-6 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
+        {/* Bottom Institutional Trust Banner (Fixed at bottom) */}
+        <div className="px-5 sm:px-6 py-2.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 shrink-0">
           <span className="flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
             256-bit TLS Encrypted Authentication
