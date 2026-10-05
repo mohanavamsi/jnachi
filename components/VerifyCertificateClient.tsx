@@ -42,6 +42,7 @@ import {
 } from '@/lib/certificate';
 import { db, auth } from '@/lib/firebase';
 import { doc, getDoc, collection, query, where, getDocs, limit } from 'firebase/firestore';
+import { CouncilSeal } from '@/components/CouncilSeal';
 
 interface VerifyCertificateClientProps {
   initialRecord: VerifiedCertificateRecord | null;
@@ -222,40 +223,37 @@ export default function VerifyCertificateClient({
         {record ? (
           <div className="space-y-8 animate-in fade-in duration-300">
             {/* OFFICIAL VERIFICATION BANNER */}
-            <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-emerald-950/70 via-slate-900 to-indigo-950/70 border border-emerald-500/30 shadow-2xl relative overflow-hidden">
+            <div className="p-6 sm:p-8 rounded-lg bg-white border border-[#D1D5DB] shadow-sm relative overflow-hidden">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-black tracking-wide">
-                      <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                      OFFICIALLY VERIFIED & ACTIVE
-                    </span>
-                    <span className="text-xs text-slate-400">
-                      Issued {record.issuedDateFormatted}
-                    </span>
-                  </div>
-
-                  <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-                    {record.recipientName}
-                  </h2>
-
-                  <div className="flex flex-wrap items-center gap-3 text-xs text-slate-300 pt-1">
-                    <span
-                      className="font-extrabold uppercase px-2.5 py-0.5 rounded-md"
-                      style={{
-                        backgroundColor: tierConfig.colorScheme.bgBadge,
-                        color: tierConfig.colorScheme.textBadge,
-                      }}
-                    >
-                      Tier 0{tierConfig.levelNumber} • {record.tierTitle}
-                    </span>
-
-                    {record.location && (
-                      <span className="flex items-center gap-1 text-slate-400">
-                        <MapPin className="w-3.5 h-3.5" />
-                        {record.location}
+                <div className="flex items-start gap-4">
+                  <CouncilSeal size={56} variant="gold" className="shrink-0 mt-1" />
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded bg-[#F0FDFA] border border-[#99F6E4] text-[#0F766E] text-xs font-semibold">
+                        <ShieldCheck className="w-3.5 h-3.5" />
+                        OFFICIALLY VERIFIED & ACTIVE
                       </span>
-                    )}
+                      <span className="text-xs text-[#6B7280]">
+                        Issued {record.issuedDateFormatted}
+                      </span>
+                    </div>
+
+                    <h2 className="font-serif-heading text-2xl sm:text-3xl text-[#0F0F14]">
+                      {record.recipientName}
+                    </h2>
+
+                    <div className="flex flex-wrap items-center gap-3 text-xs text-[#4B5563] pt-0.5">
+                      <span className="font-semibold uppercase px-2 py-0.5 rounded text-[11px] bg-[#EDE9FE] text-[#5B21B6]">
+                        Tier 0{tierConfig.levelNumber} • {record.tierTitle}
+                      </span>
+
+                      {record.location && (
+                        <span className="flex items-center gap-1 text-[#6B7280]">
+                          <MapPin className="w-3.5 h-3.5" />
+                          {record.location}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
 

@@ -12,6 +12,8 @@ import {
   ExternalLink,
 } from 'lucide-react';
 
+import { CouncilSeal } from '@/components/CouncilSeal';
+
 export function HomeCertificateShowcase() {
   const [copiedLink, setCopiedLink] = useState(false);
 
@@ -109,10 +111,14 @@ export function HomeCertificateShowcase() {
         <div className="relative bg-white border border-[#D1D5DB] rounded-lg p-6 sm:p-8 shadow-sm space-y-6 text-[#0F0F14]">
           {/* Sample Banner Label */}
           <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#5B21B6]">
-                Jnachi Certification Council
-              </span>
+            <div className="flex items-center gap-3">
+              <CouncilSeal size={38} variant="brand" />
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#5B21B6] block">
+                  Jnachi Certification Council
+                </span>
+                <span className="text-[10px] text-[#6B7280]">Official Credential Registry</span>
+              </div>
             </div>
             <span className="text-[11px] font-semibold bg-[#F5F3FF] text-[#5B21B6] border border-[#EDE9FE] px-2 py-0.5 rounded">
               Sample Credential
@@ -120,7 +126,10 @@ export function HomeCertificateShowcase() {
           </div>
 
           {/* Certificate Body */}
-          <div className="text-center space-y-3 py-2">
+          <div className="text-center space-y-3 py-2 relative">
+            <div className="flex justify-center mb-1">
+              <CouncilSeal size={68} variant="gold" />
+            </div>
             <span className="text-[11px] uppercase font-semibold tracking-wider text-[#6B7280] block">
               Official Credential Awarded To
             </span>
@@ -131,7 +140,7 @@ export function HomeCertificateShowcase() {
               for demonstrating applied competency in prompt engineering, automated workflows, and context hygiene in proctored examination.
             </p>
 
-            <div className="pt-2">
+            <div className="pt-1">
               <span className="inline-block px-3 py-1 text-xs font-semibold text-[#2E1065] bg-[#EDE9FE] border border-[#DDD6FE] rounded">
                 {sampleCert.trackName}
               </span>

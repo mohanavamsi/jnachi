@@ -10,6 +10,7 @@ import {
 import { LaunchPromoModal } from '@/components/LaunchPromoModal';
 import { HomeCertificationCatalog } from '@/components/HomeCertificationCatalog';
 import { HomeCertificateShowcase } from '@/components/HomeCertificateShowcase';
+import { CouncilSeal } from '@/components/CouncilSeal';
 import {
   TOTAL_CERTIFICATIONS_COUNT,
   TOTAL_LESSONS_COUNT,
@@ -126,17 +127,23 @@ export default function HomePage() {
 
             {/* Right Credential Preview Card */}
             <div className="lg:col-span-5">
-              <div className="bg-white border border-[#D1D5DB] rounded-lg p-6 shadow-sm space-y-5">
+              <div className="bg-white border border-[#D1D5DB] rounded-lg p-6 shadow-sm space-y-5 relative overflow-hidden">
                 <div className="flex items-center justify-between border-b border-[#E5E7EB] pb-3">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#5B21B6]">
-                    Jnachi Credential Registry
-                  </span>
+                  <div className="flex items-center gap-2.5">
+                    <CouncilSeal size={32} variant="brand" />
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#5B21B6]">
+                      Jnachi Credential Registry
+                    </span>
+                  </div>
                   <span className="text-[11px] font-semibold bg-[#F5F3FF] text-[#5B21B6] border border-[#EDE9FE] px-2 py-0.5 rounded">
                     Sample credential
                   </span>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2 relative">
+                  <div className="absolute right-0 top-0 opacity-15 pointer-events-none">
+                    <CouncilSeal size={72} variant="gold" />
+                  </div>
                   <span className="text-[10px] text-[#6B7280] uppercase tracking-wider font-semibold block">
                     Awarded To
                   </span>
