@@ -43,6 +43,9 @@ import {
   AlertOctagon,
   ExternalLink,
   CreditCard,
+  Search,
+  X,
+  SlidersHorizontal,
 } from 'lucide-react';
 import {
   CertSection,
@@ -57,7 +60,23 @@ import {
   EXAM_DURATION_MS,
   PASSING_THRESHOLD,
 } from '@/lib/certService';
-import { CertTier, CERT_TIERS, TIER_ORDER, CORE_TIER_ORDER, ROLE_TIER_ORDER, PYTHON_TIER_ORDER, AGENTIC_TIER_ORDER, FINANCE_TIER_ORDER, SYSTEMS_TIER_ORDER, INTEGRATION_TIER_ORDER, CertCategory, TIER_SLUGS, getSlugByTier } from '@/lib/certTypes';
+import {
+  CertTier,
+  CERT_TIERS,
+  TIER_ORDER,
+  CORE_TIER_ORDER,
+  ROLE_TIER_ORDER,
+  PYTHON_TIER_ORDER,
+  AGENTIC_TIER_ORDER,
+  FINANCE_TIER_ORDER,
+  SYSTEMS_TIER_ORDER,
+  INTEGRATION_TIER_ORDER,
+  CertCategory,
+  TIER_SLUGS,
+  getSlugByTier,
+  TOTAL_CERTIFICATIONS_COUNT,
+} from '@/lib/certTypes';
+import { TIER_PRICING } from '@/lib/pricing';
 import { LESSONS, CategoryKey } from '@/lib/lessonsData';
 import BeginnerCertificateModal from '@/components/BeginnerCertificateModal';
 import ExamSyllabusModal from '@/components/ExamSyllabusModal';
@@ -110,6 +129,54 @@ interface ExamSubmissionResult {
   cooldownNextAvailableAt?: number;
 }
 
+export type CatalogCategory = 'all' | 'core' | 'agentic' | 'finance' | 'role' | 'python' | 'systems' | 'integration';
+
+export function getCleanCertTitle(title: string): string {
+  return title.replace(/^Jnachi\s+Certified\s+/i, '').trim();
+}
+
+export const CATALOG_CATEGORIES: { id: CatalogCategory; label: string; count: number }[] = [
+  { id: 'all', label: 'All Certifications', count: TOTAL_CERTIFICATIONS_COUNT },
+  { id: 'core', label: 'Core AI Ladder', count: CORE_TIER_ORDER.length },
+  { id: 'agentic', label: 'Agentic AI', count: AGENTIC_TIER_ORDER.length },
+  { id: 'finance', label: 'Finance AI & FinOps', count: FINANCE_TIER_ORDER.length },
+  { id: 'role', label: 'Role Tracks', count: ROLE_TIER_ORDER.length },
+  { id: 'python', label: 'Applied Python', count: PYTHON_TIER_ORDER.length },
+  { id: 'systems', label: 'Systems & Software', count: SYSTEMS_TIER_ORDER.length },
+  { id: 'integration', label: 'Enterprise Integration', count: INTEGRATION_TIER_ORDER.length },
+];
+
+export const CORE_LADDER_STEPS: { level: string; name: string; tier: CertTier; desc: string; slug: string }[] = [
+  {
+    level: '01',
+    name: 'AI Foundations',
+    tier: 'beginner',
+    desc: 'Prompt anatomy, hallucination mitigation, and baseline confidentiality redlines.',
+    slug: 'ai-foundations',
+  },
+  {
+    level: '02',
+    name: 'AI Practitioner',
+    tier: 'practitioner',
+    desc: 'Multi-modal workflows, structured data extraction, and tool orchestration.',
+    slug: 'ai-practitioner',
+  },
+  {
+    level: '03',
+    name: 'AI Systems Builder',
+    tier: 'builder',
+    desc: 'RAG pipelines, API function calling, and vector embeddings architecture.',
+    slug: 'ai-systems-builder',
+  },
+  {
+    level: '04',
+    name: 'AI Master Architect',
+    tier: 'master',
+    desc: 'Enterprise governance, autonomous multi-agent systems, and model optimization.',
+    slug: 'ai-strategic-master',
+  },
+];
+
 export interface CertificationClientProps {
   initialTier?: CertTier;
   singleTrackMode?: boolean;
@@ -126,12 +193,72 @@ export default function CertificationClient({
   const [selectedTier, setSelectedTier] = useState<CertTier>(initialTier && CERT_TIERS[initialTier] ? initialTier : 'beginner');
   const [activeTrackTab, setActiveTrackTab] = useState<CertCategory>(initialCategory);
 
+  // Catalog Filters & Search State
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCatalogCategory, setActiveCatalogCategory] = useState<CatalogCategory>('all');
+  const [activeLevelFilter, setActiveLevelFilter] = useState<'all' | '1' | '2' | '3' | '4'>('all');
+
   useEffect(() => {
     if (initialTier && CERT_TIERS[initialTier]) {
       setSelectedTier(initialTier);
       setActiveTrackTab(CERT_TIERS[initialTier].category);
+      setActiveCatalogCategory(CERT_TIERS[initialTier].category);
     }
   }, [initialTier]);
+
+  // Dynamic Catalog Tier Filtering
+  const filteredCatalogTiers = useMemo(() => {
+    let list: CertTier[] = [];
+    if (activeCatalogCategory === 'all') {
+      list = [...TIER_ORDER];
+    } else if (activeCatalogCategory === 'core') {
+      list = [...CORE_TIER_ORDER];
+    } else if (activeCatalogCategory === 'agentic') {
+      list = [...AGENTIC_TIER_ORDER];
+    } else if (activeCatalogCategory === 'finance') {
+      list = [...FINANCE_TIER_ORDER];
+    } else if (activeCatalogCategory === 'role') {
+      list = [...ROLE_TIER_ORDER];
+    } else if (activeCatalogCategory === 'python') {
+      list = [...PYTHON_TIER_ORDER];
+    } else if (activeCatalogCategory === 'systems') {
+      list = [...SYSTEMS_TIER_ORDER];
+    } else if (activeCatalogCategory === 'integration') {
+      list = [...INTEGRATION_TIER_ORDER];
+    }
+
+    if (activeLevelFilter !== 'all') {
+      const lvl = parseInt(activeLevelFilter, 10);
+      list = list.filter((tierKey) => CERT_TIERS[tierKey]?.levelNumber === lvl);
+    }
+
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      list = list.filter((tierKey) => {
+        const tier = CERT_TIERS[tierKey];
+        if (!tier) return false;
+        const cleanTitle = getCleanCertTitle(tier.title).toLowerCase();
+        const fullTitle = tier.title.toLowerCase();
+        const shortDesc = (tier.shortDescription || '').toLowerCase();
+        const fullDesc = (tier.fullDescription || '').toLowerCase();
+        const role = (tier.roleName || '').toLowerCase();
+        const audience = (tier.targetAudience || '').toLowerCase();
+        const topics = (tier.keyTopics || []).join(' ').toLowerCase();
+
+        return (
+          cleanTitle.includes(q) ||
+          fullTitle.includes(q) ||
+          shortDesc.includes(q) ||
+          fullDesc.includes(q) ||
+          role.includes(q) ||
+          audience.includes(q) ||
+          topics.includes(q)
+        );
+      });
+    }
+
+    return list;
+  }, [activeCatalogCategory, activeLevelFilter, searchQuery]);
 
   // Gate Form & Auth State
   const [authMode, setAuthMode] = useState<AuthGateMode>('signup');
@@ -1030,7 +1157,7 @@ export default function CertificationClient({
     const isMissingRequiredProfile = isAuthenticatedCandidate && (!candidateLocation || !candidateCompany);
 
     return (
-      <div className="py-10 px-4 sm:px-6 max-w-5xl mx-auto space-y-10 animate-in fade-in duration-300">
+      <div className={`py-8 px-4 sm:px-6 mx-auto animate-in fade-in duration-300 ${singleTrackMode ? 'max-w-5xl space-y-8' : 'max-w-[1200px] space-y-8'}`}>
         {singleTrackMode ? (
           /* SINGLE TRACK DEDICATED HEADER */
           <div className="space-y-6">
@@ -1044,7 +1171,7 @@ export default function CertificationClient({
             </nav>
 
             {/* Track Hero Banner */}
-            <div className="p-6 sm:p-8 rounded-3xl border border-slate-200 bg-linear-to-br from-slate-900 via-slate-800 to-indigo-950 text-white shadow-xl relative overflow-hidden">
+            <div className="p-6 sm:p-8 rounded-2xl border border-slate-200 bg-linear-to-br from-slate-900 via-slate-800 to-indigo-950 text-white shadow-lg relative overflow-hidden">
               <div className="relative z-10 space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <span
@@ -1058,15 +1185,15 @@ export default function CertificationClient({
                   </span>
                   <Link
                     href="/certification"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-300 hover:text-white transition-colors bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-xl backdrop-blur-xs"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-300 hover:text-white transition-colors bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg backdrop-blur-xs"
                   >
-                    <span>View All 17 Certifications</span>
+                    <span>View All {TOTAL_CERTIFICATIONS_COUNT} Certifications</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
 
                 <div className="space-y-2">
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-tight">
                     {activeTierConfig.title}
                   </h1>
                   <p className="text-sm sm:text-base text-slate-300 max-w-3xl leading-relaxed">
@@ -1075,21 +1202,21 @@ export default function CertificationClient({
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-white/10 text-xs">
-                  <div className="bg-white/5 backdrop-blur-xs p-3 rounded-xl border border-white/10">
+                  <div className="bg-white/5 backdrop-blur-xs p-3 rounded-lg border border-white/10">
                     <span className="text-slate-400 block text-[11px]">Format</span>
-                    <span className="font-bold text-white">40 Proctored MCQs</span>
+                    <span className="font-semibold text-white">40 Proctored MCQs</span>
                   </div>
-                  <div className="bg-white/5 backdrop-blur-xs p-3 rounded-xl border border-white/10">
+                  <div className="bg-white/5 backdrop-blur-xs p-3 rounded-lg border border-white/10">
                     <span className="text-slate-400 block text-[11px]">Time Limit</span>
-                    <span className="font-bold text-white">{activeTierConfig.durationMinutes} Minutes</span>
+                    <span className="font-semibold text-white">{activeTierConfig.durationMinutes} Minutes</span>
                   </div>
-                  <div className="bg-white/5 backdrop-blur-xs p-3 rounded-xl border border-white/10">
+                  <div className="bg-white/5 backdrop-blur-xs p-3 rounded-lg border border-white/10">
                     <span className="text-slate-400 block text-[11px]">Passing Score</span>
-                    <span className="font-bold text-emerald-400">{activeTierConfig.passingScorePercent}% Standard</span>
+                    <span className="font-semibold text-emerald-400">{activeTierConfig.passingScorePercent}% Standard</span>
                   </div>
-                  <div className="bg-white/5 backdrop-blur-xs p-3 rounded-xl border border-white/10">
+                  <div className="bg-white/5 backdrop-blur-xs p-3 rounded-lg border border-white/10">
                     <span className="text-slate-400 block text-[11px]">Credential</span>
-                    <span className="font-bold text-amber-300">Official Diploma & Badge</span>
+                    <span className="font-semibold text-amber-300">Official Diploma & Badge</span>
                   </div>
                 </div>
               </div>
@@ -1097,232 +1224,313 @@ export default function CertificationClient({
           </div>
         ) : (
           <>
-            {/* Master Catalog Header Hero */}
-            <div className="text-center space-y-4 max-w-3xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400/20 border border-amber-400/50 text-amber-900 text-xs font-bold tracking-wide">
-                <Sparkles className="w-4 h-4 text-amber-600" />
-                <span>Limited 30-Day Launch Event: 100% Free Examination Fees</span>
+            {/* 1. PAGE HEADER (Left-aligned title, computed subtitle, search bar) */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2">
+              <div className="space-y-1">
+                <h1 className="text-2xl sm:text-3xl font-semibold text-[#111827] tracking-tight">
+                  Certifications
+                </h1>
+                <p className="text-xs sm:text-sm text-[#4B5563]">
+                  {TOTAL_CERTIFICATIONS_COUNT} proctored examinations designed to measure and certify applied technical competence across enterprise domains.
+                </p>
               </div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight">
-                Jnachi Professional Certifications
-              </h1>
-              <p className="text-base sm:text-lg text-slate-600 leading-relaxed">
-                Seventeen rigorous, proctored examinations designed to measure and certify applied capability—spanning the 4-tier Core Progression Ladder, 6 Specialized Role Tracks, 2 Python Specializations, and 5 Enterprise Integration tracks.
-              </p>
+
+              {/* Accessible Search Bar */}
+              <div className="relative w-full md:w-80 shrink-0">
+                <Search className="w-4 h-4 text-[#9CA3AF] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search certifications..."
+                  className="w-full pl-9 pr-8 py-2 text-xs sm:text-sm bg-white border border-[#D1D5DB] rounded-lg text-[#111827] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:border-[#7C3AED] transition-all"
+                  aria-label="Search certifications by name, skill, or keyword"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 text-[#9CA3AF] hover:text-[#4B5563] rounded"
+                    aria-label="Clear search"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
             </div>
 
-            {/* TRACK CATEGORY SELECTOR TABS */}
-            <div className="space-y-4">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div>
-                  <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wider flex items-center gap-2">
-                    <Layers className="w-4 h-4 text-indigo-600" />
-                    <span>Select Certification Track</span>
-                  </h2>
-                  <p className="text-xs text-slate-500">Choose between foundational engineering tiers, role certifications, Python specializations, or Enterprise Integration tracks.</p>
-                </div>
+            {/* 2. EXAM FACTS STRIP (Single understated row with thin borders) */}
+            <div className="rounded-lg border border-[#E5E7EB] bg-white px-4 py-2.5 text-xs text-[#4B5563] flex flex-wrap items-center justify-between gap-2 shadow-2xs">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                <span className="font-semibold text-[#111827]">Every exam:</span>
+                <span>40 proctored questions</span>
+                <span className="text-[#D1D5DB]">·</span>
+                <span>45 minutes</span>
+                <span className="text-[#D1D5DB]">·</span>
+                <span>80% to pass</span>
+                <span className="text-[#D1D5DB]">·</span>
+                <span className="font-semibold text-[#5B21B6]">Free during launch</span>
+              </div>
+              <div className="text-[11px] text-[#6B7280] hidden lg:block">
+                Instant digital diploma & verifiable on-chain registry ID
+              </div>
+            </div>
 
-                <div className="flex p-1 bg-slate-200/80 rounded-2xl shrink-0 self-start sm:self-auto gap-1 flex-wrap">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveTrackTab('core');
-                      if (!CORE_TIER_ORDER.includes(selectedTier)) {
-                        setSelectedTier('beginner');
-                        if (effectiveEmail) handleCheckStatus(effectiveEmail, 'beginner');
-                      }
-                    }}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                      activeTrackTab === 'core'
-                        ? 'bg-white text-indigo-700 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    Core Ladder (4 Tiers)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveTrackTab('agentic');
-                      if (!AGENTIC_TIER_ORDER.includes(selectedTier)) {
-                        setSelectedTier('agentic_ai');
-                        if (effectiveEmail) handleCheckStatus(effectiveEmail, 'agentic_ai');
-                      }
-                    }}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                      activeTrackTab === 'agentic'
-                        ? 'bg-white text-emerald-700 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    Agentic AI (3 Tracks)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveTrackTab('finance');
-                      if (!FINANCE_TIER_ORDER.includes(selectedTier)) {
-                        setSelectedTier('finance_ai');
-                        if (effectiveEmail) handleCheckStatus(effectiveEmail, 'finance_ai');
-                      }
-                    }}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                      activeTrackTab === 'finance'
-                        ? 'bg-white text-teal-700 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    Finance AI (2 Tracks)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveTrackTab('role');
-                      if (!ROLE_TIER_ORDER.includes(selectedTier)) {
-                        setSelectedTier('sales');
-                        if (effectiveEmail) handleCheckStatus(effectiveEmail, 'sales');
-                      }
-                    }}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                      activeTrackTab === 'role'
-                        ? 'bg-white text-indigo-700 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    Role Tracks (6 Roles)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveTrackTab('python');
-                      if (!PYTHON_TIER_ORDER.includes(selectedTier)) {
-                        setSelectedTier('python_ai');
-                        if (effectiveEmail) handleCheckStatus(effectiveEmail, 'python_ai');
-                      }
-                    }}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                      activeTrackTab === 'python'
-                        ? 'bg-white text-emerald-700 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    Python Tracks (2 Tracks)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveTrackTab('systems');
-                      if (!SYSTEMS_TIER_ORDER.includes(selectedTier)) {
-                        setSelectedTier('computer_basics');
-                        if (effectiveEmail) handleCheckStatus(effectiveEmail, 'computer_basics');
-                      }
-                    }}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                      activeTrackTab === 'systems'
-                        ? 'bg-white text-sky-700 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    Systems & Software (5 Tracks)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveTrackTab('integration');
-                      if (!INTEGRATION_TIER_ORDER.includes(selectedTier)) {
-                        setSelectedTier('mulesoft');
-                        if (effectiveEmail) handleCheckStatus(effectiveEmail, 'mulesoft');
-                      }
-                    }}
-                    className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
-                      activeTrackTab === 'integration'
-                        ? 'bg-white text-indigo-700 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900'
-                    }`}
-                  >
-                    Integration (6 Tracks)
-                  </button>
+            {/* 3. CORE LADDER SECTION (Connected 4-step stepper, horizontal on desktop / vertical on mobile) */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-base sm:text-lg font-semibold text-[#111827]">Core Progression Ladder</h2>
+                  <p className="text-xs sm:text-sm text-[#4B5563]">The sequential 4-tier milestone ladder for applied artificial intelligence capability.</p>
                 </div>
               </div>
 
-              {/* TIER CARDS GRID */}
-              <div className={`grid gap-4 ${activeTrackTab === 'core' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4' : activeTrackTab === 'python' || activeTrackTab === 'finance' ? 'grid-cols-1 sm:grid-cols-2' : activeTrackTab === 'integration' || activeTrackTab === 'agentic' || activeTrackTab === 'systems' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
-                {(activeTrackTab === 'core'
-                  ? CORE_TIER_ORDER
-                  : activeTrackTab === 'agentic'
-                  ? AGENTIC_TIER_ORDER
-                  : activeTrackTab === 'finance'
-                  ? FINANCE_TIER_ORDER
-                  : activeTrackTab === 'python'
-                  ? PYTHON_TIER_ORDER
-                  : activeTrackTab === 'systems'
-                  ? SYSTEMS_TIER_ORDER
-                  : activeTrackTab === 'integration'
-                  ? INTEGRATION_TIER_ORDER
-                  : ROLE_TIER_ORDER
-                ).map((tierKey) => {
-                  const tier = CERT_TIERS[tierKey];
-                  const isSelected = selectedTier === tierKey;
-                  const tierProgress = statusResponse?.allTiersProgress?.[tierKey];
-                  const isPassed = tierProgress?.passed;
-                  const tierSlug = getSlugByTier(tierKey);
-
-                  return (
-                    <Link
-                      key={tierKey}
-                      href={`/certification/${tierSlug}`}
-                      className={`p-5 rounded-2xl text-left border-2 transition-all relative flex flex-col justify-between space-y-3 cursor-pointer group hover:shadow-md ${
-                        isSelected
-                          ? 'border-indigo-600 bg-indigo-50/50 shadow-md ring-2 ring-indigo-500/20'
-                          : 'border-slate-200 bg-white hover:border-indigo-300'
-                      }`}
-                    >
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span
-                            className="text-[11px] font-extrabold uppercase px-2.5 py-0.5 rounded-full"
-                            style={{
-                              backgroundColor: tier.colorScheme.bgBadge,
-                              color: tier.colorScheme.textBadge,
-                            }}
-                          >
-                            {tier.category === 'core' ? `Tier 0${tier.levelNumber}` : (tier.roleName || 'Role Certified')}
-                          </span>
-                          {isPassed ? (
-                            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
-                              <Check className="w-3 h-3" /> Earned
-                            </span>
-                          ) : (
-                            <span className="text-xs text-slate-400 font-medium">80% Standard</span>
-                          )}
-                        </div>
-                        <h3 className="font-extrabold text-slate-900 text-lg leading-snug group-hover:text-indigo-600 transition-colors">{tier.title}</h3>
-                        <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">{tier.shortDescription}</p>
-                      </div>
-
-                      <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-600">
-                        <span>40 Proctored Qs</span>
-                        <span className="font-semibold text-indigo-600 group-hover:text-indigo-800 flex items-center gap-1">
-                          <span>View Exam</span>
-                          <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-3 relative">
+                {CORE_LADDER_STEPS.map((step, idx) => (
+                  <div
+                    key={step.level}
+                    className="rounded-lg border border-[#E5E7EB] bg-white p-4 flex flex-col justify-between space-y-3 hover:border-[#7C3AED]/50 hover:bg-[#F5F3FF]/40 transition-all relative group"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-[#EDE9FE] text-[#5B21B6]">
+                          Level {step.level}
                         </span>
+                        <span className="text-[11px] text-[#9CA3AF] font-mono">Step {idx + 1}/4</span>
                       </div>
-                    </Link>
-                  );
-                })}
+                      <div>
+                        <h3 className="text-sm sm:text-base font-semibold text-[#111827] group-hover:text-[#5B21B6] transition-colors">
+                          {step.name}
+                        </h3>
+                        <p className="text-xs text-[#4B5563] mt-1 line-clamp-2 leading-relaxed">
+                          {step.desc}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-[#F3F4F6] flex items-center justify-between">
+                      <span className="text-[11px] text-[#6B7280]">40 MCQs</span>
+                      <Link
+                        href={`/certification/${step.slug}`}
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-[#5B21B6] hover:text-[#2E1065] transition-colors"
+                      >
+                        <span>View exam</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 4. CATALOG SECTION (Two-column layout, max 1200px, centered) */}
+            <div className="space-y-4 pt-2">
+              <div className="flex flex-col min-[900px]:flex-row gap-6 items-start">
+                {/* LEFT COLUMN: CATEGORY SELECTOR (260px, sticky on desktop; single select dropdown on <900px) */}
+                <div className="w-full min-[900px]:w-[260px] shrink-0 min-[900px]:sticky min-[900px]:top-20 space-y-3">
+                  {/* Mobile & Small Screen (<900px) Select Dropdown */}
+                  <div className="block min-[900px]:hidden">
+                    <label htmlFor="catalog-category-select" className="block text-xs font-semibold text-[#374151] mb-1.5 uppercase tracking-wider">
+                      Certification Category
+                    </label>
+                    <div className="relative">
+                      <select
+                        id="catalog-category-select"
+                        value={activeCatalogCategory}
+                        onChange={(e) => setActiveCatalogCategory(e.target.value as CatalogCategory)}
+                        className="w-full px-3 py-2 text-sm bg-white border border-[#D1D5DB] rounded-lg text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:border-[#7C3AED]"
+                      >
+                        {CATALOG_CATEGORIES.map((cat) => (
+                          <option key={cat.id} value={cat.id}>
+                            {cat.label} ({cat.count})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Desktop (>=900px) Sticky Category List */}
+                  <div className="hidden min-[900px]:block bg-white rounded-lg border border-[#E5E7EB] p-1.5 space-y-0.5 shadow-2xs">
+                    <div className="px-3 py-2 text-[11px] font-semibold uppercase tracking-wider text-[#6B7280]">
+                      Categories
+                    </div>
+                    {CATALOG_CATEGORIES.map((cat) => {
+                      const isActive = activeCatalogCategory === cat.id;
+                      return (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          onClick={() => setActiveCatalogCategory(cat.id)}
+                          className={`w-full flex items-center justify-between px-3 py-2 rounded-md text-xs transition-colors text-left ${
+                            isActive
+                              ? 'bg-[#EDE9FE] text-[#2E1065] border-l-4 border-[#5B21B6] font-semibold'
+                              : 'text-[#4B5563] hover:bg-[#F9FAFB] hover:text-[#111827] border-l-4 border-transparent'
+                          }`}
+                        >
+                          <span className="truncate">{cat.label}</span>
+                          <span
+                            className={`text-[11px] px-1.5 py-0.5 rounded font-mono ${
+                              isActive ? 'bg-[#DDD6FE] text-[#2E1065]' : 'bg-[#F3F4F6] text-[#6B7280]'
+                            }`}
+                          >
+                            {cat.count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* RIGHT COLUMN: COMPACT LIST ROWS WITH LEVEL FILTER & COUNTER */}
+                <div className="flex-1 min-w-0 w-full space-y-3">
+                  {/* Results Toolbar */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 px-1">
+                    <div className="text-xs sm:text-sm text-[#4B5563]">
+                      Showing <strong className="font-semibold text-[#111827]">{filteredCatalogTiers.length}</strong> of{' '}
+                      <span className="font-semibold text-[#111827]">{TOTAL_CERTIFICATIONS_COUNT}</span> certifications
+                      {searchQuery && <span className="text-[#6B7280]"> matching &ldquo;{searchQuery}&rdquo;</span>}
+                    </div>
+
+                    {/* Level Filter Dropdown */}
+                    <div className="flex items-center gap-2">
+                      <label htmlFor="level-filter-select" className="text-xs text-[#6B7280] shrink-0">
+                        Filter Level:
+                      </label>
+                      <select
+                        id="level-filter-select"
+                        value={activeLevelFilter}
+                        onChange={(e) => setActiveLevelFilter(e.target.value as 'all' | '1' | '2' | '3' | '4')}
+                        className="px-2.5 py-1.5 text-xs bg-white border border-[#D1D5DB] rounded-lg text-[#111827] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:border-[#7C3AED]"
+                      >
+                        <option value="all">All Levels</option>
+                        <option value="1">Level 1 (Foundational)</option>
+                        <option value="2">Level 2 (Practitioner)</option>
+                        <option value="3">Level 3 (Systems Builder)</option>
+                        <option value="4">Level 4 (Master Architect)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Compact List Rows Container */}
+                  <div className="bg-white rounded-lg border border-[#E5E7EB] divide-y divide-[#E5E7EB] shadow-2xs overflow-hidden">
+                    {filteredCatalogTiers.length === 0 ? (
+                      <div className="p-8 text-center space-y-3">
+                        <p className="text-sm text-[#4B5563]">No certifications match your active search or filter criteria.</p>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setSearchQuery('');
+                            setActiveCatalogCategory('all');
+                            setActiveLevelFilter('all');
+                          }}
+                          className="px-4 py-2 text-xs font-semibold text-[#5B21B6] bg-[#EDE9FE] hover:bg-[#DDD6FE] rounded-lg transition-colors"
+                        >
+                          Clear all filters
+                        </button>
+                      </div>
+                    ) : (
+                      filteredCatalogTiers.map((tierKey) => {
+                        const tier = CERT_TIERS[tierKey];
+                        if (!tier) return null;
+                        const tierSlug = getSlugByTier(tierKey);
+                        const cleanTitle = getCleanCertTitle(tier.title);
+                        const chips = (tier.keyTopics || []).slice(0, 3);
+                        const isPassed = statusResponse?.allTiersProgress?.[tierKey]?.passed;
+
+                        return (
+                          <div
+                            key={tierKey}
+                            className="p-4 sm:p-5 hover:bg-[#F5F3FF] transition-colors group flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                          >
+                            <div className="space-y-1.5 max-w-2xl flex-1 min-w-0">
+                              <div className="flex flex-wrap items-center gap-2 text-xs">
+                                <span className="text-[#6B7280] font-medium">Jnachi Certified</span>
+                                <span className="text-[#D1D5DB]">·</span>
+                                <span className="text-[#6B7280]">Level 0{tier.levelNumber}</span>
+                                <span className="text-[#D1D5DB]">·</span>
+                                <span className="text-[#6B7280] capitalize">
+                                  {tier.category === 'core'
+                                    ? 'Core Ladder'
+                                    : tier.category === 'systems'
+                                    ? 'Systems & Software'
+                                    : tier.category === 'integration'
+                                    ? 'Integration'
+                                    : tier.category === 'agentic'
+                                    ? 'Agentic AI'
+                                    : tier.category === 'finance'
+                                    ? 'Finance AI'
+                                    : tier.category === 'python'
+                                    ? 'Python'
+                                    : 'Role Track'}
+                                </span>
+                                {isPassed ? (
+                                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#047857] bg-[#ECFDF5] border border-[#A7F3D0] px-2 py-0.5 rounded">
+                                    <Check className="w-3 h-3" /> Earned
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0]">
+                                    Free
+                                  </span>
+                                )}
+                              </div>
+
+                              <div>
+                                <Link
+                                  href={`/certification/${tierSlug}`}
+                                  className="text-base sm:text-lg font-semibold text-[#111827] group-hover:text-[#5B21B6] transition-colors line-clamp-2"
+                                >
+                                  {cleanTitle}
+                                </Link>
+                                <p className="text-xs sm:text-sm text-[#4B5563] mt-1 leading-relaxed">
+                                  {tier.shortDescription}
+                                </p>
+                              </div>
+
+                              {chips.length > 0 && (
+                                <div className="flex flex-wrap gap-1.5 pt-1">
+                                  {chips.map((chip, idx) => (
+                                    <span
+                                      key={idx}
+                                      className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-[#F3F4F6] text-[#4B5563] border border-[#E5E7EB]"
+                                    >
+                                      {chip}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+
+                            <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#F3F4F6]">
+                              <Link
+                                href={`/certification/${tierSlug}`}
+                                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold bg-[#5B21B6] text-white hover:bg-[#2E1065] transition-colors focus:outline-none focus:ring-2 focus:ring-[#7C3AED] focus:ring-offset-2"
+                              >
+                                <span>View exam</span>
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                              </Link>
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </>
         )}
 
-        {/* ACTIVE TIER SPOTLIGHT & INTERACTIVE CURRICULUM EXPLORER */}
-        <ActiveTierCurriculumExplorer
-          tier={selectedTier}
-          onOpenFullSyllabusModal={() => setIsSyllabusModalOpen(true)}
-        />
+        {/* ACTIVE TIER SPOTLIGHT & INTERACTIVE CURRICULUM EXPLORER (Shown in single-track mode) */}
+        {singleTrackMode && (
+          <ActiveTierCurriculumExplorer
+            tier={selectedTier}
+            onOpenFullSyllabusModal={() => setIsSyllabusModalOpen(true)}
+          />
+        )}
 
-        {/* CANDIDATE PORTAL SIGN-UP & VERIFICATION GATE */}
-        <div className="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 sm:p-10 space-y-8">
+        {/* CANDIDATE PORTAL SIGN-UP & VERIFICATION GATE (Shown in single-track mode) */}
+        {singleTrackMode && (
+          <div className="bg-white border border-slate-200 rounded-2xl shadow-xs p-6 sm:p-8 space-y-8">
           {!isAuthenticatedCandidate ? (
             /* STEP 1: AUTHENTICATION GATE */
             <div className="space-y-6">
@@ -1763,6 +1971,7 @@ export default function CertificationClient({
             </div>
           )}
         </div>
+        )}
 
         {/* Exam Syllabus & Candidate Study Guide Modal */}
         <ExamSyllabusModal
