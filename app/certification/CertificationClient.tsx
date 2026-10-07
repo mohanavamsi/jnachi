@@ -323,7 +323,7 @@ export default function CertificationClient({
   const [isPreCheckModalOpen, setIsPreCheckModalOpen] = useState(false);
   const [isRazorpayModalOpen, setIsRazorpayModalOpen] = useState(false);
   const [copiedCertId, setCopiedCertId] = useState(false);
-  const [isProctoredMode, setIsProctoredMode] = useState(true);
+  const [isProctoredMode, setIsProctoredMode] = useState(false);
 
   // Active tier metadata
   const activeTierConfig = CERT_TIERS[selectedTier] || CERT_TIERS.beginner;
@@ -1966,7 +1966,8 @@ export default function CertificationClient({
                         return;
                       }
                       setGateError(null);
-                      setIsPreCheckModalOpen(true);
+                      setIsProctoredMode(false);
+                      handleStartExam(selectedTier);
                     }}
                     disabled={
                       Boolean(

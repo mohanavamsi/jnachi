@@ -172,11 +172,11 @@ export default function ProctoringPreCheckModal({
     }
   };
 
-  const allPassed = cameraStatus === 'passed' && micStatus === 'passed' && acknowledged;
+  const allPassed = acknowledged;
 
   const handleLaunch = () => {
     if (!allPassed) return;
-    onConfirmLaunch({ proctoredMode: true });
+    onConfirmLaunch({ proctoredMode: Boolean(stream && cameraStatus === 'passed') });
   };
 
   if (!isOpen) return null;
